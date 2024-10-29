@@ -1,0 +1,204 @@
+<template>
+    <Master>
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="pagetitle">
+                <h3 class="mb-0 c-theme-text-color">
+                    <span>Communities</span>
+                </h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item c-theme-text-color">
+                            <a class="c-theme-text-color" href="#">Home</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            <span>Communities</span>
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+            <div>
+                <a
+                    class="btn btn-success"
+                    title="Details"
+                    :href="'/community/create'"
+                >
+                    <i class="bi bi-plus-lg"></i>
+                    {{ translate("Add new community") }}
+                </a>
+            </div>
+        </div>
+
+        <section class="section">
+            <div class="card c-card-border">
+                <div class="card-body pt-4">
+                    <div class="row g-3 p-3">
+                        <div class="input-group">
+                            <div class="form-outline col-md-5">
+                                <input
+                                    type="text"
+                                    v-model="form.name"
+                                    class="form-control c-searchbox-radius"
+                                    id="name"
+                                    :placeholder="translate('Search by name')"
+                                    :class="{
+                                        'invalid-bg': formErrors.name,
+                                    }"
+                                />
+
+                                <div
+                                    class="invalid-feedback animated fadeIn"
+                                    v-if="formErrors.name"
+                                >
+                                    {{ formErrors.name[0] }}
+                                </div>
+                            </div>
+
+                            <button
+                                v-if="formStatus == 1"
+                                @click="search(null)"
+                                class="btn btn-success"
+                            >
+                                <i class="bi bi-search"></i>
+                            </button>
+
+                            <button
+                                v-else
+                                class="btn btn-success"
+                                type="button"
+                            >
+                                <span
+                                    class="spinner-border spinner-border-sm"
+                                    role="status"
+                                    aria-hidden="true"
+                                ></span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center">#</th>
+                                    <th scope="col">
+                                        {{ translate("Name") }}
+                                    </th>
+                                    <th scope="col">
+                                        {{ translate("Location") }}
+                                    </th>
+                                    <th scope="col">
+                                        {{ translate("Image") }}
+                                    </th>
+                                    <th scope="col">
+                                        {{ translate("Action") }}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    v-for="(community, index) in communities"
+                                    :key="community.id"
+                                >
+                                    <th class="text-center">
+                                        {{ index + 1 }}
+                                    </th>
+                                    <td>
+                                        <!-- <a
+                                                        type="button"
+                                                        class="c-linked c-mouse-over c-theme-text-color"
+                                                        title="Edit"
+                                                        :href="'/community-details/' + community.id"
+                                                    > -->
+                                        {{ community.name }}
+                                        <!-- </a> -->
+                                    </td>
+                                    <td>{{ community.location }}</td>
+                                    <td>
+                                        <image-zooming-component
+                                            :file="
+                                                community.image ?? 'empty.png'
+                                            "
+                                            :width="70"
+                                        />
+                                    </td>
+
+                                    <td>
+                                        <div class="btn-group">
+                                            <a
+                                                type="button"
+                                                class="btn btn-sm fs-6"
+                                                title="Edit"
+                                                :href="
+                                                    '/community/edit/' +
+                                                    community.id
+                                                "
+                                                ><i
+                                                    class="bi bi-pencil c-theme-text-color"
+                                                ></i
+                                            ></a>
+                                            <DeleteModal
+                                                :deleteId="community.id"
+                                                @deleteThis="deleteThis"
+                                            />
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="text-center">
+                        <button
+                            v-if="pagination.next_page_url"
+                            @click="search(pagination.next_page_url)"
+                            class="btn btn-success"
+                        >
+                            {{ translate("Load More") }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </Master>
+</template>
+
+<script>
+import Master from "@components/backend/layout/Master.vue";
+import ImageCropper from "@components/global/ImageCropper.vue";
+
+export default {
+    components: {
+        Master,
+    },
+    created() {
+        this.search(this.default_url);
+    },
+    data() {
+        return {
+             
+            communities: [],
+            form: {
+                name: "",
+            },
+            formErrors: [],
+            firstTimeLoadCheck: 0,
+            formStatus: 1,
+            pagination: {},
+        };
+    },
+    methods: {
+         
+         
+    },
+};
+</script>
+
+<style>
+.c-linked {
+    text-decoration: none;
+}
+.c-mouse-over {
+    cursor: pointer;
+    font-weight: bold;
+}
+</style>
