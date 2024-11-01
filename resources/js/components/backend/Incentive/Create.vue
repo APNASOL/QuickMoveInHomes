@@ -70,7 +70,7 @@
                         <div class="col-12 col-md-6">
                             <label for="title">{{ translate("Title") }}</label>
                             <input
-                            type="text"
+                                type="text"
                                 class="form-control"
                                 id="title"
                                 :class="{
@@ -88,13 +88,15 @@
                         </div>
                         <div class="col-12 col-md-6">
                             <label for="interest_rate_first_year">{{
-                                translate("How much")
+                                translate("Interest reate first year")
                             }}</label>
-                            <input type="number"
+                            <input
+                                type="number"
                                 class="form-control"
                                 id="interest_rate_first_year"
                                 :class="{
-                                    'invalid-bg': formErrors.interest_rate_first_year,
+                                    'invalid-bg':
+                                        formErrors.interest_rate_first_year,
                                 }"
                                 v-model="form.interest_rate_first_year"
                             />
@@ -157,27 +159,63 @@
                                 {{ formErrors.end_date[0] }}
                             </div>
                         </div>
-
-                        <div class="col-12 col-md-12">
-                            <label for="descriptions">{{
-                                translate("Description")
+                        <div class="col-12 col-md-6">
+                            <label for="builder_id">{{
+                                translate("Builder")
                             }}</label>
-                            <textarea
-                                class="form-control"
-                                id="descriptions"
+                            <Multiselect
+                                v-model="form.builder_id"
+                                :options="builderOptions"
+                                :placeholder="translate('Search by Builder')"
+                                :searchable="true"
                                 :class="{
-                                    'invalid-bg': formErrors.descriptions,
+                                    'invalid-bg': formErrors.builder_id,
                                 }"
-                                v-model="form.descriptions"
-                                rows="2"
-                            ></textarea>
-
+                            />
+                            <div
+                                class="invalid-feedback"
+                                v-if="formErrors.builder_id"
+                            >
+                                {{ formErrors.builder_id[0] }}
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label>{{ translate("Incentive Banner") }}</label>
+                            <div>
+                                <ExternalWebsitImageCropper
+                                    @croppedImg="cropTheIncentiveBanner"
+                                />
+                                <br />
+                                <image-zooming-component
+                                    v-if="incentive_banner"
+                                    :file="incentive_banner ?? 'empty.png'"
+                                    :custom_class="'img-fluid img-thumbnail'"
+                                    :width="'100px'"
+                                />
+                            </div>
                             <div
                                 class="invalid-feedback animated fadeIn"
-                                v-if="formErrors.descriptions"
+                                v-if="formErrors.incentive_banner"
                             >
-                                {{ formErrors.descriptions[0] }}
+                                {{ formErrors.incentive_banner[0] }}
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-12 mt-3">
+                        <label for="descriptions"
+                            >{{ translate("Description") }}
+                        </label>
+                        <QuillEditor
+                            v-model:content="form.descriptions"
+                            contentType="html"
+                            toolbar="full"
+                            theme="snow"
+                        />
+                        <div
+                            class="invalid-feedback d-block"
+                            v-if="formErrors.descriptions"
+                        >
+                            {{ formErrors.descriptions[0] }}
                         </div>
                     </div>
                     <div class="mt-3">
@@ -210,17 +248,21 @@
 
 <script>
 import Master from "@components/backend/layout/Master.vue";
-
+import { QuillEditor } from "@vueup/vue-quill";
+import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import axios from "axios";
 import Datepicker from "@vuepic/vue-datepicker";
-
+import Multiselect from "@vueform/multiselect";
 export default {
     props: ["incentive_id"],
     components: {
         Master,
         Datepicker,
+        QuillEditor,
+        Multiselect
     },
     created() {
+        this.pluckBuilders();
         if (this.incentive_id) {
             this.getIncentive();
         }
@@ -236,10 +278,14 @@ export default {
                 interest_rate_first_year: "",
                 home_id: "",
                 status: true, // Default status to true (active)
+                incentive_banner: "",
+                builder_id: "",
             },
+            incentive_banner: "",
             formErrors: [],
             formStatus: true,
             homes_options: [],
+            builderOptions: [],
         };
     },
     methods: {
@@ -250,9 +296,12 @@ export default {
                     this.form.title = response.data.title;
                     this.form.start_date = response.data.start_date;
                     this.form.end_date = response.data.end_date;
+                    this.form.builder_id = response.data.builder_id;
                     this.form.descriptions = response.data.description;
-                    this.form.interest_rate_first_year = response.data.interest_rate_first_year;
+                    this.form.interest_rate_first_year =
+                        response.data.interest_rate_first_year;
                     this.form.status = response.data.status;
+                    this.incentive_banner = response.data.incentive_banner;
                 })
                 .catch((error) => {
                     toastr.error(error.response.data.message);
@@ -269,8 +318,8 @@ export default {
                         this.translate("Incentive saved successfully")
                     );
                     this.formErrors = [];
-                     
-                        window.location.href = "/incentives"; 
+
+                    window.location.href = "/incentives";
                 })
                 .catch((error) => {
                     this.formStatus = true;
@@ -278,6 +327,20 @@ export default {
                     if (error.response.data.errors) {
                         this.formErrors = error.response.data.errors;
                     }
+                });
+        },
+        cropTheIncentiveBanner(img) {
+            this.form.incentive_banner = img;
+            this.incentive_banner = img;
+        },
+        pluckBuilders() {
+            axios
+                .get("/api/builders/pluck")
+                .then((response) => {
+                    this.builderOptions = response.data;
+                })
+                .catch((error) => {
+                    toastr.error(error.response.data.message);
                 });
         },
     },

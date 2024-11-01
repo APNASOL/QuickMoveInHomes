@@ -75,76 +75,88 @@
                         </div>
                     </div>
 
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col" class="text-center">#</th>
-                                    <th scope="col">
-                                        {{ translate("Title") }}
-                                    </th>
-                                    <th scope="col">
-                                        {{ translate("Status") }}
-                                    </th>
-                                     
-                                    <th scope="col">
-                                        {{ translate("Start Date") }}
-                                    </th>
-                                    <th scope="col">
-                                        {{ translate("End Date") }}
-                                    </th>
-                                    <th scope="col">
-                                        {{ translate("How much") }}
-                                    </th>
-                                    <th scope="col">
-                                        {{ translate("Descriptions") }}
-                                    </th>
-                                    <th scope="col">
-                                        {{ translate("Action") }}
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr
-                                    v-for="(incentive, index) in incentives"
-                                    :key="incentive.id"
+                    <div class="accordion" id="accordionExample">
+                        <div
+                            class="accordion-item"
+                            v-for="(incentive, index) in incentives"
+                            :key="incentive.id"
+                        >
+                            <h2 class="accordion-header">
+                                <button
+                                    class="accordion-button collapsed"
+                                    type="button"
+                                    :data-bs-toggle="'collapse'"
+                                    :data-bs-target="'#collapse' + index"
+                                    :aria-expanded="
+                                        index === 0 ? 'true' : 'false'
+                                    "
+                                    :aria-controls="'collapse' + index"
                                 >
-                                    <th class="text-center">
-                                        {{ index + 1 }}
-                                    </th>
-                                    <td>{{ incentive.status }}</td>
-                                    <td>{{ incentive.title }}</td> 
-                                    <td>{{ incentive.start_date }}</td>
-                                    <td>{{ incentive.end_date }}</td>
-                                    <td>{{ incentive.interest_rate_first_year }} % </td>
-                                    <td>{{ incentive.description }}</td>
+                                   <b> {{ incentive.title }} -
+                                    {{ incentive.interest_rate_first_year }}% -
+                                    {{ incentive.builder_name }}</b>
+                                    
+                                </button>
+                            </h2>
+                            <div
+                                :id="'collapse' + index"
+                                class="accordion-collapse collapse"
+                                data-bs-parent="#accordionExample"
+                            >
+                                <div class="accordion-body">
+                                    <strong>Status:</strong>
+                                    {{ incentive.status }}<br /> 
+                                    <strong>Start Date:</strong>
+                                    {{ incentive.start_date }}<br />
+                                    <strong>End Date:</strong>
+                                    {{ incentive.end_date }}<br />
 
-                                    <td>
-                                        <div class="btn-group">
-                                            <a
-                                                type="button"
-                                                class="btn btn-sm fs-6"
-                                                title="Edit"
-                                                :href="
-                                                    '/incentive/edit/' +
-                                                    incentive.id
-                                                "
-                                                ><i
-                                                    class="bi bi-pencil c-theme-text-color"
-                                                ></i
-                                            ></a>
-                                            <DeleteModal
-                                                :deleteId="incentive.id"
-                                                @deleteThis="deleteThis"
-                                            />
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                    <strong>Descriptions:</strong>
+                                    <div
+                                        class="content ql-editor"
+                                        v-html="incentive.description"
+                                    ></div>
+                                    <div>
+                                        <strong>Banner</strong>
+                                        <br />
+                                        <image-zooming-component
+                                            :file="
+                                                incentive.incentive_banner ??
+                                                'empty.png'
+                                            "
+                                            :width="350"
+                                        />
+                                    </div>
+
+                                    <div class="btn-group mt-2">
+                                        <a
+                                            type="button"
+                                            class="btn btn-sm fs-6"
+                                            title="Edit"
+                                            :href="
+                                                '/incentive/edit/' +
+                                                incentive.id
+                                            "
+                                        >
+                                            <i
+                                                class="bi bi-pencil c-theme-text-color"
+                                            ></i>
+                                        </a>
+                                        <DeleteModal
+                                            :deleteId="incentive.id"
+                                            @deleteThis="deleteThis"
+                                        />
+
+                                    
+                                    </div>
+                                    <br>
+                                    Created at on : {{ incentive.created_at }}
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="text-center">
+                    <div class="text-center mt-4">
                         <button
                             v-if="pagination.next_page_url"
                             @click="search(pagination.next_page_url)"

@@ -1096,8 +1096,8 @@ export default {
                         this.openConfirmCodeModal = true;
                         this.user_confirmation_email = this.form.email;
                     } else {
-                        // window.location.href = "/";
-                        window.location.reload();
+                        window.location.href = "/dashboard";
+                        // window.location.reload();
                     }
                 })
                 .catch((error) => {

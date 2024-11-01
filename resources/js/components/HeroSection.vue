@@ -3,26 +3,47 @@
         <!-- Hero Section -->
         <div class="hero-section position-relative text-white">
             <!-- Background Image -->
-            <img src="https://images.unsplash.com/photo-1519227355453-8f982e425321?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt="Background" class="hero-image" />
+            <img
+                src="https://images.unsplash.com/photo-1519227355453-8f982e425321?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt="Background"
+                class="hero-image"
+            />
 
             <!-- Overlay Text and Search Box -->
             <div class="overlay"></div>
-            <div class="content position-absolute top-50 start-0 translate-middle-y ms-4">
+            <div
+                class="content position-absolute top-50 start-0 translate-middle-y ms-4"
+            >
                 <h1 class="display-4 fw-bold mb-4">Quick Move In Homes</h1>
                 <div class="search-bar-container d-flex">
                     <div class="search-bar input-group">
-                        <input type="text" class="form-control"
+                        <input
+                            type="text"
+                            class="form-control"
                             placeholder="Enter an address, neighborhood, city, or ZIP code"
-                            v-model="searching_location" />
-                        <button v-if="formStatus" :href="'/homes-list/' + searching_location" type="submit"
-                            class="btn c-btn-theme-yellow" @click="activeSpinner">
+                            v-model="searching_location"
+                        />
+                        <a
+                            v-if="formStatus"
+                            :href="'/homes-list/' + searching_location"
+                            type="submit"
+                            class="btn c-btn-theme-yellow"
+                            @click="activeSpinner"
+                        >
                             <i class="bi bi-search"></i>
-                        </button>
-                        <button class="btn c-btn-theme-yellow" type="button" disabled v-else>
-                            
-                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        </button>
+                    </a>
+                        <a
+                            class="btn c-btn-theme-yellow"
+                            type="button"
+                            disabled
+                            v-else
+                        >
+                            <span
+                                class="spinner-border spinner-border-sm"
+                                role="status"
+                                aria-hidden="true"
+                            ></span>
+                </a>
                     </div>
                 </div>
             </div>
@@ -35,7 +56,7 @@ export default {
     name: "HeroSection",
     data() {
         return {
-            searching_location: '',
+            searching_location: "",
             formStatus: true,
         };
     },
