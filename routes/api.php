@@ -30,6 +30,7 @@ use App\Http\Controllers\NeighborhoodController;
 use App\Http\Controllers\AmenityController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\AgentController;
+use App\Http\Controllers\EventController;
 
 
 /*
@@ -109,6 +110,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
    Route::get('/get/builder/{id}', [BuilderController::class, 'get'])->name('builder.edit');
    Route::post('/builder/delete/{id}', [BuilderController::class, 'delete'])->name('builder.delete');
    Route::get('/builders/pluck', [BuilderController::class, 'builders_pluck'])->name('builders.pluck');
+   // Event's
+   Route::get('/fetch-events', [EventController::class, 'events'])->name('fetch-events');
+   Route::post('/event/store', [EventController::class, 'store'])->name('event.store');
+   Route::get('/get/event/{id}', [EventController::class, 'get'])->name('event.edit');
+   Route::post('/event/delete/{id}', [EventController::class, 'delete'])->name('event.delete'); 
    // school's
    Route::post('/fetch-schools', [SchoolController::class, 'schools'])->name('fetch-schools');
    Route::post('/school/store', [SchoolController::class, 'store'])->name('school.store');

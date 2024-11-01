@@ -22,6 +22,7 @@ use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\EventController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -89,10 +90,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/regions', [LasVegasRegionController::class, 'index'])->name('regions');
     Route::get('/region/create', [LasVegasRegionController::class, 'create'])->name('region.create');
     Route::get('/region/edit/{id}', [LasVegasRegionController::class, 'edit'])->name('region.edit');
-    //  regions
+    //  builders
     Route::get('/builders', [BuilderController::class, 'index'])->name('builders');
     Route::get('/builder/create', [BuilderController::class, 'create'])->name('builder.create');
     Route::get('/builder/edit/{id}', [BuilderController::class, 'edit'])->name('builder.edit');
+    //  events
+    Route::get('/events', [EventController::class, 'index'])->name('events');
+    Route::get('/event/create', [EventController::class, 'create'])->name('event.create');
+    Route::get('/event/edit/{id}', [EventController::class, 'edit'])->name('event.edit');
     //  schools
     Route::get('/schools', [SchoolController::class, 'index'])->name('schools');
     Route::get('/school/create', [SchoolController::class, 'create'])->name('school.create');

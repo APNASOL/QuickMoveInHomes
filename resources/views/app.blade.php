@@ -301,6 +301,13 @@
     <builder-form-component />
 @elseif(Route::currentRouteName() === 'builder.edit')
     <builder-form-component :builder_id="'{{ $id }}'" />
+<!-- Events -->
+@elseif(Route::currentRouteName() === 'events')
+    <event-list-component />
+@elseif(Route::currentRouteName() === 'event.create')
+    <event-form-component />
+@elseif(Route::currentRouteName() === 'event.edit')
+    <event-form-component :event_id="'{{ $id }}'" />
 
 <!-- Neighborhoods -->
 @elseif(Route::currentRouteName() === 'neighborhoods')

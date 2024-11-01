@@ -7,7 +7,7 @@
             <div
                 class="d-flex justify-content-between align-items-center c-navbar-logo-box"
             >
-                <a class="c-navbar-brand" href="/dashboard"> 
+                <a class="c-navbar-brand" href="/dashboard">
                     <img :src="black_logo" alt="" width="150" />
                 </a>
 
@@ -110,8 +110,13 @@
                 >
                     <a
                         class="nav-link collapsed"
-                        
-                        href="/regions"   :class="{ 'active': isActive('/regions') || isActive('/region/create')|| isActive('/region/edit') }"
+                        href="/regions"
+                        :class="{
+                            active:
+                                isActive('/regions') ||
+                                isActive('/region/create') ||
+                                isActive('/region/edit'),
+                        }"
                     >
                         <i class="bi bi-globe me-2"></i>
                         <span>{{ translate("Regions") }}</span>
@@ -254,6 +259,20 @@
                 >
                     <a
                         class="nav-link collapsed"
+                        :class="{ active: isActive('/events') }"
+                        href="/events"
+                    >
+                        <i class="bi bi-calendar-check me-2"></i>
+
+                        <span>Events</span>
+                    </a>
+                </li>
+                <li
+                    class="nav-item"
+                    v-if="user_role == 'admin' || user_role == 'tour operator'"
+                >
+                    <a
+                        class="nav-link collapsed"
                         :class="{ active: isActive('/blogs/posts') }"
                         href="/blogs/posts"
                     >
@@ -266,12 +285,12 @@
                         class="nav-link collapsed"
                         data-bs-target="#icons-nav-emails"
                         data-bs-toggle="collapse"
-                        :class="{ 'active': isActive('/welcome-email') }"
+                        :class="{ active: isActive('/welcome-email') }"
                         href="#"
                     >
-                    <i class="bi bi-envelope me-2"></i><span>{{ translate("Emails") }}</span>
+                        <i class="bi bi-envelope me-2"></i
+                        ><span>{{ translate("Emails") }}</span>
                         <i class="bi bi-chevron-down ms-auto me-2"></i>
-                        
                     </a>
 
                     <ul
@@ -282,22 +301,24 @@
                     >
                         <li class="nav-item">
                             <a class="nav-link" href="/welcome-email"
-                                ><i class="bi bi-envelope-arrow-up-fill me-2"></i><span>{{
+                                ><i
+                                    class="bi bi-envelope-arrow-up-fill me-2"
+                                ></i
+                                ><span>{{
                                     translate("Welcome email")
                                 }}</span></a
                             >
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/reset-password-email"
-                                ><i class="bi bi-envelope-arrow-up-fill me-2"></i><span>{{
+                                ><i
+                                    class="bi bi-envelope-arrow-up-fill me-2"
+                                ></i
+                                ><span>{{
                                     translate("Reset password email")
                                 }}</span></a
                             >
                         </li>
-                         
-                        
-                         
-                        
                     </ul>
                 </li>
                 <!-- <li class="nav-item" v-if="user_role == 'admin'">
@@ -311,8 +332,12 @@
                     </a>
                 </li> -->
                 <li class="nav-item" v-if="user_role == 'admin'">
-                    <a class="nav-link collapsed" href="/user-contacted-us" :class="{ 'active': isActive('/user-contacted-us') }"
-                        ><i class="bi bi-person me-2"></i><span>{{ translate("User contact") }}</span></a
+                    <a
+                        class="nav-link collapsed"
+                        href="/user-contacted-us"
+                        :class="{ active: isActive('/user-contacted-us') }"
+                        ><i class="bi bi-person me-2"></i
+                        ><span>{{ translate("User contact") }}</span></a
                     >
                 </li>
                 <li class="nav-item" v-if="user_role == 'admin'">
@@ -326,8 +351,12 @@
                     </a>
                 </li>
                 <li class="nav-item" v-if="user_role == 'admin'">
-                    <a class="nav-link collapsed" href="/our-promises" :class="{ 'active': isActive('/our-promises') }"
-                        ><i class="bi bi-question-circle me-2"></i><span>{{ translate("Why choose") }}</span></a
+                    <a
+                        class="nav-link collapsed"
+                        href="/our-promises"
+                        :class="{ active: isActive('/our-promises') }"
+                        ><i class="bi bi-question-circle me-2"></i
+                        ><span>{{ translate("Why choose") }}</span></a
                     >
                 </li>
             </ul>
@@ -346,7 +375,6 @@
 
 <script>
 export default {
-    
     name: "Master",
     created() {},
     data() {

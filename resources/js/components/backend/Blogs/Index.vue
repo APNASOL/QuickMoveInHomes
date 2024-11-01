@@ -243,6 +243,9 @@ export default {
                     toastr.error(error.response.data.message);
                 });
         },
+        setAltImg(event) {
+        event.target.src = "/images/default.jpg";
+    },
     },
 };
 </script>

@@ -244,6 +244,11 @@ import BuildersList from "@components/backend/Builders/Index.vue";
 app.component("builder-list-component", BuildersList);
 import BuilderForm from "@components/backend/Builders/Create.vue";
 app.component("builder-form-component", BuilderForm);
+// Event
+import EvntsList from "@components/backend/Events/Index.vue";
+app.component("event-list-component", EvntsList);
+import EventForm from "@components/backend/Events/Create.vue";
+app.component("event-form-component", EventForm);
 // Neighborhoods
 import NeighborhoodsList from "@components/backend/Neighborhood/Index.vue";
 app.component("neighborhoods-list-component", NeighborhoodsList);
