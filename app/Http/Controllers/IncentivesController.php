@@ -47,7 +47,7 @@ class IncentivesController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'required|date',
             'title' => 'required|string|max:254', 
-            'how_much' => 'required|numeric|max:99',
+            'interest_rate_first_year' => 'required|numeric|max:99',
             'descriptions' => 'required|string|max:350', 
         ]);
 
@@ -64,7 +64,7 @@ class IncentivesController extends Controller
         $incentive->end_date = Carbon::parse($request->end_date)->format('Y-m-d');
         $incentive->title = $request->title;
         $incentive->description = $request->descriptions;
-        $incentive->how_much = $request->how_much;
+        $incentive->interest_rate_first_year = $request->interest_rate_first_year;
        
         if ($request->status == true) {
             $incentive->status = 1;

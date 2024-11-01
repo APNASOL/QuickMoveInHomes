@@ -309,7 +309,7 @@
                                                                         >Discount:</strong
                                                                     >
                                                                     {{
-                                                                        incentive.how_much
+                                                                        incentive.interest_rate_first_year
                                                                     }}%
                                                                 </p>
                                                                 <p>

@@ -270,12 +270,5 @@ export default {
 .c-card-img-overlay-flash-sale {
     left: unset;
 }
-.c-accomodation-image {
-    border-radius: 16px 0px 0px 16px;
-}
-@media (max-width: 1200px) {
-    .c-accomodation-image {
-        border-radius: 16px 16px 0px 0px;
-    }
-}
+ 
 </style>

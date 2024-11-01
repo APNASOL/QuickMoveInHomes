@@ -1,6 +1,6 @@
 <template>
     <Master>
-        <Carousel /> 
+        <HeroSection /> 
         <QuickMoveHomes />
         <Testimonials />
          <OurPromises />
@@ -15,6 +15,7 @@
 <script>
 import Master from "@components/layout/Master.vue";
 import Carousel from "@components/Carousel.vue";
+import HeroSection from "@components/HeroSection.vue";
 import QuickMoveHomes from "@components/QuickMoveHomes.vue";
 import OurPromises from "@components/OurPromises.vue";
 
@@ -39,6 +40,7 @@ export default {
     
         Multiselect,
         Reviews,
+        HeroSection
     },
     props: {
         message: {

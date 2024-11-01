@@ -179,8 +179,8 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item dropdown">
-                        <!-- Dropdown trigger -->
+                    <!-- <li class="nav-item dropdown">
+                        
                         <a
                             class="nav-link"
                             href="/search/homes"
@@ -189,8 +189,8 @@
                         >
                             <i class="bi bi-search"></i>
                         </a>
-                        <!-- Dropdown menu -->
-                    </li>
+                         
+                    </li> -->
                 </ul>
                 <h1 class="mx-auto c-site-main-title">
                     <a href="/" class="c-link-style">
@@ -1362,7 +1362,7 @@ p {
         rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
 }
 .c-card-border-design {
-    border-radius: 25px !important;
+    border-radius: 0.25rem !important;
 }
 
 .c-site-main-title {

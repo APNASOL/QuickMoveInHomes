@@ -87,23 +87,23 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
-                            <label for="how_much">{{
+                            <label for="interest_rate_first_year">{{
                                 translate("How much")
                             }}</label>
                             <input type="number"
                                 class="form-control"
-                                id="how_much"
+                                id="interest_rate_first_year"
                                 :class="{
-                                    'invalid-bg': formErrors.how_much,
+                                    'invalid-bg': formErrors.interest_rate_first_year,
                                 }"
-                                v-model="form.how_much"
+                                v-model="form.interest_rate_first_year"
                             />
 
                             <div
                                 class="invalid-feedback animated fadeIn"
-                                v-if="formErrors.how_much"
+                                v-if="formErrors.interest_rate_first_year"
                             >
-                                {{ formErrors.how_much[0] }}
+                                {{ formErrors.interest_rate_first_year[0] }}
                             </div>
                         </div>
 
@@ -233,7 +233,7 @@ export default {
                 start_date: "",
                 end_date: "",
                 descriptions: "",
-                how_much: "",
+                interest_rate_first_year: "",
                 home_id: "",
                 status: true, // Default status to true (active)
             },
@@ -251,7 +251,7 @@ export default {
                     this.form.start_date = response.data.start_date;
                     this.form.end_date = response.data.end_date;
                     this.form.descriptions = response.data.description;
-                    this.form.how_much = response.data.how_much;
+                    this.form.interest_rate_first_year = response.data.interest_rate_first_year;
                     this.form.status = response.data.status;
                 })
                 .catch((error) => {

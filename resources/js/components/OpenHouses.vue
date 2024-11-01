@@ -1,8 +1,8 @@
 <template>
-    <div class="bg-theme">
-        <div class="mx-4 p-4">
+    <div class="bg-theme" style="height: 500px;">
+        <div class="mx-4">
             <div class="d-flex justify-content-between text-white">
-                <div>
+                <div class="mt-4">
                     <h2>Visit Our Open Houses ...</h2>
                 </div>
 

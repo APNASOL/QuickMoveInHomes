@@ -1,6 +1,6 @@
 <template>
     <div v-if="videos && videos.length > 0">
-        <div class="mx-4 pb-2 pt-2">
+        <div class="mx-4 pb-2 pt-2 mt-3">
             <div>
                 <h2>Testimonials</h2>
                 <p>

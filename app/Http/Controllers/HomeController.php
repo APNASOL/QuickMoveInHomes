@@ -155,7 +155,7 @@ class HomeController extends Controller
         // Process valid incentives and calculate price
         foreach ($incentives as $incentive) {
             if ($current_date->between($incentive->start_date, $incentive->end_date)) {
-                $total_incentives_percentage += $incentive->how_much;
+                $total_incentives_percentage += $incentive->interest_rate_first_year;
                 $valid_incentives[] = $incentive;
             }
         }

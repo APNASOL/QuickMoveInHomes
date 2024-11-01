@@ -98,7 +98,7 @@ class IndexController extends Controller
         $properties_with_incentives = [];
 
         foreach ($properties as $property) {
-            // Initialize variable to store total 'how_much' (percentage) value
+            // Initialize variable to store total 'interest_rate_first_year' (percentage) value
             $total_incentives_percentage = 0;
             $current_date = now();
 
@@ -113,8 +113,8 @@ class IndexController extends Controller
             foreach ($incentives as $incentive) {
                 // Check if current date is within the start_date and end_date range
                 if ($current_date->between($incentive->start_date, $incentive->end_date)) {
-                    // Add the 'how_much' percentage to the total incentives percentage
-                    $total_incentives_percentage += $incentive->how_much;
+                    // Add the 'interest_rate_first_year' percentage to the total incentives percentage
+                    $total_incentives_percentage += $incentive->interest_rate_first_year;
 
                     // Add the incentive record to the valid incentives array
                     $valid_incentives[] = $incentive;
@@ -170,7 +170,7 @@ class IndexController extends Controller
 
         foreach ($properties as $property) {
             
-            // Initialize variable to store total 'how_much' (percentage) value
+            // Initialize variable to store total 'interest_rate_first_year' (percentage) value
             $total_incentives_percentage = 0;
             $current_date = now();
 
@@ -185,8 +185,8 @@ class IndexController extends Controller
             foreach ($incentives as $incentive) {
                 // Check if current date is within the start_date and end_date range
                 if ($current_date->between($incentive->start_date, $incentive->end_date)) {
-                    // Add the 'how_much' percentage to the total incentives percentage
-                    $total_incentives_percentage += $incentive->how_much;
+                    // Add the 'interest_rate_first_year' percentage to the total incentives percentage
+                    $total_incentives_percentage += $incentive->interest_rate_first_year;
 
                     // Add the incentive record to the valid incentives array
                     $valid_incentives[] = $incentive;

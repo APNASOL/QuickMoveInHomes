@@ -1,31 +1,15 @@
 <template>
-    <div class="c-bg-color" v-if="homes && homes.length">
+    <div class="c-bg-color" style="height: 500px;" v-if="homes && homes.length">
         <div class="mx-4">
             <div class="d-flex justify-content-between">
                 <div>
-                    <h2>
+                    <h2 class="mt-4">
                         {{ translate("Discover Your Dream Home") }}
                         |
                         {{ translate("Quick Move-Ins") }}
                     </h2>
                 </div>
-
-                <!-- <div>
-                    <a
-                        href="/all/homes"
-                        class="btn btn-outline-light me-1"
-                        title="View all properties"
-                    >
-                        View All
-                    </a>
-                    <a
-                        href="/search/homes"
-                        class="btn btn-outline-light"
-                        title="Search"
-                    >
-                        <i class="bi bi-search"></i>
-                    </a>
-                </div> -->
+ 
             </div>
 
             <Carousel 
@@ -344,7 +328,7 @@ export default defineComponent({
     color: black !important; /* Button text color */
     font-weight: bold !important; /* Bold text */
     border: 1px solid black !important;
-    border-radius: 20px !important;
+    border-radius: 0.25rem !important;
 }
 .btn-incentives:hover {
     background-color: rgb(
@@ -355,7 +339,7 @@ export default defineComponent({
     color: black !important; /* Button text color */
     font-weight: bold !important; /* Bold text */
     border: 1px solid black !important;
-    border-radius: 20px !important;
+    border-radius: 0.25rem !important;
     margin-top: 4px !important;
 }
 .modal-title {

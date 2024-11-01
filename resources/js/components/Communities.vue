@@ -1,6 +1,6 @@
 <template>
-    <div v-if="Communities && Communities.length > 0">
-        <div class="mx-4 pb-5 pt-5">
+    <div v-if="Communities && Communities.length > 0" >
+        <div class="mx-4 m-5">
             <div class="d-flex justify-content-between">
                 <div>
                     <h2>Find Your Place in Our Communities!</h2>
@@ -27,7 +27,7 @@
                         :href="'/detailed/community/' + community.id"
                     >
                         <div
-                            class="card border-0 c-border-design c-overflow-hidden"
+                            class="card border-0 c-overflow-hidden"
                         >
                             <img
                                 :src="community.main_image ?? 'empty.png'"

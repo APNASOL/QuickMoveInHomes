@@ -116,7 +116,7 @@
                                     <td>{{ incentive.title }}</td> 
                                     <td>{{ incentive.start_date }}</td>
                                     <td>{{ incentive.end_date }}</td>
-                                    <td>{{ incentive.how_much }} % </td>
+                                    <td>{{ incentive.interest_rate_first_year }} % </td>
                                     <td>{{ incentive.description }}</td>
 
                                     <td>

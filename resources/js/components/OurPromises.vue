@@ -62,7 +62,7 @@ export default {
     overflow: hidden !important;
 }
 .c-destination-cards {
-    border-radius: 25px;
+    border-radius: 0.25rem;
     filter: brightness(60%);
     transition: transform 0.5s ease;
 }
@@ -80,7 +80,7 @@ export default {
     right: 0;
 }
 .c-border-promis-design {
-    border-radius: 25px;
+    border-radius:  0.25rem;
 }
 .c-h-fix{
     min-height: 50px;

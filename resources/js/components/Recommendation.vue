@@ -547,31 +547,13 @@ section {
 }
 </style>
 <style>
-.c-accomodation-image {
-    border-radius: 16px 0px 0px 16px;
-}
+ 
 .c-content-radius {
     border: 1px solid grey;
     border-radius: 16px;
 }
-.c-accomodation-right-side {
-    border: 1px solid grey;
-    border-left: 0px;
-    border-radius: 0px 16px 16px 0px;
-}
-@media (max-width: 1200px) {
-    .c-accomodation-image {
-        border-radius: 16px 16px 0px 0px;
-    }
-    .fc-toolbar-title {
-        font-size: 18px !important;
-    }
-
-    .c-accomodation-right-side {
-        border-radius: 0px 0px 16px 16px;
-        border-top: 0px;
-    }
-}
+ 
+ 
 .main-section {
     background-image: url("https://www.exoticca.com/_next/image?url=https%3A%2F%2Fassets.exoticca.com%2Fmedia%2Fimg%2Fpromo%2Fcashback%2FUK-ES-CA-US%2Fbanne_voucher-500_country_page_desktop_1440x400px.jpg&w=1920&q=75");
     background-size: cover;
