@@ -146,8 +146,8 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item dropdown">
-                        <!-- Dropdown trigger -->
+                    <!-- <li class="nav-item dropdown">
+                       
                         <a
                             class="nav-link dropdown-toggle"
                             href="#"
@@ -159,7 +159,7 @@
                             Incentives
                         </a>
 
-                        <!-- Dropdown menu -->
+                        
                         <ul
                             class="dropdown-menu"
                             aria-labelledby="navbarDropdownOpenHouses"
@@ -176,18 +176,9 @@
                                 </a>
                             </li>
                         </ul>
-                    </li>
+                    </li> -->
 
-                    <li class="nav-item dropdown"> 
-                        <a
-                            class="nav-link"
-                            href="/all-events"
-                            id="navbarDropdownDeals"
-                            role="button"
-                        >
-                            Events
-                        </a> 
-                    </li>
+                   
                     <li class="nav-item dropdown"> 
                         <a
                             class="nav-link"
@@ -198,6 +189,7 @@
                             Incentives
                         </a> 
                     </li>
+                    
                     <!-- <li class="nav-item dropdown">
                         
                         <a
@@ -219,6 +211,16 @@
                 </h1>
                 <!-- Right side dropdowns -->
                 <ul class="navbar-nav mb-2 mb-lg-0">
+                    <li class="nav-item dropdown"> 
+                        <a
+                            class="nav-link"
+                            href="/all-events"
+                            id="navbarDropdownDeals"
+                            role="button"
+                        >
+                            Events
+                        </a> 
+                    </li>
                     <li class="nav-item dropdown">
                         <!-- Dropdown trigger -->
                         <a

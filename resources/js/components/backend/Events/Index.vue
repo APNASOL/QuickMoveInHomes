@@ -44,7 +44,7 @@
                                 :aria-controls="'collapse' + event.id"
                             >
                                 <span class="me-3">{{ index + 1 }}</span>
-                                {{ event.title }}
+                                {{ event.title }} - {{ event.date }}
                             </button>
                         </h2>
                         <div

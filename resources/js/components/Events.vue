@@ -26,11 +26,11 @@
                         <div
                             v-for="event in events"
                             :key="event.id"
-                            class="col-md-3 mb-2 d-flex" 
+                            class="col-md-3 mb-3 d-flex" 
                         >
                     
                             <div class="card c-border-design image-cover">
-                                <a href="http://www.google.com" target="_blank">
+                                <a :href="'http://'+event.registeration_link" target="_blank">
                                 <img
                                     :src="event.image"
                                     class="card-img-top c-card-img-border"
