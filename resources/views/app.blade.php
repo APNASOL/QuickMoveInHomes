@@ -388,6 +388,8 @@
         <front-incentive-details-component :incentive_id="'{{ $id }}'" />
         @elseif(Route::currentRouteName() === 'all-incentives')
         <front-all-incentives-component />
+        @elseif(Route::currentRouteName() === 'all-events')
+        <front-all-events-component />
         @elseif(Route::currentRouteName() === 'detailed.community')
         <front-community-details-component :community_id="'{{ $community_id }}'" />
 

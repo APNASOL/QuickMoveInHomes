@@ -56,13 +56,10 @@ class EventController extends Controller
 
         $request->validate([
             'title' => 'required|string|max:250',
-            'date' => 'required',
-
+            'date' => 'required', 
             'registeration_link' => 'required',
-            'image' => 'nullable',
-
-            'description' => ['required', function ($attribute, $value, $fail) {
-
+            'image' => 'nullable', 
+            'description' => ['required', function ($attribute, $value, $fail) { 
                 if (strip_tags($value) === '') {
                     $fail("Description cannot be empty.");
                 }

@@ -137,6 +137,9 @@ app.component("front-incentive-details-component", incenticeFrontDetails);
 import allIncentives from "@components/IncentiveHomes.vue";
 app.component("front-all-incentives-component", allIncentives);
 
+import allEvents from "@components/Events.vue";
+app.component("front-all-events-component", allEvents);
+
 import detatiledCommunity from "@components/CommunityDetails.vue";
 app.component("front-community-details-component", detatiledCommunity);
 

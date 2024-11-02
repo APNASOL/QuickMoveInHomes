@@ -63,8 +63,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <!-- Dropdown menus -->
-                    <li class="nav-item dropdown">
-                        <!-- Dropdown trigger -->
+                    <li class="nav-item dropdown"> 
                         <a
                             class="nav-link"
                             href="/"
@@ -72,8 +71,7 @@
                             role="button"
                         >
                             Home
-                        </a>
-                        <!-- Dropdown menu -->
+                        </a> 
                     </li>
 
                     <li class="nav-item dropdown">
@@ -178,6 +176,27 @@
                                 </a>
                             </li>
                         </ul>
+                    </li>
+
+                    <li class="nav-item dropdown"> 
+                        <a
+                            class="nav-link"
+                            href="/all-events"
+                            id="navbarDropdownDeals"
+                            role="button"
+                        >
+                            Events
+                        </a> 
+                    </li>
+                    <li class="nav-item dropdown"> 
+                        <a
+                            class="nav-link"
+                            href="/all-incentives"
+                            id="navbarDropdownDeals"
+                            role="button"
+                        >
+                            Incentives
+                        </a> 
                     </li>
                     <!-- <li class="nav-item dropdown">
                         

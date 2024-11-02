@@ -20,7 +20,7 @@
                         <input
                             type="text"
                             class="form-control"
-                            placeholder="Enter an address, neighborhood, city, or ZIP code"
+                            placeholder="Enter an address, city, or ZIP code"
                             v-model="searching_location"
                         />
                         <a

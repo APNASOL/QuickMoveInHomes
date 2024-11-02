@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Community;
+use App\Models\Event;
 use App\Models\Incentive;
 use App\Models\Property;
 use App\Models\PropertyIncentive;
 use App\Models\QuickMoveHome;
 use App\Models\Upload;
+use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 
@@ -80,6 +82,23 @@ class IndexController extends Controller
         return $communities;
     }
 
+    public function all_events()
+    {
+        $currentDate = Carbon::now();
+        $events = Event::where('date', '>', $currentDate)->get();
+        foreach($events as $event)
+        {
+            if ($event->image) {
+                $uploaded_image = Upload::where('id', $event->image)->first();
+                if ($uploaded_image) {
+                    $event->image = get_storage_url($uploaded_image->file_name);
+                }
+            } else {
+                $event->image = get_storage_url('');
+            }
+        }
+        return  $events;
+    }
     public function incentives_list()
     {
 
@@ -158,7 +177,7 @@ class IndexController extends Controller
     public function selected_incentives_properties($id)
     {
 
-        $incentive = Incentive::where('id',$id)->first();
+        $incentive = Incentive::where('id', $id)->first();
         $property_ids = PropertyIncentive::where('incentive_id', $id)
             ->pluck('property_id');
 
@@ -169,7 +188,7 @@ class IndexController extends Controller
         $properties_with_incentives = [];
 
         foreach ($properties as $property) {
-            
+
             // Initialize variable to store total 'interest_rate_first_year' (percentage) value
             $total_incentives_percentage = 0;
             $current_date = now();

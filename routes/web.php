@@ -187,6 +187,7 @@ Route::get('/all/homes', [HomeController::class, 'visit_all_homes'])->name('all.
 Route::get('/search/homes', [HomeController::class, 'search_homes'])->name('search.homes');
 Route::get('/home-details/{id}', [HomeController::class, 'home_details'])->name('home-details');
 Route::get('/incentive-details/{id}', [IndexController::class, 'incentive_details'])->name('incentive-details');
+Route::get('/all-events', [HomeController::class, 'all_events'])->name('all-events');
 Route::get('/all-incentives', [HomeController::class, 'all_incentvives'])->name('all-incentives');
 Route::get('/detailed/community/{id}', [HomeController::class, 'detailed_community'])->name('detailed.community');
 Route::get('/about-us', [HomeController::class, 'about_us'])->name('about-us');

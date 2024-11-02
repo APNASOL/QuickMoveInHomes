@@ -60,6 +60,7 @@ Route::get('/incentives-homes', [IndexController::class, 'incentives_properties'
 Route::get('/selected-incentives-homes/{id}', [IndexController::class, 'selected_incentives_properties'])->name('selected-incentives-homes');
 Route::get('/overall-blogs', [BlogPostsController::class, 'overall_blogs'])->name('overall-blogs');
 Route::get('/more-tours-to-discover/{tour_id}', [IndexController::class, 'more_tours_to_discover'])->name('more-tours-to-discover');
+Route::get('/all-events', [IndexController::class, 'all_events'])->name('all-events');
 
 Route::get('/communities', [IndexController::class, 'communities_for_navbar'])->name('communities');
 Route::get('/open-houses', [IndexController::class, 'openhouses_for_navbar'])->name('open-houses');

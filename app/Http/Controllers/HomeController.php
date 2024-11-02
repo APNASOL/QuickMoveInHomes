@@ -697,6 +697,10 @@ class HomeController extends Controller
     {
         return view('app');
     }
+    public function all_events()
+    {
+        return view('app');
+    }
     public function about_us()
     {
         return view('app');
