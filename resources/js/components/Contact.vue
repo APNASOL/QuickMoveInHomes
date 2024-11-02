@@ -326,7 +326,7 @@
                 </div>
                 <div class="col-md-6">
                     <image-zooming-component
-                        :file="'/images/incentive-main.jpg'"
+                        :file="'/images/contact-main.jpg'"
                     />
                 </div>
             </div>
@@ -467,4 +467,5 @@ body {
     font-size: 14px;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
+
 </style>

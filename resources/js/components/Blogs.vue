@@ -9,13 +9,13 @@
                     <div>
                         <h2 class="title uppercase">Blogs</h2>
                         <span class="uppercase">
-                            Inventory Closeout Specials On Quick Delivery Homes
+                            Explore our insightful blogs featuring the latest
+                            trends, tips, and exclusive deals in real estate.
                         </span>
                     </div>
                 </div>
             </div>
         </div>
-        
 
         <div class="c-tour-details container">
             <div v-if="blog_posts && blog_posts.length">
@@ -31,7 +31,6 @@
                                 :href="'/blog-details/' + post.id"
                             >
                                 <div class="card c-border-design">
-                                    
                                     <img
                                         :src="post.image"
                                         class="card-img-top c-card-img-border"
@@ -98,71 +97,7 @@ export default {
     },
 };
 </script>
-
 <style scoped>
-.carousel__slide {
-    padding: 5px;
-}
-
-.carousel__viewport {
-    perspective: 2000px;
-}
-
-.carousel__track {
-    transform-style: preserve-3d;
-}
-
-.carousel__slide--sliding {
-    transition: 0.5s;
-}
-
-.carousel__slide {
-    opacity: 0.9;
-    transform: rotateY(-20deg) scale(0.9);
-}
-
-.carousel__slide--active ~ .carousel__slide {
-    transform: rotateY(20deg) scale(0.9);
-}
-
-.carousel__slide--prev {
-    opacity: 1;
-    transform: rotateY(-10deg) scale(0.9) !important;
-}
-
-.carousel__slide--next {
-    opacity: 1;
-    transform: rotateY(10deg) scale(0.9) !important;
-}
-
-.carousel__slide--active {
-    opacity: 1;
-    transform: rotateY(0) scale(1);
-}
-.c-card-img-overlay-name {
-    top: unset;
-    bottom: 120px;
-    text-align: left;
-    color: white;
-}
-.c-card-img-overlay-flash-sale {
-    left: unset;
-}
- 
-.beat {
-    animation: beating 1s infinite;
-}
-
-@keyframes beating {
-    0%,
-    100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.1);
-    }
-}
-
 .top-section {
     position: relative;
     height: 300px; /* Adjust height as needed */
@@ -194,5 +129,37 @@ export default {
 .title {
     font-size: 24px;
     margin: 0;
+}
+
+h2,
+h3,
+h4,
+h5 {
+    font-family: "Raleway", sans-serif;
+    color: #e58b15;
+    line-height: 1.55rem;
+    font-weight: bold;
+}
+
+.card {
+    height: 280px; /* Fixed height for the card */
+    display: flex;
+    flex-direction: column; /* Stack card content vertically */
+    justify-content: space-between; /* Space out content evenly */
+
+}
+
+.card-body {
+    flex: 1; /* Allow the card body to take remaining space */
+    display: flex;
+    flex-direction: column; /* Stack content vertically */
+    justify-content: flex-start; /* Align items to the start */
+    
+}
+
+.card-img-top {
+    height: 150px; /* Fixed height for the image */
+    object-fit: cover; /* Ensure image covers the area */
+    object-position: center; /* Center the image */
 }
 </style>

@@ -7,8 +7,12 @@
             <div class="info-overlay">
                 <div class="d-flex justify-content-center container">
                     <div>
-                        <h2 class="title uppercase" v-if="incentive_title">{{ incentive_title }} Incentive</h2>
-                        <h2 class="title uppercase" v-else>Current Incentives</h2>
+                        <h2 class="title uppercase" v-if="incentive_title">
+                            {{ incentive_title }} Incentive
+                        </h2>
+                        <h2 class="title uppercase" v-else>
+                            Current Incentives
+                        </h2>
                         <span class="uppercase">
                             Inventory Closeout Specials On Quick Delivery Homes
                         </span>
@@ -16,75 +20,78 @@
                 </div>
             </div>
         </div>
-         
-        <!-- <div
-            class="container-fluid interactive-banner mt-3"
-            v-if="incentives_homes && incentives_homes.length"
-        >
-        {{  }}
-            <h1>Current Incentives</h1>
-            <p>Inventory Closeout Specials On Quick Delivery Homes</p>
-        </div> -->
 
-         
         <div class="c-tour-details container">
-            <div v-if="incentives_homes && incentives_homes.length">
+            <div v-if="incentives && incentives.length">
                 <div class="mx-4 pt-3">
-                    <div class="row">
+                    <div class="row g-3 mb-3">
                         <div
-                            v-for="home in incentives_homes"
-                            :key="home.id"
-                            class="col-md-3 mb-2"
+                            class="col-md-4"
+                            v-for="incentive in incentives"
+                            :key="incentive.id"
                         >
-                            <a
-                                class="text-decoration-none"
-                                :href="'/home-details/' + home.property_id"
-                            >
-                                <div class="card c-border-design">
+                            <div class="card c-border-design image-cover">
+                                <a
+                                    class="text-decoration-none"
+                                    :href="
+                                        '/detailed-incentive/' + incentive.id
+                                    "
+                                >
                                     <img
-                                        :src="home.main_image"
+                                        :src="
+                                            incentive.incentive_banner ??
+                                            'error.png'
+                                        "
                                         class="card-img-top c-card-img-border"
-                                        :alt="home.title"
+                                        height="150"
+                                        :alt="incentive.title"
                                         @error="setAltImg"
                                     />
-
-                                    <div
-                                        v-if="home.is_open_house"
-                                        class="card-img-overlay c-card-img-overlay-flash-sale"
+                                </a>
+                                <div class="card-body text-start">
+                                    <a
+                                        class="text-decoration-none"
+                                        :href="
+                                            '/detailed-incentive/' +
+                                            incentive.id
+                                        "
                                     >
+                                        <h4>{{ incentive.title }}</h4>
+                                    </a>
+                                    <div class="content ql-editor">
                                         <span
-                                            class="badge rounded-pill bg-white text-dark"
-                                            >Open House</span
+                                            v-html="
+                                                getTruncatedDescription(
+                                                    incentive
+                                                )
+                                            "
+                                        ></span>
+                                        <span
+                                            v-if="
+                                                incentive.description.length >
+                                                200
+                                            "
+                                            class="read-more"
+                                            @click="
+                                                toggleDescription(incentive.id)
+                                            "
                                         >
-                                    </div>
-                                    
-
-                                    <div class="card-body text-start">
-                                        <p>
-                                            AREA (SQFT)
-                                            <b>{{ home.square_feet }} </b><br />
-                                            Bedrooms
-                                            <b>
-                                                {{ home.bedrooms }}
-                                            </b>
-                                            <br />
-                                            Property type
-                                            <b>{{ home.property_type }}</b>
-                                            <br />
-
-                                            Price
-                                            <b>${{ home.price }}</b>
-                                        </p>
+                                            {{
+                                                showFullDescription[
+                                                    incentive.id
+                                                ]
+                                                    ? "Show Less"
+                                                    : "Read More"
+                                            }}
+                                        </span>
                                     </div>
                                 </div>
-                            </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Seraching Filter -->
     </Master>
 </template>
 
@@ -98,122 +105,60 @@ export default {
         Master,
         Multiselect,
     },
-    props:['incentive_id'],
 
     created() {
-        if(this.incentive_id)
-    {
-        this.selectedIncentivesHomes();
-    }else
-    {
-        this.incentivesHomes();
-    }
+        this.incentivesFetch();
     },
 
     data() {
         return {
-            incentives_homes: [],
-            backgroundImage: "",
-            incentive_title: "",
+            incentives: [],
+            showFullDescription: {}, // Initialize the object to track description visibility
         };
     },
 
     methods: {
-        async incentivesHomes() {
-            await axios
-                .get("/api/incentives-homes")
+        incentivesFetch() {
+            axios
+                .get("/api/fetch-incentives")
                 .then((response) => {
-                    this.incentives_homes = response.data;
-                    
+                    this.incentives = response.data;
+
+                    // Initialize showFullDescription for each incentive
+                    this.incentives.forEach((incentive) => {
+                        this.$set(
+                            this.showFullDescription,
+                            incentive.id,
+                            false
+                        );
+                    });
                 })
                 .catch((error) => {
                     toastr.error(error.response.data.message);
                 });
         },
-        async selectedIncentivesHomes() {
-            await axios
-                .get("/api/selected-incentives-homes/"+this.incentive_id)
-                .then((response) => {
-                    this.incentives_homes = response.data.properties_with_incentives;
-                    this.incentive_title = response.data.incentive_title;
-                   
-                })
-                .catch((error) => {
-                    toastr.error(error.response.data.message);
-                });
-        },
+
         setAltImg(event) {
             event.target.src = "/images/default.jpg";
+        },
+
+        toggleDescription(eventId) {
+            // Toggle full description visibility
+            this.showFullDescription[eventId] =
+                !this.showFullDescription[eventId];
+        },
+
+        getTruncatedDescription(incentive) {
+            // Display full description if toggled, otherwise truncate
+            return this.showFullDescription[incentive.id]
+                ? incentive.description
+                : incentive.description.slice(0, 200) + "...";
         },
     },
 };
 </script>
 
 <style scoped>
-.carousel__slide {
-    padding: 5px;
-}
-
-.carousel__viewport {
-    perspective: 2000px;
-}
-
-.carousel__track {
-    transform-style: preserve-3d;
-}
-
-.carousel__slide--sliding {
-    transition: 0.5s;
-}
-
-.carousel__slide {
-    opacity: 0.9;
-    transform: rotateY(-20deg) scale(0.9);
-}
-
-.carousel__slide--active ~ .carousel__slide {
-    transform: rotateY(20deg) scale(0.9);
-}
-
-.carousel__slide--prev {
-    opacity: 1;
-    transform: rotateY(-10deg) scale(0.9) !important;
-}
-
-.carousel__slide--next {
-    opacity: 1;
-    transform: rotateY(10deg) scale(0.9) !important;
-}
-
-.carousel__slide--active {
-    opacity: 1;
-    transform: rotateY(0) scale(1);
-}
-.c-card-img-overlay-name {
-    top: unset;
-    bottom: 120px;
-    text-align: left;
-    color: white;
-}
-.c-card-img-overlay-flash-sale {
-    left: unset;
-}
- 
-
-.beat {
-    animation: beating 1s infinite;
-}
-
-@keyframes beating {
-    0%,
-    100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.1);
-    }
-}
-
 .top-section {
     position: relative;
     height: 300px; /* Adjust height as needed */
@@ -245,5 +190,59 @@ export default {
 .title {
     font-size: 24px;
     margin: 0;
+}
+.ql-editor {
+    padding: 0px !important;
+}
+.image-cover {
+    position: relative;
+    overflow: hidden;
+    display: flex; /* Use Flexbox for card layout */
+    flex-direction: column; /* Stack items vertically */
+    height: 100%; /* Ensure the card takes full height */
+    transition: height 0.3s; /* Smooth transition for height change */
+}
+
+.card {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    height: 100%; /* Make card take full height */
+}
+.card-body {
+    display: flex;
+    flex-direction: column; /* Stack content vertically */
+    justify-content: space-between; /* Space out content */
+    flex: 1; /* Make card body take the remaining space */
+}
+
+.image-cover img {
+    width: 100%;
+    height: 150px; /* Fixed height for the image */
+    object-fit: cover;
+    object-position: center;
+    transition: height 0.3s; /* Ensure image transition is smooth */
+}
+
+.card-body h4 {
+    margin: 0; /* Remove default margin for consistency */
+}
+
+.card-body .content {
+    flex-grow: 1; /* Allow content area to grow and fill the space */
+}
+
+.read-more {
+    color: #002855;
+    cursor: pointer;
+    margin-left: 5px;
+}
+h2,
+h3,
+h4,
+h5 {
+    font-family: "Raleway", sans-serif;
+    color: #e58b15;
+    line-height: 1.55rem;
+    font-weight: bold;
 }
 </style>

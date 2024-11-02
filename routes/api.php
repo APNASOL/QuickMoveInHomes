@@ -56,8 +56,10 @@ Route::post('/forgot-password', [UserController::class, 'forgot_password'])->nam
 
 Route::get('/front-homes/{type}', [IndexController::class, 'front_homes'])->name('front-homes');
 Route::get('/incentives-list', [IndexController::class, 'incentives_list'])->name('incentives-list');
+Route::get('/fetch-incentives', [IndexController::class, 'fetch_incentives'])->name('fetch-incentives');
 Route::get('/incentives-homes', [IndexController::class, 'incentives_properties'])->name('incentives-homes');
-Route::get('/selected-incentives-homes/{id}', [IndexController::class, 'selected_incentives_properties'])->name('selected-incentives-homes');
+// Route::get('/incentive-details-fetch', [IndexController::class, 'incentive-details-fetch'])->name('incentive-details-fetch');
+Route::get('/incentive-details-fetch/{id}', [IndexController::class, 'selected_incentives_properties'])->name('incentive-details-fetch');
 Route::get('/overall-blogs', [BlogPostsController::class, 'overall_blogs'])->name('overall-blogs');
 Route::get('/more-tours-to-discover/{tour_id}', [IndexController::class, 'more_tours_to_discover'])->name('more-tours-to-discover');
 Route::get('/all-events', [IndexController::class, 'all_events'])->name('all-events');

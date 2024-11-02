@@ -72,7 +72,7 @@ class IncentivesController extends Controller
         $request->validate([ 
             'title' => 'required|string|max:254', 
             'builder_id' => 'required', 
-            'interest_rate_first_year' => 'required|numeric',
+            'interest_rate_first_year' => 'required',
             'start_date' => 'required|date',
             'end_date' => 'required|date',
          

@@ -165,9 +165,16 @@ export default {
 }
 
 .read-more {
-    color: #007bff;
+    color: #002855;
     cursor: pointer;
     margin-left: 5px;
+}
+h2, h3, h4, h5 {
+    font-family: 'Raleway', sans-serif;
+    color: #E58B15;
+    line-height: 1.55rem; 
+    font-weight: bold;
+    
 }
 
 .card {
@@ -194,5 +201,8 @@ export default {
     height: 200px; 
     object-fit: cover;  
     object-position: center;  
+}
+.ql-editor {
+    padding: 0px !important;
 }
 </style>

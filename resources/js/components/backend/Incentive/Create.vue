@@ -91,7 +91,7 @@
                                 translate("Interest reate first year")
                             }}</label>
                             <input
-                                type="number"
+                                type="decimal"
                                 class="form-control"
                                 id="interest_rate_first_year"
                                 :class="{

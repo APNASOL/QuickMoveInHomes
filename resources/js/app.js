@@ -194,6 +194,8 @@ import blog_component from "@components/Blogs.vue";
 app.component("blogs-component", blog_component);
 import blog_detail from "@components/BlogDetails.vue";
 app.component("blog-details-component", blog_detail);
+import detailedIncentive from "@components/IncentiveDetails.vue";
+app.component("detailed-incentive-component", detailedIncentive);
 
 // Offices
 import office_index from "@components/backend/Offices/Index.vue";

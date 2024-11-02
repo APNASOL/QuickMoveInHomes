@@ -9,7 +9,8 @@ use App\Models\Property;
 use App\Models\PropertyIncentive;
 use App\Models\QuickMoveHome;
 use App\Models\Upload;
-use Carbon\Carbon;
+use Carbon\Carbon;  
+use App\Models\Builder; 
 use DB;
 use Illuminate\Http\Request;
 
@@ -174,10 +175,56 @@ class IndexController extends Controller
         // Return the properties with their details and valid incentives
         return $properties_with_incentives; // Correct return value
     }
+
+    public function fetch_incentives()
+    {
+        
+        $incentives = Incentive::orderBy('created_at', 'desc')->where('status',1)->get();
+         
+        foreach ($incentives as $incentive) {
+             
+            // Fetch and set builder name
+            $builder = Builder::where('id', $incentive->builder_id)->first();
+            if ($builder) {
+                $incentive->builder_name = $builder->name;
+            }
+    
+            // Format incentive_banner image URL
+            if ($incentive && $incentive->incentive_banner) {
+                $uploaded_image = Upload::where('id', $incentive->incentive_banner)->first();
+                if ($uploaded_image) {
+                    $incentive->incentive_banner = get_storage_url($uploaded_image->file_name);
+                }
+            }
+    
+            // Format created_at and updated_at dates
+            $incentive->created_at = Carbon::parse($incentive->created_at)->format('d-m-Y');
+            $incentive->updated_at = Carbon::parse($incentive->updated_at)->format('d-m-Y');
+        }
+    
+        return $incentives;
+     
+    }
+
+    public function detailed_incentive($id)
+    {
+        return view('app', compact('id'));
+    }
+ 
     public function selected_incentives_properties($id)
     {
 
         $incentive = Incentive::where('id', $id)->first();
+        $incentive_banner = '';
+        // Format incentive_banner image URL
+        if ($incentive && $incentive->incentive_banner) {
+            $uploaded_image = Upload::where('id', $incentive->incentive_banner)->first();
+            if ($uploaded_image) {
+                $incentive_banner = get_storage_url($uploaded_image->file_name);
+            } 
+        }
+    
+        
         $property_ids = PropertyIncentive::where('incentive_id', $id)
             ->pluck('property_id');
 
@@ -243,8 +290,9 @@ class IndexController extends Controller
             }
         }
 
+        
         // Return the properties with their details and valid incentives
-        return ['properties_with_incentives' => $properties_with_incentives, 'incentive_title' => $incentive->title]; // Correct return value
+        return ['properties_with_incentives' => $properties_with_incentives, 'incentive' => $incentive,'incentive_banner'=>$incentive_banner]; // Correct return value
     }
 
     public function communities_for_navbar()

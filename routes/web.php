@@ -193,6 +193,7 @@ Route::get('/detailed/community/{id}', [HomeController::class, 'detailed_communi
 Route::get('/about-us', [HomeController::class, 'about_us'])->name('about-us');
 Route::get('/homes-agents/{property_id}', [HomeController::class, 'agents'])->name('homes-agents');
 Route::get('/blog-details/{id}', [BlogPostsController::class, 'blog_details'])->name('blog-details');
+Route::get('/detailed-incentive/{id}', [IndexController::class, 'detailed_incentive'])->name('detailed-incentive');
 Route::get('/homes-list/{location?}', [HomeController::class, 'homes_search_by_location'])->name('homes-list');
  
 Route::get('/map', function () {

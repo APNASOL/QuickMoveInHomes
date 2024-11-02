@@ -346,15 +346,7 @@ body {
     color: white !important;
 }
 
-.branches {
-    font-family: Poppins, sans-serif;
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 24px;
-    color: rgb(255, 255, 255);
-    font-size: 14px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-}
+ 
 
 .hero-section {
     background-size: cover;
@@ -416,13 +408,12 @@ h2 {
     color: white !important;
 }
 
-.branches {
-    font-family: Poppins, sans-serif;
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 24px;
-    color: rgb(255, 255, 255);
-    font-size: 14px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+h2, h3, h4, h5 {
+    font-family: 'Raleway', sans-serif;
+    color: #E58B15;
+    line-height: 1.55rem; 
+    font-weight: bold;
+    
 }
+ 
 </style>
