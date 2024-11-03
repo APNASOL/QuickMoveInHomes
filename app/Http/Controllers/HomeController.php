@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Agent;
 use App\Models\Amenity;
+use App\Models\Builder;
+use App\Models\BuildersCommunity;
 use App\Models\Community;
 use App\Models\CommunityAmenity;
 use App\Models\CommunityLasVegasRegion;
@@ -12,8 +14,6 @@ use App\Models\Contact;
 use App\Models\CustomerAgentConnection;
 use App\Models\HOA;
 use App\Models\Incentive;
-use App\Models\Builder;
-use App\Models\BuildersCommunity;
 use App\Models\LasVegasRegion;
 use App\Models\Neighborhood;
 use App\Models\OpenHouse;
@@ -88,7 +88,7 @@ class HomeController extends Controller
         // Initialize variables
         $property_main_image = null;
         $openHouseData = [];
-        $valid_incentives = [];
+         
         $new_price_after_incentive = null;
         $total_incentives_percentage = 0;
         $current_date = now();
@@ -146,25 +146,38 @@ class HomeController extends Controller
             if ($community_upload) {
                 $community->main_image = get_storage_url($community_upload->file_name);
             }
+
+            
+            $community_builder = BuildersCommunity::where('community_id', $community->id)->first();
+            if($community_builder)
+            {
+                $builder = Builder::where('id', $community_builder->builder_id)->first();
+                if($builder)
+                {
+                   $incentive = Incentive::where('builder_id',$builder->id)->first();
+                }
+            }
+            
+
         }
 
         // Fetch related incentives for the property
-        $incentives_ids = PropertyIncentive::where('property_id', $property->property_id)->pluck('incentive_id');
-        $incentives = Incentive::whereIn('id', $incentives_ids)->get();
+        //$incentives_ids = PropertyIncentive::where('property_id', $property->property_id)->pluck('incentive_id');
+       // $incentives = Incentive::whereIn('id', $incentives_ids)->get();
 
         // Process valid incentives and calculate price
-        foreach ($incentives as $incentive) {
-            if ($current_date->between($incentive->start_date, $incentive->end_date)) {
-                $total_incentives_percentage += $incentive->interest_rate_first_year;
-                $valid_incentives[] = $incentive;
-            }
-        }
+        // foreach ($incentives as $incentive) {
+         //    if ($current_date->between($incentive->start_date, $incentive->end_date)) {
+         //        $total_incentives_percentage += $incentive->interest_rate_first_year;
+         //        $valid_incentives[] = $incentive;
+         //    }
+       //  }
 
-        if (count($valid_incentives) > 0 && $property->price) {
-            $original_price = $property->price;
-            $discount = $original_price * ($total_incentives_percentage / 100);
-            $new_price_after_incentive = $original_price - $discount;
-        }
+       // if (count($valid_incentives) > 0 && $property->price) {
+        //    $original_price = $property->price;
+        //    $discount = $original_price * ($total_incentives_percentage / 100);
+        //    $new_price_after_incentive = $original_price - $discount;
+       // }
 
         // Prepare property data
         $propertyData = [
@@ -214,7 +227,7 @@ class HomeController extends Controller
                 'landscape_maintenance' => optional($property->feature)->landscape_maintenance,
                 'foundation_conditions' => optional($property->feature)->foundation_conditions,
             ],
-            'incentives' => $valid_incentives,
+            'incentive' => $incentive,
         ];
 
         // Merge the open house data into property data if available
@@ -236,7 +249,7 @@ class HomeController extends Controller
         return [
             'property_info' => $propertyData,
             'community_info' => $community,
-            'incentives' => $valid_incentives,
+            'incentive' => $incentive,
         ];
     }
 
@@ -276,18 +289,14 @@ class HomeController extends Controller
         // Get the community
         $community = Community::find($id);
 
-          
-            $community_builders_ids = BuildersCommunity::where('community_id', $community->id)->pluck('builder_id');
-            
-            if ($community_builders_ids) { 
-        
-                $builders_data = Builder::whereIn('id', $community_builders_ids)->pluck('name','description');
-              
-                $community->builders = $builders_data;
-            }
-             
+        $community_builders_ids = BuildersCommunity::where('community_id', $community->id)->pluck('builder_id');
 
-         
+        if ($community_builders_ids) {
+
+            $builders_data = Builder::whereIn('id', $community_builders_ids)->pluck('name', 'description');
+
+            $community->builders = $builders_data;
+        }
 
         if (!$community) {
             return response()->json(['message' => 'Community not found'], 404);
@@ -421,127 +430,132 @@ class HomeController extends Controller
     }
 
     public function quickSearch(Request $request)
-{
-    // Validate request
-    $request->validate([
-        'main_search_field' => 'nullable|string',
-        'bathroom' => 'nullable|integer',
-        'bedrooms' => 'nullable|integer',
-    
-        // Only validate max_price if min_price is provided
-        'min_price' => 'nullable|integer|min:0',
-        'max_price' => [
-            'nullable',
-            'integer',
-            function ($attribute, $value, $fail) use ($request) {
-                if ($request->min_price && $value && $value <= $request->min_price) {
-                    $fail('The max price must be greater than the min price.');
-                }
-            },
-        ],
-    
-        'min_square_feet' => 'nullable|integer|min:0',
-        'max_square_feet' => [
-            'nullable',
-            'integer',
-            function ($attribute, $value, $fail) use ($request) {
-                if ($request->min_square_feet && $value && $value <= $request->min_square_feet) {
-                    $fail('The max square feet must be greater than the min square feet.');
-                }
-            },
-        ],
-    
-        'min_lot_size' => 'nullable|integer|min:0',
-        'max_lot_size' => [
-            'nullable',
-            'integer',
-            function ($attribute, $value, $fail) use ($request) {
-                if ($request->min_lot_size && $value && $value <= $request->min_lot_size) {
-                    $fail('The max lot size must be greater than the min lot size.');
-                }
-            },
-        ],
-    ]);
-    
+    {
+        // Validate request
+        $request->validate([
+            'main_search_field' => 'nullable|string',
+            'bathroom' => 'nullable|integer',
+            'bedrooms' => 'nullable|integer',
 
-    $properties = DB::table('properties')
-        ->leftJoin('property_features', 'properties.property_id', '=', 'property_features.property_id'); // Join property_features
+            // Only validate max_price if min_price is provided
+            'min_price' => 'nullable|integer|min:0',
+            'max_price' => [
+                'nullable',
+                'integer',
+                function ($attribute, $value, $fail) use ($request) {
+                    if ($request->min_price && $value && $value <= $request->min_price) {
+                        $fail('The max price must be greater than the min price.');
+                    }
+                },
+            ],
 
-    if ($request->main_search_field) {
-        $searchTerm = $request->main_search_field;
+            'min_square_feet' => 'nullable|integer|min:0',
+            'max_square_feet' => [
+                'nullable',
+                'integer',
+                function ($attribute, $value, $fail) use ($request) {
+                    if ($request->min_square_feet && $value && $value <= $request->min_square_feet) {
+                        $fail('The max square feet must be greater than the min square feet.');
+                    }
+                },
+            ],
 
-        // Check if the search term is not null and not the string "null"
-        if ($searchTerm !== null && $searchTerm !== "null") {
-            $properties->where(function ($query) use ($searchTerm) {
-                $query->where('properties.address', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('properties.city', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('properties.zip_code', 'LIKE', '%' . $searchTerm . '%');
-            });
-        }
-    }
+            'min_lot_size' => 'nullable|integer|min:0',
+            'max_lot_size' => [
+                'nullable',
+                'integer',
+                function ($attribute, $value, $fail) use ($request) {
+                    if ($request->min_lot_size && $value && $value <= $request->min_lot_size) {
+                        $fail('The max lot size must be greater than the min lot size.');
+                    }
+                },
+            ],
+        ]);
 
-    // Apply price filtering
-    if ($request->min_price && $request->max_price) {
-        $properties->whereBetween('properties.price', [$request->min_price, $request->max_price]);
-    } elseif ($request->min_price) {
-        $properties->where('properties.price', '>=', $request->min_price);
-    } elseif ($request->max_price) {
-        $properties->where('properties.price', '<=', $request->max_price);
-    }
+        $properties = DB::table('properties')
+            ->leftJoin('property_features', 'properties.property_id', '=', 'property_features.property_id'); // Join property_features
 
-    // Apply square feet filtering
-    if ($request->min_square_feet && $request->max_square_feet) {
-        $properties->whereBetween('properties.square_feet', [$request->min_square_feet, $request->max_square_feet]);
-    } elseif ($request->min_square_feet) {
-        $properties->where('properties.square_feet', '>=', $request->min_square_feet);
-    } elseif ($request->max_square_feet) {
-        $properties->where('properties.square_feet', '<=', $request->max_square_feet);
-    }
+        if ($request->main_search_field) {
+            $searchTerm = $request->main_search_field;
 
-    // Apply lot size filtering
-    if ($request->min_lot_size && $request->max_lot_size) {
-        $properties->whereBetween('properties.lot_size', [$request->min_lot_size, $request->max_lot_size]);
-    } elseif ($request->min_lot_size) {
-        $properties->where('properties.lot_size', '>=', $request->min_lot_size);
-    } elseif ($request->max_lot_size) {
-        $properties->where('properties.lot_size', '<=', $request->max_lot_size);
-    }
-
-    // Apply bedrooms filtering
-    if ($request->bedrooms) {
-        $properties->where('properties.bedrooms', $request->bedrooms);
-    }
-
-    // Apply bathroom filtering
-    if ($request->bathroom !== null && $request->bathroom !== "null") {
-        $properties->where('property_features.private_bath', $request->bathroom);
-    }
-
-    // Fetch properties
-    $properties = $properties->get();
-    $total_homes = $properties->count();
-
-    foreach ($properties as $property) {
-        // Fetch related property record
-        $home = QuickMoveHome::where('property_id', $property->property_id)->first();
-        if ($property->is_open_house) {
-            $open_house = OpenHouse::where('property_id', $property->property_id)->first();
-            $property->open_house_data = $open_house;
-        }
-
-        // Process main image
-        if ($home && $home->main_image) {
-            $uploaded_image = Upload::find($home->main_image);
-            if ($uploaded_image) {
-                $home->main_image = get_storage_url($uploaded_image->file_name);
+            // Check if the search term is not null and not the string "null"
+            if ($searchTerm !== null && $searchTerm !== "null") {
+                $properties->where(function ($query) use ($searchTerm) {
+                    $query->where('properties.address', 'LIKE', '%' . $searchTerm . '%')
+                        ->orWhere('properties.city', 'LIKE', '%' . $searchTerm . '%')
+                        ->orWhere('properties.zip_code', 'LIKE', '%' . $searchTerm . '%');
+                });
             }
         }
+        
+        if($request->is_open_house === true || $request->is_open_house === "true")
+        { 
+            $properties->where('is_open_house',$request->is_open_house);
+            
+        } 
 
-        $property->home_data = $home;
+        // Apply price filtering
+        if ($request->min_price && $request->max_price) {
+            $properties->whereBetween('properties.price', [$request->min_price, $request->max_price]);
+        } elseif ($request->min_price) {
+            $properties->where('properties.price', '>=', $request->min_price);
+        } elseif ($request->max_price) {
+            $properties->where('properties.price', '<=', $request->max_price);
+        }
+
+        // Apply square feet filtering
+        if ($request->min_square_feet && $request->max_square_feet) {
+            $properties->whereBetween('properties.square_feet', [$request->min_square_feet, $request->max_square_feet]);
+        } elseif ($request->min_square_feet) {
+            $properties->where('properties.square_feet', '>=', $request->min_square_feet);
+        } elseif ($request->max_square_feet) {
+            $properties->where('properties.square_feet', '<=', $request->max_square_feet);
+        }
+
+        // Apply lot size filtering
+        if ($request->min_lot_size && $request->max_lot_size) {
+            $properties->whereBetween('properties.lot_size', [$request->min_lot_size, $request->max_lot_size]);
+        } elseif ($request->min_lot_size) {
+            $properties->where('properties.lot_size', '>=', $request->min_lot_size);
+        } elseif ($request->max_lot_size) {
+            $properties->where('properties.lot_size', '<=', $request->max_lot_size);
+        }
+
+        // Apply bedrooms filtering
+        if ($request->bedrooms) {
+            $properties->where('properties.bedrooms', $request->bedrooms);
+        }
+
+        // Apply bathroom filtering
+        if ($request->bathroom !== null && $request->bathroom !== "null") {
+            $properties->where('property_features.private_bath', $request->bathroom);
+        }
+
+        // Fetch properties
+        $properties = $properties->get();
+        $total_homes = $properties->count();
+
+        foreach ($properties as $property) {
+            // Fetch related property record
+            $home = QuickMoveHome::where('property_id', $property->property_id)->first();
+            if ($property->is_open_house) {
+                $open_house = OpenHouse::where('property_id', $property->property_id)->first();
+                $property->open_house_data = $open_house;
+            }
+
+            // Process main image
+            if ($home && $home->main_image) {
+                $uploaded_image = Upload::find($home->main_image);
+                if ($uploaded_image) {
+                    $home->main_image = get_storage_url($uploaded_image->file_name);
+                }
+            }
+
+            $property->home_data = $home;
+        }
+
+        return ['properties' => $properties ?? "", 'total_homes' => $total_homes ?? ""];
     }
-
-    return ['properties' => $properties ?? "", 'total_homes' => $total_homes ?? ""];
-}
 
     public function searchProperties(Request $request)
     {

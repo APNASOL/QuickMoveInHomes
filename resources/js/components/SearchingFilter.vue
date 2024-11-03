@@ -4,7 +4,8 @@
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button
-                        class="accordion-button c-theme-color" style="height: 20px !important;"
+                        class="accordion-button c-theme-color"
+                        style="height: 20px !important"
                         type="button"
                         data-bs-toggle="collapse"
                         data-bs-target="#mainAccordionCollapse"
@@ -34,7 +35,7 @@
                                     @change="quickSearch"
                                 />
                             </div>
-                            <div class="col-4 col ">
+                            <div class="col-4 col">
                                 <div class="d-flex">
                                     <input
                                         type="number"
@@ -53,7 +54,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-4 col ">
+                            <div class="col-4 col">
                                 <div class="d-flex">
                                     <input
                                         type="number"
@@ -239,23 +240,35 @@
                                 </a>
                             </div>
 
+                            <div class="mt-3 col-2 col">
+                                <label class="custom-checkbox">
+                                    <input
+                                        type="checkbox"
+                                        v-model="is_open_house"
+                                        @change="quickSearch"
+                                    />
+                                    <span class="checkmark"></span>
+                                    <!-- Custom checkbox styling -->
+                                    Is Open House
+                                </label>
+                            </div>
 
-                            <div class="mt-2 col">
-                            <button
-                                ref="openFilter"
-                                data-bs-target="#filterModal"
-                                data-bs-toggle="modal"
-                                class="btn btn-primary w-30"
-                            >
-                                Advance
-                            </button>
-                            <button
-                                @click="resetForm"
-                                class="btn btn-primary w-30 ms-1"
-                            >
-                                Reset
-                            </button>
-                        </div>
+                            <div class="mt-3 col d-flex justify-content-end">
+                                <button
+                                    ref="openFilter"
+                                    data-bs-target="#filterModal"
+                                    data-bs-toggle="modal"
+                                    class="btn btn-primary w-30"
+                                >
+                                    Advance
+                                </button>
+                                <button
+                                    @click="resetForm"
+                                    class="btn btn-primary w-30 ms-1"
+                                >
+                                    Reset
+                                </button>
+                            </div>
                             <!-- <div class="mt-2 col-1">
                                 <button
                                     ref="openFilter"
@@ -269,7 +282,6 @@
                                 
                             </div> -->
                         </div>
-                        
 
                         <!-- <div class="row">
                             <div class="col-12 d-flex justify-content-end mt-4">
@@ -289,79 +301,99 @@
         <div class="c-tour-details container-fluid mt-1">
             <div class="row">
                 <div class="col-md-6">
-    <div class="row mx-4">
-        <div class="col-md-4">
-            <b>Quick Move In Homes</b>
-            <br />
-            <small>{{ total_homes }} results</small>
-        </div>
-        <div class="col-md-2"></div>
-        <div class="col-md-6">
-            <b>Sort Quick Move In Homes</b>
-            <br />
-            <div class="dropdown">
-                <Multiselect
-                    v-model="sort_by"
-                    :options="sortingOptions"
-                    :placeholder="translate('Sort homes for you')"
-                    :searchable="true"
-                    @select="sortProperties"
-                />
-            </div>
-            <br />
-        </div>
-    </div>
-
-    <!-- Scrollable content container -->
-    <div v-if="homes && homes.length > 0" class="scrollable-content">
-        <div class="mx-4">
-            <div class="row g-2">
-                <div
-                    v-for="home in homes"
-                    :key="home.id"
-                    class="col-md-4 mb-3"
-                >
-                    <a
-                        class="text-decoration-none"
-                        :href="'/home-details/' + home.property_id"
-                    >
-                        <div class="card">
-                            <img
-                                :src="home.home_data.main_image"
-                                class="card-img-top"
-                                :alt="home.title"
-                                @error="setAltImg"
-                            />
-
-                            <div
-                                v-if="home.is_open_house"
-                                class="card-img-overlay c-card-img-overlay-flash-sale"
-                            >
-                                <span class="badge rounded-pill bg-white text-dark">
-                                    Open House
-                                </span>
+                    <div class="row mx-4">
+                        <div class="col-md-4">
+                            <b>Quick Move In Homes</b>
+                            <br />
+                            <small>{{ total_homes }} results</small>
+                        </div>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-6">
+                            <b>Sort Quick Move In Homes</b>
+                            <br />
+                            <div class="dropdown">
+                                <Multiselect
+                                    v-model="sort_by"
+                                    :options="sortingOptions"
+                                    :placeholder="
+                                        translate('Sort homes for you')
+                                    "
+                                    :searchable="true"
+                                    @select="sortProperties"
+                                />
                             </div>
+                            <br />
+                        </div>
+                    </div>
 
-                            <div class="card-body text-start">
-                                <p>
-                                    <i class="bi bi-currency-dollar"></i>
-                                    {{ home.price }} <br />
-                                    <i class="bi bi-aspect-ratio"></i>
-                                    {{ home.square_feet }} sq ft<br />
-                                    <i class="bi bi-house-door"></i>
-                                    {{ home.bedrooms }} <br />
-                                    <i class="bi bi-building"></i>
-                                    <small>{{ home.property_type }}</small><br />
-                                </p>
+                    <!-- Scrollable content container -->
+                    <div
+                        v-if="homes && homes.length > 0"
+                        class="scrollable-content"
+                    >
+                        <div class="mx-4">
+                            <div class="row g-2">
+                                <div
+                                    v-for="home in homes"
+                                    :key="home.id"
+                                    class="col-md-4 mb-3"
+                                >
+                                    <a
+                                        class="text-decoration-none"
+                                        :href="
+                                            '/home-details/' + home.property_id
+                                        "
+                                    >
+                                        <div class="card">
+                                            <img
+                                                :src="home.home_data.main_image"
+                                                class="card-img-top"
+                                                :alt="home.title"
+                                                @error="setAltImg"
+                                            />
+
+                                            <div
+                                                v-if="home.is_open_house"
+                                                class="card-img-overlay c-card-img-overlay-flash-sale"
+                                            >
+                                                <span
+                                                    class="badge rounded-pill bg-white text-dark"
+                                                >
+                                                    Open House
+                                                </span>
+                                            </div>
+
+                                            <div class="card-body text-start">
+                                                <p>
+                                                    <i
+                                                        class="bi bi-currency-dollar"
+                                                    ></i>
+                                                    {{ home.price }} <br />
+                                                    <i
+                                                        class="bi bi-aspect-ratio"
+                                                    ></i>
+                                                    {{ home.square_feet }} sq
+                                                    ft<br />
+                                                    <i
+                                                        class="bi bi-house-door"
+                                                    ></i>
+                                                    {{ home.bedrooms }} <br />
+                                                    <i
+                                                        class="bi bi-building"
+                                                    ></i>
+                                                    <small>{{
+                                                        home.property_type
+                                                    }}</small
+                                                    ><br />
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </a>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 
                 <div
                     class="col-md-6"
@@ -371,7 +403,7 @@
                         height: 550px;
                         overflow: auto;
                     "
-                > 
+                >
                     <Map :homes="homes" />
                     <!-- <div
                         class="container mb-2"
@@ -613,12 +645,6 @@
                                                         }}
                                                     </div>
                                                 </div>
-
-                                               
-
-                                              
- 
- 
 
                                                 <div class="col-12 col-md-6">
                                                     <label
@@ -1321,6 +1347,7 @@ export default {
 
             bathroom: "",
             bedrooms: "",
+            is_open_house: "",
         };
     },
 
@@ -1338,6 +1365,7 @@ export default {
 
             this.bathroom = "";
             this.bedrooms = "";
+            this.is_open_house = "";
             this.quickSearch();
         },
         // initMap() {
@@ -1442,7 +1470,7 @@ export default {
                 });
         },
 
-        sortProperties() { 
+        sortProperties() {
             let formData = new FormData();
             formData.append("sort_by", this.sort_by ?? "");
 
@@ -1454,7 +1482,6 @@ export default {
                     },
                 })
                 .then((response) => {
-                        
                     this.formStatus = 1;
                     this.homes = response.data.properties;
                     this.total_homes = response.data.total_homes;
@@ -1478,8 +1505,9 @@ export default {
                     }
                 });
         },
-        quickSearch() { 
+        quickSearch() {
             let formData = new FormData();
+            formData.append("is_open_house", this.is_open_house ?? "");
             formData.append("main_search_field", this.main_search_field ?? "");
 
             formData.append("min_price", this.min_price ?? "");
@@ -1525,7 +1553,7 @@ export default {
                     }
                 });
         },
-        searchHomes() { 
+        searchHomes() {
             this.formStatus = 0;
 
             // Create a FormData object
@@ -1664,7 +1692,6 @@ export default {
 .c-card-img-overlay-flash-sale {
     left: unset;
 }
- 
 
 .beat {
     animation: beating 1s infinite;
@@ -1702,5 +1729,4 @@ export default {
     overflow-y: auto;
     padding-right: 10px; /* Optional: Adds space to the right to avoid overlapping scrollbar */
 }
-
 </style>

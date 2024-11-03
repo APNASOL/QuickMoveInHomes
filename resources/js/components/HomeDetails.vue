@@ -33,7 +33,7 @@
                                 </span>
                                 <b v-if="Home.new_price_after_incentive">
                                     <br />
-                                    after incentives</b
+                                    after incentive</b
                                 >
                                 <span
                                     class="price ms-2"
@@ -45,10 +45,10 @@
                         </div>
                     </div>
                 </div>
- 
+
                 <div
                     class="container-fluid interactive-open-house-banner mt-3"
-                    v-if="Home.is_open_house"
+                    v-if="Home.is_open_house && Home.is_open_house != 0"
                 >
                     <div class="banner-content p-2">
                         <div class="open-house-tag mb-2">OPEN HOUSE</div>
@@ -126,11 +126,15 @@
                                 v-if="
                                     logged_in_user &&
                                     logged_in_user.role === 'customer'
-                                    
                                 "
-                                
                             >
-                                <h5 class="mt-3 c-theme-color" v-if="logged_in_user && !logged_in_user.agreement">
+                                <h5
+                                    class="mt-3 c-theme-color"
+                                    v-if="
+                                        logged_in_user &&
+                                        !logged_in_user.agreement
+                                    "
+                                >
                                     To access all information, please sign a
                                     contract first while selecting your home.
                                 </h5>
@@ -228,116 +232,24 @@
                                         logged_in_user.agreement
                                     "
                                 >
-                                    <div
-                                        v-if="
-                                            Home.incentives &&
-                                            Home.incentives.length > 0
-                                        "
-                                    >
+                                    <div v-if="Home.incentive">
                                         <div class="banner-content">
                                             <div class="open-house-tag mb-2">
-                                                INCENTIVES
+                                                AVAILABLE INCENTIVE
                                             </div>
-                                            <div
-                                                v-if="
-                                                    Home.incentives &&
-                                                    Home.incentives.length
-                                                "
-                                            >
-                                                <div
-                                                    class="accordion"
-                                                    id="accordionIncentives"
+                                            <div>
+                                                <i
+                                                    class="bi bi-check-lg text-warning fs-5 "
+                                                ></i>
+                                                <a
+                                                    class="text-decoration-none c-anchor-style"
+                                                    :href="
+                                                        '/detailed-incentive/' +
+                                                        incentive.id
+                                                    "
                                                 >
-                                                    <div
-                                                        v-for="(
-                                                            incentive, index
-                                                        ) in Home.incentives"
-                                                        :key="incentive.id"
-                                                        class="accordion-item"
-                                                    >
-                                                        <h2
-                                                            class="accordion-header"
-                                                            :id="
-                                                                'heading' +
-                                                                index
-                                                            "
-                                                        >
-                                                            <button
-                                                                class="accordion-button"
-                                                                type="button"
-                                                                data-bs-toggle="collapse"
-                                                                :data-bs-target="
-                                                                    '#collapse' +
-                                                                    index
-                                                                "
-                                                                aria-expanded="true"
-                                                                :aria-controls="
-                                                                    'collapse' +
-                                                                    index
-                                                                "
-                                                            >
-                                                                {{
-                                                                    incentive.title
-                                                                }}
-                                                            </button>
-                                                        </h2>
-                                                        <div
-                                                            :id="
-                                                                'collapse' +
-                                                                index
-                                                            "
-                                                            class="accordion-collapse collapse"
-                                                            :aria-labelledby="
-                                                                'heading' +
-                                                                index
-                                                            "
-                                                            data-bs-parent="#accordionIncentives"
-                                                        >
-                                                            <div
-                                                                class="accordion-body"
-                                                            >
-                                                                <p>
-                                                                    <strong
-                                                                        >Description:</strong
-                                                                    >
-                                                                    {{
-                                                                        incentive.description
-                                                                    }}
-                                                                </p>
-                                                                <p>
-                                                                    <strong
-                                                                        >Discount:</strong
-                                                                    >
-                                                                    {{
-                                                                        incentive.interest_rate_first_year
-                                                                    }}%
-                                                                </p>
-                                                                <p>
-                                                                    <strong
-                                                                        >Valid
-                                                                        From:</strong
-                                                                    >
-                                                                    {{
-                                                                        formatDate(
-                                                                            incentive.start_date
-                                                                        )
-                                                                    }}
-                                                                </p>
-                                                                <p>
-                                                                    <strong
-                                                                        >Valid
-                                                                        Until:</strong
-                                                                    >
-                                                                    {{
-                                                                        formatDate(
-                                                                            incentive.end_date
-                                                                        )
-                                                                    }}
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                    {{ incentive.title }}</a
+                                                >
                                             </div>
                                         </div>
                                     </div>
@@ -662,7 +574,8 @@
                                             <p>
                                                 {{
                                                     Home.feature
-                                                        .landscape_maintenance ? "Yes"
+                                                        .landscape_maintenance
+                                                        ? "Yes"
                                                         : "No"
                                                 }}
                                             </p>
@@ -703,7 +616,7 @@
                 <div class="container-fluid interactive-banner mt-3">
                     <h1>RELATED COMMUNITY MOVE IN HOMES</h1>
                 </div>
-                
+
                 <div class="mx-4 pt-3">
                     <div class="container row">
                         <div
@@ -807,7 +720,7 @@ export default {
 
             Community: [],
             community_homes: [],
-            incentives: [],
+            incentive: [],
 
             formErrors: [],
             currentSlide: 0,
@@ -839,7 +752,7 @@ export default {
                     this.Home = response.data.property_info;
 
                     this.Community = response.data.community_info;
-                    this.incentives = response.data.incentives;
+                    this.incentive = response.data.incentive;
                     this.getThisCommunityAllHomes();
                 })
                 .catch((error) => {
@@ -1060,4 +973,17 @@ export default {
 .open_house_desc {
     text-align: left !important;
 }
+.c-anchor-style {
+    cursor: pointer;
+    text-decoration: none;
+    color: #002855;
+    transition: transform 0.3s ease; /* Smooth transition for the zoom effect */
+    display: inline-block; /* Ensures the text scales correctly */
+}
+
+/* Hover state */
+.c-anchor-style:hover {
+    transform: scale(1.2); /* Zoom in on text */
+}
+
 </style>
