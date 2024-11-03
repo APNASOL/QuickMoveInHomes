@@ -1,5 +1,5 @@
 <template>
-    <div class="c-bg-color" style="height: 500px;" v-if="homes && homes.length">
+    <div class="c-bg-color" style="height: 550px" v-if="homes && homes.length">
         <div class="mx-4">
             <div class="d-flex justify-content-between">
                 <div>
@@ -9,10 +9,19 @@
                         {{ translate("Quick Move-Ins") }}
                     </h2>
                 </div>
- 
+                <!-- <div>
+                    <a
+                        class="searchHome"
+                        href="/search/homes"
+                        id="navbarDropdownDeals"
+                        role="button"
+                    >
+                        <img src="/images/map-icon.png" height="70" />
+                    </a>
+                </div> -->
             </div>
 
-            <Carousel 
+            <Carousel
                 :settings="settings"
                 :wrapAround="true"
                 :breakpoints="breakpoints"
@@ -70,9 +79,7 @@
                                     </p>
                                 </div> -->
                                 <div class="card-body text-start">
-                                    
                                     <p>
-                                        
                                         AREA (SQFT)
                                         <b
                                             >{{
@@ -142,7 +149,7 @@
                 </div>
                 <div class="modal-body text-center">
                     <h1
-                        class="modal-title text-center "
+                        class="modal-title text-center"
                         id="openIncentivesModal"
                     >
                         MOVE-IN-READY INCENTIVES
@@ -225,11 +232,10 @@ export default defineComponent({
         this.openModal();
     },
     methods: {
-        
         openModal() {
-            setTimeout(() => { 
-                        this.$refs.openIncentivesModal.click();
-                    }, 2000);
+            setTimeout(() => {
+                this.$refs.openIncentivesModal.click();
+            }, 2000);
         },
         async getHomes() {
             await axios
@@ -355,5 +361,19 @@ export default defineComponent({
     line-height: 1.7em;
     font-weight: 700;
     color: rgba(255, 255, 255, 1);
+}
+/* Initial state */
+.searchHome {
+    overflow: hidden; /* Ensure content doesn’t overflow during zoom */
+}
+
+/* Image within .searchHome */
+.searchHome img {
+    transition: transform 0.3s ease; /* Smooth transition */
+}
+
+/* Hover state */
+.searchHome:hover img {
+    transform: scale(1.2); /* Zoom in the image */
 }
 </style>

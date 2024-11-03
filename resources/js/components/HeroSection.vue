@@ -14,7 +14,7 @@
             <div
                 class="content position-absolute top-50 start-0 translate-middle-y ms-4"
             >
-                <h1 class="display-4 fw-bold mb-4">Quick Move In Homes</h1>
+                <h1 class="display-3 fw-bold mb-4">Quick Move In Homes</h1>
                 <div class="search-bar-container d-flex">
                     <div class="search-bar input-group">
                         <input
@@ -31,7 +31,7 @@
                             @click="activeSpinner"
                         >
                             <i class="bi bi-search"></i>
-                    </a>
+                        </a>
                         <a
                             class="btn c-btn-theme-yellow"
                             type="button"
@@ -43,8 +43,18 @@
                                 role="status"
                                 aria-hidden="true"
                             ></span>
-                </a>
+                        </a>
                     </div>
+                    <div class="bg-white ms-2 " style="border-radius: 0.25rem;" >
+                    <a
+                            class="searchHome"
+                            href="/search/homes"
+                            id="navbarDropdownDeals"
+                            role="button"
+                        > 
+                            <img src="/images/map-icon.png" height="50" />
+                        </a>
+                </div>
                 </div>
             </div>
         </div>
@@ -75,13 +85,13 @@ export default {
     align-items: center;
     justify-content: center;
     padding: 0; /* Remove extra padding */
-    height: 80px; /* Match height of the input field */
+    height: 50px; /* Match height of the input field */
     width: 80px; /* Set a fixed width for the button */
 }
 
 /* Hero Section Styling */
 .hero-section {
-    height: 60vh;
+    height: 50vh;
     position: relative;
     overflow: hidden;
 }
@@ -119,15 +129,15 @@ export default {
 
 .search-bar {
     width: 100%;
-    background: #fff;
+    
     border-radius: 0.25rem;
 }
 
 .search-bar input {
     border: none;
-    padding: 1rem;
+    
     font-size: 1rem;
-    height: 80px; /* Set height for desktop screens */
+    height: 50px; /* Set height for desktop screens */
     border-top-left-radius: 0.25rem;
     border-bottom-left-radius: 0.25rem;
 }
@@ -136,9 +146,8 @@ export default {
     border: none;
     border-top-right-radius: 0.25rem; /* Ensure rounded corners */
     border-bottom-right-radius: 0.25rem; /* Ensure rounded corners */
-    background-color: #fff;
-    padding: 0; /* Remove extra padding */
-    height: 80px; /* Match height of the input field */
+    background-color: #fff; 
+    height: 50px; /* Match height of the input field */
     display: flex; /* Use flexbox to center content */
     align-items: center; /* Center content vertically */
     justify-content: center; /* Center content horizontally */
@@ -157,19 +166,18 @@ export default {
     }
 
     .content {
-        max-width: 90%;
-        padding: 0 1rem;
+        max-width: 90%; 
     }
 
     .search-bar input {
-        height: 60px; /* Adjust height for tablets */
-        padding: 0.75rem;
+        height: 50px; /* Adjust height for tablets */
+       
         font-size: 0.9rem;
     }
 
     .search-bar button {
         width: 60px; /* Adjust width for tablets */
-        padding: 0 0.75rem;
+      
     }
 }
 
@@ -184,13 +192,27 @@ export default {
 
     .search-bar input {
         height: 50px; /* Adjust height for mobile screens */
-        padding: 0.5rem;
+         
         font-size: 0.85rem;
     }
 
     .search-bar button {
         width: 50px; /* Adjust width for mobile screens */
-        padding: 0 0.5rem;
+        
     }
+}
+
+.searchHome {
+    overflow: hidden; /* Ensure content doesn’t overflow during zoom */
+}
+
+/* Image within .searchHome */
+.searchHome img {
+    transition: transform 0.3s ease; /* Smooth transition */
+}
+
+/* Hover state */
+.searchHome:hover img {
+    transform: scale(1.2); /* Zoom in the image */
 }
 </style>

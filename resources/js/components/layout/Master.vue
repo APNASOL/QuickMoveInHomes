@@ -189,6 +189,16 @@
                             Incentives
                         </a> 
                     </li>
+                    <!-- <li class="nav-item dropdown"> 
+                        <a
+                            class="nav-link"
+                            href="/all-incentives"
+                            id="navbarDropdownDeals"
+                            role="button"
+                        >
+                        Search
+                        </a> 
+                    </li> -->
                     
                     <!-- <li class="nav-item dropdown">
                         

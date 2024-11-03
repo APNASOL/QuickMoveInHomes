@@ -115,13 +115,17 @@ export default {
         },
         incentivesFetch() {
             axios
-                .get("/api/fetch-incentives")
+                .get("/api/fetch-sorted-incentives/" + "Name")
                 .then((response) => {
                     this.incentives = response.data;
 
                     // Initialize showFullDescription for each incentive
-                    this.incentives.forEach(incentive => {
-                        this.$set(this.showFullDescription, incentive.id, false);
+                    this.incentives.forEach((incentive) => {
+                        this.$set(
+                            this.showFullDescription,
+                            incentive.id,
+                            false
+                        );
                     });
                 })
                 .catch((error) => {

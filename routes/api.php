@@ -56,7 +56,7 @@ Route::post('/forgot-password', [UserController::class, 'forgot_password'])->nam
 
 Route::get('/front-homes/{type}', [IndexController::class, 'front_homes'])->name('front-homes');
 Route::get('/incentives-list', [IndexController::class, 'incentives_list'])->name('incentives-list');
-Route::get('/fetch-incentives', [IndexController::class, 'fetch_incentives'])->name('fetch-incentives');
+Route::get('/fetch-sorted-incentives/{sort_by}', [IndexController::class, 'fetch_sorted_incentives'])->name('fetch-sorted-incentives');
 Route::get('/incentives-homes', [IndexController::class, 'incentives_properties'])->name('incentives-homes');
 // Route::get('/incentive-details-fetch', [IndexController::class, 'incentive-details-fetch'])->name('incentive-details-fetch');
 Route::get('/incentive-details-fetch/{id}', [IndexController::class, 'selected_incentives_properties'])->name('incentive-details-fetch');

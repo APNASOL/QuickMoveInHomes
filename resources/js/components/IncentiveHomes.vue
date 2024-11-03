@@ -7,12 +7,7 @@
             <div class="info-overlay">
                 <div class="d-flex justify-content-center container">
                     <div>
-                        <h2 class="title uppercase" v-if="incentive_title">
-                            {{ incentive_title }} Incentive
-                        </h2>
-                        <h2 class="title uppercase" v-else>
-                            Current Incentives
-                        </h2>
+                        <h2 class="title uppercase">Current Incentives</h2>
                         <span class="uppercase">
                             Inventory Closeout Specials On Quick Delivery Homes
                         </span>
@@ -22,6 +17,21 @@
         </div>
 
         <div class="c-tour-details container">
+            <div class="row mx-4 d-flex justify-content-end mt-3">
+                <div class="col-md-4">
+                    <b>Incentive Sort By</b>
+                    <div class="dropdown">
+                        <Multiselect
+                            v-model="sort_by"
+                            :options="sortingOptions"
+                            :placeholder="translate('Sort by')"
+                            :searchable="true"
+                            @select="incentivesFetch(sort_by)"
+                        />
+                    </div>
+                </div>
+            </div>
+
             <div v-if="incentives && incentives.length">
                 <div class="mx-4 pt-3">
                     <div class="row g-3 mb-3">
@@ -107,20 +117,27 @@ export default {
     },
 
     created() {
-        this.incentivesFetch();
+        this.incentivesFetch("Name");
     },
 
     data() {
         return {
             incentives: [],
             showFullDescription: {}, // Initialize the object to track description visibility
+            sortingOptions: [
+                "Name",
+                "Interest rate",
+                "Low to Hight",
+                "Hight to Low",
+            ],
+            sorty_by: "",
         };
     },
 
     methods: {
-        incentivesFetch() {
+        incentivesFetch(sorting_option) {
             axios
-                .get("/api/fetch-incentives")
+                .get("/api/fetch-sorted-incentives/" + sorting_option)
                 .then((response) => {
                     this.incentives = response.data;
 

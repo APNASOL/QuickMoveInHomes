@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Builder;
 use App\Models\Community;
 use App\Models\Event;
 use App\Models\Incentive;
+use App\Models\OpenHouse;
 use App\Models\Property;
 use App\Models\PropertyIncentive;
 use App\Models\QuickMoveHome;
 use App\Models\Upload;
-use Carbon\Carbon;  
-use App\Models\Builder; 
+use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 
@@ -22,13 +23,13 @@ class IndexController extends Controller
             // Get all homes
             $homes = QuickMoveHome::all()->filter(function ($home) {
                 $property = Property::first();
-                return $property && $property->is_open_house;
+                return $property;
             });
         } else if ($type == 'open_houses') {
             // Get homes where the related property's is_open_house field is true
             $homes = QuickMoveHome::all()->filter(function ($home) {
                 $property = Property::where('property_id', $home->property_id)->first();
-                return $property && $property->is_open_house == 'true';
+                return $property && ($property->is_open_house == 'true' || $property->is_open_house == true);
             });
 
         }
@@ -87,8 +88,7 @@ class IndexController extends Controller
     {
         $currentDate = Carbon::now();
         $events = Event::where('date', '>', $currentDate)->get();
-        foreach($events as $event)
-        {
+        foreach ($events as $event) {
             if ($event->image) {
                 $uploaded_image = Upload::where('id', $event->image)->first();
                 if ($uploaded_image) {
@@ -98,7 +98,7 @@ class IndexController extends Controller
                 $event->image = get_storage_url('');
             }
         }
-        return  $events;
+        return $events;
     }
     public function incentives_list()
     {
@@ -178,17 +178,17 @@ class IndexController extends Controller
 
     public function fetch_incentives()
     {
-        
-        $incentives = Incentive::orderBy('created_at', 'desc')->where('status',1)->get();
-         
+
+        $incentives = Incentive::orderBy('created_at', 'desc')->where('status', 1)->get();
+
         foreach ($incentives as $incentive) {
-             
+
             // Fetch and set builder name
             $builder = Builder::where('id', $incentive->builder_id)->first();
             if ($builder) {
                 $incentive->builder_name = $builder->name;
             }
-    
+
             // Format incentive_banner image URL
             if ($incentive && $incentive->incentive_banner) {
                 $uploaded_image = Upload::where('id', $incentive->incentive_banner)->first();
@@ -196,21 +196,69 @@ class IndexController extends Controller
                     $incentive->incentive_banner = get_storage_url($uploaded_image->file_name);
                 }
             }
-    
+
             // Format created_at and updated_at dates
             $incentive->created_at = Carbon::parse($incentive->created_at)->format('d-m-Y');
             $incentive->updated_at = Carbon::parse($incentive->updated_at)->format('d-m-Y');
         }
-    
+
         return $incentives;
-     
+
+    }
+    public function fetch_sorted_incentives($sort_by)
+    {
+
+        // Initialize the query
+        $query = Incentive::where('status', 1);
+
+        // Apply sorting based on the $sort_by parameter
+        if ($sort_by === 'Name') {
+            $query->orderBy('title', 'asc'); // Sort by title in ascending order
+        } elseif ($sort_by === 'Interest rate') {
+            // Sort by interest_rate_first_year; default to low to high
+            $query->orderBy('interest_rate_first_year', 'asc'); // Low to High
+        } elseif ($sort_by === 'Low to Hight') {
+            $query->orderBy('interest_rate_first_year', 'asc'); // Low to High
+        } elseif ($sort_by === 'Hight to Low') {
+            $query->orderBy('interest_rate_first_year', 'desc'); // High to Low
+        } else {
+            // Default sorting (latest first) if the sort_by parameter is invalid
+            $query->orderBy('created_at', 'desc');
+        }
+
+        // Execute the query and get the results
+        $incentives = $query->get();
+
+        foreach ($incentives as $incentive) {
+
+            // Fetch and set builder name
+            $builder = Builder::where('id', $incentive->builder_id)->first();
+            if ($builder) {
+                $incentive->builder_name = $builder->name;
+            }
+
+            // Format incentive_banner image URL
+            if ($incentive && $incentive->incentive_banner) {
+                $uploaded_image = Upload::where('id', $incentive->incentive_banner)->first();
+                if ($uploaded_image) {
+                    $incentive->incentive_banner = get_storage_url($uploaded_image->file_name);
+                }
+            }
+
+            // Format created_at and updated_at dates
+            $incentive->created_at = Carbon::parse($incentive->created_at)->format('d-m-Y');
+            $incentive->updated_at = Carbon::parse($incentive->updated_at)->format('d-m-Y');
+        }
+
+        return $incentives;
+
     }
 
     public function detailed_incentive($id)
     {
         return view('app', compact('id'));
     }
- 
+
     public function selected_incentives_properties($id)
     {
 
@@ -221,10 +269,9 @@ class IndexController extends Controller
             $uploaded_image = Upload::where('id', $incentive->incentive_banner)->first();
             if ($uploaded_image) {
                 $incentive_banner = get_storage_url($uploaded_image->file_name);
-            } 
+            }
         }
-    
-        
+
         $property_ids = PropertyIncentive::where('incentive_id', $id)
             ->pluck('property_id');
 
@@ -290,9 +337,8 @@ class IndexController extends Controller
             }
         }
 
-        
         // Return the properties with their details and valid incentives
-        return ['properties_with_incentives' => $properties_with_incentives, 'incentive' => $incentive,'incentive_banner'=>$incentive_banner]; // Correct return value
+        return ['properties_with_incentives' => $properties_with_incentives, 'incentive' => $incentive, 'incentive_banner' => $incentive_banner]; // Correct return value
     }
 
     public function communities_for_navbar()
@@ -305,10 +351,45 @@ class IndexController extends Controller
     }
 
     public function openhouses_for_navbar()
-    {
-        // Fetch properties where 'is_open_house' is true
-        $properties = Property::where('is_open_house', 'true')->orWhere('is_open_house', true)->get();
+{
+    // Get the current date and time
+    $currentDate = now();
+    $currentTime = $currentDate->format('H:i:s');
 
-        return $properties;
-    }
+    // Fetch properties where 'is_open_house' is true
+    $properties = Property::where('is_open_house', 'true')
+        ->orWhere('is_open_house', true)
+        ->get();
+
+    // Filter properties based on open house availability
+    $filteredProperties = $properties->reject(function ($property) use ($currentDate, $currentTime) {
+        // Fetch the open house record for the property
+        $open_house_record = OpenHouse::where('property_id', $property->property_id)->first();
+
+        // Check if open house record exists
+        if (!$open_house_record) {
+            return true; // Exclude if no open house record
+        }
+
+        // Check if the open house date is in the future or if it is today and the current time is within the open house hours
+        if ($open_house_record->date > $currentDate->toDateString()) {
+            return false; // Include property if the open house date is in the future
+        } elseif ($open_house_record->date == $currentDate->toDateString()) {
+            // If the open house is today, ensure the current time is within the start and end times
+            if ($open_house_record->end_time >= $currentTime) {
+                return false; // Include property if within today's open house hours
+            }
+        }
+
+        // If conditions are not met, update the property and delete the open house record
+        $property->update(['is_open_house' => false]);
+        $open_house_record->delete();
+
+        return true; // Exclude property from the final result
+    });
+
+    return $filteredProperties;
+}
+
+
 }
