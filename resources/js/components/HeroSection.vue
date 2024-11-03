@@ -45,16 +45,16 @@
                             ></span>
                         </a>
                     </div>
-                    <div class="bg-white ms-2 " style="border-radius: 0.25rem;" >
-                    <a
+                    <div class="bg-white ms-2" style="border-radius: 0.25rem">
+                        <a
                             class="searchHome"
                             href="/search/homes"
                             id="navbarDropdownDeals"
                             role="button"
-                        > 
+                        >
                             <img src="/images/map-icon.png" height="50" />
                         </a>
-                </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -129,13 +129,13 @@ export default {
 
 .search-bar {
     width: 100%;
-    
+
     border-radius: 0.25rem;
 }
 
 .search-bar input {
     border: none;
-    
+
     font-size: 1rem;
     height: 50px; /* Set height for desktop screens */
     border-top-left-radius: 0.25rem;
@@ -146,7 +146,7 @@ export default {
     border: none;
     border-top-right-radius: 0.25rem; /* Ensure rounded corners */
     border-bottom-right-radius: 0.25rem; /* Ensure rounded corners */
-    background-color: #fff; 
+    background-color: #fff;
     height: 50px; /* Match height of the input field */
     display: flex; /* Use flexbox to center content */
     align-items: center; /* Center content vertically */
@@ -166,18 +166,17 @@ export default {
     }
 
     .content {
-        max-width: 90%; 
+        max-width: 90%;
     }
 
     .search-bar input {
         height: 50px; /* Adjust height for tablets */
-       
+
         font-size: 0.9rem;
     }
 
     .search-bar button {
         width: 60px; /* Adjust width for tablets */
-      
     }
 }
 
@@ -192,13 +191,12 @@ export default {
 
     .search-bar input {
         height: 50px; /* Adjust height for mobile screens */
-         
+
         font-size: 0.85rem;
     }
 
     .search-bar button {
         width: 50px; /* Adjust width for mobile screens */
-        
     }
 }
 
