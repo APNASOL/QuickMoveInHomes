@@ -206,16 +206,18 @@ class IndexController extends Controller
 
     }
     public function fetch_sorted_incentives($sort_by)
-    {
-
+    { 
+      
+        $currentDate = now()->format('Y-m-d');
+        
         // Initialize the query
-        $query = Incentive::where('status', 1);
-
+        $query = Incentive::where('status', 1)
+            ->where('end_date', '>=',  $currentDate); // Filter out past incentives
+    
         // Apply sorting based on the $sort_by parameter
         if ($sort_by === 'Name') {
             $query->orderBy('title', 'asc'); // Sort by title in ascending order
         } elseif ($sort_by === 'Interest rate') {
-            // Sort by interest_rate_first_year; default to low to high
             $query->orderBy('interest_rate_first_year', 'asc'); // Low to High
         } elseif ($sort_by === 'Low to Hight') {
             $query->orderBy('interest_rate_first_year', 'asc'); // Low to High
@@ -225,18 +227,17 @@ class IndexController extends Controller
             // Default sorting (latest first) if the sort_by parameter is invalid
             $query->orderBy('created_at', 'desc');
         }
-
+    
         // Execute the query and get the results
         $incentives = $query->get();
-
+    
         foreach ($incentives as $incentive) {
-
             // Fetch and set builder name
             $builder = Builder::where('id', $incentive->builder_id)->first();
             if ($builder) {
                 $incentive->builder_name = $builder->name;
             }
-
+    
             // Format incentive_banner image URL
             if ($incentive && $incentive->incentive_banner) {
                 $uploaded_image = Upload::where('id', $incentive->incentive_banner)->first();
@@ -244,15 +245,15 @@ class IndexController extends Controller
                     $incentive->incentive_banner = get_storage_url($uploaded_image->file_name);
                 }
             }
-
+    
             // Format created_at and updated_at dates
             $incentive->created_at = Carbon::parse($incentive->created_at)->format('d-m-Y');
             $incentive->updated_at = Carbon::parse($incentive->updated_at)->format('d-m-Y');
         }
-
+    
         return $incentives;
-
     }
+    
 
     public function detailed_incentive($id)
     {

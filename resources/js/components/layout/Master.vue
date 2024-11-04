@@ -1794,6 +1794,7 @@ label {
     text-decoration: none;
     color: white;
     cursor: pointer;
+    
 }
 /* Customize dropdown menu styling for the navbar */
 

@@ -72,7 +72,13 @@
                                     {{ formErrors.status[0] }}
                                 </div>
                             </div>
-                            <div class="row g-3" v-if="property.is_open_house">
+                            <div
+                                class="row g-3"
+                                v-if="
+                                    property.is_open_house &&
+                                    property.is_open_house != 0
+                                "
+                            >
                                 <b>Open house details</b>
                                 <div class="col-12 col-md-6">
                                     <b>{{ translate("Date") }}</b
@@ -111,7 +117,8 @@
                                 <b>{{ translate("Incentives") }}</b>
                                 <ul>
                                     <li
-                                        v-for="incentive in property.incentives" :key="incentive.id"
+                                        v-for="incentive in property.incentives"
+                                        :key="incentive.id"
                                     >
                                         {{ incentive }}
                                     </li>
@@ -688,7 +695,7 @@ export default {
             axios
                 .get("/api/get/property/details/" + this.property_id)
                 .then((response) => {
-                    this.property = response.data; 
+                    this.property = response.data;
                     this.form.status = response.data.is_open_house;
                     this.$nextTick(() => {
                         this.initMasonry(); // Re-initialize Masonry after data is set

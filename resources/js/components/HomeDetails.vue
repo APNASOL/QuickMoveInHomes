@@ -905,8 +905,7 @@ export default {
     background: #fba638;
     color: white;
     text-align: center;
-    box-shadow: 0 4px 8px #bcd6f5b2;
-
+    box-shadow: 0 4px 8px #bcd6f5b2; 
     letter-spacing: 0.15em;
 }
 
@@ -973,17 +972,13 @@ export default {
 .open_house_desc {
     text-align: left !important;
 }
-.c-anchor-style {
-    cursor: pointer;
+.c-anchor-style { 
     text-decoration: none;
-    color: #002855;
-    transition: transform 0.3s ease; /* Smooth transition for the zoom effect */
-    display: inline-block; /* Ensures the text scales correctly */
-}
-
-/* Hover state */
+    color: #002855;      
+}  
 .c-anchor-style:hover {
-    transform: scale(1.2); /* Zoom in on text */
+    cursor: pointer;
+    font-weight: bold;
 }
 
 </style>

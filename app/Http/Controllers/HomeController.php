@@ -82,6 +82,8 @@ class HomeController extends Controller
 
     public function getPropertyDetails($id)
     {
+
+        $currentDate = now()->format('Y-m-d');
         // Fetch the property along with its relationships
         $property = Property::with(['feature', 'hoa', 'school'])->findOrFail($id);
 
@@ -154,7 +156,7 @@ class HomeController extends Controller
                 $builder = Builder::where('id', $community_builder->builder_id)->first();
                 if($builder)
                 {
-                   $incentive = Incentive::where('builder_id',$builder->id)->first();
+                   $incentive = Incentive::where('builder_id',$builder->id)->where('end_date', '>=',  $currentDate)->first();
                 }
             }
             
@@ -190,7 +192,7 @@ class HomeController extends Controller
             'state' => $property->state,
             'zip_code' => $property->zip_code,
             'price' => $property->price,
-            'new_price_after_incentive' => $new_price_after_incentive,
+             
             'bedrooms' => $property->bedrooms,
             'square_feet' => $property->square_feet,
             'lot_size' => $property->lot_size,
@@ -227,7 +229,7 @@ class HomeController extends Controller
                 'landscape_maintenance' => optional($property->feature)->landscape_maintenance,
                 'foundation_conditions' => optional($property->feature)->foundation_conditions,
             ],
-            'incentive' => $incentive,
+            'incentive' => $incentive  ?? '',
         ];
 
         // Merge the open house data into property data if available
@@ -249,7 +251,7 @@ class HomeController extends Controller
         return [
             'property_info' => $propertyData,
             'community_info' => $community,
-            'incentive' => $incentive,
+            'incentive' => $incentive ?? '',
         ];
     }
 
@@ -431,6 +433,7 @@ class HomeController extends Controller
 
     public function quickSearch(Request $request)
     {
+        $currentDate = now()->format('Y-m-d');
         // Validate request
         $request->validate([
             'main_search_field' => 'nullable|string',
@@ -550,6 +553,30 @@ class HomeController extends Controller
                     $home->main_image = get_storage_url($uploaded_image->file_name);
                 }
             }
+
+
+            // Fetch community details
+        $community = Community::find($property->community_id);
+        if ($community && $community->main_image) {
+            $community_upload = Upload::find($community->main_image);
+            if ($community_upload) {
+                $community->main_image = get_storage_url($community_upload->file_name);
+            }
+
+            
+            $community_builder = BuildersCommunity::where('community_id', $community->id)->first();
+            if($community_builder)
+            {
+                $builder = Builder::where('id', $community_builder->builder_id)->first();
+                if($builder)
+                {
+                    $incentive_record = Incentive::where('builder_id',$builder->id)->where('end_date', '>=',  $currentDate)->first();
+                    $home->incentive = $incentive_record->title;
+                }
+            }
+            
+
+        }
 
             $property->home_data = $home;
         }

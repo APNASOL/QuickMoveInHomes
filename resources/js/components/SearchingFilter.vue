@@ -327,6 +327,7 @@
                     </div>
 
                     <!-- Scrollable content container -->
+
                     <div
                         v-if="homes && homes.length > 0"
                         class="scrollable-content"
@@ -345,22 +346,38 @@
                                         "
                                     >
                                         <div class="card">
-                                            <img
-                                                :src="home.home_data.main_image"
-                                                class="card-img-top"
-                                                :alt="home.title"
-                                                @error="setAltImg"
-                                            />
+                                            <div class="image-wrapper">
+                                                <img
+                                                    :src="
+                                                        home.home_data
+                                                            .main_image
+                                                    "
+                                                    class="card-img-top"
+                                                    :alt="home.title"
+                                                    @error="setAltImg"
+                                                />
 
-                                            <div
-                                                v-if="home.is_open_house"
-                                                class="card-img-overlay c-card-img-overlay-flash-sale"
-                                            >
-                                                <span
-                                                    class="badge rounded-pill bg-white text-dark"
+                                                <!-- Open House badge positioned at the top of the image -->
+                                                <div
+                                                    v-if="home.is_open_house"
+                                                    class="card-img-overlay c-card-img-overlay-flash-sale"
                                                 >
-                                                    Open House
-                                                </span>
+                                                    <span
+                                                        class="badge rounded-pill bg-white text-dark"
+                                                    >
+                                                        Open House
+                                                    </span>
+                                                </div>
+
+                                                <!-- Incentive Home bar positioned at the bottom of the image -->
+                                                <div
+                                                    v-if="
+                                                        home.home_data.incentive
+                                                    "
+                                                    class="bottom-bar text-white"
+                                                >
+                                                    Incentive Home
+                                                </div>
                                             </div>
 
                                             <div class="card-body text-start">
@@ -1728,5 +1745,49 @@ export default {
     height: 500px; /* Adjust height as needed */
     overflow-y: auto;
     padding-right: 10px; /* Optional: Adds space to the right to avoid overlapping scrollbar */
+}
+.card {
+    position: relative;
+    overflow: hidden;
+}
+.card {
+    position: relative;
+    overflow: hidden;
+}
+
+.card-img-top {
+    position: relative;
+}
+.card {
+    position: relative;
+    overflow: hidden;
+}
+
+.image-wrapper {
+    position: relative;
+}
+
+.c-card-img-overlay-flash-sale {
+    left: unset;
+}
+.c-card-img-overlay-flash-sale {
+    left: unset;
+}
+
+/* Open House badge styling to keep it in its original place */
+
+/* Incentive Home bar at the bottom of the image */
+.bottom-bar {
+    background-color: red; /* Customize the background color */
+    color: white;
+    text-align: center;
+    font-size: 9px; /* Adjust font size as needed */
+    padding: 5px 0; /* Adjust padding as needed */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    font-weight: bold;
 }
 </style>
