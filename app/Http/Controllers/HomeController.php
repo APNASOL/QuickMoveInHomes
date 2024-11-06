@@ -12,13 +12,13 @@ use App\Models\CommunityLasVegasRegion;
 use App\Models\CommunityNeighborhood;
 use App\Models\Contact;
 use App\Models\CustomerAgentConnection;
+use App\Models\CustomerVisitingHomesHistory;
 use App\Models\HOA;
 use App\Models\Incentive;
 use App\Models\LasVegasRegion;
 use App\Models\Neighborhood;
 use App\Models\OpenHouse;
 use App\Models\Property;
-use App\Models\PropertyIncentive;
 use App\Models\QuickMoveHome;
 use App\Models\Upload;
 use App\Models\User;
@@ -90,7 +90,7 @@ class HomeController extends Controller
         // Initialize variables
         $property_main_image = null;
         $openHouseData = [];
-         
+
         $new_price_after_incentive = null;
         $total_incentives_percentage = 0;
         $current_date = now();
@@ -149,37 +149,33 @@ class HomeController extends Controller
                 $community->main_image = get_storage_url($community_upload->file_name);
             }
 
-            
             $community_builder = BuildersCommunity::where('community_id', $community->id)->first();
-            if($community_builder)
-            {
+            if ($community_builder) {
                 $builder = Builder::where('id', $community_builder->builder_id)->first();
-                if($builder)
-                {
-                   $incentive = Incentive::where('builder_id',$builder->id)->where('end_date', '>=',  $currentDate)->first();
+                if ($builder) {
+                    $incentive = Incentive::where('builder_id', $builder->id)->where('end_date', '>=', $currentDate)->first();
                 }
             }
-            
 
         }
 
         // Fetch related incentives for the property
         //$incentives_ids = PropertyIncentive::where('property_id', $property->property_id)->pluck('incentive_id');
-       // $incentives = Incentive::whereIn('id', $incentives_ids)->get();
+        // $incentives = Incentive::whereIn('id', $incentives_ids)->get();
 
         // Process valid incentives and calculate price
         // foreach ($incentives as $incentive) {
-         //    if ($current_date->between($incentive->start_date, $incentive->end_date)) {
-         //        $total_incentives_percentage += $incentive->interest_rate_first_year;
-         //        $valid_incentives[] = $incentive;
-         //    }
-       //  }
+        //    if ($current_date->between($incentive->start_date, $incentive->end_date)) {
+        //        $total_incentives_percentage += $incentive->interest_rate_first_year;
+        //        $valid_incentives[] = $incentive;
+        //    }
+        //  }
 
-       // if (count($valid_incentives) > 0 && $property->price) {
+        // if (count($valid_incentives) > 0 && $property->price) {
         //    $original_price = $property->price;
         //    $discount = $original_price * ($total_incentives_percentage / 100);
         //    $new_price_after_incentive = $original_price - $discount;
-       // }
+        // }
 
         // Prepare property data
         $propertyData = [
@@ -192,7 +188,7 @@ class HomeController extends Controller
             'state' => $property->state,
             'zip_code' => $property->zip_code,
             'price' => $property->price,
-             
+
             'bedrooms' => $property->bedrooms,
             'square_feet' => $property->square_feet,
             'lot_size' => $property->lot_size,
@@ -229,7 +225,7 @@ class HomeController extends Controller
                 'landscape_maintenance' => optional($property->feature)->landscape_maintenance,
                 'foundation_conditions' => optional($property->feature)->foundation_conditions,
             ],
-            'incentive' => $incentive  ?? '',
+            'incentive' => $incentive ?? '',
         ];
 
         // Merge the open house data into property data if available
@@ -244,6 +240,24 @@ class HomeController extends Controller
             foreach ($uploads as $upload) {
                 $upload->file_name = get_storage_url($upload->file_name);
                 $propertyData['files'][] = $upload;
+            }
+        }
+
+        if (auth()->check() && auth()->user()->role == 'customer') {
+            // Fetch the most recent agreement for the logged-in user
+            $agreement = CustomerAgentConnection::where('customer_id', auth()->user()->id)->first();
+
+            if ($agreement) {
+
+                $existing_customer_history_record = CustomerVisitingHomesHistory::where('customer_id', auth()->user()->id)->where('home_id', $id)->first();
+                if (!$existing_customer_history_record) {
+                    $customer_history = new CustomerVisitingHomesHistory;
+                    $customer_history->id = Str::orderedUuid();
+                    $customer_history->customer_id = auth()->user()->id;
+                    $customer_history->home_id = $id;
+                    $customer_history->ip_address = request()->ip(); // Capture the user's IP address
+                    $customer_history->save();
+                }
             }
         }
 
@@ -490,12 +504,11 @@ class HomeController extends Controller
                 });
             }
         }
-        
-        if($request->is_open_house === true || $request->is_open_house === "true")
-        { 
-            $properties->where('is_open_house',$request->is_open_house);
-            
-        } 
+
+        if ($request->is_open_house === true || $request->is_open_house === "true") {
+            $properties->where('is_open_house', $request->is_open_house);
+
+        }
 
         // Apply price filtering
         if ($request->min_price && $request->max_price) {
@@ -554,29 +567,24 @@ class HomeController extends Controller
                 }
             }
 
-
             // Fetch community details
-        $community = Community::find($property->community_id);
-        if ($community && $community->main_image) {
-            $community_upload = Upload::find($community->main_image);
-            if ($community_upload) {
-                $community->main_image = get_storage_url($community_upload->file_name);
-            }
-
-            
-            $community_builder = BuildersCommunity::where('community_id', $community->id)->first();
-            if($community_builder)
-            {
-                $builder = Builder::where('id', $community_builder->builder_id)->first();
-                if($builder)
-                {
-                    $incentive_record = Incentive::where('builder_id',$builder->id)->where('end_date', '>=',  $currentDate)->first();
-                    $home->incentive = $incentive_record->title;
+            $community = Community::find($property->community_id);
+            if ($community && $community->main_image) {
+                $community_upload = Upload::find($community->main_image);
+                if ($community_upload) {
+                    $community->main_image = get_storage_url($community_upload->file_name);
                 }
-            }
-            
 
-        }
+                $community_builder = BuildersCommunity::where('community_id', $community->id)->first();
+                if ($community_builder) {
+                    $builder = Builder::where('id', $community_builder->builder_id)->first();
+                    if ($builder) {
+                        $incentive_record = Incentive::where('builder_id', $builder->id)->where('end_date', '>=', $currentDate)->first();
+                        $home->incentive = $incentive_record->title;
+                    }
+                }
+
+            }
 
             $property->home_data = $home;
         }

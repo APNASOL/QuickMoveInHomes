@@ -145,5 +145,8 @@ class HomesController extends Controller
     public function homes_pluck() { 
         return Home::pluck('title','id');
     }
+    public function fetch_customer_visits() { 
+        
+    }
 
 }

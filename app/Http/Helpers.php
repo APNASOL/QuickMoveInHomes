@@ -3,6 +3,7 @@ use App\Models\CustomerAgentConnection;
 use App\Models\Setting;
 use App\Models\Translation;
 use App\Models\Upload;
+use App\Models\CustomerVisitingHomesHistory;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -95,4 +96,13 @@ function logedInUser()
 function get_storage_url($path)
 {
     return Storage::url($path);
+}
+
+function user_home_visiting_history_count()
+{
+    if (auth()->check() && auth()->user()->role == 'customer')
+    {        
+        $user_visits_how_much_homes = CustomerVisitingHomesHistory::where('customer_id', auth()->user()->id)->count(); 
+        return $user_visits_how_much_homes; 
+    }
 }

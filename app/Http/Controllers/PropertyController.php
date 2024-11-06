@@ -3,14 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Community;
+use App\Models\CustomerAgentConnection;
+use App\Models\CustomerVisitingHomesHistory;
+use App\Models\Incentive;
 use App\Models\OpenHouse;
 use App\Models\Property;
 use App\Models\PropertyFeature;
+use App\Models\PropertyIncentive;
 use App\Models\QuickMoveHome;
 use App\Models\QuickMoveInHome;
-use App\Models\Incentive;
-use App\Models\PropertyIncentive;
 use App\Models\Upload;
+use App\Models\Agent;
+use App\Models\User;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
@@ -166,8 +170,8 @@ class PropertyController extends Controller
         $property->cic = $request->cic ? 1 : 0;
         $property->school_id = $request->school_id;
 
-         // Handle amenities
-         if ($request->incentives) {
+        // Handle amenities
+        if ($request->incentives) {
             PropertyIncentive::where('property_id', $property->property_id)->delete();
             $requested_incentives = json_decode($request->incentives);
 
@@ -178,8 +182,7 @@ class PropertyController extends Controller
                 $incentive_record->incentive_id = $incentive;
                 $incentive_record->save();
             }
-        }else
-        {
+        } else {
             PropertyIncentive::where('property_id', $property->property_id)->delete();
         }
 
@@ -302,7 +305,7 @@ class PropertyController extends Controller
         $property->feature['outdoor_shower'] = $features->outdoor_shower == 1 ? "Yes" : "No";
 
         $property->listing_date = $QuickMoveInHome->move_in_date;
-    
+
         if ($QuickMoveInHome->main_image) {
             $uploads = Upload::where('id', $QuickMoveInHome->main_image)->first();
 
@@ -359,17 +362,16 @@ class PropertyController extends Controller
             $community = Community::where('id', $property->community_id)->first();
         }
 
-         // Get amenities
-         $PropertyIncentivesIds = PropertyIncentive::where('property_id', $id)->pluck('incentive_id');
-         if ($PropertyIncentivesIds->isNotEmpty()) {
-         
-             $property->incentives = Incentive::whereIn('id', $PropertyIncentivesIds)->pluck('title');
-             
-         } else {
-             $property->incentives = [];
-         }
+        // Get amenities
+        $PropertyIncentivesIds = PropertyIncentive::where('property_id', $id)->pluck('incentive_id');
+        if ($PropertyIncentivesIds->isNotEmpty()) {
 
- 
+            $property->incentives = Incentive::whereIn('id', $PropertyIncentivesIds)->pluck('title');
+
+        } else {
+            $property->incentives = [];
+        }
+
         // Initialize the property data array
         $propertyData = [
             'id' => $property->id,
@@ -514,6 +516,65 @@ class PropertyController extends Controller
 
         $OpenHouse->delete();
         return 'success';
+    }
+    public function fetch_customer_visits(Request $request)
+    {
+        // Step 1: Get distinct customer IDs
+        $distinctCustomerIds = CustomerVisitingHomesHistory::select('customer_id')
+            ->distinct()
+            ->pluck('customer_id');
+
+        $customerVisitsData = [];
+
+        // Step 2: Loop through each distinct customer ID and fetch related visit records
+        foreach ($distinctCustomerIds as $customerId) {
+            // Fetch the customer record to get the name
+            $customer_record = User::find($customerId);
+
+            if ($customer_record) {
+                // Fetch visit records for the customer
+                $visits = CustomerVisitingHomesHistory::where('customer_id', $customerId)
+                    ->get(['id', 'home_id', 'ip_address', 'created_at', 'customer_id']);
+
+                // Attach the home title to each visit
+                foreach ($visits as $visit) {
+                    $property_record = Property::where('property_id', $visit->home_id)->first();
+                    $visit->home_title = $property_record ? $property_record->title : "N/A";
+                }
+
+                // Step 3: Store the data in a structured format, including customer name
+                $customerVisitsData[] = [
+                    'customer_id' => $customerId,
+                    'customer_name' => $customer_record->name,
+                    'visits' => $visits,
+                ];
+            }
+        }
+
+        return $customerVisitsData;
+    }
+
+    public function clear_visited_customer_list($customer_id)
+    {
+        CustomerVisitingHomesHistory::where('customer_id', $customer_id)->delete();
+        return "succss";
+    }
+
+    public function fetch_customer_agreements()
+    {
+        $agreements = CustomerAgentConnection::all();
+        foreach ($agreements as $agreement) {
+            $property_record = Property::where('property_id', $agreement->property_id)->first();
+            $agreement->home_title = $property_record ? $property_record->title : "N/A";
+
+            $customer_record = User::where('id',$agreement->customer_id)->first();
+            $agreement->customer_name = $customer_record ? $customer_record->name : "N/A";
+
+            $agent_record = Agent::where('id',$agreement->agent_id)->first();
+            $agreement->agent_name = $agent_record ? $agent_record->name : "N/A";
+            
+        }
+        return $agreements;
     }
 
 }

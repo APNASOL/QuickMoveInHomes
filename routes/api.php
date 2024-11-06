@@ -107,6 +107,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
    Route::get('/get/region/{id}', [LasVegasRegionController::class, 'get'])->name('region.edit');
    Route::post('/region/delete/{id}', [LasVegasRegionController::class, 'delete'])->name('region.delete');
    Route::get('/regions/pluck', [LasVegasRegionController::class, 'regions_pluck'])->name('regions.pluck');
+   // customer's
+   Route::get('/fetch-customer-visits', [PropertyController::class, 'fetch_customer_visits'])->name('fetch-customer-visits');
+   Route::post('/customer-visits-clear/{id}', [PropertyController::class, 'clear_visited_customer_list'])->name('customer-visits-clear');
+   // agreements's
+   Route::get('/fetch-customer-agreements', [PropertyController::class, 'fetch_customer_agreements'])->name('fetch-customer-agreements');
+   Route::post('/customer-visits-clear/{id}', [PropertyController::class, 'clear_visited_customer_list'])->name('customer-visits-clear');
    // builder's
    Route::post('/fetch-builders', [BuilderController::class, 'builders'])->name('fetch-builders');
    Route::post('/builder/store', [BuilderController::class, 'store'])->name('builder.store');
@@ -177,8 +183,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     
 //    Agents
 Route::post('/agent/store', [AgentController::class, 'store'])->name('agent.store');
-// incentives
-Route::post('/fetch-agents', [AgentController::class, 'fetchAgents'])->name('fetch-agents');
+// agents
+Route::get('/fetch-agents', [AgentController::class, 'fetchAgents'])->name('fetch-agents');
 Route::get('/pluck/agents', [AgentController::class, 'agents_pluck'])->name('pluck.agents');
 Route::post('/agent/store', [AgentController::class, 'store'])->name('agent.store');
 Route::get('/get/agent/{id}', [AgentController::class, 'getAgent'])->name('agent.edit');

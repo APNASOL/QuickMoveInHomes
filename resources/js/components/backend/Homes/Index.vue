@@ -106,7 +106,7 @@
                                         <a
                                             type="button"
                                             class="c-linked c-mouse-over c-theme-text-color"
-                                            title="Edit"
+                                            title="details"
                                             :href="
                                                 '/property/details/' +
                                                 home.property_record.property_id

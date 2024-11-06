@@ -265,6 +265,12 @@ app.component("amenities-list-component", AmenitiesList);
 import AmenityForm from "@components/backend/Amenities/Create.vue";
 app.component("amenities-form-component", AmenityForm);
 
+
+import customerVisits from "@components/backend/Customers/Visits.vue";
+app.component("customer-visits-component", customerVisits);
+import customerAgreements from "@components/backend/Customers/Agreements.vue";
+app.component("customer-agreements-component", customerAgreements);
+
  
 // Communities
 import communities_index from "@components/backend/Community/Index.vue";

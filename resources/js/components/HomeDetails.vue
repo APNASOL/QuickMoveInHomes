@@ -71,6 +71,7 @@
                     </div>
                 </div>
 
+                <!-- <h1>TEst - {{ user_home_visiting_history_count }}</h1> -->
                 <div class="container">
                     <!-- Property Details Section at the top -->
                     <div class="row">
@@ -125,14 +126,15 @@
                             <div
                                 v-if="
                                     logged_in_user &&
-                                    logged_in_user.role === 'customer'
+                                    logged_in_user.role === 'customer' &&
+                                    user_home_visiting_history_count < 2
                                 "
                             >
                                 <h5
                                     class="mt-3 c-theme-color"
                                     v-if="
-                                        logged_in_user &&
-                                        !logged_in_user.agreement
+                                        (logged_in_user &&
+                                        !logged_in_user.agreement)
                                     "
                                 >
                                     To access all information, please sign a
@@ -229,7 +231,8 @@
                                 <div
                                     v-if="
                                         logged_in_user &&
-                                        logged_in_user.agreement
+                                        logged_in_user.role === 'customer' &&
+                                        user_home_visiting_history_count < 2
                                     "
                                 >
                                     <div v-if="Home.incentive">
@@ -239,7 +242,7 @@
                                             </div>
                                             <div>
                                                 <i
-                                                    class="bi bi-check-lg text-warning fs-5 "
+                                                    class="bi bi-check-lg text-warning fs-5"
                                                 ></i>
                                                 <a
                                                     class="text-decoration-none c-anchor-style"
@@ -336,7 +339,12 @@
 
                     <div
                         class="middle-section row mt-2"
-                        v-if="logged_in_user && logged_in_user.agreement"
+                        v-if="
+                            (logged_in_user &&
+                            logged_in_user.role === 'customer') &&
+                            logged_in_user.agreement &&
+                            user_home_visiting_history_count < 2
+                        "
                     >
                         <h2 class="feature-state">SUMMARY</h2>
                         <p>
@@ -347,7 +355,12 @@
                     <div
                         class="accordion mt-2"
                         id="accordionExample"
-                        v-if="logged_in_user && logged_in_user.agreement"
+                        v-if="
+                            (logged_in_user &&
+                            logged_in_user.role === 'customer') &&
+                            logged_in_user.agreement &&
+                            user_home_visiting_history_count < 2
+                        "
                     >
                         <div class="accordion-item">
                             <h2 class="accordion-header">
@@ -617,8 +630,8 @@
                     <h1>RELATED COMMUNITY MOVE IN HOMES</h1>
                 </div>
 
-                <div class="mx-4 pt-3">
-                    <div class="container row">
+                <div class=" pt-3">
+                    <div class=" row mx-4">
                         <div
                             v-for="home in community_homes"
                             :key="home.id"
@@ -698,6 +711,10 @@ export default {
     created() {
         this.fetchHomeDetails();
         this.backgroundImage = this.Home.property_main_image;
+        if(this.user_home_visiting_history_count > 2)
+        {
+            alert("Agreement expired you exceed your limit.");
+        }
     },
 
     data() {
@@ -707,6 +724,7 @@ export default {
             logo: external_website.white_logo,
             name: external_website.name,
             logged_in_user: logged_in_user,
+            user_home_visiting_history_count: user_home_visiting_history_count,
             settings: {
                 itemsToShow: 1,
                 autoplay: 3500,
@@ -905,7 +923,7 @@ export default {
     background: #fba638;
     color: white;
     text-align: center;
-    box-shadow: 0 4px 8px #bcd6f5b2; 
+    box-shadow: 0 4px 8px #bcd6f5b2;
     letter-spacing: 0.15em;
 }
 
@@ -972,13 +990,12 @@ export default {
 .open_house_desc {
     text-align: left !important;
 }
-.c-anchor-style { 
+.c-anchor-style {
     text-decoration: none;
-    color: #002855;      
-}  
+    color: #002855;
+}
 .c-anchor-style:hover {
     cursor: pointer;
     font-weight: bold;
 }
-
 </style>

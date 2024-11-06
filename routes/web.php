@@ -68,6 +68,12 @@ Route::get('/reset-password/{user_id}', function ($user_id) {
 Route::get('/external-website', function () {
     return view('app');
 })->name('external-website');
+Route::get('/customer-visits', function () {
+    return view('app');
+})->name('customer-visits');
+Route::get('/customer-agreements', function () {
+    return view('app');
+})->name('customer-agreements');
 
 Route::get('/profile-settings', [UserController::class, 'profile_settings'])->name('profile-settings');
 

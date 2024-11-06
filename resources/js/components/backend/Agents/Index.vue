@@ -1,4 +1,4 @@
-<template> 
+<template>
     <Master>
         <div class="d-flex justify-content-between align-items-center">
             <div class="pagetitle">
@@ -62,6 +62,27 @@
                                 >
                                     <div class="accordion-body">
                                         <div class="accordion-body">
+                                            <div
+                                                class="d-flex justify-content-end p-2"
+                                            >
+                                                <a
+                                                    type="button"
+                                                    class="btn btn-sm fs-6"
+                                                    title="Edit"
+                                                    :href="
+                                                        '/agent/edit/' +
+                                                        agent.id
+                                                    "
+                                                >
+                                                    <i
+                                                        class="bi bi-pencil c-theme-text-color"
+                                                    ></i>
+                                                </a>
+                                                <DeleteModal
+                                                    :deleteId="agent.id"
+                                                    @deleteThis="deleteThis"
+                                                />
+                                            </div>
                                             <div class="row g-3">
                                                 <div class="col-6">
                                                     <strong>Email:</strong>
@@ -105,38 +126,100 @@
                                             </div>
                                         </div>
 
-                                        <div class="btn-group ms-3">
-                                            <a
-                                                type="button"
-                                                class="btn btn-sm fs-6"
-                                                title="Edit"
-                                                :href="
-                                                    '/agent/edit/' + agent.id
-                                                "
-                                            >
-                                                <i
-                                                    class="bi bi-pencil c-theme-text-color"
-                                                ></i>
-                                            </a>
-                                            <DeleteModal
-                                                :deleteId="agent.id"
-                                                @deleteThis="deleteThis"
-                                            />
+                                        <div class="container mt-4">
+                                            <h3>Agreements</h3>
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">
+                                                            Customer
+                                                        </th>
+                                                        <th scope="col">
+                                                            Property
+                                                        </th>
+                                                        <th scope="col">
+                                                            Date
+                                                        </th>
+                                                        <th scope="col">
+                                                            Status
+                                                        </th>
+                                                        <th scope="col">
+                                                            Terms Agreed
+                                                        </th>
+                                                        <th scope="col">
+                                                            Agreement Type
+                                                        </th>
+                                                        <th scope="col">
+                                                            Home Title
+                                                        </th>
+                                                         
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr
+                                                        v-for="(
+                                                            agreement, index
+                                                        ) in agent.customer_agreements"
+                                                        :key="agreement.id"
+                                                    >
+                                                        <td>{{ index + 1 }}</td>
+                                                        <td>
+                                                            {{
+                                                                agreement.customer_name
+                                                            }}
+                                                        </td>
+                                                        <td>
+                                                            {{
+                                                                agreement.customer_name
+                                                            }}
+                                                        </td>
+                                                        <td>
+                                                            {{ agreement.date }}
+                                                        </td>
+                                                        <td>
+                                                            {{
+                                                                agreement.current_status
+                                                            }}
+                                                        </td>
+                                                        <td>
+                                                            {{
+                                                                agreement.terms_agreed
+                                                            }}
+                                                        </td>
+                                                        <td>
+                                                            {{
+                                                                agreement.agreement_type
+                                                            }}
+                                                        </td>
+                                                        <td>
+
+                                                            <a
+                                                            type="button"
+                                                            class="c-linked c-mouse-over c-theme-text-color"
+                                                            title="Edit"
+                                                            target="_blank"
+                                                            :href="
+                                                                '/property/details/' +
+                                                                agreement.home_id
+                                                            "
+                                                        >
+                                                            {{
+                                                                agreement.home_title
+                                                            }}
+                                                        </a>
+
+                                                            
+                                                        </td>
+                                                         
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="text-center">
-                        <button
-                            v-if="pagination.next_page_url"
-                            @click="search(pagination.next_page_url)"
-                            class="btn btn-success"
-                        >
-                            {{ translate("Load More") }}
-                        </button>
                     </div>
                 </div>
             </div>
@@ -158,49 +241,20 @@ export default {
     },
     data() {
         return {
-            default_url: "/api/fetch-agents",
             agents: [],
-            form: {
-                name: "",
-            },
+
             formErrors: [],
-            firstTimeLoadCheck: 0,
             formStatus: 1,
-            pagination: {},
         };
     },
     methods: {
-        makePagination(res) {
-            let pagination = {
-                links: res.links,
-                current_page: res.current_page,
-                last_page: res.last_page,
-                next_page_url: res.next_page_url,
-                prev_page_url: res.prev_page_url,
-            };
-            this.pagination = pagination;
-        },
-        search(page_url) {
+        search() {
             this.formStatus = 0;
-            if (!page_url) {
-                this.firstTimeLoadCheck = 1;
-            }
-            page_url = page_url || this.default_url;
-
-            let formData = new FormData();
-            formData.append("name", this.form.name || "");
 
             axios
-                .post(page_url, formData)
+                .get("/api/fetch-agents")
                 .then((response) => {
-                    if (this.firstTimeLoadCheck === 1) {
-                        this.agents = response.data.data;
-                        this.firstTimeLoadCheck = 0;
-                    } else {
-                        this.agents = this.agents.concat(response.data.data);
-                    }
-                    this.formStatus = 1;
-                    this.makePagination(response.data);
+                    this.agents = response.data;
                 })
                 .catch((error) => {
                     this.formStatus = 1;

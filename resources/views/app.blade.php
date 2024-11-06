@@ -45,7 +45,8 @@
     @php
     $translations = getTranslations();
     $external_website = getExternalWebsiteData();
-    $logged_in_user = logedInUser(); 
+    $logged_in_user = logedInUser();
+    $user_home_visiting_history_count = user_home_visiting_history_count(); 
     @endphp
     <script>
         let translations = @json($translations);
@@ -54,6 +55,8 @@
         window.external_website = JSON.stringify(external_website);
         let logged_in_user = @json($logged_in_user);
         window.logged_in_user = logged_in_user; 
+        let user_home_visiting_history_count = @json($user_home_visiting_history_count);
+        window.user_home_visiting_history_count = user_home_visiting_history_count; 
     </script>
 
     <!-- Google Tag Manager -->
@@ -405,6 +408,11 @@
         <agents-component :property_id="'{{ $property_id }}'" />
         @elseif(Route::currentRouteName() === 'map')
         <map-component />
+
+        @elseif(Route::currentRouteName() === 'customer-visits')
+        <customer-visits-component />
+        @elseif(Route::currentRouteName() === 'customer-agreements')
+        <customer-agreements-component />
 
 
 

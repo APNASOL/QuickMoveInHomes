@@ -1,9 +1,9 @@
 // vite.config.js
-import { defineConfig } from "file:///C:/laragon/www/Shahispace/Travecations/node_modules/vite/dist/node/index.js";
-import laravel from "file:///C:/laragon/www/Shahispace/Travecations/node_modules/laravel-vite-plugin/dist/index.js";
-import vue from "file:///C:/laragon/www/Shahispace/Travecations/node_modules/@vitejs/plugin-vue/dist/index.mjs";
+import { defineConfig } from "file:///C:/laragon/www/Shahispace/QuickMoveHomes/node_modules/vite/dist/node/index.js";
+import laravel from "file:///C:/laragon/www/Shahispace/QuickMoveHomes/node_modules/laravel-vite-plugin/dist/index.js";
+import vue from "file:///C:/laragon/www/Shahispace/QuickMoveHomes/node_modules/@vitejs/plugin-vue/dist/index.mjs";
 import path from "path";
-var __vite_injected_original_dirname = "C:\\laragon\\www\\Shahispace\\Travecations";
+var __vite_injected_original_dirname = "C:\\laragon\\www\\Shahispace\\QuickMoveHomes";
 var vite_config_default = defineConfig({
   plugins: [
     laravel(

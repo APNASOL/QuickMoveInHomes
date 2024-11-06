@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agent;
+use App\Models\CustomerAgentConnection;
+use App\Models\Property;
+use App\Models\Setting;
+use App\Models\User;
+use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use App\Models\User;
-use App\Models\Setting;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Carbon\Carbon;
+use Illuminate\Support\Str;
+
 class AgentController extends Controller
 {
     public function index()
@@ -18,15 +21,24 @@ class AgentController extends Controller
         return view('app');
     }
 
-    public function fetchAgents(Request $request)
+    public function fetchAgents()
     {
-        $agents = DB::table('agents');
+        $agents = Agent::all();  
+        foreach ($agents as $agent) {
+            $agreements = CustomerAgentConnection::where('agent_id', $agent->id)->get();
 
-        if ($request->agency_name !== null && $request->agency_name !== "null") {
-            $agents->where('agency_name', 'LIKE', '%' . $request->agency_name . '%');
-        }
+            foreach ($agreements as $agreement) {
+                $property_record = Property::where('property_id', $agreement->property_id)->first();
+                $agreement->home_title = $property_record ? $property_record->title : "N/A";
+                $agreement->home_id = $property_record ? $property_record->property_id : "N/A";
 
-        $agents = $agents->paginate(15);
+                $customer_record = User::where('id', $agreement->customer_id)->first();
+                $agreement->customer_name = $customer_record ? $customer_record->name : "N/A";
+
+            }
+
+            $agent->customer_agreements = $agreements;
+        } 
 
         return $agents;
     }
@@ -64,7 +76,6 @@ class AgentController extends Controller
             $User->email_verified_at = Carbon::now();
             $User->role = "agent";
             $User->password = Hash::make($randomPassword);
-            
 
             $welcome_email = Setting::where('type', 'welcome_email')->first();
             if ($welcome_email) {
@@ -106,7 +117,7 @@ class AgentController extends Controller
         $agent->experience = $request->experience;
         $agent->languages = $request->languages;
         $agent->contact = $request->contact;
-        
+
         $User->save();
         // Save the Agent model
         $agent->user_id = $User->id;
