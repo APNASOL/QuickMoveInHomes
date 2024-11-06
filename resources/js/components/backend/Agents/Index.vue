@@ -153,7 +153,6 @@
                                                         <th scope="col">
                                                             Home Title
                                                         </th>
-                                                         
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -193,25 +192,21 @@
                                                             }}
                                                         </td>
                                                         <td>
-
                                                             <a
-                                                            type="button"
-                                                            class="c-linked c-mouse-over c-theme-text-color"
-                                                            title="Edit"
-                                                            target="_blank"
-                                                            :href="
-                                                                '/property/details/' +
-                                                                agreement.home_id
-                                                            "
-                                                        >
-                                                            {{
-                                                                agreement.home_title
-                                                            }}
-                                                        </a>
-
-                                                            
+                                                                type="button"
+                                                                class="c-linked c-mouse-over c-theme-text-color"
+                                                                title="Edit"
+                                                                target="_blank"
+                                                                :href="
+                                                                    '/property/details/' +
+                                                                    agreement.home_id
+                                                                "
+                                                            >
+                                                                {{
+                                                                    agreement.home_title
+                                                                }}
+                                                            </a>
                                                         </td>
-                                                         
                                                     </tr>
                                                 </tbody>
                                             </table>
