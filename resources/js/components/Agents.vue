@@ -18,13 +18,7 @@
         <div class="container-fluid interactive-banner mt-3 mb-3">
             <h1>AVAILABLE AGENTS MOVE IN HOMES</h1>
         </div>
-        <div
-            class="container-fluid interactive-banner"
-            v-if="homes && homes.length"
-        >
-            <h1>Current Incentives</h1>
-            <p>Inventory Closeout Specials On Quick Delivery Homes</p>
-        </div>
+        
 
         <div class="c-tour-details container">
             <div>
@@ -318,7 +312,7 @@ export default {
             formStatus: true,
             termsAgreed: false,
             agreementType: "single",
-            homes: "",
+         
         };
     },
 

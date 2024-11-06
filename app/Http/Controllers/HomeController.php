@@ -762,8 +762,13 @@ class HomeController extends Controller
     {
 
         $agents = Agent::all();
-        foreach ($agents as $agent) {
+        foreach ($agents as $key => $agent) {
 
+            $agreements_count = CustomerAgentConnection::where('agent_id', $agent->id)->where('current_status','!=','Completed')->count();
+            if($agreements_count > 2)
+            { 
+                $agents = $agents->forget($key);
+            }
             $user = User::where('id', $agent->user_id)->first();
             if ($user) {
                 $uploaded_image = Upload::where('id', $user->image)->first();
