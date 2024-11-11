@@ -413,6 +413,8 @@
         <customer-visits-component />
         @elseif(Route::currentRouteName() === 'customer-agreements')
         <customer-agreements-component />
+        @elseif(Route::currentRouteName() === 'help')
+        <customer-help-component />
 
 
 

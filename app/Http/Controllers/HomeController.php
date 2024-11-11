@@ -580,7 +580,10 @@ class HomeController extends Controller
                     $builder = Builder::where('id', $community_builder->builder_id)->first();
                     if ($builder) {
                         $incentive_record = Incentive::where('builder_id', $builder->id)->where('end_date', '>=', $currentDate)->first();
-                        $home->incentive = $incentive_record->title;
+                        if($incentive_record)
+                        {
+                            $home->incentive = $incentive_record->title ?? "";
+                        }
                     }
                 }
 

@@ -74,6 +74,9 @@ Route::get('/customer-visits', function () {
 Route::get('/customer-agreements', function () {
     return view('app');
 })->name('customer-agreements');
+Route::get('/help', function () { 
+    return view('app');
+})->name('help');
 
 Route::get('/profile-settings', [UserController::class, 'profile_settings'])->name('profile-settings');
 

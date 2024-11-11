@@ -270,7 +270,8 @@ import customerVisits from "@components/backend/Customers/Visits.vue";
 app.component("customer-visits-component", customerVisits);
 import customerAgreements from "@components/backend/Customers/Agreements.vue";
 app.component("customer-agreements-component", customerAgreements);
-
+import helpComponent from '@components/Help.vue';
+app.component("customer-help-component",  helpComponent);
  
 // Communities
 import communities_index from "@components/backend/Community/Index.vue";
@@ -317,6 +318,7 @@ app.component("agents-component",  agent_front_end);
 
 import map_front_end from '@components/Map.vue';
 app.component("map-component",  map_front_end);
+
 
 // Quick Move Homes external website
 

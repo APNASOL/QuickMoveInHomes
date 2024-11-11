@@ -127,7 +127,7 @@
                                 v-if="
                                     logged_in_user &&
                                     logged_in_user.role === 'customer' &&
-                                    user_home_visiting_history_count < 2
+                                    user_home_visiting_history_count < 5
                                 "
                             >
                                 <h5
@@ -232,7 +232,7 @@
                                     v-if="
                                         logged_in_user &&
                                         logged_in_user.role === 'customer' &&
-                                        user_home_visiting_history_count < 2
+                                        user_home_visiting_history_count < 5
                                     "
                                 >
                                     <div v-if="Home.incentive">
@@ -343,7 +343,7 @@
                             (logged_in_user &&
                             logged_in_user.role === 'customer') &&
                             logged_in_user.agreement &&
-                            user_home_visiting_history_count < 2
+                            user_home_visiting_history_count < 5
                         "
                     >
                         <h2 class="feature-state">SUMMARY</h2>
@@ -359,7 +359,7 @@
                             (logged_in_user &&
                             logged_in_user.role === 'customer') &&
                             logged_in_user.agreement &&
-                            user_home_visiting_history_count < 2
+                            user_home_visiting_history_count < 5
                         "
                     >
                         <div class="accordion-item">
@@ -713,7 +713,7 @@ export default {
         this.backgroundImage = this.Home.property_main_image;
         if(this.user_home_visiting_history_count > 2)
         {
-            alert("Agreement expired you exceed your limit.");
+            window.location.href = "/help";
         }
     },
 

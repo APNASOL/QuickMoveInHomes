@@ -231,6 +231,7 @@
                             Events
                         </a> 
                     </li>
+                    
                     <li class="nav-item dropdown">
                         <!-- Dropdown trigger -->
                         <a
@@ -266,6 +267,16 @@
                             Blogs
                         </a>
                         <!-- Dropdown menu -->
+                    </li>
+                    <li class="nav-item dropdown"> 
+                        <a
+                            class="nav-link"
+                            href="/help"
+                            id="navbarDropdownDeals"
+                            role="button"
+                        >
+                        Help
+                        </a> 
                     </li>
 
                     <!-- Login dropdown -->
