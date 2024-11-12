@@ -16,7 +16,7 @@
                                 </h1>
                                 <span class="icon">📍</span
                                 >{{ community_details.location }}
-                                <a
+                                <!-- <a
                                     :href="`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
                                         community_details.map_location
                                     )}`"
@@ -24,7 +24,7 @@
                                     target="_blank"
                                 >
                                     Map & Directions
-                                </a>
+                                </a> -->
                             </div>
                             <div class="location">
                                 <h3 class="master_plan">
@@ -245,7 +245,7 @@
                                             <li>{{ community_details.hoa }}</li>
                                         </ul>
                                     </div>
-                                    <div>
+                                    <!-- <div>
                                         <div class="open-house-tag mb-2">
                                             <i
                                                 class="bi bi-building text-warning fs-5"
@@ -264,7 +264,7 @@
                                                  
                                             </li>
                                         </ul>
-                                    </div>
+                                    </div> -->
                                 </div>
 
                                 <!-- Blurred placeholder when user is a customer or not logged in -->

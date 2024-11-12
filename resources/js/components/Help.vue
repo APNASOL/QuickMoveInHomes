@@ -23,9 +23,9 @@
                     <p class="help-info">
                         Welcome to Quick Move In Home! Here’s an important
                         reminder: when you sign an agreement with an agent,
-                        you’ll have limited permissions to visit a select number
-                        of homes. Once your viewing permission expires, you’ll
-                        need to contact the administration to renew your access
+                        <b> you’ll have limited permissions to visit a select number
+                        of homes</b>. Once your viewing permission expires, you’ll
+                        need to  <b>contact the <a href="/contact"> administration</a></b> to renew your access
                         or for further inquiries. Our agents will reach out to
                         assist with any further arrangements.
                     </p>
