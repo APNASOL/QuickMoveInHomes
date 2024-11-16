@@ -7,10 +7,7 @@
             <div class="info-overlay">
                 <div class="d-flex justify-content-center container">
                     <div>
-                        <h2 class="title uppercase">
-                            Help
-                        </h2>
-                         
+                        <h2 class="title uppercase">Help</h2>
                     </div>
                 </div>
             </div>
@@ -23,11 +20,17 @@
                     <p class="help-info">
                         Welcome to Quick Move In Home! Here’s an important
                         reminder: when you sign an agreement with an agent,
-                        <b> you’ll have limited permissions to visit a select number
-                        of homes</b>. Once your viewing permission expires, you’ll
-                        need to  <b>contact the <a href="/contact"> administration</a></b> to renew your access
-                        or for further inquiries. Our agents will reach out to
-                        assist with any further arrangements.
+                        <b>
+                            you’ll have limited permissions to visit a select
+                            number of homes</b
+                        >. Once your viewing permission expires, you’ll need to
+                        <b
+                            >contact the
+                            <a href="/contact"> administration</a></b
+                        >
+                        to renew your access or for further inquiries. Our
+                        agents will reach out to assist with any further
+                        arrangements.
                     </p>
                     <p class="help-info">
                         Property Viewing Guidelines "At Quick Move In Home, we
@@ -109,15 +112,15 @@ body {
 }
 .top-section {
     position: relative;
-    height: 300px; 
+    height: 300px;
     background-size: cover;
     background-position: center;
     color: white;
     display: flex;
-    justify-content: center;  
+    justify-content: center;
     align-items: flex-end;
     width: 100%;
-    overflow: hidden; 
+    overflow: hidden;
 }
 
 .uppercase {
@@ -125,18 +128,14 @@ body {
 }
 
 .info-overlay {
-    background: rgba(1, 6, 13, 0.8); 
-    padding: 20px;  
+    background: rgba(1, 6, 13, 0.8);
+    padding: 20px;
     width: 100%;
     border-radius: 0px !important;
-    display: flex;  
-    flex-direction: column;  
-    align-items: center;  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
- 
- 
- 
- 
 
 h2,
 h3,
@@ -147,9 +146,7 @@ h5 {
     line-height: 1.55rem;
     font-weight: bold;
 }
-.help-info
-{
+.help-info {
     padding: 10px;
 }
-
 </style>
