@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 29, 2024 at 06:29 AM
+-- Generation Time: Nov 14, 2024 at 05:23 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -41,7 +41,7 @@ CREATE TABLE `agents` (
   `contact` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `agents`
@@ -60,12 +60,12 @@ INSERT INTO `agents` (`id`, `user_id`, `name`, `email`, `agency_name`, `license_
 --
 
 CREATE TABLE `amenities` (
-  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
+  `id` char(36) COLLATE utf8mb4_general_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `description` text COLLATE utf8mb4_general_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `amenities`
@@ -91,7 +91,7 @@ CREATE TABLE `blog_posts` (
   `status` tinytext NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `blog_posts`
@@ -109,12 +109,12 @@ INSERT INTO `blog_posts` (`id`, `title`, `content`, `author_id`, `image`, `statu
 --
 
 CREATE TABLE `builders` (
-  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
+  `id` char(36) COLLATE utf8mb4_general_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `description` text COLLATE utf8mb4_general_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `builders`
@@ -133,12 +133,12 @@ INSERT INTO `builders` (`id`, `name`, `description`, `created_at`, `updated_at`)
 --
 
 CREATE TABLE `builders_communities` (
-  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `community_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `builder_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` char(36) COLLATE utf8mb4_general_ci NOT NULL,
+  `community_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `builder_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `builders_communities`
@@ -180,34 +180,34 @@ INSERT INTO `carousels` (`id`, `image_id`, `description`, `order_id`, `created_a
 --
 
 CREATE TABLE `communities` (
-  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
-  `location` text COLLATE utf8mb4_unicode_ci,
-  `longitude` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `latitude` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `amenity_id` char(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `hoa_id` char(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `neighborhood_id` char(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `las_vegas_region_id` char(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` char(36) COLLATE utf8mb4_general_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `description` text COLLATE utf8mb4_general_ci,
+  `location` text COLLATE utf8mb4_general_ci,
+  `longitude` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `latitude` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `amenity_id` char(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `hoa_id` char(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `neighborhood_id` char(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `las_vegas_region_id` char(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `main_image` int DEFAULT NULL,
-  `files` text COLLATE utf8mb4_unicode_ci,
-  `map_location` text COLLATE utf8mb4_unicode_ci,
-  `legal_subdivision` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nearby_properties` text COLLATE utf8mb4_unicode_ci,
-  `masterplan` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `sub_association` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `cic` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `lid` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `cid` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `files` text COLLATE utf8mb4_general_ci,
+  `map_location` text COLLATE utf8mb4_general_ci,
+  `legal_subdivision` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `nearby_properties` text COLLATE utf8mb4_general_ci,
+  `masterplan` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `sub_association` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `cic` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `lid` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `cid` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `sid_lid_fee` decimal(10,2) DEFAULT NULL,
-  `sid_lid_payment_frequency` text COLLATE utf8mb4_unicode_ci,
+  `sid_lid_payment_frequency` text COLLATE utf8mb4_general_ci,
   `proximity_to_strip` decimal(8,2) DEFAULT NULL,
   `proximity_to_airport` decimal(8,2) DEFAULT NULL,
-  `nearby_attractions` text COLLATE utf8mb4_unicode_ci,
+  `nearby_attractions` text COLLATE utf8mb4_general_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `communities`
@@ -227,12 +227,12 @@ INSERT INTO `communities` (`id`, `name`, `description`, `location`, `longitude`,
 --
 
 CREATE TABLE `community_amenities` (
-  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `community_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `amenity_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` char(36) COLLATE utf8mb4_general_ci NOT NULL,
+  `community_id` char(36) COLLATE utf8mb4_general_ci NOT NULL,
+  `amenity_id` char(36) COLLATE utf8mb4_general_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `community_amenities`
@@ -255,12 +255,12 @@ INSERT INTO `community_amenities` (`id`, `community_id`, `amenity_id`, `created_
 --
 
 CREATE TABLE `community_las_vegas_regions` (
-  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `community_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `las_vegas_regions_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` char(36) COLLATE utf8mb4_general_ci NOT NULL,
+  `community_id` char(36) COLLATE utf8mb4_general_ci NOT NULL,
+  `las_vegas_regions_id` char(36) COLLATE utf8mb4_general_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `community_las_vegas_regions`
@@ -284,12 +284,12 @@ INSERT INTO `community_las_vegas_regions` (`id`, `community_id`, `las_vegas_regi
 --
 
 CREATE TABLE `community_neighborhoods` (
-  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `community_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `neighborhood_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` char(36) COLLATE utf8mb4_general_ci NOT NULL,
+  `community_id` char(36) COLLATE utf8mb4_general_ci NOT NULL,
+  `neighborhood_id` char(36) COLLATE utf8mb4_general_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `community_neighborhoods`
@@ -357,18 +357,79 @@ CREATE TABLE `customer_agents_connections` (
   `agreement_type` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `customer_agents_connections`
 --
 
 INSERT INTO `customer_agents_connections` (`id`, `customer_id`, `agent_id`, `property_id`, `date`, `current_status`, `terms_agreed`, `agreement_type`, `created_at`, `updated_at`) VALUES
-('9d52df6a-bf3f-4f77-b002-c7efbe471637', '108', '9d2cd7a1-d78a-4a83-b805-4a1353bab4d3', '9d50964d-70f3-4344-a323-027f244562d0', '2024-10-24', 'Pending', 'true', 'single', '2024-10-24 12:56:52', '2024-10-24 12:56:52'),
+('9d52df6a-bf3f-4f77-b002-c7efbe471637', '108', '9d52e170-cda2-4b72-8885-1dd6352fad5b', '9d50964d-70f3-4344-a323-027f244562d0', '2024-10-24', 'Pending', 'true', 'single', '2024-10-24 12:56:52', '2024-10-24 12:56:52'),
 ('9d52e3ff-c314-4df4-8a63-1aa09292c918', '112', '9d52e1ba-8bf3-4110-9785-2c0b09199ab0', '9d50964d-70f3-4344-a323-027f244562d0', '2024-10-24', 'Pending', 'true', 'single', '2024-10-24 13:09:40', '2024-10-24 13:09:40'),
-('9d52e55d-1335-4a9e-bf73-27655cc710a0', '110', '9d52e1ba-8bf3-4110-9785-2c0b09199ab0', '9d50964d-70f3-4344-a323-027f244562d0', '2024-10-24', 'Completed', 'true', 'single', '2024-10-24 13:13:29', '2024-10-24 13:14:19'),
+('9d52e55d-1335-4a9e-bf73-27655cc710a0', '110', '9d52e1ba-8bf3-4110-9785-2c0b09199ab0', '9d50964d-70f3-4344-a323-027f244562d0', '2024-10-24', 'Pending', 'true', 'single', '2024-10-24 13:13:29', '2024-10-24 13:14:19'),
 ('9d54ac91-78b7-4e3d-8bed-e5985cb90d51', '115', '9d52e202-cd57-4c0b-a1b2-be63b8a1e9f4', '9d50964d-80b1-41c0-adf4-ef838f70f225', '2024-10-25', 'Pending', 'true', 'single', '2024-10-25 10:26:20', '2024-10-25 10:26:20'),
-('9d54dec5-31ec-424b-a1af-8e1b21f4cf5f', '116', '9d52e202-cd57-4c0b-a1b2-be63b8a1e9f4', '9d50964d-80b1-41c0-adf4-ef838f70f225', '2024-10-25', 'Pending', 'true', 'single', '2024-10-25 12:46:43', '2024-10-25 12:46:43');
+('9d54dec5-31ec-424b-a1af-8e1b21f4cf5f', '116', '9d52e202-cd57-4c0b-a1b2-be63b8a1e9f4', '9d50964d-80b1-41c0-adf4-ef838f70f225', '2024-10-25', 'Pending', 'true', 'single', '2024-10-25 12:46:43', '2024-10-25 12:46:43'),
+('9d5edf91-983c-409b-b2ba-a3f3e0df3ba6', '118', '9d52e170-cda2-4b72-8885-1dd6352fad5b', '9d50964d-70f3-4344-a323-027f244562d0', '2024-10-30', 'Pending', 'true', 'Multiple', '2024-10-30 12:07:14', '2024-10-30 12:07:14'),
+('9d603ef8-18da-4089-8a38-c04374d2a5f2', '119', '9d52e170-cda2-4b72-8885-1dd6352fad5b', '9d50964d-8630-4260-804d-201c0891c895', '2024-10-31', 'Pending', 'true', 'single', '2024-10-31 04:29:49', '2024-10-31 04:29:49'),
+('9d603ef8-18da-4089-8a38-c04374d2a5f4', '119', '9d52e170-cda2-4b72-8885-1dd6352fad5b', '9d50964d-8630-4260-804d-201c0891c895', '2024-10-31', 'Pending', 'true', 'single', '2024-10-31 04:29:49', '2024-10-31 04:29:49');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer_visiting_homes_history`
+--
+
+CREATE TABLE `customer_visiting_homes_history` (
+  `id` varchar(255) NOT NULL,
+  `customer_id` varchar(255) NOT NULL,
+  `home_id` varchar(255) NOT NULL,
+  `ip_address` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `customer_visiting_homes_history`
+--
+
+INSERT INTO `customer_visiting_homes_history` (`id`, `customer_id`, `home_id`, `ip_address`, `created_at`, `updated_at`) VALUES
+('9d682bdf-72a4-488b-9d7b-474ffa016162', '120', '9d50964d-70f3-4344-a323-027f244562d0', '127.0.0.1', '2024-11-04 03:03:02', '2024-11-04 03:03:02'),
+('9d684068-d872-4e41-bd6f-e370dbaed371', '120', '9d50964d-8ba2-4602-95dd-fcb72e1d4bcc', '127.0.0.1', '2024-11-04 04:00:27', '2024-11-04 04:00:27'),
+('9d6bb98b-5aed-4347-a579-4269b229ee67', '118', '9d50964d-70f3-4344-a323-027f244562d0', '127.0.0.1', '2024-11-05 21:26:40', '2024-11-05 21:26:40'),
+('9d6bbda8-e53a-4b9b-b11c-ee07538f823c', '118', '9d50964d-8630-4260-804d-201c0891c895', '127.0.0.1', '2024-11-05 21:38:10', '2024-11-05 21:38:10'),
+('9d6bbdca-fb90-41bf-b41b-b02584174ee6', '118', '9d50964d-8344-4d3d-a09a-1a48cf2c2139', '127.0.0.1', '2024-11-05 21:38:32', '2024-11-05 21:38:32'),
+('9d6bbdd7-3976-4535-b3fe-42e4c293797b', '118', '9d50964d-940a-4fe2-b727-a891a1a60ae1', '127.0.0.1', '2024-11-05 21:38:40', '2024-11-05 21:38:40'),
+('9d6bbdf7-8d83-4973-bf90-95d5071ac7e7', '118', '9d50964d-8ba2-4602-95dd-fcb72e1d4bcc', '127.0.0.1', '2024-11-05 21:39:01', '2024-11-05 21:39:01'),
+('9d6bbe02-1cd0-4b5d-8e03-04bf111aaf62', '118', '9d50964d-80b1-41c0-adf4-ef838f70f225', '127.0.0.1', '2024-11-05 21:39:08', '2024-11-05 21:39:08'),
+('9d6bbe07-8485-4976-872a-2dce14073487', '118', '9d50964d-8e86-480c-9690-22dc634fe4a9', '127.0.0.1', '2024-11-05 21:39:12', '2024-11-05 21:39:12'),
+('9d6bcf3c-1240-4424-9f05-e24dc5365fc9', '118', '9d50964d-88cc-4755-bf49-c87be36704af', '127.0.0.1', '2024-11-05 22:27:18', '2024-11-05 22:27:18');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `events`
+--
+
+CREATE TABLE `events` (
+  `id` varchar(255) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `date` date NOT NULL,
+  `description` text NOT NULL,
+  `registeration_link` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `events`
+--
+
+INSERT INTO `events` (`id`, `title`, `date`, `description`, `registeration_link`, `image`, `created_at`, `updated_at`) VALUES
+('9d620b35-42bf-494e-870d-f18a61b32090', 'Realtor Networking Mixer', '2024-11-20', '<p class=\"ql-align-justify\">Join us for an evening of networking <span style=\"color: rgb(0, 138, 0);\">with fellow realtors!</span> This mixer is a perfect opportunity to exchange ideas, share listings, and<span style=\"color: rgb(255, 255, 0);\"> </span><span style=\"background-color: rgb(255, 255, 0);\" class=\"ql-font-serif\">build valuable connections</span> within the real estate community.</p>', 'realtor.events.example.com', '534', '2024-11-01 01:56:43', '2024-11-02 01:55:35'),
+('9d640d87-40ea-4b6f-8649-25d29caeab49', 'Homebuyer Seminar', '2025-11-04', '<p>Are you <strong>ready </strong>to buy your dream home? Our expert panel will guide you through the <strong>homebuying </strong>process, from securing financing to making the best offers. <span style=\"color: rgb(230, 0, 0);\">Don’t miss this chance to ask your questions</span>!</p>', 'realtor.events.example.com', '533', '2024-11-02 01:54:52', '2024-11-02 01:54:52'),
+('9d640e15-a5e9-4e1c-9f40-439abb3a4fd9', 'Real Estate Investment Workshop', '2024-12-06', '<p><span style=\"color: rgb(230, 0, 0);\">Learn the secrets</span> of successful real estate <span style=\"color: rgb(230, 0, 0);\">investing</span>! This workshop will cover everything from market analysis to property management, helping you make informed investment decisions.</p>', 'realtor.events.example.com', '535', '2024-11-02 01:56:25', '2024-11-02 02:57:26'),
+('9d640e91-06cd-410c-9cf7-8bf62aa30f61', 'Open House Showcase', '2024-11-22', '<p>Discover beautiful properties at our Open House Showcase! Explore various homes on the market, meet the listing agents, and find out what makes each property unique.Discover beautiful properties at our Open House Showcase! Explore various homes on the market, meet the listing agents, and find out what makes each property unique.</p>', 'realtor.events.example.com', '536', '2024-11-02 01:57:46', '2024-11-02 01:58:05');
 
 -- --------------------------------------------------------
 
@@ -378,13 +439,13 @@ INSERT INTO `customer_agents_connections` (`id`, `customer_id`, `agent_id`, `pro
 
 CREATE TABLE `failed_jobs` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `connection` text COLLATE utf8mb4_general_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_general_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_general_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_general_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -393,15 +454,15 @@ CREATE TABLE `failed_jobs` (
 --
 
 CREATE TABLE `hoa` (
-  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` char(36) COLLATE utf8mb4_general_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `fee` decimal(8,2) DEFAULT NULL,
-  `frequency` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `frequency` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `master_plan` tinyint(1) NOT NULL DEFAULT '0',
   `sub_association` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `hoa`
@@ -421,25 +482,26 @@ INSERT INTO `hoa` (`id`, `name`, `fee`, `frequency`, `master_plan`, `sub_associa
 CREATE TABLE `incentives` (
   `id` varchar(255) NOT NULL,
   `title` varchar(255) DEFAULT NULL,
-  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
-  `how_much` varchar(255) DEFAULT NULL,
+  `interest_rate_first_year` double(8,2) DEFAULT NULL,
   `status` tinyint DEFAULT NULL,
+  `incentive_banner` int DEFAULT NULL,
+  `builder_id` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `incentives`
 --
 
-INSERT INTO `incentives` (`id`, `title`, `description`, `start_date`, `end_date`, `how_much`, `status`, `created_at`, `updated_at`) VALUES
-('9d2ad55f-982b-43dc-a1bb-f32456ac7e6d', 'Incentive One', 'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is available. Wikipedia', '2024-10-04', '2024-10-18', '20', 1, '2024-10-04 15:15:39', '2024-10-05 04:56:35'),
-('9d2ad560-c7f4-4e8f-b0b8-79caa3fab0d0', 'Incentive Two', 'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is available. Wikipedia', '2024-10-04', '2024-11-03', '10', 1, '2024-10-04 15:15:40', '2024-10-05 04:56:59'),
-('9d2ad561-ce01-474a-adb9-a5b196d74c53', 'Incentive Three', 'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is available. Wikipedia', '2024-10-02', '2024-10-27', '50', 1, '2024-10-04 15:15:41', '2024-10-05 05:14:34'),
-('9d2ad562-e4dc-47c1-bb00-b32ae2ff7089', 'Incentive Four', 'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is available. Wikipedia', '2024-10-01', '2024-11-30', '4', 1, '2024-10-04 15:15:42', '2024-10-05 05:14:18'),
-('9d2bf1ca-d91d-4d3c-b7fc-d639df557d3e', 'Incentive 3', 'Desctipion....', '2024-10-04', '2024-10-18', '30', 1, '2024-10-05 04:30:57', '2024-10-05 05:15:12');
+INSERT INTO `incentives` (`id`, `title`, `description`, `start_date`, `end_date`, `interest_rate_first_year`, `status`, `incentive_banner`, `builder_id`, `created_at`, `updated_at`) VALUES
+('9d2ad55f-982b-43dc-a1bb-f32456ac7e6d', 'Inventory Home Incentive', '<p><span style=\"color: rgb(41, 80, 59);\">Get up to $5,000 towards closing costs &amp; up to $1% of your loan amount (up to $5,000) towards interest rate buy down when you use a preferred vendor on an Inventory Home!</span></p>', '2024-10-04', '2024-11-18', 20.00, 1, 539, '9d408aa7-ba82-42a3-b0a7-6dda8017e87a', '2024-10-04 15:15:39', '2024-11-02 05:35:13'),
+('9d2ad560-c7f4-4e8f-b0b8-79caa3fab0d0', 'Luxury Living at The Strip', '<p><span class=\"hljs-string\">Experience unparalleled luxury with our latest homes located on The Strip. Enjoy world-class amenities and breathtaking views.</span></p>', '2024-10-04', '2024-11-22', 25.00, 1, 537, '9d09a7ab-a328-473b-9d44-b3637e545501', '2024-10-04 15:15:40', '2024-11-02 05:14:43'),
+('9d2ad561-ce01-474a-adb9-a5b196d74c53', 'Pre-Sale Incentive', '<p>Get up to $5,000 in design center upgrade credit &amp; 1% of your loan amount (up to $5,000) credited toward rate buy down when you use a preferred vendor on a pre-sale lot!</p>', '2024-10-02', '2024-11-04', 50.00, 1, 538, '9d09a566-6d4c-4dec-bbf1-75df4305c8e1', '2024-10-04 15:15:41', '2024-11-04 01:05:20'),
+('9d2ad562-e4dc-47c1-bb00-b32ae2ff7089', 'Family-Friendly Community Special', '<p>Join our family-friendly community in Las Vegas with great schools, parks, and recreational activities. Limited-time incentives available!</p>', '2024-10-01', '2024-11-30', 25.20, 1, 540, '9d09a7ab-a328-473b-9d44-b3637e545501', '2024-10-04 15:15:42', '2024-11-02 05:34:22');
 
 -- --------------------------------------------------------
 
@@ -471,13 +533,13 @@ INSERT INTO `languages` (`id`, `name`, `code`, `rtl`, `created_at`, `updated_at`
 --
 
 CREATE TABLE `las_vegas_regions` (
-  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
-  `boundaries` text COLLATE utf8mb4_unicode_ci,
+  `id` char(36) COLLATE utf8mb4_general_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `description` text COLLATE utf8mb4_general_ci,
+  `boundaries` text COLLATE utf8mb4_general_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `las_vegas_regions`
@@ -496,9 +558,9 @@ INSERT INTO `las_vegas_regions` (`id`, `name`, `description`, `boundaries`, `cre
 
 CREATE TABLE `migrations` (
   `id` int UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `batch` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `migrations`
@@ -532,17 +594,17 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `neighborhoods` (
-  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
-  `location` text COLLATE utf8mb4_unicode_ci,
-  `amenities` text COLLATE utf8mb4_unicode_ci,
+  `id` char(36) COLLATE utf8mb4_general_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `description` text COLLATE utf8mb4_general_ci,
+  `location` text COLLATE utf8mb4_general_ci,
+  `amenities` text COLLATE utf8mb4_general_ci,
   `image` int DEFAULT NULL,
-  `map_location` text COLLATE utf8mb4_unicode_ci,
-  `nearby_properties` text COLLATE utf8mb4_unicode_ci,
+  `map_location` text COLLATE utf8mb4_general_ci,
+  `nearby_properties` text COLLATE utf8mb4_general_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `neighborhoods`
@@ -570,7 +632,7 @@ CREATE TABLE `open_houses` (
   `description` text NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `open_houses`
@@ -580,19 +642,14 @@ INSERT INTO `open_houses` (`id`, `property_id`, `date`, `start_time`, `end_time`
 ('9d26ccd8-c704-4a8e-9f5a-3ebd893e246a', '9d261304-04af-4cde-90a1-c2d24bfdb4eb', '2024-10-17', '03:10:00', '06:13:00', 'Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator.', '2024-10-02 15:08:30', '2024-10-02 15:08:30'),
 ('9d26cce6-1a13-4a48-8301-275c1345c865', '9d261321-af36-4672-91a6-7205a079def0', '2024-10-24', '02:09:00', '05:12:00', 'Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator.', '2024-10-02 15:08:39', '2024-10-02 15:08:39'),
 ('9d26ccff-29c6-4a83-9b20-06ba978c1b94', '9d2613a8-363d-4149-a46f-ff3040d8f3c6', '2024-10-25', '01:10:00', '01:14:00', 'Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator.', '2024-10-02 15:08:55', '2024-10-02 15:08:55'),
-('9d3ffaf0-b9e6-4435-beca-8bdf8de441f0', '9d261298-5daf-4151-8b8b-289fa32ebe3e', '2024-10-16', '13:31:00', '15:34:00', 'Join us for an open house at the Beautiful Family Home! Located in the vibrant heart of the city, this stunning property features spacious living areas and a lovely backyard perfect for family gatherings. Whether you\'re a first-time homebuyer or looking to upgrade, this home blends convenience and style. Visit us on [insert date and time] to experience this delightful space and envision your life in your dream home!', '2024-10-15 03:33:05', '2024-10-15 03:33:05'),
+('9d3ffaf0-b9e6-4435-beca-8bdf8de441f0', '9d261298-5daf-4151-8b8b-289fa32ebe3e', '2024-11-16', '13:31:00', '19:34:00', 'Join us for an open house at the Beautiful Family Home! Located in the vibrant heart of the city, this stunning property features spacious living areas and a lovely backyard perfect for family gatherings. Whether you\'re a first-time homebuyer or looking to upgrade, this home blends convenience and style. Visit us on [insert date and time] to experience this delightful space and envision your life in your dream home!', '2024-10-15 03:33:05', '2024-10-15 03:33:05'),
 ('9d50a262-d325-4801-a3eb-c1e05c878ee7', '9d50964d-a7ba-4af6-b3dd-bc73e9a7ddcc', '2024-10-25', '21:13:00', '20:16:00', 'Join us for our Open Houses at TraveCations, where you can explore exclusive listings and experience your dream home firsthand! Enjoy personalized tours led by our knowledgeable agents, complimentary refreshments, and valuable insights about the properties and neighborhoods. Don’t miss this opportunity to envision your future in a new home—check our schedule for upcoming events and contact us for more details!', '2024-10-23 10:14:33', '2024-10-23 10:14:33'),
 ('9d50a2a9-a465-4e49-830e-30a5ab5dc971', '9d50964d-aa83-41d4-b1b2-18f8fdb25aae', '2024-10-26', '08:15:00', '11:18:00', 'Join us for our Open Houses at TraveCations, where you can explore exclusive listings and experience your dream home firsthand! Enjoy personalized tours led by our knowledgeable agents, complimentary refreshments, and valuable insights about the properties and neighborhoods. Don’t miss this opportunity to envision your future in a new home—check our schedule for upcoming events and contact us for more details!', '2024-10-23 10:15:19', '2024-10-23 10:15:19'),
 ('9d50a2ec-8ad6-4c88-be23-4e7f6a02b606', '9d50964d-ad39-4c9d-b3e9-3db32bb464ca', '2024-11-13', '12:19:00', '01:20:00', 'Join us for our Open Houses at TraveCations, where you can explore exclusive listings and experience your dream home firsthand! Enjoy personalized tours led by our knowledgeable agents, complimentary refreshments, and valuable insights about the properties and neighborhoods. Don’t miss this opportunity to envision your future in a new home—check our schedule for upcoming events and contact us for more details!', '2024-10-23 10:16:03', '2024-10-23 10:16:03'),
 ('9d50a332-ab8e-4596-ad51-779f7fae9bfc', '9d50964d-afc0-4d4d-a8b1-57f7db147bfb', '2025-10-08', '22:18:00', '12:20:00', 'Join us for our Open Houses at TraveCations, where you can explore exclusive listings and experience your dream home firsthand! Enjoy personalized tours led by our knowledgeable agents, complimentary refreshments, and valuable insights about the properties and neighborhoods. Don’t miss this opportunity to envision your future in a new home—check our schedule for upcoming events and contact us for more details!', '2024-10-23 10:16:49', '2024-10-23 10:16:49'),
-('9d50a8bf-52b0-48a3-aca1-9d6c3418348a', '9d50964d-70f3-4344-a323-027f244562d0', '2024-10-29', '21:33:00', '12:35:00', 'Join us for our Open Houses at TraveCations, where you can explore exclusive listings and experience your dream home firsthand! Enjoy personalized tours led by our knowledgeable agents, complimentary refreshments, and valuable insights about the properties and neighborhoods. Don’t miss this opportunity to envision your future in a new home—check our schedule for upcoming events and contact us for more details!', '2024-10-23 10:32:20', '2024-10-23 10:32:20'),
 ('9d50a8ec-e300-4beb-8c97-97845fffe6dd', '9d50964d-80b1-41c0-adf4-ef838f70f225', '2024-10-30', '20:32:00', '12:36:00', 'Join us for our Open Houses at TraveCations, where you can explore exclusive listings and experience your dream home firsthand! Enjoy personalized tours led by our knowledgeable agents, complimentary refreshments, and valuable insights about the properties and neighborhoods. Don’t miss this opportunity to envision your future in a new home—check our schedule for upcoming events and contact us for more details!', '2024-10-23 10:32:50', '2024-10-23 10:32:50'),
-('9d50a900-eac1-42b1-92f6-f1aa7381ea9f', '9d50964d-8344-4d3d-a09a-1a48cf2c2139', '2025-08-06', '20:32:00', '08:33:00', 'Join us for our Open Houses at TraveCations, where you can explore exclusive listings and experience your dream home firsthand! Enjoy personalized tours led by our knowledgeable agents, complimentary refreshments, and valuable insights about the properties and neighborhoods. Don’t miss this opportunity to envision your future in a new home—check our schedule for upcoming events and contact us for more details!', '2024-10-23 10:33:03', '2024-10-23 10:33:03'),
 ('9d50a91b-32ed-41c4-8081-1396cc9b4cc4', '9d50964d-8630-4260-804d-201c0891c895', '2024-11-22', '20:33:00', '23:36:00', 'Join us for our Open Houses at TraveCations, where you can explore exclusive listings and experience your dream home firsthand! Enjoy personalized tours led by our knowledgeable agents, complimentary refreshments, and valuable insights about the properties and neighborhoods. Don’t miss this opportunity to envision your future in a new home—check our schedule for upcoming events and contact us for more details!', '2024-10-23 10:33:20', '2024-10-23 10:33:20'),
 ('9d50a92d-8ced-48c9-8a30-6a0f445f84a6', '9d50964d-88cc-4755-bf49-c87be36704af', '2024-11-14', '21:34:00', '23:36:00', 'Join us for our Open Houses at TraveCations, where you can explore exclusive listings and experience your dream home firsthand! Enjoy personalized tours led by our knowledgeable agents, complimentary refreshments, and valuable insights about the properties and neighborhoods. Don’t miss this opportunity to envision your future in a new home—check our schedule for upcoming events and contact us for more details!', '2024-10-23 10:33:32', '2024-10-23 10:33:32'),
-('9d50a93e-c089-4345-8bb2-c11fb5f771e1', '9d50964d-8ba2-4602-95dd-fcb72e1d4bcc', '2025-10-15', '09:34:00', '23:36:00', 'Join us for our Open Houses at TraveCations, where you can explore exclusive listings and experience your dream home firsthand! Enjoy personalized tours led by our knowledgeable agents, complimentary refreshments, and valuable insights about the properties and neighborhoods. Don’t miss this opportunity to envision your future in a new home—check our schedule for upcoming events and contact us for more details!', '2024-10-23 10:33:44', '2024-10-23 10:33:44'),
-('9d50a94d-f5be-4608-81ab-ec9a750e1a4b', '9d50964d-8e86-480c-9690-22dc634fe4a9', '2025-01-04', '20:33:00', '08:33:00', 'Join us for our Open Houses at TraveCations, where you can explore exclusive listings and experience your dream home firsthand! Enjoy personalized tours led by our knowledgeable agents, complimentary refreshments, and valuable insights about the properties and neighborhoods. Don’t miss this opportunity to envision your future in a new home—check our schedule for upcoming events and contact us for more details!', '2024-10-23 10:33:54', '2024-10-23 10:33:54'),
-('9d50a96c-915b-4f60-b37e-1f58a38ec31f', '9d50964d-9165-49d8-8909-0b15eac3defc', '2027-10-13', '22:35:00', '02:40:00', 'Join us for our Open Houses at TraveCations, where you can explore exclusive listings and experience your dream home firsthand! Enjoy personalized tours led by our knowledgeable agents, complimentary refreshments, and valuable insights about the properties and neighborhoods. Don’t miss this opportunity to envision your future in a new home—check our schedule for upcoming events and contact us for more details!', '2024-10-23 10:34:14', '2024-10-23 10:34:14'),
 ('9d50a97d-c4c4-442c-bf7a-961f8e6f98cc', '9d50964d-940a-4fe2-b727-a891a1a60ae1', '2024-12-04', '08:34:00', '13:39:00', 'Join us for our Open Houses at TraveCations, where you can explore exclusive listings and experience your dream home firsthand! Enjoy personalized tours led by our knowledgeable agents, complimentary refreshments, and valuable insights about the properties and neighborhoods. Don’t miss this opportunity to envision your future in a new home—check our schedule for upcoming events and contact us for more details!', '2024-10-23 10:34:25', '2024-10-23 10:34:25');
 
 -- --------------------------------------------------------
@@ -626,10 +683,10 @@ INSERT INTO `our_promises` (`id`, `title`, `description`, `icon`, `created_at`, 
 --
 
 CREATE TABLE `password_reset_tokens` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -639,16 +696,16 @@ CREATE TABLE `password_reset_tokens` (
 
 CREATE TABLE `personal_access_tokens` (
   `id` bigint UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_type` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `tokenable_id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text COLLATE utf8mb4_unicode_ci,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `token` varchar(64) COLLATE utf8mb4_general_ci NOT NULL,
+  `abilities` text COLLATE utf8mb4_general_ci,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `expires_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `personal_access_tokens`
@@ -756,7 +813,27 @@ INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `n
 (99, 'App\\Models\\User', 115, 'webToken', 'd038cc1c2e41d65d3abcb0727c1f49b0c4feec384d229dc4aef291e2656f4768', '[\"*\"]', NULL, NULL, '2024-10-25 10:25:26', '2024-10-25 10:25:26'),
 (100, 'App\\Models\\User', 113, 'webToken', '85e07b6f440f764e97b6ab3edef803eb03c9d88dd3948890a524090978294d70', '[\"*\"]', NULL, NULL, '2024-10-25 10:26:54', '2024-10-25 10:26:54'),
 (101, 'App\\Models\\User', 114, 'webToken', 'e3963b954ff7d50674022ee0712dd41ee1c938027674decd5d1089e89e44db14', '[\"*\"]', NULL, NULL, '2024-10-25 10:28:16', '2024-10-25 10:28:16'),
-(102, 'App\\Models\\User', 116, 'webToken', 'ea05d58daf1ec7a96de38f42314ffb068cd15a1f199873d45aba57b1d0e2baea', '[\"*\"]', NULL, NULL, '2024-10-25 12:42:53', '2024-10-25 12:42:53');
+(102, 'App\\Models\\User', 116, 'webToken', 'ea05d58daf1ec7a96de38f42314ffb068cd15a1f199873d45aba57b1d0e2baea', '[\"*\"]', NULL, NULL, '2024-10-25 12:42:53', '2024-10-25 12:42:53'),
+(103, 'App\\Models\\User', 118, 'webToken', '2086f0dd2cbdd00d6888e5fb80f82c742c9983dc7956335f51eddd1d6a6f23ae', '[\"*\"]', NULL, NULL, '2024-10-30 12:06:15', '2024-10-30 12:06:15'),
+(104, 'App\\Models\\User', 118, 'webToken', '3299403207075b4f9754f69c4206db0c9b88fdf12a8e8b2795eb26b5ffc4efaf', '[\"*\"]', NULL, NULL, '2024-10-30 12:13:52', '2024-10-30 12:13:52'),
+(105, 'App\\Models\\User', 1, 'webToken', '69e314853061645d673636df59a189ba87f4f4e70f481d6da37f02f1b0599c45', '[\"*\"]', NULL, NULL, '2024-10-30 12:14:53', '2024-10-30 12:14:53'),
+(106, 'App\\Models\\User', 1, 'webToken', '7b85918a54f559d690f60c777e849c542a77fe905a85bbca36336327a7484259', '[\"*\"]', NULL, NULL, '2024-10-31 03:57:46', '2024-10-31 03:57:46'),
+(107, 'App\\Models\\User', 119, 'webToken', 'bf74cd05abcfcff698ad446e042dd868ac37e5307c37fcb0d1be4e5755aa2639', '[\"*\"]', NULL, NULL, '2024-10-31 04:13:18', '2024-10-31 04:13:18'),
+(108, 'App\\Models\\User', 1, 'webToken', 'aac83c30f26fd32bd388cd2dbafc95e1530229568b78c529978f1fccc308b26d', '[\"*\"]', NULL, NULL, '2024-11-01 00:08:05', '2024-11-01 00:08:05'),
+(109, 'App\\Models\\User', 1, 'webToken', '375ad2fb825b4f82a0bcea149be2c8be01a5707ea4e9ca0aeac04c57066146f6', '[\"*\"]', NULL, NULL, '2024-11-01 00:09:24', '2024-11-01 00:09:24'),
+(110, 'App\\Models\\User', 1, 'webToken', 'd147c3e9353a97c0d513a5f53a64342fb53bc199de4fbb78f6e2e9d6a274d00c', '[\"*\"]', NULL, NULL, '2024-11-01 00:09:49', '2024-11-01 00:09:49'),
+(111, 'App\\Models\\User', 1, 'webToken', 'f6657ae648b328f871598558a58e58aef7a29a3a10c072e1cf38bbf812991cc8', '[\"*\"]', NULL, NULL, '2024-11-02 01:26:24', '2024-11-02 01:26:24'),
+(112, 'App\\Models\\User', 1, 'webToken', '5859fbb141768c1a44e684069c91e83663302c55f433ce64701ff1dea7d4d7da', '[\"*\"]', NULL, NULL, '2024-11-03 12:20:04', '2024-11-03 12:20:04'),
+(113, 'App\\Models\\User', 118, 'webToken', 'ddfa4d0ff5cf543b4d11f3dadb0d35a68745d38679266c7a83ae5ccb1ce9d610', '[\"*\"]', NULL, NULL, '2024-11-03 14:15:56', '2024-11-03 14:15:56'),
+(114, 'App\\Models\\User', 1, 'webToken', '38a28f225d5ee7924b8d80815d954ef2bf8d8d39e5762e8fd7f86f923fab964f', '[\"*\"]', NULL, NULL, '2024-11-03 14:19:56', '2024-11-03 14:19:56'),
+(115, 'App\\Models\\User', 118, 'webToken', 'ab2f49042f2a0e9001f2bc8080f1dec963d3d8de391ae78abef782e62ac581b7', '[\"*\"]', NULL, NULL, '2024-11-04 00:44:12', '2024-11-04 00:44:12'),
+(116, 'App\\Models\\User', 1, 'webToken', '47dd8b50f4f5d40abfab2a472de6bdde5aba21bb921f0ad6ce734e71b5a60f54', '[\"*\"]', NULL, NULL, '2024-11-04 01:04:29', '2024-11-04 01:04:29'),
+(117, 'App\\Models\\User', 120, 'webToken', '05f5d33bf6677a56fafa4774a1858c026bbcb12ebdddfb72fc08a2c681cd4297', '[\"*\"]', NULL, NULL, '2024-11-04 02:48:48', '2024-11-04 02:48:48'),
+(118, 'App\\Models\\User', 1, 'webToken', 'ce4f08f8cbc8d6d1ba705290eb768868ed53b7b18bf8f7eafbb60a427b6b304a', '[\"*\"]', NULL, NULL, '2024-11-05 01:30:15', '2024-11-05 01:30:15'),
+(119, 'App\\Models\\User', 1, 'webToken', 'fbd784e6cbc3023c0d065ffb924bcab80184ae50e33f3cafa62b334de81af1aa', '[\"*\"]', NULL, NULL, '2024-11-05 20:54:32', '2024-11-05 20:54:32'),
+(120, 'App\\Models\\User', 118, 'webToken', '0ad18d4bdeea496f6815ed956e3476fdac94a13fd23b6ab87aec928310750ada', '[\"*\"]', NULL, NULL, '2024-11-05 21:26:35', '2024-11-05 21:26:35'),
+(121, 'App\\Models\\User', 118, 'webToken', '8017db2fe77fd03f079dd56ba6ce55bdd32ed0d241d238514967b7dae3b8af5d', '[\"*\"]', NULL, NULL, '2024-11-12 00:48:19', '2024-11-12 00:48:19'),
+(122, 'App\\Models\\User', 1, 'webToken', '9f5aa9a3c093fd2b2cd659078d06fab400b3860032c31b216ec8695b539bc5f2', '[\"*\"]', NULL, NULL, '2024-11-12 00:55:37', '2024-11-12 00:55:37');
 
 -- --------------------------------------------------------
 
@@ -765,47 +842,47 @@ INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `n
 --
 
 CREATE TABLE `properties` (
-  `property_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `property_id` char(36) COLLATE utf8mb4_general_ci NOT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
-  `community_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
-  `address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `city` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `state` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `zip_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `longitude` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `latitude` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `community_id` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `title` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `description` text COLLATE utf8mb4_general_ci,
+  `address` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `city` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `state` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `zip_code` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `longitude` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `latitude` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `price` decimal(10,2) DEFAULT NULL,
   `bedrooms` int DEFAULT NULL,
   `square_feet` decimal(10,2) DEFAULT NULL,
   `lot_size` decimal(10,2) DEFAULT NULL,
-  `property_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `listing_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `property_type` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `listing_type` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `year_built` int DEFAULT NULL,
-  `hoa_id` char(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `hoa_id` char(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `association_fee` decimal(10,2) DEFAULT NULL,
   `cic` tinyint(1) DEFAULT NULL,
-  `school_id` char(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `files` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `is_open_house` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `school_id` char(36) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `files` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
+  `is_open_house` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `properties`
 --
 
 INSERT INTO `properties` (`property_id`, `user_id`, `community_id`, `title`, `description`, `address`, `city`, `state`, `zip_code`, `longitude`, `latitude`, `price`, `bedrooms`, `square_feet`, `lot_size`, `property_type`, `listing_type`, `year_built`, `hoa_id`, `association_fee`, `cic`, `school_id`, `files`, `is_open_house`, `created_at`, `updated_at`) VALUES
-('9d50964d-70f3-4344-a323-027f244562d0', 1, '9d264864-541a-47f7-9990-17e079da88e7', 'Beautiful Las Vegas Home 1', 'This stunning Las Vegas home offers modern elegance with spacious open-concept living, high ceilings, and sleek finishes. Located near vibrant amenities and entertainment, it features a chef’s kitchen, luxurious master suite, and a beautifully landscaped backyard perfect for relaxation and entertaining. Enjoy the convenience of nearby shopping, dining, and world-class attractions, making this home an ideal Las Vegas retreat.', '123 Las Vegas St 1', 'Las Vegas', 'NV', '89153', '-115.1692', '36.1180', 625274.00, 3, 3785.00, 960.00, 'single-family', 'sale', 1998, '9d09b3e5-20ea-4ad4-a16d-6d328bc8750e', 238.00, 1, '9d09a857-3d19-40a3-ad82-8fb3731c7fcd', '[343,344,345,346]', 'true', '2024-10-23 09:40:46', '2024-10-23 10:36:01'),
+('9d50964d-70f3-4344-a323-027f244562d0', 1, '9d264864-541a-47f7-9990-17e079da88e7', 'Beautiful Las Vegas Home 1', 'This stunning Las Vegas home offers modern elegance with spacious open-concept living, high ceilings, and sleek finishes. Located near vibrant amenities and entertainment, it features a chef’s kitchen, luxurious master suite, and a beautifully landscaped backyard perfect for relaxation and entertaining. Enjoy the convenience of nearby shopping, dining, and world-class attractions, making this home an ideal Las Vegas retreat.', '123 Las Vegas St 1', 'Las Vegas', 'NV', '89153', '-115.1692', '36.1180', 625274.00, 3, 3785.00, 960.00, 'single-family', 'sale', 1998, '9d09b3e5-20ea-4ad4-a16d-6d328bc8750e', 238.00, 1, '9d09a857-3d19-40a3-ad82-8fb3731c7fcd', '[343,344,345,346]', '0', '2024-10-23 09:40:46', '2024-11-03 12:17:12'),
 ('9d50964d-80b1-41c0-adf4-ef838f70f225', 1, '9d264764-2e21-4869-b7e6-692c38c02bbd', 'Beautiful Las Vegas Home 2', 'This stunning Las Vegas home offers modern elegance with spacious open-concept living, high ceilings, and sleek finishes. Located near vibrant amenities and entertainment, it features a chef’s kitchen, luxurious master suite, and a beautifully landscaped backyard perfect for relaxation and entertaining. Enjoy the convenience of nearby shopping, dining, and world-class attractions, making this home an ideal Las Vegas retreat.', '123 Las Vegas St 2', 'Las Vegas', 'NV', '89188', '-115.1743', '36.1210', 855044.00, 4, 2623.00, 700.00, 'single-family', 'sale', 1990, '9d09b3e5-20ea-4ad4-a16d-6d328bc8750e', 442.00, 1, '9d09a857-3d19-40a3-ad82-8fb3731c7fcd', '[348,349,350,351,352,353]', NULL, '2024-10-23 09:40:46', '2024-10-23 09:57:21'),
-('9d50964d-8344-4d3d-a09a-1a48cf2c2139', 1, '9d264764-2e21-4869-b7e6-692c38c02bbd', 'Beautiful Las Vegas Home 3', 'This stunning Las Vegas home offers modern elegance with spacious open-concept living, high ceilings, and sleek finishes. Located near vibrant amenities and entertainment, it features a chef’s kitchen, luxurious master suite, and a beautifully landscaped backyard perfect for relaxation and entertaining. Enjoy the convenience of nearby shopping, dining, and world-class attractions, making this home an ideal Las Vegas retreat.', '123 Las Vegas St 3', 'Las Vegas', 'NV', '89126', '-115.1763', '36.1128', 872252.00, 5, 2754.00, 600.00, 'single-family', 'sale', 2012, '9d09b3e5-20ea-4ad4-a16d-6d328bc8750e', 123.00, 1, '9d09a857-3d19-40a3-ad82-8fb3731c7fcd', '[355,356,357,358,359,360,361]', 'true', '2024-10-23 09:40:46', '2024-10-23 10:33:03'),
-('9d50964d-8630-4260-804d-201c0891c895', 1, '9d264764-2e21-4869-b7e6-692c38c02bbd', 'Beautiful Las Vegas Home 4', 'This stunning Las Vegas home offers modern elegance with spacious open-concept living, high ceilings, and sleek finishes. Located near vibrant amenities and entertainment, it features a chef’s kitchen, luxurious master suite, and a beautifully landscaped backyard perfect for relaxation and entertaining. Enjoy the convenience of nearby shopping, dining, and world-class attractions, making this home an ideal Las Vegas retreat.', '123 Las Vegas St 4', 'Las Vegas', 'NV', '89148', '-115.1687', '36.1224', 391221.00, 4, 3351.00, 680.00, 'single-family', 'sale', 2018, '9d09b3e5-20ea-4ad4-a16d-6d328bc8750e', 136.00, 1, '9d09a857-3d19-40a3-ad82-8fb3731c7fcd', '[363,364,365,366,367,368]', 'true', '2024-10-23 09:40:46', '2024-10-23 10:33:20'),
-('9d50964d-88cc-4755-bf49-c87be36704af', 1, '9d264764-2e21-4869-b7e6-692c38c02bbd', 'Beautiful Las Vegas Home 5', 'This stunning Las Vegas home offers modern elegance with spacious open-concept living, high ceilings, and sleek finishes. Located near vibrant amenities and entertainment, it features a chef’s kitchen, luxurious master suite, and a beautifully landscaped backyard perfect for relaxation and entertaining. Enjoy the convenience of nearby shopping, dining, and world-class attractions, making this home an ideal Las Vegas retreat.', '123 Las Vegas St 5', 'Las Vegas', 'NV', '89178', ' -115.1760', '36.1159', 839777.00, 6, 2624.00, 250.00, 'single-family', 'sale', 2001, '9d09b3e5-20ea-4ad4-a16d-6d328bc8750e', 314.00, 1, '9d09a857-3d19-40a3-ad82-8fb3731c7fcd', '[370,371,372,373,374,375]', 'true', '2024-10-23 09:40:46', '2024-10-23 10:33:32'),
-('9d50964d-8ba2-4602-95dd-fcb72e1d4bcc', 1, '9d264764-2e21-4869-b7e6-692c38c02bbd', 'Beautiful Las Vegas Home 6', 'This stunning Las Vegas home offers modern elegance with spacious open-concept living, high ceilings, and sleek finishes. Located near vibrant amenities and entertainment, it features a chef’s kitchen, luxurious master suite, and a beautifully landscaped backyard perfect for relaxation and entertaining. Enjoy the convenience of nearby shopping, dining, and world-class attractions, making this home an ideal Las Vegas retreat.', '123 Las Vegas St 6', 'Las Vegas', 'NV', '89124', '-115.1721', '36.1182', 584635.00, 6, 3311.00, 1199.00, 'single-family', 'sale', 2008, '9d09b3e5-20ea-4ad4-a16d-6d328bc8750e', 155.00, 1, '9d09a857-3d19-40a3-ad82-8fb3731c7fcd', '[377,378,379,380]', 'true', '2024-10-23 09:40:46', '2024-10-23 10:33:44'),
-('9d50964d-8e86-480c-9690-22dc634fe4a9', 1, '9d264764-2e21-4869-b7e6-692c38c02bbd', 'Beautiful Las Vegas Home 7', 'This stunning Las Vegas home offers modern elegance with spacious open-concept living, high ceilings, and sleek finishes. Located near vibrant amenities and entertainment, it features a chef’s kitchen, luxurious master suite, and a beautifully landscaped backyard perfect for relaxation and entertaining. Enjoy the convenience of nearby shopping, dining, and world-class attractions, making this home an ideal Las Vegas retreat.', '123 Las Vegas St 7', 'Las Vegas', 'NV', '89194', '-115.1688', '36.1215', 696509.00, 4, 2905.00, 2520.00, 'single-family', 'sale', 1994, '9d09b3e5-20ea-4ad4-a16d-6d328bc8750e', 179.00, 1, '9d09a857-3d19-40a3-ad82-8fb3731c7fcd', '[382,383,384,385]', 'true', '2024-10-23 09:40:46', '2024-10-23 10:33:54'),
-('9d50964d-9165-49d8-8909-0b15eac3defc', 1, '9d264764-2e21-4869-b7e6-692c38c02bbd', 'Beautiful Las Vegas Home 8', 'This stunning Las Vegas home offers modern elegance with spacious open-concept living, high ceilings, and sleek finishes. Located near vibrant amenities and entertainment, it features a chef’s kitchen, luxurious master suite, and a beautifully landscaped backyard perfect for relaxation and entertaining. Enjoy the convenience of nearby shopping, dining, and world-class attractions, making this home an ideal Las Vegas retreat.', '123 Las Vegas St 8', 'Las Vegas', 'NV', '89118', '-115.1746', '36.1163', 585391.00, 6, 2153.00, 1250.00, 'single-family', 'sale', 1992, '9d09b3e5-20ea-4ad4-a16d-6d328bc8750e', 154.00, 1, '9d09a857-3d19-40a3-ad82-8fb3731c7fcd', '[387,388,389,390,391,392]', 'true', '2024-10-23 09:40:46', '2024-10-23 10:34:14'),
+('9d50964d-8344-4d3d-a09a-1a48cf2c2139', 1, '9d264764-2e21-4869-b7e6-692c38c02bbd', 'Beautiful Las Vegas Home 3', 'This stunning Las Vegas home offers modern elegance with spacious open-concept living, high ceilings, and sleek finishes. Located near vibrant amenities and entertainment, it features a chef’s kitchen, luxurious master suite, and a beautifully landscaped backyard perfect for relaxation and entertaining. Enjoy the convenience of nearby shopping, dining, and world-class attractions, making this home an ideal Las Vegas retreat.', '123 Las Vegas St 3', 'Las Vegas', 'NV', '89126', '-115.1763', '36.1128', 872252.00, 5, 2754.00, 600.00, 'single-family', 'sale', 2012, '9d09b3e5-20ea-4ad4-a16d-6d328bc8750e', 123.00, 1, '9d09a857-3d19-40a3-ad82-8fb3731c7fcd', '[355,356,357,358,359,360,361]', '0', '2024-10-23 09:40:46', '2024-11-03 12:17:12'),
+('9d50964d-8630-4260-804d-201c0891c895', 1, '9d264828-aca0-48a7-afcf-8399b433edc7', 'Beautiful Las Vegas Home 4', 'This stunning Las Vegas home offers modern elegance with spacious open-concept living, high ceilings, and sleek finishes. Located near vibrant amenities and entertainment, it features a chef’s kitchen, luxurious master suite, and a beautifully landscaped backyard perfect for relaxation and entertaining. Enjoy the convenience of nearby shopping, dining, and world-class attractions, making this home an ideal Las Vegas retreat.', '123 Las Vegas St 4', 'Las Vegas', 'NV', '89148', '-115.1687', '36.1224', 391221.00, 4, 3351.00, 680.00, 'single-family', 'sale', 2018, '9d09b3e5-20ea-4ad4-a16d-6d328bc8750e', 136.00, 1, '9d09a857-3d19-40a3-ad82-8fb3731c7fcd', '[363,364,365,366,367,368]', 'true', '2024-10-23 09:40:46', '2024-11-03 14:42:39'),
+('9d50964d-88cc-4755-bf49-c87be36704af', 1, '9d2647f5-93a7-4712-b440-37c679f8a9ae', 'Beautiful Las Vegas Home 5', 'This stunning Las Vegas home offers modern elegance with spacious open-concept living, high ceilings, and sleek finishes. Located near vibrant amenities and entertainment, it features a chef’s kitchen, luxurious master suite, and a beautifully landscaped backyard perfect for relaxation and entertaining. Enjoy the convenience of nearby shopping, dining, and world-class attractions, making this home an ideal Las Vegas retreat.', '123 Las Vegas St 5', 'Las Vegas', 'NV', '89178', '-115.1760', '36.1159', 839777.00, 6, 2624.00, 250.00, 'single-family', 'sale', 2001, '9d09b3e5-20ea-4ad4-a16d-6d328bc8750e', 314.00, 1, '9d09a857-3d19-40a3-ad82-8fb3731c7fcd', '[370,371,372,373,374,375]', 'true', '2024-10-23 09:40:46', '2024-11-03 15:45:09'),
+('9d50964d-8ba2-4602-95dd-fcb72e1d4bcc', 1, '9d264764-2e21-4869-b7e6-692c38c02bbd', 'Beautiful Las Vegas Home 6', 'This stunning Las Vegas home offers modern elegance with spacious open-concept living, high ceilings, and sleek finishes. Located near vibrant amenities and entertainment, it features a chef’s kitchen, luxurious master suite, and a beautifully landscaped backyard perfect for relaxation and entertaining. Enjoy the convenience of nearby shopping, dining, and world-class attractions, making this home an ideal Las Vegas retreat.', '123 Las Vegas St 6', 'Las Vegas', 'NV', '89124', '-115.1721', '36.1182', 584635.00, 6, 3311.00, 1199.00, 'single-family', 'sale', 2008, '9d09b3e5-20ea-4ad4-a16d-6d328bc8750e', 155.00, 1, '9d09a857-3d19-40a3-ad82-8fb3731c7fcd', '[377,378,379,380]', NULL, '2024-10-23 09:40:46', '2024-11-03 12:21:14'),
+('9d50964d-8e86-480c-9690-22dc634fe4a9', 1, '9d264764-2e21-4869-b7e6-692c38c02bbd', 'Beautiful Las Vegas Home 7', 'This stunning Las Vegas home offers modern elegance with spacious open-concept living, high ceilings, and sleek finishes. Located near vibrant amenities and entertainment, it features a chef’s kitchen, luxurious master suite, and a beautifully landscaped backyard perfect for relaxation and entertaining. Enjoy the convenience of nearby shopping, dining, and world-class attractions, making this home an ideal Las Vegas retreat.', '123 Las Vegas St 7', 'Las Vegas', 'NV', '89194', '-115.1688', '36.1215', 696509.00, 4, 2905.00, 2520.00, 'single-family', 'sale', 1994, '9d09b3e5-20ea-4ad4-a16d-6d328bc8750e', 179.00, 1, '9d09a857-3d19-40a3-ad82-8fb3731c7fcd', '[382,383,384,385]', '0', '2024-10-23 09:40:46', '2024-11-03 12:17:59'),
+('9d50964d-9165-49d8-8909-0b15eac3defc', 1, '9d264764-2e21-4869-b7e6-692c38c02bbd', 'Beautiful Las Vegas Home 8', 'This stunning Las Vegas home offers modern elegance with spacious open-concept living, high ceilings, and sleek finishes. Located near vibrant amenities and entertainment, it features a chef’s kitchen, luxurious master suite, and a beautifully landscaped backyard perfect for relaxation and entertaining. Enjoy the convenience of nearby shopping, dining, and world-class attractions, making this home an ideal Las Vegas retreat.', '123 Las Vegas St 8', 'Las Vegas', 'NV', '89118', '-115.1746', '36.1163', 585391.00, 6, 2153.00, 1250.00, 'single-family', 'sale', 1992, '9d09b3e5-20ea-4ad4-a16d-6d328bc8750e', 154.00, 1, '9d09a857-3d19-40a3-ad82-8fb3731c7fcd', '[387,388,389,390,391,392]', '0', '2024-10-23 09:40:46', '2024-11-04 01:16:24'),
 ('9d50964d-940a-4fe2-b727-a891a1a60ae1', 1, '9d264764-2e21-4869-b7e6-692c38c02bbd', 'Beautiful Las Vegas Home 9', 'This stunning Las Vegas home offers modern elegance with spacious open-concept living, high ceilings, and sleek finishes. Located near vibrant amenities and entertainment, it features a chef’s kitchen, luxurious master suite, and a beautifully landscaped backyard perfect for relaxation and entertaining. Enjoy the convenience of nearby shopping, dining, and world-class attractions, making this home an ideal Las Vegas retreat.', '123 Las Vegas St 9', 'Las Vegas', 'NV', '89178', '-115.1711', '36.1185', 540673.00, 3, 2659.00, 950.00, 'single-family', 'sale', 2020, '9d09b3e5-20ea-4ad4-a16d-6d328bc8750e', 423.00, 1, '9d09a857-3d19-40a3-ad82-8fb3731c7fcd', '[394,395,396,397]', 'true', '2024-10-23 09:40:46', '2024-10-23 10:34:25'),
 ('9d50964d-96ef-4a91-bbca-4ec597b42fe6', 1, '9d264764-2e21-4869-b7e6-692c38c02bbd', 'Beautiful Las Vegas Home 10', 'This stunning Las Vegas home offers modern elegance with spacious open-concept living, high ceilings, and sleek finishes. Located near vibrant amenities and entertainment, it features a chef’s kitchen, luxurious master suite, and a beautifully landscaped backyard perfect for relaxation and entertaining. Enjoy the convenience of nearby shopping, dining, and world-class attractions, making this home an ideal Las Vegas retreat.', '123 Las Vegas St 10', 'Las Vegas', 'NV', '89102', '-115.1699', '36.1232', 277118.00, 3, 3625.00, 100.00, 'single-family', 'sale', 2014, '9d09b3e5-20ea-4ad4-a16d-6d328bc8750e', 251.00, 1, '9d09a857-3d19-40a3-ad82-8fb3731c7fcd', '[399,400,401,402,403,404]', NULL, '2024-10-23 09:40:46', '2024-10-23 10:05:00'),
 ('9d50964d-99ee-43d8-9752-73610c536f99', 1, '9d2647f5-93a7-4712-b440-37c679f8a9ae', 'Beautiful Las Vegas Home 11', 'This stunning Las Vegas home offers modern elegance with spacious open-concept living, high ceilings, and sleek finishes. Located near vibrant amenities and entertainment, it features a chef’s kitchen, luxurious master suite, and a beautifully landscaped backyard perfect for relaxation and entertaining. Enjoy the convenience of nearby shopping, dining, and world-class attractions, making this home an ideal Las Vegas retreat.', '123 Las Vegas St 11', 'Las Vegas', 'NV', '89121', '-115.1746', '36.1163', 526509.00, 4, 1761.00, 2650.00, 'single-family', 'sale', 2001, '9d09c8ef-0178-4a5e-ab20-aeaee9749fb2', 314.00, 1, '9d09a87c-2bee-448c-9567-53ad9c27dfa3', '[406,407,408,409]', NULL, '2024-10-23 09:40:46', '2024-10-23 10:05:39'),
@@ -831,32 +908,32 @@ INSERT INTO `properties` (`property_id`, `user_id`, `community_id`, `title`, `de
 
 CREATE TABLE `property_features` (
   `feature_id` int NOT NULL,
-  `property_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
-  `fireplace_type` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `kitchen_pantry_type` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `property_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `description` text COLLATE utf8mb4_general_ci,
+  `fireplace_type` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `kitchen_pantry_type` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `reach_in` tinyint(1) DEFAULT NULL,
   `walk_in` tinyint(1) DEFAULT NULL,
   `laundry_closet` tinyint(1) DEFAULT NULL,
-  `closet_location` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `bedroom_location` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `bathroom_type` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `bathroom_status` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `pool_shape` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `water_features` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `pool_status` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `closet_location` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `bedroom_location` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `bathroom_type` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `bathroom_status` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `pool_shape` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `water_features` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `pool_status` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `spa` tinyint(1) DEFAULT NULL,
-  `fencing_material` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `fencing_status` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fencing_material` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `fencing_status` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `parking_enclosure` tinyint(1) DEFAULT NULL,
   `private_bath` tinyint(1) DEFAULT NULL,
   `outdoor_shower` tinyint(1) DEFAULT NULL,
-  `landscape_maintenance` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `foundation_conditions` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `landscape_maintenance` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `foundation_conditions` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `property_features`
@@ -866,8 +943,8 @@ INSERT INTO `property_features` (`feature_id`, `property_id`, `name`, `descripti
 (46, '9d50964d-70f3-4344-a323-027f244562d0', 'Feature 1 for Home', 'This is a dummy description for home 1', 'wood', 'walk-in', 1, 1, 1, 'bedroom', 'second floor', 'full', 'renovated', 'rectangle', 'waterfall', 'under maintenance', 1, 'vinyl', 'repaired', 1, 1, 1, '0', 'new', '2024-10-23 09:40:46', '2024-10-23 09:56:28'),
 (47, '9d50964d-80b1-41c0-adf4-ef838f70f225', 'Feature 2 for Home', 'This is a dummy description for home 2', 'wood', 'reach-in', 1, 1, 1, 'hallway', 'second floor', 'half', 'new', 'oval', 'waterfall', 'operational', 1, 'vinyl', 'new', 1, 1, 1, '1', 'new', '2024-10-23 09:40:46', '2024-10-23 09:57:21'),
 (48, '9d50964d-8344-4d3d-a09a-1a48cf2c2139', 'Feature 3 for Home', 'This is a dummy description for home 3', 'gas', 'reach-in', 1, 1, 1, 'bedroom', 'first floor', 'full', 'new', 'rectangle', 'waterfall', 'operational', 1, 'wood', 'repaired', 1, 1, 1, '1', 'settled', '2024-10-23 09:40:46', '2024-10-23 09:57:58'),
-(49, '9d50964d-8630-4260-804d-201c0891c895', 'Feature 4 for Home', 'This is a dummy description for home 4', 'gas', 'walk-in', 1, 1, 1, 'bedroom', 'first floor', 'full', 'renovated', 'rectangle', 'fountain', 'operational', 1, 'vinyl', 'repaired', 1, 1, 1, '0', 'new', '2024-10-23 09:40:46', '2024-10-23 09:59:13'),
-(50, '9d50964d-88cc-4755-bf49-c87be36704af', 'Feature 5 for Home', 'This is a dummy description for home 5', 'gas', 'walk-in', 1, 1, 1, 'bedroom', 'second floor', 'half', 'new', 'oval', 'fountain', 'under maintenance', 1, 'wood', 'repaired', 1, 1, 1, '0', 'new', '2024-10-23 09:40:46', '2024-10-23 09:59:53'),
+(49, '9d50964d-8630-4260-804d-201c0891c895', 'Feature 4 for Home', 'This stunning Las Vegas home offers modern elegance with spacious open-concept living, high ceilings, and sleek finishes. Located near vibrant amenities and entertainment, it features a chef’s kitchen, luxurious master suite, and a beautifully landscaped backyard perfect for relaxation and entertaining. Enjoy the convenience of nearby shopping, dining, and world-class attractions, making this home an ideal Las Vegas retreat.', 'gas', 'walk-in', 1, 1, 1, 'bedroom', 'first floor', 'full', 'renovated', 'rectangle', 'fountain', 'operational', 1, 'vinyl', 'repaired', 1, 1, 1, '0', 'new', '2024-10-23 09:40:46', '2024-11-03 14:42:39'),
+(50, '9d50964d-88cc-4755-bf49-c87be36704af', 'Feature 5 for Home', 'This stunning Las Vegas home offers modern elegance with spacious open-concept living, high ceilings, and sleek finishes. Located near vibrant amenities and entertainment, it features a chef’s kitchen, luxurious master suite, and a beautifully landscaped backyard perfect for relaxation and entertaining. Enjoy the convenience of nearby shopping, dining, and world-class attractions, making this home an ideal Las Vegas retreat.', 'gas', 'walk-in', 1, 1, 1, 'bedroom', 'second floor', 'half', 'new', 'oval', 'fountain', 'under maintenance', 1, 'wood', 'repaired', 1, 1, 1, '0', 'new', '2024-10-23 09:40:46', '2024-11-03 15:45:09'),
 (51, '9d50964d-8ba2-4602-95dd-fcb72e1d4bcc', 'Feature 6 for Home', 'This is a dummy description for home 6', 'gas', 'reach-in', 1, 1, 1, 'hallway', 'second floor', 'full', 'new', 'rectangle', 'fountain', 'operational', 1, 'wood', 'repaired', 1, 1, 1, '0', 'settled', '2024-10-23 09:40:46', '2024-10-23 10:03:22'),
 (52, '9d50964d-8e86-480c-9690-22dc634fe4a9', 'Feature 7 for Home', 'This is a dummy description for home 7', 'gas', 'reach-in', 1, 1, 1, 'bedroom', 'first floor', 'half', 'new', 'rectangle', 'waterfall', 'operational', 1, 'wood', 'repaired', 1, 1, 1, '0', 'new', '2024-10-23 09:40:46', '2024-10-23 10:03:45'),
 (53, '9d50964d-9165-49d8-8909-0b15eac3defc', 'Feature 8 for Home', 'This is a dummy description for home 8', 'wood', 'walk-in', 1, 1, 1, 'hallway', 'second floor', 'half', 'new', 'rectangle', 'fountain', 'operational', 1, 'wood', 'new', 1, 1, 1, '0', 'new', '2024-10-23 09:40:46', '2024-10-23 10:04:08'),
@@ -900,7 +977,7 @@ CREATE TABLE `property_incentives` (
   `incentive_id` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `property_incentives`
@@ -912,15 +989,15 @@ INSERT INTO `property_incentives` (`id`, `property_id`, `incentive_id`, `created
 ('9d50d413-7bf9-4012-9766-0e2ce124a11a', '9d50d413-7764-4ca5-92d3-8daf7426ef19', '9d2ad55f-982b-43dc-a1bb-f32456ac7e6d', '2024-10-23 12:33:29', '2024-10-23 12:33:29'),
 ('9d50d511-1350-4881-b308-9fd6fca03bd8', '9d50d42c-ac85-44be-ab6d-f59bf9294acc', '9d2ad55f-982b-43dc-a1bb-f32456ac7e6d', '2024-10-23 12:36:16', '2024-10-23 12:36:16'),
 ('9d50d511-1720-48d1-ae60-c3e25c61c9c0', '9d50d42c-ac85-44be-ab6d-f59bf9294acc', '9d2ad560-c7f4-4e8f-b0b8-79caa3fab0d0', '2024-10-23 12:36:16', '2024-10-23 12:36:16'),
-('9d50d5a2-fb02-4f95-b44f-77dd000fa69d', '9d50964d-88cc-4755-bf49-c87be36704af', '9d2ad562-e4dc-47c1-bb00-b32ae2ff7089', '2024-10-23 12:37:51', '2024-10-23 12:37:51'),
-('9d50d5a2-fe77-4f5f-8835-e706bf0e8655', '9d50964d-88cc-4755-bf49-c87be36704af', '9d2bf1ca-d91d-4d3c-b7fc-d639df557d3e', '2024-10-23 12:37:51', '2024-10-23 12:37:51'),
-('9d50d5a2-ff64-46ec-80ef-9f0166a6ea5d', '9d50964d-88cc-4755-bf49-c87be36704af', '9d2ad560-c7f4-4e8f-b0b8-79caa3fab0d0', '2024-10-23 12:37:51', '2024-10-23 12:37:51'),
 ('9d50d5cc-58b5-4deb-86e6-2c2bca1254c4', '9d50964d-8ba2-4602-95dd-fcb72e1d4bcc', '9d2ad560-c7f4-4e8f-b0b8-79caa3fab0d0', '2024-10-23 12:38:18', '2024-10-23 12:38:18'),
 ('9d50d5cc-5b8e-4328-9da6-4ced13788234', '9d50964d-8ba2-4602-95dd-fcb72e1d4bcc', '9d2ad561-ce01-474a-adb9-a5b196d74c53', '2024-10-23 12:38:18', '2024-10-23 12:38:18'),
-('9d50d5ef-853a-488c-9350-96cabdd103c1', '9d50964d-8630-4260-804d-201c0891c895', '9d2ad55f-982b-43dc-a1bb-f32456ac7e6d', '2024-10-23 12:38:41', '2024-10-23 12:38:41'),
-('9d50d5ef-8837-499b-aac2-6ca455bcc900', '9d50964d-8630-4260-804d-201c0891c895', '9d2ad560-c7f4-4e8f-b0b8-79caa3fab0d0', '2024-10-23 12:38:41', '2024-10-23 12:38:41'),
-('9d50d5ef-890a-493e-86e9-f0a7f506d938', '9d50964d-8630-4260-804d-201c0891c895', '9d2ad561-ce01-474a-adb9-a5b196d74c53', '2024-10-23 12:38:41', '2024-10-23 12:38:41'),
-('9d50d5ef-8a2c-4496-b3a2-6d2c8a4586bb', '9d50964d-8630-4260-804d-201c0891c895', '9d2ad562-e4dc-47c1-bb00-b32ae2ff7089', '2024-10-23 12:38:41', '2024-10-23 12:38:41');
+('9d672317-f435-4144-80bf-30352fd1beba', '9d50964d-8630-4260-804d-201c0891c895', '9d2ad55f-982b-43dc-a1bb-f32456ac7e6d', '2024-11-03 14:42:39', '2024-11-03 14:42:39'),
+('9d672317-fc83-4468-8f3f-e4c1da0997f2', '9d50964d-8630-4260-804d-201c0891c895', '9d2ad560-c7f4-4e8f-b0b8-79caa3fab0d0', '2024-11-03 14:42:39', '2024-11-03 14:42:39'),
+('9d672317-fe21-48dd-83c8-1ba5a3ab02b8', '9d50964d-8630-4260-804d-201c0891c895', '9d2ad561-ce01-474a-adb9-a5b196d74c53', '2024-11-03 14:42:39', '2024-11-03 14:42:39'),
+('9d672317-ff9b-40a6-b9e2-4f74d1606f16', '9d50964d-8630-4260-804d-201c0891c895', '9d2ad562-e4dc-47c1-bb00-b32ae2ff7089', '2024-11-03 14:42:39', '2024-11-03 14:42:39'),
+('9d673970-871d-4e0b-9e10-836ba0e8f025', '9d50964d-88cc-4755-bf49-c87be36704af', '9d2ad562-e4dc-47c1-bb00-b32ae2ff7089', '2024-11-03 15:45:09', '2024-11-03 15:45:09'),
+('9d673971-a5cb-4a34-aac3-e0777ec1feeb', '9d50964d-88cc-4755-bf49-c87be36704af', '9d2bf1ca-d91d-4d3c-b7fc-d639df557d3e', '2024-11-03 15:45:09', '2024-11-03 15:45:09'),
+('9d673971-a77e-4f06-89c6-e9bcdb68ef79', '9d50964d-88cc-4755-bf49-c87be36704af', '9d2ad560-c7f4-4e8f-b0b8-79caa3fab0d0', '2024-11-03 15:45:09', '2024-11-03 15:45:09');
 
 -- --------------------------------------------------------
 
@@ -929,14 +1006,14 @@ INSERT INTO `property_incentives` (`id`, `property_id`, `incentive_id`, `created
 --
 
 CREATE TABLE `quick_move_in_homes` (
-  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `property_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` char(36) COLLATE utf8mb4_general_ci NOT NULL,
+  `property_id` char(36) COLLATE utf8mb4_general_ci NOT NULL,
   `move_in_date` date NOT NULL,
-  `incentives` text COLLATE utf8mb4_unicode_ci,
+  `incentives` text COLLATE utf8mb4_general_ci,
   `main_image` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `quick_move_in_homes`
@@ -955,7 +1032,7 @@ INSERT INTO `quick_move_in_homes` (`id`, `property_id`, `move_in_date`, `incenti
 ('34655bbc-03ae-40d3-841f-71af44f4cad5', '9d50964d-a4dd-4452-be52-12ee3689be5d', '2024-10-23', NULL, 432, '2024-10-23 09:40:46', '2024-10-23 10:07:46'),
 ('3691fc57-b03f-478d-85a1-73545bc52b97', '9d50964d-80b1-41c0-adf4-ef838f70f225', '2024-10-23', NULL, 354, '2024-10-23 09:40:46', '2024-10-23 09:57:21'),
 ('4a982f8a-5c13-4d29-81e4-7946a83e75b7', '9d50964d-b8b8-4a8b-ae3c-b065e07907f1', '2024-10-23', NULL, 467, '2024-10-23 09:40:46', '2024-10-23 10:18:36'),
-('4ae013e0-e707-4cac-9ba6-ea25022fb2a5', '9d50964d-88cc-4755-bf49-c87be36704af', '2024-10-23', '[\"9d2ad562-e4dc-47c1-bb00-b32ae2ff7089\",\"9d2bf1ca-d91d-4d3c-b7fc-d639df557d3e\",\"9d2ad560-c7f4-4e8f-b0b8-79caa3fab0d0\"]', 492, '2024-10-23 09:40:46', '2024-10-23 12:37:51'),
+('4ae013e0-e707-4cac-9ba6-ea25022fb2a5', '9d50964d-88cc-4755-bf49-c87be36704af', '2024-10-23', '[\"9d2ad562-e4dc-47c1-bb00-b32ae2ff7089\",\"9d2bf1ca-d91d-4d3c-b7fc-d639df557d3e\",\"9d2ad560-c7f4-4e8f-b0b8-79caa3fab0d0\"]', 542, '2024-10-23 09:40:46', '2024-11-03 15:45:09'),
 ('5e054841-58fd-49bb-9d2f-7365ac8d1669', '9d50964d-ad39-4c9d-b3e9-3db32bb464ca', '2024-10-23', NULL, 447, '2024-10-23 09:40:46', '2024-10-23 10:15:48'),
 ('741bbffe-7d53-48b1-a972-3c70c59572bb', '9d50964d-becf-434e-9e71-462a6a9b3586', '2024-10-23', NULL, 477, '2024-10-23 09:40:46', '2024-10-23 10:19:43'),
 ('79bd05ff-6ee8-4d58-aa37-2c302532ba85', '9d50964d-8e86-480c-9690-22dc634fe4a9', '2024-10-23', NULL, 386, '2024-10-23 09:40:46', '2024-10-23 10:03:45'),
@@ -965,7 +1042,7 @@ INSERT INTO `quick_move_in_homes` (`id`, `property_id`, `move_in_date`, `incenti
 ('a63d46f1-2d6e-42e7-b4bb-820676f42cea', '9d50964d-9f87-4fd3-aee4-65c4442b669a', '2024-10-23', NULL, 420, '2024-10-23 09:40:46', '2024-10-23 10:06:43'),
 ('c11cb074-4348-43ac-8fe3-aec0f160d74e', '9d50964d-aa83-41d4-b1b2-18f8fdb25aae', '2024-10-23', NULL, 442, '2024-10-23 09:40:46', '2024-10-23 10:15:02'),
 ('c748b569-e86c-402c-b1eb-c684a4f17707', '9d50964d-8ba2-4602-95dd-fcb72e1d4bcc', '2024-10-23', '[\"9d2ad560-c7f4-4e8f-b0b8-79caa3fab0d0\",\"9d2ad561-ce01-474a-adb9-a5b196d74c53\"]', 493, '2024-10-23 09:40:46', '2024-10-23 12:38:18'),
-('dc6a5b1f-375b-41a0-bf45-634026b061f6', '9d50964d-8630-4260-804d-201c0891c895', '2024-10-23', '[\"9d2ad55f-982b-43dc-a1bb-f32456ac7e6d\",\"9d2ad560-c7f4-4e8f-b0b8-79caa3fab0d0\",\"9d2ad561-ce01-474a-adb9-a5b196d74c53\",\"9d2ad562-e4dc-47c1-bb00-b32ae2ff7089\"]', 494, '2024-10-23 09:40:46', '2024-10-23 12:38:41'),
+('dc6a5b1f-375b-41a0-bf45-634026b061f6', '9d50964d-8630-4260-804d-201c0891c895', '2024-10-23', '[\"9d2ad55f-982b-43dc-a1bb-f32456ac7e6d\",\"9d2ad560-c7f4-4e8f-b0b8-79caa3fab0d0\",\"9d2ad561-ce01-474a-adb9-a5b196d74c53\",\"9d2ad562-e4dc-47c1-bb00-b32ae2ff7089\"]', 541, '2024-10-23 09:40:46', '2024-11-03 14:42:39'),
 ('dcdf705f-8a7e-467c-b31a-b12c460aaa1e', '9d50964d-afc0-4d4d-a8b1-57f7db147bfb', '2024-10-23', NULL, 452, '2024-10-23 09:40:46', '2024-10-23 10:16:34');
 
 -- --------------------------------------------------------
@@ -975,13 +1052,13 @@ INSERT INTO `quick_move_in_homes` (`id`, `property_id`, `move_in_date`, `incenti
 --
 
 CREATE TABLE `schools` (
-  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `directions_and_details` text COLLATE utf8mb4_unicode_ci,
+  `id` char(36) COLLATE utf8mb4_general_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `type` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `directions_and_details` text COLLATE utf8mb4_general_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `schools`
@@ -2602,7 +2679,214 @@ INSERT INTO `translations` (`id`, `lang`, `lang_key`, `lang_value`, `created_at`
 ('9d4032d5-cb2d-4b85-a712-3464a6dfceef', 'ES', 'Sort homes for you', 'Sort homes for you', '2024-10-15 06:09:23', '2024-10-15 06:09:23'),
 ('9d4032d5-cc11-4eee-aa0c-f05421235cb0', 'ES', 'Sort homes for you', 'Sort homes for you', '2024-10-15 06:09:23', '2024-10-15 06:09:23'),
 ('9d408aa8-2fb9-488a-a0df-701c5ddc2fe7', 'US', 'Builder saved successfully', 'Builder saved successfully', '2024-10-15 10:14:57', '2024-10-15 10:14:57'),
-('9d408aa8-3295-416b-bcec-06f31b056fa7', 'ES', 'Builder saved successfully', 'Builder saved successfully', '2024-10-15 10:14:57', '2024-10-15 10:14:57');
+('9d408aa8-3295-416b-bcec-06f31b056fa7', 'ES', 'Builder saved successfully', 'Builder saved successfully', '2024-10-15 10:14:57', '2024-10-15 10:14:57'),
+('9d61e592-f029-4c0b-97a5-cbf39a7683af', 'US', 'Int', 'Int', '2024-11-01 00:11:30', '2024-11-01 00:11:30'),
+('9d61e592-f5f0-4d53-8d74-b4c3d0200ea6', 'ES', 'Int', 'Int', '2024-11-01 00:11:30', '2024-11-01 00:11:30'),
+('9d61e593-570e-4a08-9bf3-4f10a3a90e62', 'US', 'Inte', 'Inte', '2024-11-01 00:11:30', '2024-11-01 00:11:30'),
+('9d61e593-5f66-4f68-9562-99bf6397d83b', 'ES', 'Inte', 'Inte', '2024-11-01 00:11:30', '2024-11-01 00:11:30'),
+('9d61e593-9a27-4142-b31f-a636a1226a76', 'US', 'Inter', 'Inter', '2024-11-01 00:11:30', '2024-11-01 00:11:30'),
+('9d61e593-9f22-4a37-aee2-df0407fe73a5', 'ES', 'Inter', 'Inter', '2024-11-01 00:11:30', '2024-11-01 00:11:30'),
+('9d61e593-d0cd-4ebe-87a2-b7e5292fc4b3', 'US', 'Intere', 'Intere', '2024-11-01 00:11:30', '2024-11-01 00:11:30'),
+('9d61e593-d4e7-4d83-b765-87361e1c8087', 'ES', 'Intere', 'Intere', '2024-11-01 00:11:30', '2024-11-01 00:11:30'),
+('9d61e595-3edf-41f7-8070-823ca963df6a', 'US', 'Interes', 'Interes', '2024-11-01 00:11:31', '2024-11-01 00:11:31'),
+('9d61e595-44fa-494e-888a-4f41da8aba0d', 'ES', 'Interes', 'Interes', '2024-11-01 00:11:31', '2024-11-01 00:11:31'),
+('9d61e595-efef-439b-a672-075672779eb0', 'US', 'Interest', 'Interest', '2024-11-01 00:11:31', '2024-11-01 00:11:31'),
+('9d61e595-f3ed-4b37-846a-28f8fd4fb2c9', 'ES', 'Interest', 'Interest', '2024-11-01 00:11:31', '2024-11-01 00:11:31'),
+('9d61e596-621a-4243-bad9-a24dfc7470d1', 'US', 'Interest R', 'Interest R', '2024-11-01 00:11:32', '2024-11-01 00:11:32'),
+('9d61e596-6766-4fec-ab67-5b6627fe9409', 'ES', 'Interest R', 'Interest R', '2024-11-01 00:11:32', '2024-11-01 00:11:32'),
+('9d61e597-a02d-47fd-ac5a-8828d8873df2', 'US', 'Interest r', 'Interest r', '2024-11-01 00:11:33', '2024-11-01 00:11:33'),
+('9d61e597-a463-4c77-89a9-65f708a6d9b7', 'ES', 'Interest r', 'Interest r', '2024-11-01 00:11:33', '2024-11-01 00:11:33'),
+('9d61e597-ee83-4124-b46a-4479b4a75919', 'US', 'Interest re', 'Interest re', '2024-11-01 00:11:33', '2024-11-01 00:11:33'),
+('9d61e597-f2d5-421f-859e-0f44b5179a68', 'ES', 'Interest re', 'Interest re', '2024-11-01 00:11:33', '2024-11-01 00:11:33'),
+('9d61e598-1848-4724-a596-e21bf28dde80', 'US', 'Interest reate', 'Interest reate', '2024-11-01 00:11:33', '2024-11-01 00:11:33'),
+('9d61e598-1bb1-46cf-b4f3-ca810db3ad47', 'ES', 'Interest reate', 'Interest reate', '2024-11-01 00:11:33', '2024-11-01 00:11:33'),
+('9d61e599-705c-498d-bd94-d54910094de1', 'US', 'Interest reate/', 'Interest reate/', '2024-11-01 00:11:34', '2024-11-01 00:11:34'),
+('9d61e599-7540-4efc-8125-53cafbd33e8c', 'ES', 'Interest reate/', 'Interest reate/', '2024-11-01 00:11:34', '2024-11-01 00:11:34'),
+('9d61e59a-c0fc-402d-aeca-d9027b92489e', 'US', 'Interest reatef', 'Interest reatef', '2024-11-01 00:11:35', '2024-11-01 00:11:35'),
+('9d61e59a-c89b-4ddf-902f-96e7a812c6f4', 'ES', 'Interest reatef', 'Interest reatef', '2024-11-01 00:11:35', '2024-11-01 00:11:35'),
+('9d61e59b-ee8f-41e1-9a62-58332687a688', 'US', 'Interest reate fi', 'Interest reate fi', '2024-11-01 00:11:35', '2024-11-01 00:11:35'),
+('9d61e59b-f134-4383-b387-2e1025d6848d', 'ES', 'Interest reate fi', 'Interest reate fi', '2024-11-01 00:11:35', '2024-11-01 00:11:35'),
+('9d61e59c-ae29-4ddd-9e6a-e8d64db183a9', 'US', 'Interest reate fir', 'Interest reate fir', '2024-11-01 00:11:36', '2024-11-01 00:11:36'),
+('9d61e59c-b0a4-463f-9c4d-43eb1b050ddb', 'ES', 'Interest reate fir', 'Interest reate fir', '2024-11-01 00:11:36', '2024-11-01 00:11:36'),
+('9d61e59c-fce5-4859-af5f-297fa11e547b', 'US', 'Interest reate first', 'Interest reate first', '2024-11-01 00:11:36', '2024-11-01 00:11:36'),
+('9d61e59c-ff89-4131-a5a6-69280428cc26', 'ES', 'Interest reate first', 'Interest reate first', '2024-11-01 00:11:36', '2024-11-01 00:11:36'),
+('9d61e59d-712f-4a21-a04b-eaf203c1f2be', 'US', 'Interest reate first y', 'Interest reate first y', '2024-11-01 00:11:36', '2024-11-01 00:11:36'),
+('9d61e59d-740b-42b4-be7d-72f436cc3818', 'ES', 'Interest reate first y', 'Interest reate first y', '2024-11-01 00:11:36', '2024-11-01 00:11:36'),
+('9d61e59d-88ee-4c69-83df-f88630578823', 'US', 'Interest reate first ye', 'Interest reate first ye', '2024-11-01 00:11:36', '2024-11-01 00:11:36'),
+('9d61e59d-8b2d-4521-9db4-636bf419eb84', 'ES', 'Interest reate first ye', 'Interest reate first ye', '2024-11-01 00:11:36', '2024-11-01 00:11:36'),
+('9d61e59d-e08c-442e-a87a-980d27658a64', 'US', 'Interest reate first year', 'Interest reate first year', '2024-11-01 00:11:37', '2024-11-01 00:11:37'),
+('9d61e59d-e395-41f3-ae97-7c08d0cf2c4f', 'ES', 'Interest reate first year', 'Interest reate first year', '2024-11-01 00:11:37', '2024-11-01 00:11:37'),
+('9d61e6ae-817f-4d79-908e-7b420e77ecaa', 'US', 'Not included', 'Not included', '2024-11-01 00:14:35', '2024-11-01 00:14:35'),
+('9d61e6ae-88d9-45da-96e4-fad7cb3a9134', 'ES', 'Not included', 'Not included', '2024-11-01 00:14:35', '2024-11-01 00:14:35'),
+('9d61e862-cd6b-4477-bc74-bfa372ceb0b9', 'US', 'Itinerary main Image', 'Itinerary main Image', '2024-11-01 00:19:21', '2024-11-01 00:19:21'),
+('9d61e862-d4a7-476b-bfb8-b69629974456', 'ES', 'Itinerary main Image', 'Itinerary main Image', '2024-11-01 00:19:21', '2024-11-01 00:19:21'),
+('9d61ec99-63c3-4ec5-b638-e0ece7008c12', 'US', 'Inc', 'Inc', '2024-11-01 00:31:08', '2024-11-01 00:31:08'),
+('9d61ec99-696e-419e-abe8-6e44a6132426', 'ES', 'Inc', 'Inc', '2024-11-01 00:31:08', '2024-11-01 00:31:08'),
+('9d61ec9b-6780-49eb-8afd-a71a0f6e166c', 'US', 'Incentiv', 'Incentiv', '2024-11-01 00:31:09', '2024-11-01 00:31:09'),
+('9d61ec9b-6b90-4fc1-a77e-9b447bf94fc9', 'US', 'Incenti', 'Incenti', '2024-11-01 00:31:09', '2024-11-01 00:31:09'),
+('9d61ec9b-6c11-4e24-8e15-24dcb9e402ac', 'ES', 'Incentiv', 'Incentiv', '2024-11-01 00:31:09', '2024-11-01 00:31:09'),
+('9d61ec9b-7186-404c-aab1-844f744150ae', 'ES', 'Incenti', 'Incenti', '2024-11-01 00:31:09', '2024-11-01 00:31:09'),
+('9d61ec9c-2d88-4412-a794-1df01bde7b86', 'US', 'Incentive', 'Incentive', '2024-11-01 00:31:10', '2024-11-01 00:31:10'),
+('9d61ec9c-3265-487e-b60c-2aab64a9ad53', 'ES', 'Incentive', 'Incentive', '2024-11-01 00:31:10', '2024-11-01 00:31:10'),
+('9d61ec9c-aed7-45a9-b0d0-c48a79f1ff83', 'US', 'Incentive Ba', 'Incentive Ba', '2024-11-01 00:31:10', '2024-11-01 00:31:10'),
+('9d61ec9c-b379-4da4-9a87-dd8ffa436c8f', 'ES', 'Incentive Ba', 'Incentive Ba', '2024-11-01 00:31:10', '2024-11-01 00:31:10'),
+('9d61ec9c-c0cc-4eab-b621-c389149c6538', 'US', 'Incentive B', 'Incentive B', '2024-11-01 00:31:10', '2024-11-01 00:31:10'),
+('9d61ec9c-c94b-48b1-b392-957e480b7a17', 'ES', 'Incentive B', 'Incentive B', '2024-11-01 00:31:10', '2024-11-01 00:31:10'),
+('9d61ec9d-88e3-4e5c-80f3-7f8997fc0246', 'US', 'Incentive Bann', 'Incentive Bann', '2024-11-01 00:31:11', '2024-11-01 00:31:11'),
+('9d61ec9d-8d30-4937-b49f-146002475f2f', 'ES', 'Incentive Bann', 'Incentive Bann', '2024-11-01 00:31:11', '2024-11-01 00:31:11'),
+('9d61ec9d-9a90-4610-9399-f0f11765dbd1', 'US', 'Incentive Ban', 'Incentive Ban', '2024-11-01 00:31:11', '2024-11-01 00:31:11'),
+('9d61ec9d-9f4e-4978-9e86-922a4459e107', 'ES', 'Incentive Ban', 'Incentive Ban', '2024-11-01 00:31:11', '2024-11-01 00:31:11'),
+('9d61ec9e-4fe9-4c13-a36d-43b26d1f525a', 'US', 'Incentive Banner', 'Incentive Banner', '2024-11-01 00:31:11', '2024-11-01 00:31:11'),
+('9d61ec9e-5487-49ce-a029-7ec10a762bc2', 'ES', 'Incentive Banner', 'Incentive Banner', '2024-11-01 00:31:11', '2024-11-01 00:31:11'),
+('9d61f1e4-28dd-4c91-aa32-fefd89131363', 'US', 'Search by B', 'Search by B', '2024-11-01 00:45:56', '2024-11-01 00:45:56'),
+('9d61f1e4-316c-401d-a375-ee98ee548822', 'ES', 'Search by B', 'Search by B', '2024-11-01 00:45:56', '2024-11-01 00:45:56'),
+('9d61f1e4-af66-4c8e-9035-c72f733d1771', 'US', 'Search by Bu', 'Search by Bu', '2024-11-01 00:45:56', '2024-11-01 00:45:56'),
+('9d61f1e4-b4be-4912-8e22-5069dacf805f', 'ES', 'Search by Bu', 'Search by Bu', '2024-11-01 00:45:56', '2024-11-01 00:45:56'),
+('9d61f1e4-e369-41ba-9554-fa85509cb43e', 'US', 'Search by Bui', 'Search by Bui', '2024-11-01 00:45:56', '2024-11-01 00:45:56'),
+('9d61f1e4-e6c8-4b32-81f2-5446bc976aa5', 'ES', 'Search by Bui', 'Search by Bui', '2024-11-01 00:45:56', '2024-11-01 00:45:56'),
+('9d61f1e5-2eab-4907-9819-6cf158bb6a66', 'US', 'Search by Build', 'Search by Build', '2024-11-01 00:45:57', '2024-11-01 00:45:57'),
+('9d61f1e5-32e0-4aed-9a17-bb0e84aa6379', 'ES', 'Search by Build', 'Search by Build', '2024-11-01 00:45:57', '2024-11-01 00:45:57'),
+('9d61f1e5-5479-4e00-ae24-489722cf0fc8', 'US', 'Search by Builder', 'Search by Builder', '2024-11-01 00:45:57', '2024-11-01 00:45:57'),
+('9d61f1e5-5a21-427c-b963-5fd7689db5a2', 'ES', 'Search by Builder', 'Search by Builder', '2024-11-01 00:45:57', '2024-11-01 00:45:57'),
+('9d61f1e8-8947-43cc-9ad8-f1cec9a4a6c0', 'US', 'Builder', 'Builder', '2024-11-01 00:45:59', '2024-11-01 00:45:59'),
+('9d61f1e8-8c5c-40a7-8a78-919e56e30156', 'ES', 'Builder', 'Builder', '2024-11-01 00:45:59', '2024-11-01 00:45:59'),
+('9d620547-f1e0-47ee-b2cb-8a80d0854411', 'US', 'Events', 'Events', '2024-11-01 01:40:09', '2024-11-01 01:40:09'),
+('9d620548-06a1-4729-99b3-e894efdf55fb', 'ES', 'Events', 'Events', '2024-11-01 01:40:09', '2024-11-01 01:40:09'),
+('9d620548-bce9-49ff-8200-95a6c399b9bf', 'US', 'Add Event', 'Add Event', '2024-11-01 01:40:10', '2024-11-01 01:40:10'),
+('9d620548-c1bc-4805-a2e1-578b56f42811', 'ES', 'Add Event', 'Add Event', '2024-11-01 01:40:10', '2024-11-01 01:40:10'),
+('9d6205da-14be-47ab-b6cb-e96e6f4ab32c', 'US', 'Create New Event', 'Create New Event', '2024-11-01 01:41:45', '2024-11-01 01:41:45'),
+('9d6205da-1917-4b6b-8ec8-43980933e114', 'ES', 'Create New Event', 'Create New Event', '2024-11-01 01:41:45', '2024-11-01 01:41:45'),
+('9d6205da-208f-4907-8ce4-d768c4c0bacf', 'US', 'View All Events', 'View All Events', '2024-11-01 01:41:45', '2024-11-01 01:41:45'),
+('9d6205da-24e0-468b-90c2-88ccae509972', 'ES', 'View All Events', 'View All Events', '2024-11-01 01:41:45', '2024-11-01 01:41:45'),
+('9d6205da-8739-44a5-b597-c156827d21ae', 'US', 'Event Details', 'Event Details', '2024-11-01 01:41:45', '2024-11-01 01:41:45'),
+('9d6205da-8a6d-45e7-b6d2-fe4dd68c1f95', 'ES', 'Event Details', 'Event Details', '2024-11-01 01:41:45', '2024-11-01 01:41:45'),
+('9d6205da-906e-4528-95c4-22d963baff54', 'US', 'Banner', 'Banner', '2024-11-01 01:41:45', '2024-11-01 01:41:45'),
+('9d6205da-934d-4045-8641-fb33f41ffd4a', 'ES', 'Banner', 'Banner', '2024-11-01 01:41:45', '2024-11-01 01:41:45'),
+('9d620621-1cb1-45c7-a798-fcd0fbcdcb81', 'US', 'Choose status', 'Choose status', '2024-11-01 01:42:31', '2024-11-01 01:42:31'),
+('9d620621-23b6-45fa-8627-74ea37ba4781', 'ES', 'Choose status', 'Choose status', '2024-11-01 01:42:31', '2024-11-01 01:42:31'),
+('9d620621-9be0-4ebd-89a8-7facdfa43855', 'US', 'Off', 'Off', '2024-11-01 01:42:32', '2024-11-01 01:42:32'),
+('9d620621-9ded-4a85-b566-fcb48fa53843', 'US', 'On', 'On', '2024-11-01 01:42:32', '2024-11-01 01:42:32'),
+('9d620621-9ecc-49b4-99b7-0150204331ac', 'ES', 'Off', 'Off', '2024-11-01 01:42:32', '2024-11-01 01:42:32'),
+('9d620621-a26e-4d83-98e9-d314f64baa7c', 'ES', 'On', 'On', '2024-11-01 01:42:32', '2024-11-01 01:42:32'),
+('9d620622-2b40-4459-ba2b-cc9079e7e90d', 'US', 'Event title', 'Event title', '2024-11-01 01:42:32', '2024-11-01 01:42:32'),
+('9d620622-3054-46aa-ba69-1f2a613aa997', 'ES', 'Event title', 'Event title', '2024-11-01 01:42:32', '2024-11-01 01:42:32'),
+('9d620622-3773-41a9-88d2-f899da2fbc1b', 'US', 'Event start date', 'Event start date', '2024-11-01 01:42:32', '2024-11-01 01:42:32'),
+('9d620622-3c6d-4a9c-bc11-2a666d073562', 'ES', 'Event start date', 'Event start date', '2024-11-01 01:42:32', '2024-11-01 01:42:32');
+INSERT INTO `translations` (`id`, `lang`, `lang_key`, `lang_value`, `created_at`, `updated_at`) VALUES
+('9d620622-c553-4d4f-9c5c-a3cbd940a6a8', 'US', 'Event end date', 'Event end date', '2024-11-01 01:42:32', '2024-11-01 01:42:32'),
+('9d620622-c742-43fa-a362-dd5636e653f7', 'US', 'Eligibility', 'Eligibility', '2024-11-01 01:42:32', '2024-11-01 01:42:32'),
+('9d620622-c84b-471e-8bbb-c18765bbe057', 'ES', 'Event end date', 'Event end date', '2024-11-01 01:42:32', '2024-11-01 01:42:32'),
+('9d620622-ca53-4aa3-ac21-8cb33e61f9c3', 'ES', 'Eligibility', 'Eligibility', '2024-11-01 01:42:32', '2024-11-01 01:42:32'),
+('9d620623-243c-4317-bfb0-fb52539539e5', 'US', 'Catalog', 'Catalog', '2024-11-01 01:42:33', '2024-11-01 01:42:33'),
+('9d620623-28dc-4e8d-80bd-7f2dfb9fe26d', 'ES', 'Catalog', 'Catalog', '2024-11-01 01:42:33', '2024-11-01 01:42:33'),
+('9d620712-e42f-4d89-a51d-dd1ddcf40c12', 'US', 'registeration_link', 'registeration_link', '2024-11-01 01:45:10', '2024-11-01 01:45:10'),
+('9d620712-e9f5-4921-809c-b9c88f73cad1', 'ES', 'registeration_link', 'registeration_link', '2024-11-01 01:45:10', '2024-11-01 01:45:10'),
+('9d620716-0cb6-4105-adb6-d686d5523cfc', 'US', 'Registeration_link', 'Registeration_link', '2024-11-01 01:45:12', '2024-11-01 01:45:12'),
+('9d620716-122d-4da9-b7b2-fc9d015252f8', 'ES', 'Registeration_link', 'Registeration_link', '2024-11-01 01:45:12', '2024-11-01 01:45:12'),
+('9d620718-0e9d-49c7-ba71-43b03c1cd1b4', 'US', 'Registeration link', 'Registeration link', '2024-11-01 01:45:13', '2024-11-01 01:45:13'),
+('9d620718-11fe-470a-8e91-c0b1bdb18f78', 'ES', 'Registeration link', 'Registeration link', '2024-11-01 01:45:13', '2024-11-01 01:45:13'),
+('9d620847-801b-4143-8cde-fe2044eac778', 'US', 'Registration link', 'Registration link', '2024-11-01 01:48:32', '2024-11-01 01:48:32'),
+('9d620847-87ab-48c7-81a9-fe88d290dfbf', 'ES', 'Registration link', 'Registration link', '2024-11-01 01:48:32', '2024-11-01 01:48:32'),
+('9d620863-60d2-44fc-af13-738b90d83739', 'US', 'Event  date', 'Event  date', '2024-11-01 01:48:50', '2024-11-01 01:48:50'),
+('9d620863-657e-4cf2-a796-fc18e69dc288', 'ES', 'Event  date', 'Event  date', '2024-11-01 01:48:50', '2024-11-01 01:48:50'),
+('9d620863-99fc-489c-ac66-32084d76eea0', 'US', 'Event date', 'Event date', '2024-11-01 01:48:51', '2024-11-01 01:48:51'),
+('9d620863-9da0-4ee2-89a0-e3e7018dfb5e', 'ES', 'Event date', 'Event date', '2024-11-01 01:48:51', '2024-11-01 01:48:51'),
+('9d620863-e2fd-495c-a609-08f15cdea565', 'US', 'Even date', 'Even date', '2024-11-01 01:48:51', '2024-11-01 01:48:51'),
+('9d620863-e76f-4d63-b3c6-b54db5d6c554', 'ES', 'Even date', 'Even date', '2024-11-01 01:48:51', '2024-11-01 01:48:51'),
+('9d620864-310f-4b6e-a043-9f503735df31', 'US', 'Eve date', 'Eve date', '2024-11-01 01:48:51', '2024-11-01 01:48:51'),
+('9d620864-358c-4ee9-9691-30636c52222d', 'ES', 'Eve date', 'Eve date', '2024-11-01 01:48:51', '2024-11-01 01:48:51'),
+('9d620864-947a-429c-b685-fca404a6724b', 'US', 'Ev date', 'Ev date', '2024-11-01 01:48:51', '2024-11-01 01:48:51'),
+('9d620864-96b0-4f2f-b712-0390272002a3', 'ES', 'Ev date', 'Ev date', '2024-11-01 01:48:51', '2024-11-01 01:48:51'),
+('9d620864-b673-4da4-92cc-5880178d538d', 'US', 'E date', 'E date', '2024-11-01 01:48:51', '2024-11-01 01:48:51'),
+('9d620864-b98a-4f8a-bafb-16ee6497d3fb', 'ES', 'E date', 'E date', '2024-11-01 01:48:51', '2024-11-01 01:48:51'),
+('9d620864-ed5e-4601-9569-71c08ebf4956', 'US', 'date', 'date', '2024-11-01 01:48:51', '2024-11-01 01:48:51'),
+('9d620864-f0ad-4981-b9f5-14efb68ab541', 'ES', 'date', 'date', '2024-11-01 01:48:51', '2024-11-01 01:48:51'),
+('9d620866-2a49-47eb-bc8f-51bc9adf1c9f', 'US', 'ate', 'ate', '2024-11-01 01:48:52', '2024-11-01 01:48:52'),
+('9d620866-2d89-4552-bb6f-fd9858cbc6f3', 'ES', 'ate', 'ate', '2024-11-01 01:48:52', '2024-11-01 01:48:52'),
+('9d620867-6486-49c2-81ad-3a91601f11bd', 'US', 'DEate', 'DEate', '2024-11-01 01:48:53', '2024-11-01 01:48:53'),
+('9d620867-6a08-457f-bc11-27ea633996b3', 'ES', 'DEate', 'DEate', '2024-11-01 01:48:53', '2024-11-01 01:48:53'),
+('9d620868-f696-4b17-8c51-7d30cf75464d', 'US', 'EDate', 'EDate', '2024-11-01 01:48:54', '2024-11-01 01:48:54'),
+('9d620868-f8ca-4b6f-8b9e-06aebf1b2d4f', 'ES', 'EDate', 'EDate', '2024-11-01 01:48:54', '2024-11-01 01:48:54'),
+('9d620869-8af4-472c-8d03-39b97beb3f0c', 'US', 'EvDate', 'EvDate', '2024-11-01 01:48:54', '2024-11-01 01:48:54'),
+('9d620869-8e49-4a96-ba9a-63a0c2d6ba16', 'ES', 'EvDate', 'EvDate', '2024-11-01 01:48:54', '2024-11-01 01:48:54'),
+('9d62086a-5ea7-4091-963e-59bfd61c4c2b', 'US', 'EvtDate', 'EvtDate', '2024-11-01 01:48:55', '2024-11-01 01:48:55'),
+('9d62086a-62c6-400d-9aef-fddea5ca8202', 'ES', 'EvtDate', 'EvtDate', '2024-11-01 01:48:55', '2024-11-01 01:48:55'),
+('9d62086b-0736-46e9-8e81-851818167b07', 'US', 'EveDate', 'EveDate', '2024-11-01 01:48:55', '2024-11-01 01:48:55'),
+('9d62086b-0bb6-446b-8749-b14e2830a45d', 'ES', 'EveDate', 'EveDate', '2024-11-01 01:48:55', '2024-11-01 01:48:55'),
+('9d62086b-4dfc-4c10-ab22-028e3bdb5087', 'US', 'EventDate', 'EventDate', '2024-11-01 01:48:56', '2024-11-01 01:48:56'),
+('9d62086b-5099-4746-ab65-bef6cb01400c', 'ES', 'EventDate', 'EventDate', '2024-11-01 01:48:56', '2024-11-01 01:48:56'),
+('9d62086b-7e7d-48c7-b174-a1a9efb47c71', 'US', 'Event Date', 'Event Date', '2024-11-01 01:48:56', '2024-11-01 01:48:56'),
+('9d62086b-818d-4461-b105-0ff9c7249289', 'ES', 'Event Date', 'Event Date', '2024-11-01 01:48:56', '2024-11-01 01:48:56'),
+('9d620b35-cb75-4ae0-aae8-5e4851c0154e', 'US', 'Event saved successfully', 'Event saved successfully', '2024-11-01 01:56:44', '2024-11-01 01:56:44'),
+('9d620b35-d224-4829-9594-96ceec722d2f', 'ES', 'Event saved successfully', 'Event saved successfully', '2024-11-01 01:56:44', '2024-11-01 01:56:44'),
+('9d620d36-5ae2-4079-9d99-0cebb85ee198', 'US', 'Registration Link', 'Registration Link', '2024-11-01 02:02:20', '2024-11-01 02:02:20'),
+('9d620d36-5b14-4dff-a97c-27b83e8e3117', 'US', 'View Details', 'View Details', '2024-11-01 02:02:20', '2024-11-01 02:02:20'),
+('9d620d36-636f-4fb2-878d-2c6626709baf', 'ES', 'Registration Link', 'Registration Link', '2024-11-01 02:02:20', '2024-11-01 02:02:20'),
+('9d620d36-644e-4cae-92e7-72b14907b62c', 'ES', 'View Details', 'View Details', '2024-11-01 02:02:20', '2024-11-01 02:02:20'),
+('9d6210f4-afe1-472e-92a2-bd80e6d164a1', 'US', 'Event deleted successfully.', 'Event deleted successfully.', '2024-11-01 02:12:48', '2024-11-01 02:12:48'),
+('9d6210f4-b4a4-42a9-8b9c-9b938ab97e87', 'ES', 'Event deleted successfully.', 'Event deleted successfully.', '2024-11-01 02:12:48', '2024-11-01 02:12:48'),
+('9d665cd2-cad3-40da-8c83-cb83be3312c0', 'US', 'Sort By', 'Sort By', '2024-11-03 05:28:15', '2024-11-03 05:28:15'),
+('9d665cd2-cad3-4cbe-98d4-a8946102d90d', 'US', 'Sort B', 'Sort B', '2024-11-03 05:28:15', '2024-11-03 05:28:15'),
+('9d665cd3-8cc8-4c11-a187-6719ee14d5bb', 'ES', 'Sort B', 'Sort B', '2024-11-03 05:28:15', '2024-11-03 05:28:15'),
+('9d665cd3-8cfc-45b9-8653-b68c16b299a1', 'ES', 'Sort By', 'Sort By', '2024-11-03 05:28:15', '2024-11-03 05:28:15'),
+('9d665cf0-62dc-47dc-b3b8-118fa5f3d8fb', 'US', 'Sort b', 'Sort b', '2024-11-03 05:28:34', '2024-11-03 05:28:34'),
+('9d665cf0-6803-4c75-8196-1e794136fc58', 'ES', 'Sort b', 'Sort b', '2024-11-03 05:28:34', '2024-11-03 05:28:34'),
+('9d6a1090-7ec9-4924-a5f1-ae1f9fe2fd9a', 'US', 'V', 'V', '2024-11-05 01:38:20', '2024-11-05 01:38:20'),
+('9d6a1090-8885-4288-8871-86d0591663ff', 'ES', 'V', 'V', '2024-11-05 01:38:20', '2024-11-05 01:38:20'),
+('9d6a1090-a5b1-44ab-8f73-992f4fcf7ee2', 'US', 'Vi', 'Vi', '2024-11-05 01:38:20', '2024-11-05 01:38:20'),
+('9d6a1090-abb4-46a0-8d43-978300e034dc', 'ES', 'Vi', 'Vi', '2024-11-05 01:38:20', '2024-11-05 01:38:20'),
+('9d6a1091-2e44-4e8f-a7fe-a3d400d42981', 'US', 'Vis', 'Vis', '2024-11-05 01:38:20', '2024-11-05 01:38:20'),
+('9d6a1091-33d1-4a38-a759-8ed2a09b00e4', 'ES', 'Vis', 'Vis', '2024-11-05 01:38:20', '2024-11-05 01:38:20'),
+('9d6a1091-5c2e-45b0-9df6-c464866fe716', 'US', 'Visi', 'Visi', '2024-11-05 01:38:20', '2024-11-05 01:38:20'),
+('9d6a1091-6273-48cb-b9e9-fd9b96795d48', 'ES', 'Visi', 'Visi', '2024-11-05 01:38:20', '2024-11-05 01:38:20'),
+('9d6a1092-6f05-48bf-a48d-096a0dea5809', 'US', 'Visit', 'Visit', '2024-11-05 01:38:21', '2024-11-05 01:38:21'),
+('9d6a1092-748c-492c-8c5d-89755a7c6f78', 'ES', 'Visit', 'Visit', '2024-11-05 01:38:21', '2024-11-05 01:38:21'),
+('9d6a1092-7fc7-4eff-9237-b9e6005fb8fc', 'US', 'Visite', 'Visite', '2024-11-05 01:38:21', '2024-11-05 01:38:21'),
+('9d6a1092-86c6-4e5b-bab9-9c506b943bdf', 'ES', 'Visite', 'Visite', '2024-11-05 01:38:21', '2024-11-05 01:38:21'),
+('9d6a1093-22c5-40c8-a845-0017c0158952', 'US', 'Visited', 'Visited', '2024-11-05 01:38:21', '2024-11-05 01:38:21'),
+('9d6a1093-25f7-4330-ae5d-e3226155c637', 'ES', 'Visited', 'Visited', '2024-11-05 01:38:21', '2024-11-05 01:38:21'),
+('9d6a1093-b8be-44e2-81f4-8bb225cb1a8c', 'US', 'Visited H', 'Visited H', '2024-11-05 01:38:22', '2024-11-05 01:38:22'),
+('9d6a1093-bd2f-4ce2-a3a5-44d611a50f81', 'ES', 'Visited H', 'Visited H', '2024-11-05 01:38:22', '2024-11-05 01:38:22'),
+('9d6a1093-c202-41d3-964e-50def2044440', 'US', 'Visited Hom', 'Visited Hom', '2024-11-05 01:38:22', '2024-11-05 01:38:22'),
+('9d6a1093-c6a6-4955-9ca0-b397f93b73f7', 'ES', 'Visited Hom', 'Visited Hom', '2024-11-05 01:38:22', '2024-11-05 01:38:22'),
+('9d6a1094-3548-4274-8839-b0c10339785d', 'US', 'Visited Home', 'Visited Home', '2024-11-05 01:38:22', '2024-11-05 01:38:22'),
+('9d6a1094-3a6d-49f7-9318-a62f2a5a0e2f', 'ES', 'Visited Home', 'Visited Home', '2024-11-05 01:38:22', '2024-11-05 01:38:22'),
+('9d6a10a3-a71e-462e-8196-9f19c43e49be', 'US', 'Date &', 'Date &', '2024-11-05 01:38:32', '2024-11-05 01:38:32'),
+('9d6a10a3-ad93-42cb-afb2-e6cd662adee7', 'ES', 'Date &', 'Date &', '2024-11-05 01:38:32', '2024-11-05 01:38:32'),
+('9d6a10a4-311e-444a-ac5a-72b68905cedb', 'US', 'Date & T', 'Date & T', '2024-11-05 01:38:32', '2024-11-05 01:38:32'),
+('9d6a10a4-3462-4e65-be5b-b2aaa0cedcf2', 'ES', 'Date & T', 'Date & T', '2024-11-05 01:38:32', '2024-11-05 01:38:32'),
+('9d6a10a4-b4dd-4f0d-b885-72308020c357', 'US', 'Date & Tom', 'Date & Tom', '2024-11-05 01:38:33', '2024-11-05 01:38:33'),
+('9d6a10a4-b99d-4d28-88c1-2b3ecc75bfe6', 'ES', 'Date & Tom', 'Date & Tom', '2024-11-05 01:38:33', '2024-11-05 01:38:33'),
+('9d6a10a5-5e94-4be1-8398-f7078c8f9a44', 'US', 'Date & Tome', 'Date & Tome', '2024-11-05 01:38:33', '2024-11-05 01:38:33'),
+('9d6a10a5-62e1-4fcf-b949-84c89b64af13', 'ES', 'Date & Tome', 'Date & Tome', '2024-11-05 01:38:33', '2024-11-05 01:38:33'),
+('9d6a10a6-9875-4787-8f2e-04f425ff32e8', 'US', 'Date & To', 'Date & To', '2024-11-05 01:38:34', '2024-11-05 01:38:34'),
+('9d6a10a6-9e50-4f6a-8327-a3226f172654', 'ES', 'Date & To', 'Date & To', '2024-11-05 01:38:34', '2024-11-05 01:38:34'),
+('9d6a10a7-ce15-4a05-bad0-2bdef6720696', 'US', 'Date & Tim', 'Date & Tim', '2024-11-05 01:38:35', '2024-11-05 01:38:35'),
+('9d6a10a7-d159-4fa7-b356-3ccf43d01828', 'ES', 'Date & Tim', 'Date & Tim', '2024-11-05 01:38:35', '2024-11-05 01:38:35'),
+('9d6a10a8-7958-411f-87d0-ba68ed309933', 'US', 'Date & Time', 'Date & Time', '2024-11-05 01:38:35', '2024-11-05 01:38:35'),
+('9d6a10a8-80f6-4859-9a6c-987229d59b77', 'ES', 'Date & Time', 'Date & Time', '2024-11-05 01:38:35', '2024-11-05 01:38:35'),
+('9d6a10b3-ee33-4098-96f5-fc7b5cb31dc3', 'US', 'Dev', 'Dev', '2024-11-05 01:38:43', '2024-11-05 01:38:43'),
+('9d6a10b3-f20b-4f15-b147-2d7c1591e144', 'ES', 'Dev', 'Dev', '2024-11-05 01:38:43', '2024-11-05 01:38:43'),
+('9d6a10b4-78c1-421b-856e-1aaf592606e5', 'US', 'Devi', 'Devi', '2024-11-05 01:38:43', '2024-11-05 01:38:43'),
+('9d6a10b4-7ef6-4779-9ff2-ca1d6680e1a9', 'ES', 'Devi', 'Devi', '2024-11-05 01:38:43', '2024-11-05 01:38:43'),
+('9d6a10b5-9763-49a5-b87a-a1b5761a5bd0', 'US', 'Devin', 'Devin', '2024-11-05 01:38:44', '2024-11-05 01:38:44'),
+('9d6a10b5-9b8d-4737-95a0-e5816e29ab7e', 'ES', 'Devin', 'Devin', '2024-11-05 01:38:44', '2024-11-05 01:38:44'),
+('9d6a10b6-2010-4545-867e-cf9d9b0aa64a', 'US', 'Devinc', 'Devinc', '2024-11-05 01:38:44', '2024-11-05 01:38:44'),
+('9d6a10b6-2481-431a-a5c0-196a34488319', 'ES', 'Devinc', 'Devinc', '2024-11-05 01:38:44', '2024-11-05 01:38:44'),
+('9d6a10b8-2b34-4bb2-bb66-c1134eec755f', 'US', 'Devic', 'Devic', '2024-11-05 01:38:46', '2024-11-05 01:38:46'),
+('9d6a10b8-2fd0-4dbc-96d9-45fd9f9f819e', 'ES', 'Devic', 'Devic', '2024-11-05 01:38:46', '2024-11-05 01:38:46'),
+('9d6a10b9-8ce6-4365-bcd3-04cdcee87f3e', 'US', 'Devicew', 'Devicew', '2024-11-05 01:38:46', '2024-11-05 01:38:46'),
+('9d6a10b9-9494-42f2-98e4-a7e5a60b3bf1', 'ES', 'Devicew', 'Devicew', '2024-11-05 01:38:46', '2024-11-05 01:38:46'),
+('9d6a10ba-3666-4f83-9d72-c204db71d92a', 'US', 'Device', 'Device', '2024-11-05 01:38:47', '2024-11-05 01:38:47'),
+('9d6a10ba-3cf0-4a8d-b1cc-523ac4b5aabc', 'ES', 'Device', 'Device', '2024-11-05 01:38:47', '2024-11-05 01:38:47'),
+('9d6a3da3-d1d4-4eeb-91cf-e6f353b2b8e4', 'US', 'Ip', 'Ip', '2024-11-05 03:44:22', '2024-11-05 03:44:22'),
+('9d6a3da4-1008-4f76-a7f7-2ca0409b32b0', 'ES', 'Ip', 'Ip', '2024-11-05 03:44:22', '2024-11-05 03:44:22'),
+('9d6a3e1c-ed46-4428-8408-2cd8a2c3a2af', 'US', 'Customer ID', 'Customer ID', '2024-11-05 03:45:41', '2024-11-05 03:45:41'),
+('9d6a3e1c-f6d1-4e08-bfb1-fad0a54a2912', 'ES', 'Customer ID', 'Customer ID', '2024-11-05 03:45:41', '2024-11-05 03:45:41'),
+('9d6a3e1d-27fc-4e68-94a6-ea2bb88491ad', 'US', 'IP Address', 'IP Address', '2024-11-05 03:45:41', '2024-11-05 03:45:41'),
+('9d6a3e1d-2df1-4930-91ad-679dc276ba5e', 'ES', 'IP Address', 'IP Address', '2024-11-05 03:45:41', '2024-11-05 03:45:41'),
+('9d6a4785-1141-4f81-89b1-1f5d6fd274b9', 'US', 'Visiting List cleared Successfully.', 'Visiting List cleared Successfully.', '2024-11-05 04:11:59', '2024-11-05 04:11:59'),
+('9d6a4785-1e04-479f-944e-62579817cb19', 'ES', 'Visiting List cleared Successfully.', 'Visiting List cleared Successfully.', '2024-11-05 04:12:00', '2024-11-05 04:12:00');
 
 -- --------------------------------------------------------
 
@@ -3118,7 +3402,21 @@ INSERT INTO `uploads` (`id`, `file_original_name`, `file_name`, `file_size`, `ex
 (510, 'images.jpeg', 'real_public/CommunitiesFiles//Amtv6nUKyAKUU2pJTyr6NsMRveOOxcjvSpL1CNpn.jpg', 9869, 'jpg', 'image/jpeg', '2024-10-25 09:42:37', '2024-10-25 09:42:37', NULL),
 (511, 'remodel-building-luxury-living-shenandoah-valley-virginia.jpeg', 'real_public/CommunitiesFiles//xigZESiIpBAyJQicVVh4GyEVYB7RseFbxc4NSxWp.jpg', 1522702, 'jpg', 'image/jpeg', '2024-10-25 09:42:37', '2024-10-25 09:42:37', NULL),
 (512, 'real_public/profile_images/U3SMz9DwpH0PeIUvqDbNdr9hU4DbGKmpMUwDty7V.png', 'real_public/profile_images/U3SMz9DwpH0PeIUvqDbNdr9hU4DbGKmpMUwDty7V.png', NULL, 'png', 'image/png', '2024-10-25 10:27:27', '2024-10-25 10:27:27', NULL),
-(513, 'real_public/profile_images/nuTSlpWNBVHWXQgplbAarxogHaDEmwvReLESIUv2.png', 'real_public/profile_images/nuTSlpWNBVHWXQgplbAarxogHaDEmwvReLESIUv2.png', NULL, 'png', 'image/png', '2024-10-25 10:29:08', '2024-10-25 10:29:08', NULL);
+(513, 'real_public/profile_images/nuTSlpWNBVHWXQgplbAarxogHaDEmwvReLESIUv2.png', 'real_public/profile_images/nuTSlpWNBVHWXQgplbAarxogHaDEmwvReLESIUv2.png', NULL, 'png', 'image/png', '2024-10-25 10:29:08', '2024-10-25 10:29:08', NULL),
+(518, 'real_public/incentive_banners/A48Ldo21D5plXkdKjiMbUVFYGNLYjiXPcNUGdzpv.png', 'real_public/incentive_banners/A48Ldo21D5plXkdKjiMbUVFYGNLYjiXPcNUGdzpv.png', NULL, 'png', 'incentive_banner/png', '2024-11-01 00:41:40', '2024-11-01 00:41:40', NULL),
+(519, 'real_public/incentive_banners/3JKHbl3QoKWU60nFak3fFRrq1wikEvC7BXViiEp7.png', 'real_public/incentive_banners/3JKHbl3QoKWU60nFak3fFRrq1wikEvC7BXViiEp7.png', NULL, 'png', 'incentive_banner/png', '2024-11-01 00:47:26', '2024-11-01 00:47:26', NULL),
+(520, 'real_public/incentive_banners/nrDp9yPPDtea7oGs3sqT8RcgbDsyswpC6Z7bdTb8.png', 'real_public/incentive_banners/nrDp9yPPDtea7oGs3sqT8RcgbDsyswpC6Z7bdTb8.png', NULL, 'png', 'incentive_banner/png', '2024-11-01 00:48:09', '2024-11-01 00:48:09', NULL),
+(521, 'EventImages/BTRNiSe8BivEtJjmRt4x7K0vkX50R9dP3Lbmg5Kw.png', 'EventImages/BTRNiSe8BivEtJjmRt4x7K0vkX50R9dP3Lbmg5Kw.png', NULL, 'png', 'image/png', '2024-11-01 01:55:53', '2024-11-01 01:55:53', NULL),
+(533, 'EventImages/esFJNd0EPGp9LbZE6Drjd7UyyLPJll5FnsmJtejh.png', 'EventImages/esFJNd0EPGp9LbZE6Drjd7UyyLPJll5FnsmJtejh.png', NULL, 'png', 'image/png', '2024-11-02 01:54:52', '2024-11-02 01:54:52', NULL),
+(534, 'EventImages/QeBYJw2pXu2BcYUoRLOSTRftATvlGEbW6wAdJEbT.png', 'EventImages/QeBYJw2pXu2BcYUoRLOSTRftATvlGEbW6wAdJEbT.png', NULL, 'png', 'image/png', '2024-11-02 01:55:35', '2024-11-02 01:55:35', NULL),
+(535, 'EventImages/8YSB8nnhbtggErnLO2702ZzlvoAhQA4k1xg8Z7Bg.png', 'EventImages/8YSB8nnhbtggErnLO2702ZzlvoAhQA4k1xg8Z7Bg.png', NULL, 'png', 'image/png', '2024-11-02 01:56:25', '2024-11-02 01:56:25', NULL),
+(536, 'EventImages/6nYIRFDquXZ1OFOfJuRriPfdudF5cYj5k160qcWG.png', 'EventImages/6nYIRFDquXZ1OFOfJuRriPfdudF5cYj5k160qcWG.png', NULL, 'png', 'image/png', '2024-11-02 01:57:46', '2024-11-02 01:57:46', NULL),
+(537, 'real_public/incentive_banners/Bb1cBCsRVXxEsvRTalk3ztKwgUfnsmvYafbXwrXY.png', 'real_public/incentive_banners/Bb1cBCsRVXxEsvRTalk3ztKwgUfnsmvYafbXwrXY.png', NULL, 'png', 'incentive_banner/png', '2024-11-02 05:14:43', '2024-11-02 05:14:43', NULL),
+(538, 'real_public/incentive_banners/IqdHXmFgsaR4ELf3EfeDRhwMG0NwaMB4qwRsiewM.png', 'real_public/incentive_banners/IqdHXmFgsaR4ELf3EfeDRhwMG0NwaMB4qwRsiewM.png', NULL, 'png', 'incentive_banner/png', '2024-11-02 05:20:03', '2024-11-02 05:20:03', NULL),
+(539, 'real_public/incentive_banners/WEvsJwDOHBadHL2IMX8EZQMXvK9KE8JuGXxOsIAg.png', 'real_public/incentive_banners/WEvsJwDOHBadHL2IMX8EZQMXvK9KE8JuGXxOsIAg.png', NULL, 'png', 'incentive_banner/png', '2024-11-02 05:20:40', '2024-11-02 05:20:40', NULL),
+(540, 'real_public/incentive_banners/v5yn1Kqah4VEiAO0MHfEbE3zW0jgrLEGKsor33rG.png', 'real_public/incentive_banners/v5yn1Kqah4VEiAO0MHfEbE3zW0jgrLEGKsor33rG.png', NULL, 'png', 'incentive_banner/png', '2024-11-02 05:34:22', '2024-11-02 05:34:22', NULL),
+(541, 'real_public/quickMoveInHomeMainImages/zXhD1ZcvDpVJASAVeEbYphddquWEAtw07doWOtPA.png', 'real_public/quickMoveInHomeMainImages/zXhD1ZcvDpVJASAVeEbYphddquWEAtw07doWOtPA.png', NULL, 'png', 'image/png', '2024-11-03 14:42:39', '2024-11-03 14:42:39', NULL),
+(542, 'real_public/quickMoveInHomeMainImages/gV2PXnw34sGE8TeulUXKDO1dfUl2fbhAjVFlMirN.png', 'real_public/quickMoveInHomeMainImages/gV2PXnw34sGE8TeulUXKDO1dfUl2fbhAjVFlMirN.png', NULL, 'png', 'image/png', '2024-11-03 15:45:09', '2024-11-03 15:45:09', NULL);
 
 -- --------------------------------------------------------
 
@@ -3147,16 +3445,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `role`, `image`, `remember_token`, `token`, `verification_code`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Admin', 'admin@example.com', '2024-03-04 15:56:44', '$2y$12$bwAEfVL5PFq/HcscZE4SMOj0AyBEIR83DSWSV64IclvTUuoWCnQQa', 'admin', 262, NULL, 'snA6fFMSI6m3HlrUqI20UhQPa5n7jstB5foviX4JYrAIqTbmyYMpMU6scNF6mBBp', NULL, NULL, '2024-02-01 15:38:37', '2024-06-24 15:20:18'),
-(42, 'Charlie Sophia', 'agent@example.com', '2024-03-25 20:42:40', '$2y$12$bwAEfVL5PFq/HcscZE4SMOj0AyBEIR83DSWSV64IclvTUuoWCnQQa', 'agent', 174, NULL, NULL, NULL, NULL, '2024-03-05 08:27:55', '2024-05-30 04:39:33'),
-(108, 'Syed Umar', 'syed-umar@hotmail.com', '2024-10-15 12:20:56', '$2y$12$bwAEfVL5PFq/HcscZE4SMOj0AyBEIR83DSWSV64IclvTUuoWCnQQa', 'customer', 502, NULL, NULL, NULL, NULL, '2024-10-15 12:20:57', '2024-10-24 12:50:27'),
-(110, 'Johan Chawl', 'john@example.test', '2024-10-24 12:59:35', '$2y$12$BY/KNdCEoC8fMkinbd7kne7y79U668NwhF/43zqHfpH9DSFslcoZ.', 'customer', 507, NULL, NULL, NULL, NULL, '2024-10-24 12:59:36', '2024-10-24 13:14:09'),
-(111, 'Sarah Thompson', 'sarah.thompson@homerealty.com', '2024-10-24 13:02:31', '$2y$12$bwAEfVL5PFq/HcscZE4SMOj0AyBEIR83DSWSV64IclvTUuoWCnQQa', 'agent', 504, NULL, NULL, NULL, NULL, '2024-10-24 13:02:35', '2024-10-24 13:08:05'),
-(112, 'James Wu', 'james.wu@urbanproperties.com', '2024-10-24 13:03:19', '$2y$12$bwAEfVL5PFq/HcscZE4SMOj0AyBEIR83DSWSV64IclvTUuoWCnQQa', 'agent', 506, NULL, NULL, NULL, NULL, '2024-10-24 13:03:24', '2024-10-24 13:09:18'),
-(113, 'Maria Garcia', 'maria.garcia@luxuryhomes.com', '2024-10-24 13:04:07', '$2y$12$bwAEfVL5PFq/HcscZE4SMOj0AyBEIR83DSWSV64IclvTUuoWCnQQa', 'agent', 512, NULL, NULL, NULL, NULL, '2024-10-24 13:04:11', '2024-10-25 10:27:27'),
-(114, 'David Patel', 'david.patel@coastalproperties.com', '2024-10-24 13:11:32', '$2y$12$NpE.iyEcisFLCwDQp3Mg7.OCIA/6K1vFQeKOsuh1pm3lPHOwvx0ga', 'agent', 513, NULL, NULL, NULL, NULL, '2024-10-24 13:11:36', '2024-10-25 10:29:08'),
-(115, 'Jack Flower', 'jack@flower.example', '2024-10-25 10:25:12', '$2y$12$M8.t0yJE1/xQrcpOCk5SreJZTSE7ZoRMxgLbtbOxg/uBvRjA82Ukm', 'customer', NULL, NULL, NULL, NULL, NULL, '2024-10-25 10:25:12', '2024-10-25 10:25:12'),
-(116, 'Johan Alm', 'johan@test.example', '2024-10-25 12:42:36', '$2y$12$P3bpdoxvOzecU7zc1T679uuy0Dy8lu.8uBPOljP5nNInax6FKvJf.', 'customer', NULL, NULL, NULL, NULL, NULL, '2024-10-25 12:42:37', '2024-10-25 12:42:37');
+(1, 'Admin', 'admin@example.com', '2024-03-04 15:56:44', '$2y$12$NpE.iyEcisFLCwDQp3Mg7.OCIA/6K1vFQeKOsuh1pm3lPHOwvx0ga', 'admin', 262, NULL, 'snA6fFMSI6m3HlrUqI20UhQPa5n7jstB5foviX4JYrAIqTbmyYMpMU6scNF6mBBp', NULL, NULL, '2024-02-01 15:38:37', '2024-06-24 15:20:18'),
+(118, 'naeem', 'shehryar.muslim@gmail.com', '2024-10-30 12:05:05', '$2y$12$NpE.iyEcisFLCwDQp3Mg7.OCIA/6K1vFQeKOsuh1pm3lPHOwvx0ga', 'customer', NULL, NULL, NULL, NULL, NULL, '2024-10-30 12:05:06', '2024-10-30 12:05:06'),
+(119, 'Jack', 'jack@flower.example', '2024-10-31 04:13:09', '$2y$12$voMNgZ9PPoL2YvrkT4vER.ELwbTrZpQPiTsEB9phT8wS2sOoKbhau', 'customer', NULL, NULL, NULL, NULL, NULL, '2024-10-31 04:13:09', '2024-10-31 04:13:09'),
+(120, 'Syed Umar', 'syed-umar@hotmail.com', '2024-11-04 02:48:39', '$2y$12$BI3.TEM7TU.vXlNZiiV/WOvAzjUxL62a3e2dubn7DxILS1ndF5FnG', 'customer', NULL, NULL, NULL, NULL, NULL, '2024-11-04 02:48:40', '2024-11-04 02:48:40');
 
 --
 -- Indexes for dumped tables
@@ -3241,6 +3533,18 @@ ALTER TABLE `contacts`
 -- Indexes for table `customer_agents_connections`
 --
 ALTER TABLE `customer_agents_connections`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `customer_visiting_homes_history`
+--
+ALTER TABLE `customer_visiting_homes_history`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `events`
+--
+ALTER TABLE `events`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -3405,7 +3709,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=123;
 
 --
 -- AUTO_INCREMENT for table `property_features`
@@ -3417,13 +3721,13 @@ ALTER TABLE `property_features`
 -- AUTO_INCREMENT for table `uploads`
 --
 ALTER TABLE `uploads`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=514;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=543;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
 
 --
 -- Constraints for dumped tables
