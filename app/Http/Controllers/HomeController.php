@@ -87,6 +87,7 @@ class HomeController extends Controller
         // Fetch the property along with its relationships
         $property = Property::with(['feature', 'hoa', 'school'])->findOrFail($id);
         dd($property);
+        
         // Initialize variables
         $property_main_image = null;
         $openHouseData = [];
