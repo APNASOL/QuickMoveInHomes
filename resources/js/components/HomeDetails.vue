@@ -75,7 +75,7 @@
                 <div class="container">
                     <!-- Property Details Section at the top -->
                     <div class="row">
-                        <div class="col-md-8 p-5">
+                        <div class="col-12 col-md-8 mt-5">
                             <div class="details-section">
                                 <div
                                     class="details d-flex justify-content-between text-center"
@@ -122,7 +122,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-4 p-2">
+                        <div class="col-12 col-md-4 p-2">
                             <div
                                 v-if="
                                     logged_in_user &&
@@ -660,22 +660,38 @@
                                     </div>
 
                                     <div class="card-body text-start">
-                                        <p>
-                                            AREA (SQFT)
-                                            <b>{{ home.square_feet }} </b><br />
-                                            Bedrooms
-                                            <b>
-                                                {{ home.bedrooms }}
-                                            </b>
-                                            <br />
-                                            Property type
-                                            <b>{{ home.property_type }}</b>
-                                            <br />
+    <div class="row gy-2">
+        <!-- AREA -->
+        <div class="col-12 col-md-6">
+            <p class="mb-1">
+                <span class="text-muted">AREA (SQFT)</span><br />
+                <b>{{ home.square_feet }}</b>
+            </p>
+        </div>
+        <!-- BEDROOMS -->
+        <div class="col-12 col-md-6">
+            <p class="mb-1">
+                <span class="text-muted">Bedrooms</span><br />
+                <b>{{ home.bedrooms }}</b>
+            </p>
+        </div>
+        <!-- PROPERTY TYPE -->
+        <div class="col-12 col-md-6">
+            <p class="mb-1">
+                <span class="text-muted">Property Type</span><br />
+                <b>{{ home.property_type }}</b>
+            </p>
+        </div>
+        <!-- PRICE -->
+        <div class="col-12 col-md-6">
+            <p class="mb-1">
+                <span class="text-muted">Price</span><br />
+                <b>${{ home.price }}</b>
+            </p>
+        </div>
+    </div>
+</div>
 
-                                            Price
-                                            <b>${{ home.price }}</b>
-                                        </p>
-                                    </div>
                                 </div>
                             </a>
                         </div>

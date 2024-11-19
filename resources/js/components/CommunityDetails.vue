@@ -75,7 +75,7 @@
                     <!-- Middle Section: Image Carousel and Highlights in Two Columns -->
                     <div class="middle-section row mt-4">
                         <!-- Image Carousel in col-8 -->
-                        <div class="col-8 col-md-8">
+                        <div class="col-12 col-md-8">
                             <div class="mt-2">
                                 <!-- Main Carousel -->
                                 <Carousel
@@ -147,7 +147,7 @@
                         </div>
 
                         <!-- Community Highlights and Sales Office in col-4 -->
-                        <div class="col-4 col-md-4">
+                        <div class="col-12 col-md-4">
                             <!-- Community Highlights Section -->
                             <div class="highlights">
                                 <h4 class="feature-title">HIGHLIGHTS</h4>
