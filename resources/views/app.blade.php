@@ -274,7 +274,7 @@
         <our-promises-create-component :our_promise_id="'{{ $id }}'" />
         <!-- Quick Move Homes  -->
          <!-- HOAs -->
-@elseif(Route::currentRouteName() === 'hoas')
+@elseif(Route::currentRouteName() === 'all-hoas')
     <hoa-list-component />
 @elseif(Route::currentRouteName() === 'hoa.create')
     <hoa-form-component />
