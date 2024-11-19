@@ -86,7 +86,7 @@ class HomeController extends Controller
         $currentDate = now()->format('Y-m-d');
         // Fetch the property along with its relationships
         $property = Property::with(['feature', 'hoa', 'school'])->findOrFail($id);
-
+        dd($property);
         // Initialize variables
         $property_main_image = null;
         $openHouseData = [];
@@ -158,25 +158,6 @@ class HomeController extends Controller
             }
 
         }
-
-        // Fetch related incentives for the property
-        //$incentives_ids = PropertyIncentive::where('property_id', $property->property_id)->pluck('incentive_id');
-        // $incentives = Incentive::whereIn('id', $incentives_ids)->get();
-
-        // Process valid incentives and calculate price
-        // foreach ($incentives as $incentive) {
-        //    if ($current_date->between($incentive->start_date, $incentive->end_date)) {
-        //        $total_incentives_percentage += $incentive->interest_rate_first_year;
-        //        $valid_incentives[] = $incentive;
-        //    }
-        //  }
-
-        // if (count($valid_incentives) > 0 && $property->price) {
-        //    $original_price = $property->price;
-        //    $discount = $original_price * ($total_incentives_percentage / 100);
-        //    $new_price_after_incentive = $original_price - $discount;
-        // }
-
         // Prepare property data
         $propertyData = [
             'id' => $property->id,
