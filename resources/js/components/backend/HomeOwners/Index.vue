@@ -101,22 +101,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr
-                                    v-for="(hoa, index) in hoas"
-                                    :key="hoa.id"
-                                >
+                                <tr v-for="(hoa, index) in hoas" :key="hoa.id">
                                     <th class="text-center">
                                         {{ index + 1 }}
                                     </th>
                                     <td>
-                                        
-                                        {{ hoa.name }} 
+                                        {{ hoa.name }}
                                     </td>
                                     <td>{{ hoa.fee }}</td>
                                     <td>{{ hoa.frequency }}</td>
                                     <td>{{ hoa.master_plan }}</td>
                                     <td>{{ hoa.sub_association }}</td>
-                                     
 
                                     <td>
                                         <div class="btn-group">
@@ -124,10 +119,7 @@
                                                 type="button"
                                                 class="btn btn-sm fs-6"
                                                 title="Edit"
-                                                :href="
-                                                    '/hoa/edit/' +
-                                                    hoa.id
-                                                "
+                                                :href="'/hoa/edit/' + hoa.id"
                                                 ><i
                                                     class="bi bi-pencil c-theme-text-color"
                                                 ></i
@@ -210,9 +202,7 @@ export default {
                         this.hoas = response.data.data;
                         this.firstTimeLoadCheck = 0;
                     } else {
-                        this.hoas = this.hoas.concat(
-                            response.data.data
-                        );
+                        this.hoas = this.hoas.concat(response.data.data);
                     }
                     this.formStatus = 1;
                     this.makePagination(response.data);
