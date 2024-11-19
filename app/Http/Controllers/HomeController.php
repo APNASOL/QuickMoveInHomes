@@ -85,7 +85,7 @@ class HomeController extends Controller
 
         $currentDate = now()->format('Y-m-d');
         // Fetch the property along with its relationships
-        dd($currentDate);
+        dd($currentDate,$id);
         $property = Property::with(['feature', 'hoa', 'school'])->findOrFail($id);
 
         // Initialize variables
