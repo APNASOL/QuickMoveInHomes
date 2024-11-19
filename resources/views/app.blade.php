@@ -275,7 +275,7 @@
         <!-- Quick Move Homes  -->
          <!-- HOAs -->
 @elseif(Route::currentRouteName() === 'home-owners')
-    <hoa-list-component />
+    <home-owners-component />
 @elseif(Route::currentRouteName() === 'hoa.create')
     <hoa-form-component />
 @elseif(Route::currentRouteName() === 'hoa.edit')
