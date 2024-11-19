@@ -23,7 +23,7 @@ use App\Http\Controllers\HomesController;
 use App\Http\Controllers\IncentivesController;
 use App\Http\Controllers\BlogPostsController;
 use App\Http\Controllers\LasVegasRegionController;
-use App\Http\Controllers\HoaController;
+use App\Http\Controllers\HOAController;
 use App\Http\Controllers\BuilderController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\NeighborhoodController;
@@ -78,7 +78,7 @@ Route::get('/get-tour-dates/{tour_id}', [HomeController::class, 'tour_dates_fetc
 Route::post('/passenger-quantity-checking', [HomeController::class, 'passenger_quantity_base_tour_details_fetch'])->name('passenger-quantity-checking');
 Route::get('/front-end-tour-payment-dates/{dates_id}', [HomeController::class, 'tour_payment_dates_fetch'])->name('front-end-tour-payment-dates');
 // Route::get('/front-tours-flash_sale', [HomeController::class, 'flash_sales'])->name('front-tours-flash_sale');
-Route::get('/home/owners/pluck/', [HoaController::class, 'hoas_pluck'])->name('homw.owners.pluck');
+Route::get('/home/owners/pluck/', [HOAController::class, 'hoas_pluck'])->name('homw.owners.pluck');
 Route::get('/schools/pluck', [SchoolController::class, 'schools_pluck'])->name('schools.pluck');
 Route::get('/communities/pluck', [CommunitiesController::class, 'communities_pluck'])->name('communities.pluck');
 
@@ -97,10 +97,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
    Route::get('/users/pluck', [UserController::class, 'users_pluck'])->name('users.pluck');
 
    // Hoa's
-   Route::post('/fetch-home-owners', [HoaController::class, 'hoas'])->name('fetch-home-owners');
-   Route::post('/hoa/store', [HoaController::class, 'store'])->name('hoa.store');
-   Route::get('/get/hoa/{id}', [HoaController::class, 'get'])->name('hoa.edit');
-   Route::post('/hoa/delete/{id}', [HoaController::class, 'delete'])->name('hoa.delete');
+   Route::post('/fetch-home-owners', [HOAController::class, 'hoas'])->name('fetch-home-owners');
+   Route::post('/hoa/store', [HOAController::class, 'store'])->name('hoa.store');
+   Route::get('/get/hoa/{id}', [HOAController::class, 'get'])->name('hoa.edit');
+   Route::post('/hoa/delete/{id}', [HOAController::class, 'delete'])->name('hoa.delete');
    // Regions's
    Route::post('/fetch-regions', [LasVegasRegionController::class, 'regions'])->name('fetch-regions');
    Route::post('/region/store', [LasVegasRegionController::class, 'store'])->name('region.store');

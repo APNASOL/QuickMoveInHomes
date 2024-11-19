@@ -1478,7 +1478,7 @@ export default {
         },
         pluckHoas() {
             axios
-                .get("/api/home/owners/pluck/")
+                .get("/api/home/owners/pluck")
                 .then((response) => {
                     this.hoasOptions = response.data;
                 })

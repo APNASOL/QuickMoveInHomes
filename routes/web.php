@@ -8,7 +8,7 @@ use App\Http\Controllers\BuilderController;
 use App\Http\Controllers\CallMeNowController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\CommunitiesController;
-use App\Http\Controllers\HoaController;
+use App\Http\Controllers\HOAController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HomesController;
 use App\Http\Controllers\IncentivesController;
@@ -92,9 +92,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     //  Home Quick Move Routes
     //  Hoas
-    Route::get('/home-owners', [HoaController::class, 'index'])->name('home-owners');
-    Route::get('/hoa/create', [HoaController::class, 'create'])->name('home.owners.create');
-    Route::get('/hoa/edit/{id}', [HoaController::class, 'edit'])->name('home.owners.edit');
+    Route::get('/home-owners', [HOAController::class, 'index'])->name('home-owners');
+    Route::get('/hoa/create', [HOAController::class, 'create'])->name('home.owners.create');
+    Route::get('/hoa/edit/{id}', [HOAController::class, 'edit'])->name('home.owners.edit');
     //  regions
     Route::get('/regions', [LasVegasRegionController::class, 'index'])->name('regions');
     Route::get('/region/create', [LasVegasRegionController::class, 'create'])->name('region.create');
