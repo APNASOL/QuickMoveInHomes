@@ -85,7 +85,7 @@ class HomeController extends Controller
 
         $currentDate = now()->format('Y-m-d');
         // Fetch the property along with its relationships
-        dd($currentDate,$id);
+        
         $property = Property::with(['feature', 'hoa', 'school'])->findOrFail($id);
 
         // Initialize variables
@@ -111,9 +111,7 @@ class HomeController extends Controller
             if ($image) {
                 $property_main_image = get_storage_url($image->file_name);
             }
-        }
-
-        // Fetch Open House details if the property is marked as an open house
+        } 
         // Fetch Open House details if the property is marked as an open house
         if ($property->is_open_house) {
             $openHouse = OpenHouse::where('property_id', $id)->first();

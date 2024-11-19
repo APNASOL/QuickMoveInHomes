@@ -36,7 +36,7 @@ class Property extends Model
      
     public function hoa()
     {
-        return $this->belongsTo(Hoa::class, 'hoa_id');
+        return $this->belongsTo(HOA::class, 'hoa_id');
     }
 
     public function school()
