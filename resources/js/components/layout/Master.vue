@@ -63,7 +63,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <!-- Dropdown menus -->
-                    <li class="nav-item dropdown"> 
+                    <li class="nav-item dropdown">
                         <a
                             class="nav-link"
                             href="/"
@@ -71,7 +71,7 @@
                             role="button"
                         >
                             Home
-                        </a> 
+                        </a>
                     </li>
 
                     <li class="nav-item dropdown">
@@ -178,8 +178,7 @@
                         </ul>
                     </li> -->
 
-                   
-                    <li class="nav-item dropdown"> 
+                    <li class="nav-item dropdown">
                         <a
                             class="nav-link"
                             href="/all-incentives"
@@ -187,7 +186,7 @@
                             role="button"
                         >
                             Incentives
-                        </a> 
+                        </a>
                     </li>
                     <!-- <li class="nav-item dropdown"> 
                         <a
@@ -199,7 +198,7 @@
                         Search
                         </a> 
                     </li> -->
-                    
+
                     <!-- <li class="nav-item dropdown">
                         
                         <a
@@ -221,7 +220,7 @@
                 </h1>
                 <!-- Right side dropdowns -->
                 <ul class="navbar-nav mb-2 mb-lg-0">
-                    <li class="nav-item dropdown"> 
+                    <li class="nav-item dropdown">
                         <a
                             class="nav-link"
                             href="/all-events"
@@ -229,9 +228,9 @@
                             role="button"
                         >
                             Events
-                        </a> 
+                        </a>
                     </li>
-                    
+
                     <li class="nav-item dropdown">
                         <!-- Dropdown trigger -->
                         <a
@@ -268,15 +267,15 @@
                         </a>
                         <!-- Dropdown menu -->
                     </li>
-                    <li class="nav-item dropdown"> 
+                    <li class="nav-item dropdown">
                         <a
                             class="nav-link"
                             href="/help"
                             id="navbarDropdownDeals"
                             role="button"
                         >
-                        Help
-                        </a> 
+                            Help
+                        </a>
                     </li>
 
                     <!-- Login dropdown -->
@@ -348,15 +347,14 @@
                             </a>
                         </span>
 
-                        
-                            <a :href="'mailto:' + email" class="contact"> 
+                        <a :href="'mailto:' + email" class="text-white contact">
                             {{ email }}
                         </a>
 
                         <br />
 
                         <a
-                            class="text-black ms-1"
+                            class="text-white ms-1"
                             :href="'tel:' + website_phone"
                         >
                             {{ website_phone }}
@@ -843,11 +841,17 @@
                     <hr />
                     <ul type="circle">
                         <li v-if="external_website.website_email">
-                            <a :href="'mailto:' + external_website.website_email" class="text-white c-dec-none">{{ external_website.website_email }}</a>
+                            <a
+                                :href="
+                                    'mailto:' + external_website.website_email
+                                "
+                                class="text-white c-dec-none"
+                                >{{ external_website.website_email }}</a
+                            >
                         </li>
                         <li v-if="external_website.website_phone">
                             <a
-                                class="text-white ms-1 c-dec-none" 
+                                class="text-white ms-1 c-dec-none"
                                 :href="'tel:' + external_website.website_phone"
                             >
                                 {{ external_website.website_phone }}
@@ -1805,7 +1809,6 @@ label {
     text-decoration: none;
     color: white;
     cursor: pointer;
-    
 }
 /* Customize dropdown menu styling for the navbar */
 
@@ -1823,9 +1826,7 @@ label {
     background-color: #002855;
     color: white; /* Adjust text color for better readability, if needed */
 }
-.c-dec-none
-{
+.c-dec-none {
     text-decoration: none;
 }
-
 </style>
