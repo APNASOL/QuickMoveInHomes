@@ -147,7 +147,7 @@
         </li>
         
         <li class="nav-item" v-if="user_role == 'admin' || user_role == 'tour operator'">
-            <a class="nav-link collapsed" :class="{ active: isActive('/all-hoas') }" href="all-hoas">
+            <a class="nav-link collapsed" :class="{ active: isActive('/home-owners') }" href="/home-owners">
                 <i class="bi bi-people me-2"></i>
                 <span>{{ translate("HOA") }}</span>
             </a>
