@@ -61,8 +61,7 @@ app.component("tour-payment-details-component", TourPaymentDetails);
 import booking_using_account from "@components/BookingAccountOptions.vue";
 app.component("booking-using-account-component", booking_using_account);
 
-import booking_payment_options from "@components/BookingPaymentOptions.vue";
-app.component("booking-payment-options-component", booking_payment_options);
+ 
 
 
 import register from "@components/Register.vue";

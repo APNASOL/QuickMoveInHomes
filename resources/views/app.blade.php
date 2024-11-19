@@ -41,7 +41,7 @@
     <script src="https://www.paypal.com/sdk/js?client-id=AbDZhpcVKO8GscxzZ2TG2gq7db2Yj3Dlyj2odlAaeVu3iHBVlNQKHSuhS4mj6IzKpo7iP69VwbGsHly4&currency=USD"></script>
 
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Best Online Vacation Packages</title>
+ 
     @php
     $translations = getTranslations();
     $external_website = getExternalWebsiteData();
@@ -237,21 +237,7 @@
         @elseif(Route::currentRouteName() === 'make-booking')
         <booking-using-account-component :tour_id="'{{ $tour_id }}'" :dates_id="'{{ $dates_id }}'"
             :booking_code="'{{ $booking_code }}'" :infants="'{{ $infants }}'" :children="'{{ $children }}'" :price="'{{ $price }}'" :discount=" '{{ $discount }}'" :adults="'{{ $adults }}'" />
-        @elseif(Route::currentRouteName() === 'booking-payment-options')
-        <booking-payment-options-component
-            :email="'{{ $email }}'"
-            :tour_id="'{{ $tour_id }}'"
-            :dates_id="'{{ $dates_id }}'"
-            :booking_code="'{{ $booking_code }}'"
-            :infants="'{{ $infants }}'"
-            :children="'{{ $children }}'"
-            :adults="'{{ $adults }}'"
-            :price="'{{ $price }}'"
-            :discount="'{{ $discount }}'"
-            :final_amount="'{{ $final_amount }}'"
-            :order_code="'{{ $order_code }}'"
-            :client_secret="'{{ $client_secret }}'"
-        />
+     
 
 
         @elseif(Route::currentRouteName() === 'custom-pages')
@@ -273,9 +259,10 @@
         @elseif(Route::currentRouteName() === 'edit-our-promise')
         <our-promises-create-component :our_promise_id="'{{ $id }}'" />
         <!-- Quick Move Homes  -->
+
          <!-- HOAs -->
-<!-- @elseif(Route::currentRouteName() === 'home-owners')
-    <home-owners-component /> -->
+@elseif(Route::currentRouteName() === 'home-owners')
+    <home-owners-component />
 @elseif(Route::currentRouteName() === 'hoa.create')
     <hoa-form-component />
 @elseif(Route::currentRouteName() === 'hoa.edit')
