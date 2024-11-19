@@ -171,7 +171,7 @@ export default {
     },
     data() {
         return {
-            default_url: "/api/fetch-hoas",
+            default_url: "/api/fetch-home-owners",
             hoas: [],
             form: {
                 name: "",

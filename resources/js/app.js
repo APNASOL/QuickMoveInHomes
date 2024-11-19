@@ -61,7 +61,8 @@ app.component("tour-payment-details-component", TourPaymentDetails);
 import booking_using_account from "@components/BookingAccountOptions.vue";
 app.component("booking-using-account-component", booking_using_account);
 
- 
+import booking_payment_options from "@components/BookingPaymentOptions.vue";
+app.component("booking-payment-options-component", booking_payment_options);
 
 
 import register from "@components/Register.vue";
@@ -229,10 +230,10 @@ app.component("tour-countries-tours-listing", tour_country_tours_list);
 
 // Quick Move Homes admin panel 
 // HOA's
-import HomeOwners from "@components/backend/Schools/Create.vue";
+import HomeOwners from "@components/backend/HomeOwners/Index.vue";
 app.component("home-owners-component", HomeOwners);
-import HOAForm from "@components/backend/HomeOwners/Create.vue";
-app.component("hoa-form-component", HOAForm);
+import HomeOwnersCreate from "@components/backend/HomeOwners/Create.vue";
+app.component("home-owners-create-component", HomeOwnersCreate);
 // Schools
 import SchoolList from "@components/backend/Schools/Index.vue";
 app.component("school-list-component", SchoolList);

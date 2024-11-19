@@ -263,10 +263,10 @@
          <!-- HOAs -->
 @elseif(Route::currentRouteName() === 'home-owners')
     <home-owners-component />
-@elseif(Route::currentRouteName() === 'hoa.create')
-    <hoa-form-component />
-@elseif(Route::currentRouteName() === 'hoa.edit')
-    <hoa-form-component :hoa_id="'{{ $id }}'" />
+@elseif(Route::currentRouteName() === 'home.owners.create')
+    <home-owners-create-component />
+@elseif(Route::currentRouteName() === 'home.owners.edit')
+    <home-owners-create-component :hoa_id="'{{ $id }}'" />
 
 <!-- Schools -->
 @elseif(Route::currentRouteName() === 'schools')

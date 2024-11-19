@@ -27,7 +27,7 @@
             <div class="mb-3 d-flex justify-content-end">
                 <a
                     class="btn btn-success justify-content-end"
-                    href="/hoas"
+                    href="/home-owners"
                 >
                     <i class="bi bi-list"></i> {{ translate("HOAs") }}</a
                 >
@@ -243,7 +243,7 @@ export default {
                     );
                     this.formErrors = [];
                     setTimeout(() => {
-                        window.location.href = "/hoas";
+                        window.location.href = "/home/owners";
                     }, 2000); // Delay of 2000 milliseconds (2 seconds)
                 })
                 .catch((error) => {

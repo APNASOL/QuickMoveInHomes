@@ -93,8 +93,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     //  Home Quick Move Routes
     //  Hoas
     Route::get('/home-owners', [HoaController::class, 'index'])->name('home-owners');
-    Route::get('/hoa/create', [HoaController::class, 'create'])->name('hoa.create');
-    Route::get('/hoa/edit/{id}', [HoaController::class, 'edit'])->name('hoa.edit');
+    Route::get('/hoa/create', [HoaController::class, 'create'])->name('home.owners.create');
+    Route::get('/hoa/edit/{id}', [HoaController::class, 'edit'])->name('home.owners.edit');
     //  regions
     Route::get('/regions', [LasVegasRegionController::class, 'index'])->name('regions');
     Route::get('/region/create', [LasVegasRegionController::class, 'create'])->name('region.create');
