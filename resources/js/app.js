@@ -230,7 +230,7 @@ app.component("tour-countries-tours-listing", tour_country_tours_list);
 
 // Quick Move Homes admin panel 
 // HOA's
-import HomeOwners from "@components/backend/HomeOwners/Index.vue";
+import HomeOwners from "@components/backend/Schools/Create.vue";
 app.component("home-owners-component", HomeOwners);
 import HOAForm from "@components/backend/HomeOwners/Create.vue";
 app.component("hoa-form-component", HOAForm);
