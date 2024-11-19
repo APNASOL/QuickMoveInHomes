@@ -12,21 +12,30 @@
             </nav>
         </div>
 
-        <section class="section dashboard" v-if="logged_in_user.role == 'admin'">
+        <section
+            class="section dashboard"
+            v-if="logged_in_user.role == 'admin'"
+        >
             <div class="row">
                 <!-- Left side columns -->
                 <div class="col-lg-12">
                     <div class="row g-3">
                         <div class="col-xxl-4 col-md-4">
                             <div class="card info-card sales-card">
-                                <a class="nav-link collapsed" href="/properties">
+                                <a
+                                    class="nav-link collapsed"
+                                    href="/properties"
+                                >
                                     <div class="card-body">
                                         <h5 class="card-title">Properties</h5>
 
                                         <div class="d-flex align-items-center">
                                             <div
-                                                class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                                <i class="bi bi-people-fill"></i>
+                                                class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                                            >
+                                                <i
+                                                    class="bi bi-people-fill"
+                                                ></i>
                                             </div>
                                             <div class="ps-3">
                                                 <h6>5</h6>
@@ -44,8 +53,11 @@
 
                                         <div class="d-flex align-items-center">
                                             <div
-                                                class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                                <i class="bi bi-people-fill"></i>
+                                                class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                                            >
+                                                <i
+                                                    class="bi bi-people-fill"
+                                                ></i>
                                             </div>
                                             <div class="ps-3">
                                                 <h6>6</h6>
@@ -65,8 +77,11 @@
 
                                         <div class="d-flex align-items-center">
                                             <div
-                                                class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                                <i class="bi bi-people-fill"></i>
+                                                class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                                            >
+                                                <i
+                                                    class="bi bi-people-fill"
+                                                ></i>
                                             </div>
                                             <div class="ps-3">
                                                 <h6>8</h6>
@@ -84,8 +99,11 @@
 
                                         <div class="d-flex align-items-center">
                                             <div
-                                                class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                                <i class="bi bi-people-fill"></i>
+                                                class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                                            >
+                                                <i
+                                                    class="bi bi-people-fill"
+                                                ></i>
                                             </div>
                                             <div class="ps-3">
                                                 <h6>8</h6>
@@ -103,8 +121,11 @@
 
                                         <div class="d-flex align-items-center">
                                             <div
-                                                class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                                <i class="bi bi-people-fill"></i>
+                                                class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                                            >
+                                                <i
+                                                    class="bi bi-people-fill"
+                                                ></i>
                                             </div>
                                             <div class="ps-3">
                                                 <h6>8</h6>
@@ -120,7 +141,10 @@
             </div>
         </section>
 
-        <section class="section dashboard" v-if="logged_in_user.role == 'agent'">
+        <section
+            class="section dashboard"
+            v-if="logged_in_user.role == 'agent'"
+        >
             <div class="row">
                 <!-- Left side columns -->
                 <div class="col-lg-12">
@@ -129,40 +153,87 @@
                             <div class="card card-body">
                                 <h3>Property Dealing History</h3>
                                 <div class="accordion" id="historyAccordion">
-                                    <div v-for="(entry, index) in agent_history" :key="entry.id" class="accordion-item">
-                                        <h2 class="accordion-header" :id="'heading' + entry.id">
-                                            <button class="accordion-button collapsed" type="button"
-                                                data-bs-toggle="collapse" :data-bs-target="'#collapse' + entry.id"
-                                                aria-expanded="true" :aria-controls="'collapse' + entry.id">
-                                                {{ entry.property.title }} - Status: {{ entry.current_status }}
+                                    <div
+                                        v-for="(entry, index) in agent_history"
+                                        :key="entry.id"
+                                        class="accordion-item"
+                                    >
+                                        <h2
+                                            class="accordion-header"
+                                            :id="'heading' + entry.id"
+                                        >
+                                            <button
+                                                class="accordion-button collapsed"
+                                                type="button"
+                                                data-bs-toggle="collapse"
+                                                :data-bs-target="
+                                                    '#collapse' + entry.id
+                                                "
+                                                aria-expanded="true"
+                                                :aria-controls="
+                                                    'collapse' + entry.id
+                                                "
+                                            >
+                                                {{ entry.property.title }} -
+                                                Status:
+                                                {{ entry.current_status }}
 
                                                 <!-- Place Multiselect at the end of the button -->
-                                                <span style="margin-left: auto; width: 300px;">
-                                                    <Multiselect v-model="entry.current_status" :options="statusOptions"
-                                                        @select="changeTheCurrentStatus(entry.id, entry.current_status)" />
+                                                <span
+                                                    style="
+                                                        margin-left: auto;
+                                                        width: 300px;
+                                                    "
+                                                >
+                                                    <Multiselect
+                                                        v-model="
+                                                            entry.current_status
+                                                        "
+                                                        :options="statusOptions"
+                                                        @select="
+                                                            changeTheCurrentStatus(
+                                                                entry.id,
+                                                                entry.current_status
+                                                            )
+                                                        "
+                                                    />
                                                 </span>
                                             </button>
-
                                         </h2>
-                                        <div :id="'collapse' + entry.id" class="accordion-collapse collapse"
-                                            :class="{ show: index === 0 }" :aria-labelledby="'heading' + entry.id
-                                                " data-bs-parent="#historyAccordion">
+                                        <div
+                                            :id="'collapse' + entry.id"
+                                            class="accordion-collapse collapse"
+                                            :class="{ show: index === 0 }"
+                                            :aria-labelledby="
+                                                'heading' + entry.id
+                                            "
+                                            data-bs-parent="#historyAccordion"
+                                        >
                                             <div class="accordion-body">
                                                 <div class="card card-body">
                                                     <div>
-                                                        <image-zooming-component v-if="
-                                                            entry.user.image
-                                                        " :file="entry.user.image
-                                                                " :custom_class="'img-fluid img-thumbnail rounded'"
-                                                            :width="100" />
+                                                        <image-zooming-component
+                                                            v-if="
+                                                                entry.user.image
+                                                            "
+                                                            :file="
+                                                                entry.user.image
+                                                            "
+                                                            :custom_class="'img-fluid img-thumbnail rounded'"
+                                                            :width="100"
+                                                        />
                                                     </div>
                                                     <p>
-                                                        <strong>Customer:</strong>
+                                                        <strong
+                                                            >Customer:</strong
+                                                        >
                                                         {{ entry.user.name }}
                                                     </p>
                                                     <p>
-                                                        <strong>Customer
-                                                            Email:</strong>
+                                                        <strong
+                                                            >Customer
+                                                            Email:</strong
+                                                        >
                                                         {{ entry.user.email }}
                                                     </p>
                                                     <p>
@@ -170,8 +241,10 @@
                                                         {{ entry.date }}
                                                     </p>
                                                     <p>
-                                                        <strong>Property
-                                                            Address:</strong>
+                                                        <strong
+                                                            >Property
+                                                            Address:</strong
+                                                        >
                                                         {{
                                                             entry.property
                                                                 .address
@@ -187,10 +260,12 @@
                                                                 .zip_code
                                                         }}
                                                     </p>
-                                                     
+
                                                     <p>
-                                                        <strong>Property
-                                                            Description:</strong>
+                                                        <strong
+                                                            >Property
+                                                            Description:</strong
+                                                        >
                                                         {{
                                                             entry.property
                                                                 .description
@@ -199,12 +274,14 @@
                                                 </div>
                                             </div>
                                             <div class="accordion-footer p-3">
-                                                <small>Created At:
+                                                <small
+                                                    >Created At:
                                                     {{
                                                         new Date(
                                                             entry.created_at
                                                         ).toLocaleString()
-                                                    }}</small>
+                                                    }}</small
+                                                >
                                             </div>
                                         </div>
                                     </div>
@@ -215,7 +292,10 @@
                 </div>
             </div>
         </section>
-        <section class="section dashboard" v-if="logged_in_user.role == 'customer'">
+        <section
+            class="section dashboard"
+            v-if="logged_in_user.role == 'customer'"
+        >
             <div class="row">
                 <!-- Left side columns -->
                 <div class="col-lg-12">
@@ -224,38 +304,61 @@
                             <div class="card card-body">
                                 <h3>Property Dealing History</h3>
                                 <div class="accordion" id="historyAccordion">
-                                    <div v-for="(
+                                    <div
+                                        v-for="(
                                             entry, index
-                                        ) in customer_history" :key="entry.id" class="accordion-item">
-                                        <h2 class="accordion-header" :id="'heading' + entry.id">
-                                            <button class="accordion-button collapsed" type="button"
-                                                data-bs-toggle="collapse" :data-bs-target="'#collapse' + entry.id
-                                                    " aria-expanded="true" :aria-controls="'collapse' + entry.id
-                                                    ">
+                                        ) in customer_history"
+                                        :key="entry.id"
+                                        class="accordion-item"
+                                    >
+                                        <h2
+                                            class="accordion-header"
+                                            :id="'heading' + entry.id"
+                                        >
+                                            <button
+                                                class="accordion-button collapsed"
+                                                type="button"
+                                                data-bs-toggle="collapse"
+                                                :data-bs-target="
+                                                    '#collapse' + entry.id
+                                                "
+                                                aria-expanded="true"
+                                                :aria-controls="
+                                                    'collapse' + entry.id
+                                                "
+                                            >
                                                 {{ entry.property.title }} -
                                                 Status:
                                                 {{ entry.current_status }}
                                             </button>
                                         </h2>
-                                        <div :id="'collapse' + entry.id" class="accordion-collapse collapse"
-                                            :class="{ show: index === 0 }" :aria-labelledby="'heading' + entry.id
-                                                " data-bs-parent="#historyAccordion">
+                                        <div
+                                            :id="'collapse' + entry.id"
+                                            class="accordion-collapse collapse"
+                                            :class="{ show: index === 0 }"
+                                            :aria-labelledby="
+                                                'heading' + entry.id
+                                            "
+                                            data-bs-parent="#historyAccordion"
+                                        >
                                             <div class="accordion-body">
                                                 <div class="card card-body">
-                                                     
-                                                        <image-zooming-component v-if="
-                                                            entry.user.image
-                                                        " :file="entry.user.image
-                                                                " :custom_class="'img-fluid img-thumbnail rounded'"
-                                                            :width="100" />
-                                                     
+                                                    <image-zooming-component
+                                                        v-if="entry.user.image"
+                                                        :file="entry.user.image"
+                                                        :custom_class="'img-fluid img-thumbnail rounded'"
+                                                        :width="100"
+                                                    />
+
                                                     <p>
                                                         <strong>Agent:</strong>
                                                         {{ entry.user.name }}
                                                     </p>
                                                     <p>
-                                                        <strong>Agent
-                                                            Email:</strong>
+                                                        <strong
+                                                            >Agent
+                                                            Email:</strong
+                                                        >
                                                         {{ entry.user.email }}
                                                     </p>
                                                     <p>
@@ -263,8 +366,10 @@
                                                         {{ entry.date }}
                                                     </p>
                                                     <p>
-                                                        <strong>Property
-                                                            Address:</strong>
+                                                        <strong
+                                                            >Property
+                                                            Address:</strong
+                                                        >
                                                         {{
                                                             entry.property
                                                                 .address
@@ -280,10 +385,12 @@
                                                                 .zip_code
                                                         }}
                                                     </p>
-                                                     
+
                                                     <p>
-                                                        <strong>Property
-                                                            Description:</strong>
+                                                        <strong
+                                                            >Property
+                                                            Description:</strong
+                                                        >
                                                         {{
                                                             entry.property
                                                                 .description
@@ -292,12 +399,14 @@
                                                 </div>
                                             </div>
                                             <div class="accordion-footer p-3">
-                                                <small>Created At:
+                                                <small
+                                                    >Created At:
                                                     {{
                                                         new Date(
                                                             entry.created_at
                                                         ).toLocaleString()
-                                                    }}</small>
+                                                    }}</small
+                                                >
                                             </div>
                                         </div>
                                     </div>
