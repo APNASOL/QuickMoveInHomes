@@ -476,29 +476,27 @@
 
                         <div class="col-12 col-md-6">
                             <label for="main_image">{{
-                                translate("Upload main image")
+                                translate("Main image")
                             }}</label>
-                            <div class="">
-                                <br />
+                            <div class="mt-3 mb-2">
+                                <img
+                                    v-if="form.main_image"
+                                    :src="form.main_image ?? '/images/default.jpg'"
+                                    :custom_class="'img-fluid img-thumbnail rounded'"
+                                    :width="125"
+                                />
+                                <img
+                                    v-else
+                                    :src="existing_main_image ?? '/images/default.jpg'"
+                                    :custom_class="'img-fluid img-thumbnail rounded'"
+                                    :width="125"
+                                />
+                                 
+                                </div>
                                 <ImageCropper
                                     @croppedImg="croppedImgSubmit"
                                     :ratio="1"
-                                />
-                                <br />
-
-                                <image-zooming-component
-                                    v-if="form.main_image"
-                                    :file="form.main_image"
-                                    :custom_class="'img-fluid img-thumbnail rounded'"
-                                    :width="200"
-                                />
-                                <image-zooming-component
-                                    v-else
-                                    :file="existing_main_image"
-                                    :custom_class="'img-fluid img-thumbnail rounded'"
-                                    :width="200"
-                                />
-                            </div>
+                                /> 
 
                             <div
                                 class="invalid-feedback animated fadeIn"

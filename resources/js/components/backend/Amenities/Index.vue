@@ -102,6 +102,18 @@
                                     </th>
                                     <td>
                                         {{ amenity.name }}
+                                        <br>
+                                        <span
+                                            class="c-linked c-mouse-over"
+                                            @click="
+                                                copyToClipboard(amenity.id)
+                                            "
+                                            style="
+                                                cursor: pointer;
+                                                color: blue; 
+                                            "
+                                            >{{ amenity.id }}</span
+                                        >
                                     </td>
                                     <td>{{ amenity.description }}</td>
 
@@ -170,6 +182,16 @@ export default {
         };
     },
     methods: {
+        copyToClipboard(id) {
+            navigator.clipboard
+                .writeText(id)
+                .then(() => {
+                    toastr.success(this.translate("Copied to clipboard."));
+                })
+                .catch((err) => {
+                    console.error("Failed to copy text: ", err);
+                });
+        },
         makePagination(res) {
             let pagination = {
                 links: res.links,

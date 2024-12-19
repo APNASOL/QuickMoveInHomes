@@ -27,7 +27,7 @@
         <div class="container-fluid interactive-banner mt-3">
                 <h1>MORE INCENTIVES</h1>
             </div>
-        <div class="c-tour-details container">
+        <div class="c-section-main-details container">
             <div v-if="incentives && incentives.length">
                 <div class="mx-4 pt-3">
                     <div class="row g-3 mb-3">

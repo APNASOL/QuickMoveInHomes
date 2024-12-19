@@ -1,52 +1,34 @@
-<!-- In your Blade template -->
-
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-<meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-  <title>QMI </title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-
-  <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCsAFTWVWD88hq9sOtqnYT2pNOTnAJW1R0"></script>
-
-  <!-- <script src="https://cdn.maptiler.com/maptiler-sdk-js/v2.0.3/maptiler-sdk.umd.js"></script>
-    <link href="https://cdn.maptiler.com/maptiler-sdk-js/v2.0.3/maptiler-sdk.css" rel="stylesheet" /> -->
-
-  <!-- Vendor CSS Files -->
-  <!-- <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }} " rel="stylesheet">
-  <link href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }} " rel="stylesheet">
-  <link href="{{ asset('assets/vendor/boxicons/css/boxicons.min.css') }} " rel="stylesheet">
-  <link href="{{ asset('assets/vendor/quill/quill.snow.css') }} " rel="stylesheet">
-  <link href="{{ asset('assets/vendor/quill/quill.bubble.css') }} " rel="stylesheet">
-  <link href="{{ asset('assets/vendor/remixicon/remixicon.css') }} " rel="stylesheet">
-  <link href="{{ asset('assets/vendor/simple-datatables/style.css') }} " rel="stylesheet"> -->
-
-  <!-- Template Main CSS File -->
-  <!-- <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet"> -->
-
-
-    <!-- <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}"> -->
-
-    <script src="https://www.paypal.com/sdk/js?client-id=AbDZhpcVKO8GscxzZ2TG2gq7db2Yj3Dlyj2odlAaeVu3iHBVlNQKHSuhS4mj6IzKpo7iP69VwbGsHly4&currency=USD"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
- 
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <link href="https://cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">
+
+    <!-- Standard favicon for most browsers -->
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+
+    <!-- Apple Touch Icon for iOS devices -->
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+
+    <title>Vegas Properties: Find Your Dream Home | Luxury & Affordable Real Estate in Las Vegas</title>
+    <meta name="description" content="Discover the best real estate deals in Las Vegas with Vegas Properties. Explore luxury homes, affordable properties, and exclusive listings tailored to your needs. Your trusted partner for buying, selling, and renting properties in America's entertainment capital. Start your journey today!">
+    <meta name="keywords" content="Las Vegas Real Estate, Luxury Homes in Vegas, Affordable Properties in Las Vegas, Vegas Realtors, Exclusive Property Listings, Buy Property in Las Vegas, Sell Your Home in Vegas, Rent Las Vegas Properties, Real Estate Deals in Nevada, Dream Homes in Las Vegas">
+    <meta name="author" content="Vegas Properties">
+    <meta name="robots" content="index, follow">
+
     @php
+
     $translations = getTranslations();
     $external_website = getExternalWebsiteData();
     $logged_in_user = logedInUser();
-    $user_home_visiting_history_count = user_home_visiting_history_count(); 
+    $logo = $external_website->white_logo ?? "";
+    $user_home_visiting_history_count = user_home_visiting_history_count();
+
     @endphp
     <script>
         let translations = @json($translations);
@@ -54,9 +36,9 @@
         let external_website = @json($external_website);
         window.external_website = JSON.stringify(external_website);
         let logged_in_user = @json($logged_in_user);
-        window.logged_in_user = logged_in_user; 
+        window.logged_in_user = logged_in_user;
         let user_home_visiting_history_count = @json($user_home_visiting_history_count);
-        window.user_home_visiting_history_count = user_home_visiting_history_count; 
+        window.user_home_visiting_history_count = user_home_visiting_history_count;
     </script>
 
     <!-- Google Tag Manager -->
@@ -67,7 +49,7 @@
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-N5HBHXZ4');
     </script>
-    
+
     <!-- End Google Tag Manager -->
 
     <!-- Google tag (gtag.js) -->
@@ -79,24 +61,6 @@
 
     gtag('config', 'G-S75H1XPW9F');
     </script>
-
-    @if (Route::currentRouteName() === 'tour-details')
-    <div itemscope itemtype="http://schema.org/Product">
-        <meta itemprop="productID" content="{{$tour->id}}">
-        <meta itemprop="image" content="{{$tour->image}}">
-        <meta itemprop="description" content="{{$tour->name}}">
-        <meta itemprop="name" content="{{$tour->name}}">
-        <meta itemprop="url" content="{{url('/').'/tour-details/' . $tour->id . '/' . urlencode(str_replace(' ', '-', $tour->name))}}">
-
-        <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-            <link itemprop="availability" href="http://schema.org/InStock">
-            <meta itemprop="price" content="{{$tour->price}}">
-            <meta itemprop="priceCurrency" content="USD">
-          </div>
-    </div>
-    @endif
-
-    @vite(['resources/sass/app.scss','resources/js/app.js'])
 
     <!-- Meta Pixel Code -->
     <script>
@@ -114,16 +78,14 @@
     <noscript><img height="1" width="1" style="display:none"
             src="https://www.facebook.com/tr?id=443483678328612&ev=PageView&noscript=1" /></noscript>
     <!-- End Meta Pixel Code -->
+    @vite(['resources/sass/app.scss','resources/js/app.js'])
 </head>
 
 <body>
     <div id="app">
         @if(Route::currentRouteName() === 'website')
         <index-component />
-        @elseif(Route::currentRouteName() === 'tour-details')
-        <external-tour-details-component :tour_name="'{{ $tour_name }}'" :tour_id="'{{ $tour_id }}'" />
-        {{--
-        <booking-details :booking_id="'{{ $booking_id }}'" /> --}}
+
         @elseif(Route::currentRouteName() === 'register')
         <register-component />
         @elseif(Route::currentRouteName() === 'login')
@@ -134,26 +96,14 @@
         <reset-password-component :user_id=" {{ $user_id }} " />
         @elseif(Route::currentRouteName() === 'profile-settings')
         <profile-settings-component :user_id=" {{ $user_id }} " />
-        @elseif(Route::currentRouteName() === 'tours')
-        <tour-index-component />
-        @elseif(Route::currentRouteName() === 'booked-tours')
-        <booked-tours-component />
-        @elseif(Route::currentRouteName() === 'add-review-on-tour')
-        <add-review-on-tour-component :tour_id="'{{ $tour_id }}'" />
 
-        @elseif(Route::currentRouteName() === 'see-reviews-on-tour')
-        <see-review-on-tour-component :tour_id="'{{ $tour_id }}'" />
-        @elseif(Route::currentRouteName() === 'user-reviews')
-        <user-reviews-for-superadmin-component />
+
+
+
 
         @elseif(Route::currentRouteName() === 'dashboard')
         <dashboard-component />
-        @elseif(Route::currentRouteName() === 'create-tour')
-        <create-tour-component />
-        @elseif(Route::currentRouteName() === 'edit-tour')
-        <create-tour-component :tour_id="'{{ $id }}'" />
-        @elseif(Route::currentRouteName() === 'details-tour')
-        <tour-details-component :tour_id="'{{ $id }}'" />
+
         @elseif(Route::currentRouteName() === 'languages')
         <language-component />
         @elseif(Route::currentRouteName() === 'create-language')
@@ -162,37 +112,17 @@
         <language-create-component :lang_id="'{{ $id }}'" />
         @elseif(Route::currentRouteName() === 'translations-show')
         <translation-component :language_id="'{{ $id }}'" />
-       
+
         @elseif(Route::currentRouteName() === 'verification-code-email')
         <verification-code-email-component />
         @elseif(Route::currentRouteName() === 'external-website')
         <external-website-component />
-        @elseif(Route::currentRouteName() === 'itinerary-create' )
-        <create-itinerary-component :tour_id="'{{ $tour_id }}'" :process_status="'{{ $status }}'" />
-        @elseif(Route::currentRouteName() === 'edit-itinerary')
-        <create-itinerary-component :tour_id="'{{ $tour_id }}'" :process_status="'{{ $status }}'"
-            :itinerary_id="'{{ $itinerary_id }}'" />
 
-        @elseif(Route::currentRouteName() === 'activity-create' )
-        <create-activity-component :tour_id="'{{ $tour_id }}'" :process_status="'{{ $status }}'" />
-        @elseif(Route::currentRouteName() === 'edit-activity')
-        <create-activity-component :tour_id="'{{ $tour_id }}'" :process_status="'{{ $status }}'"
-            :activity_id="'{{ $activity_id }}'" />
-        @elseif(Route::currentRouteName() === 'details-activity')
-        <details-activity-component :activity_id="'{{ $activity_id }}'" :tour_id="'{{ $tour_id }}'" />
 
-        @elseif(Route::currentRouteName() === 'accommodation-create' )
-        <create-accommodation-component :tour_id="'{{ $tour_id }}'" :process_status="'{{ $status }}'" />
-        @elseif(Route::currentRouteName() === 'edit-accommodation')
-        <create-accommodation-component :tour_id="'{{ $tour_id }}'" :process_status="'{{ $status }}'"
-            :accommodation_id="'{{ $accommodation_id }}'" />
-        @elseif(Route::currentRouteName() === 'details-accommodation')
-        <details-accommodation-component :accommodation_id="'{{ $accommodation_id }}'" :tour_id="'{{ $tour_id }}'" />
 
-        @elseif(Route::currentRouteName() === 'tour-payment-details')
-        <tour-payment-details-component :dates_id="'{{ $dates_id }}'" :tour_id="'{{ $tour_id }}'"
-            :booking_code="'{{ $booking_code }}'" :infants=" '{{ $infants }}' " :children=" '{{ $children }}' "
-            :adults=" '{{ $adults }}' " />
+
+
+
         @elseif(Route::currentRouteName() === 'users')
         <users-index-component />
         @elseif(Route::currentRouteName() === 'create-user')
@@ -212,53 +142,18 @@
         @elseif(Route::currentRouteName() === 'contact-details')
         <admin-side-user-contacted-us-details-component :contact_id="'{{ $id }}'" />
 
-        @elseif(Route::currentRouteName() === 'offices')
-        <offices-index-component />
-        @elseif(Route::currentRouteName() === 'create-office')
-        <create-office-component />
-        @elseif(Route::currentRouteName() === 'edit-office')
-        <create-office-component :office_id="'{{ $id }}'" />
-        @elseif(Route::currentRouteName() === 'recommendation')
-        <recommendation-component />
-        @elseif(Route::currentRouteName() === 'tours-countries')
-        <tour-countries />
-        @elseif(Route::currentRouteName() === 'tour-country-details')
-        <tour-countries-details-create :tour_country_record_id="'{{ $tour_country_id }}'" />
-        @elseif(Route::currentRouteName() === 'tour-country-tours-list')
-        <tour-countries-tours-listing :country_id="'{{ $country_id }}'" />
-        @elseif(Route::currentRouteName() === 'stories')
-        <stories-index-component />
-        @elseif(Route::currentRouteName() === 'create-story')
-        <create-story-component />
-        @elseif(Route::currentRouteName() === 'edit-story')
-        <create-story-component :story_id="'{{ $id }}'" />
+
+
         @elseif(Route::currentRouteName() === 'call-now')
         <call-now-component />
-        @elseif(Route::currentRouteName() === 'make-booking')
-        <booking-using-account-component :tour_id="'{{ $tour_id }}'" :dates_id="'{{ $dates_id }}'"
-            :booking_code="'{{ $booking_code }}'" :infants="'{{ $infants }}'" :children="'{{ $children }}'" :price="'{{ $price }}'" :discount=" '{{ $discount }}'" :adults="'{{ $adults }}'" />
-     
-
-
-        @elseif(Route::currentRouteName() === 'custom-pages')
-        <custom-pages-component />
-        @elseif(Route::currentRouteName() === 'add-custom-page')
-        <create-custom-page-component />
-        @elseif(Route::currentRouteName() === 'custom-page-edit')
-        <create-custom-page-component :custom_page_id="'{{ $id }}'" />
-        @elseif(Route::currentRouteName() === 'custom-page-details')
-        <custom-page-details-component :custom_page_id="'{{ $id }}'" />
-
-        @elseif(Route::currentRouteName() === 'pages')
-        <external-website-custom-page-details :custom_page_name="'{{ $name }}'" />
-
+ 
         @elseif(Route::currentRouteName() === 'our-promises')
         <our-promises-index-component />
         @elseif(Route::currentRouteName() === 'create-our-promise')
         <our-promises-create-component />
         @elseif(Route::currentRouteName() === 'edit-our-promise')
         <our-promises-create-component :our_promise_id="'{{ $id }}'" />
-        <!-- Quick Move Homes  -->
+        
 
          <!-- HOAs -->
 @elseif(Route::currentRouteName() === 'home-owners')
@@ -325,6 +220,8 @@
         @elseif(Route::currentRouteName() === 'community.details')
         <community-details-component :community_id="'{{ $id }}'" />
         <!-- Homes -->
+        @elseif(Route::currentRouteName() === 'upload')
+        <upload-properties-component  />
         @elseif(Route::currentRouteName() === 'homes')
         <homes-index-component  />
         @elseif(Route::currentRouteName() === 'home.create')
@@ -371,7 +268,7 @@
 
         @elseif(Route::currentRouteName() === 'homes-list')
         <search-homes  :location="'{{ $location }}'"/>
-        
+
         @elseif(Route::currentRouteName() === 'home-details')
         <front-home-details-component :home_id="'{{ $id }}'" />
         @elseif(Route::currentRouteName() === 'incentive-details')

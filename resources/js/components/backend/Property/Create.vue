@@ -195,17 +195,18 @@
                                 {{ formErrors.zip_code[0] }}
                             </div>
                         </div>
-                       
+
                         <div class="col-12 col-md-6">
                             <label for="latitude">{{
                                 translate("Latitude")
                             }}</label>
-                            <input type="text"
+                            <input
+                                type="text"
                                 class="form-control"
                                 id="latitude"
                                 :class="{ 'invalid-bg': formErrors.latitude }"
                                 v-model="form.latitude"
-                            > 
+                            />
                             <div
                                 class="invalid-feedback animated fadeIn"
                                 v-if="formErrors.latitude"
@@ -218,12 +219,13 @@
                             <label for="longitude">{{
                                 translate("Longitude")
                             }}</label>
-                            <input type="text"
+                            <input
+                                type="text"
                                 class="form-control"
                                 id="longitude"
                                 :class="{ 'invalid-bg': formErrors.longitude }"
                                 v-model="form.longitude"
-                            > 
+                            />
                             <div
                                 class="invalid-feedback animated fadeIn"
                                 v-if="formErrors.longitude"
@@ -231,7 +233,7 @@
                                 {{ formErrors.longitude[0] }}
                             </div>
                         </div>
-                        
+
                         <div class="col-12 col-md-6">
                             <label for="price">{{ translate("Price") }}</label>
                             <input
@@ -273,7 +275,7 @@
                                 translate("Square Feet")
                             }}</label>
                             <input
-                                type="number"
+                                type="text"
                                 class="form-control"
                                 id="square_feet"
                                 v-model="form.square_feet"
@@ -294,7 +296,7 @@
                                 translate("Lot Size")
                             }}</label>
                             <input
-                                type="number"
+                                type="text"
                                 class="form-control"
                                 id="lot_size"
                                 v-model="form.lot_size"
@@ -898,27 +900,30 @@
                         </div>
                         <div class="col-12 col-md-12">
                             <label for="home_main_image">{{
-                                translate("Home main image")
+                                translate("Main image")
                             }}</label>
-                            <div>
-                                <image-zooming-component
-                                    v-if="
-                                        existing_home_main_image &&
-                                        !form.home_main_image
-                                    "
-                                    :file="form.home_main_image"
-                                    :width="130"
+
+                            <div class="mt-3 mb-2">
+                                <img
+                                    v-if="form.home_main_image"
+                                    :src="form.home_main_image ?? '/images/default.jpg'"
+                                    :custom_class="'img-fluid img-thumbnail rounded'"
+                                    :width="125"
                                 />
-                                <image-zooming-component
+                                <img
                                     v-else
-                                    :file="form.home_main_image"
-                                    :width="130"
+                                    :src="existing_home_main_image ?? '/images/default.jpg'"
+                                    :custom_class="'img-fluid img-thumbnail rounded'"
+                                    :width="125"
                                 />
-                                <br />
+                                 
+                                </div>
                                 <ImageCropper
                                     @croppedImg="croppedImgSubmit"
                                     :ratio="1"
-                                />
+                                /> 
+                            <div>
+                                 
                             </div>
 
                             <div
@@ -1102,7 +1107,7 @@ export default {
                     this.form.cic = property.cic || null; // Add if applicable
                     this.form.school_id = property.school_id || null; // Add if applicable
                     this.form.community_id = property.community_id || ""; // Add if applicable
-                    this.form.home_main_image = property.home_main_image;
+                    //this.form.home_main_image = property.home_main_image;
                     this.existing_home_main_image = property.home_main_image;
                     // Populate Property Features
                     this.form.incentives = property.incentives; // Ensure this is an array
@@ -1149,7 +1154,7 @@ export default {
                     }
 
                     // Optional: If there's an image field
-                    this.home_main_image = property.home_main_image || ""; // Assign image if applicable
+                    // this.home_main_image = property.home_main_image || ""; // Assign image if applicable
                     this.form.listing_date = property.listing_date || ""; // Assign image if applicable
                 })
                 .catch((error) => {

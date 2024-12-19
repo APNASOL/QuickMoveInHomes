@@ -103,10 +103,16 @@
                 <span>Dashboard</span>
             </a>
         </li>
-        <li class="nav-item" v-if="user_role == 'admin' || user_role == 'tour operator'">
+        <li class="nav-item" v-if="user_role == 'admin'">
             <a class="nav-link collapsed" :class="{ active: isActive('/agents') }" href="/agents">
                 <i class="bi bi-person-check me-2"></i>
                 <span>{{ translate("Agents") }}</span>
+            </a>
+        </li>
+        <li class="nav-item" v-if="user_role == 'admin'">
+            <a class="nav-link collapsed" :class="{ active: isActive('/upload') }" href="/upload">
+                <i class="bi bi-person-check me-2"></i>
+                <span>{{ translate("Upload") }}</span>
             </a>
         </li>
         <li class="nav-item" v-if="user_role == 'admin'">
@@ -121,44 +127,44 @@
                 <span>Customer Visits</span>
             </a>
         </li>
-        <li class="nav-item" v-if="user_role == 'admin' || user_role == 'tour operator'">
+        <li class="nav-item" v-if="user_role == 'admin'">
             <a class="nav-link collapsed" :class="{ active: isActive('/builders') }" href="/builders">
                 <i class="bi bi-tools me-2"></i>
                 <span>{{ translate("Builders") }}</span>
             </a>
         </li>
-        <li class="nav-item" v-if="user_role == 'admin' || user_role == 'tour operator'">
+        <li class="nav-item" v-if="user_role == 'admin'">
             <a class="nav-link collapsed" :class="{ active: isActive('/blogs/posts') }" href="/blogs/posts">
                 <i class="bi bi-journal me-2"></i>
                 <span>Blog posts</span>
             </a>
         </li>
-        <li class="nav-item" v-if="user_role == 'admin' || user_role == 'tour operator'">
+        <li class="nav-item" v-if="user_role == 'admin'">
             <a class="nav-link collapsed" :class="{ active: isActive('/communities') }" href="/communities">
                 <i class="bi bi-person-heart me-2"></i>
                 <span>{{ translate("Communities") }}</span>
             </a>
         </li>
-        <li class="nav-item" v-if="user_role == 'admin' || user_role == 'tour operator'">
+        <li class="nav-item" v-if="user_role == 'admin'">
             <a class="nav-link collapsed" :class="{ active: isActive('/events') }" href="/events">
                 <i class="bi bi-calendar-check me-2"></i>
                 <span>Events</span>
             </a>
         </li>
         
-        <li class="nav-item" v-if="user_role == 'admin' || user_role == 'tour operator'">
+        <li class="nav-item" v-if="user_role == 'admin'">
             <a class="nav-link collapsed" :class="{ active: isActive('/home-owners') }" href="/home-owners">
                 <i class="bi bi-people me-2"></i>
                 <span>{{ translate("HOA") }}</span>
             </a>
         </li>
-        <li class="nav-item" v-if="user_role == 'admin' || user_role == 'tour operator'">
+        <li class="nav-item" v-if="user_role == 'admin'">
             <a class="nav-link collapsed" :class="{ active: isActive('/incentives') }" href="/incentives">
                 <i class="bi bi-star me-2"></i>
                 <span>Incentives</span>
             </a>
         </li>
-        <li class="nav-item" v-if="user_role == 'admin' || user_role == 'tour operator'">
+        <li class="nav-item" v-if="user_role == 'admin'">
             <a class="nav-link collapsed" :class="{ active: isActive('/neighborhoods') }" href="/neighborhoods">
                 <i class="bi bi-map me-2"></i>
                 <span>{{ translate("Neighborhood") }}</span>
@@ -170,13 +176,24 @@
                 <span>{{ translate("Why choose") }}</span>
             </a>
         </li>
-        <li class="nav-item" v-if="user_role == 'admin' || user_role == 'tour operator'">
+        
+        <li class="nav-item" v-if="user_role == 'admin'">
+            <a class="nav-link collapsed" :class="{ active: isActive('/homes') }" href="/homes">
+                <i class="bi bi-arrow-right me-2"></i>
+                <span>Quick Move In</span>
+            </a>
+        </li>
+
+
+        <li class="nav-item" v-if="user_role == 'admin'">
             <a class="nav-link collapsed" :class="{ active: isActive('/properties') }" href="/properties">
                 <i class="bi bi-file-earmark-text me-2"></i>
                 <span>Properties</span>
             </a>
         </li>
-        <li class="nav-item" v-if="user_role == 'admin' || user_role == 'tour operator'">
+        
+
+        <li class="nav-item" v-if="user_role == 'admin'">
             <a class="nav-link collapsed" :class="{ active: isActive('/regions') || isActive('/region/create') || isActive('/region/edit') }" href="/regions">
                 <i class="bi bi-globe me-2"></i>
                 <span>{{ translate("Regions") }}</span>
@@ -194,24 +211,19 @@
                 <span>{{ translate("Settings") }}</span>
             </a>
         </li>
-        <li class="nav-item" v-if="user_role == 'admin' || user_role == 'tour operator'">
+        <li class="nav-item" v-if="user_role == 'admin'">
             <a class="nav-link collapsed" :class="{ active: isActive('/schools') }" href="/schools">
                 <i class="bi bi-book me-2"></i>
                 <span>{{ translate("Schools") }}</span>
             </a>
         </li>
-        <li class="nav-item" v-if="user_role == 'admin' || user_role == 'tour operator'">
+        <li class="nav-item" v-if="user_role == 'admin'">
             <a class="nav-link collapsed" :class="{ active: isActive('/amenities') }" href="/amenities">
                 <i class="bi bi-bag me-2"></i>
                 <span>{{ translate("Amenities") }}</span>
             </a>
         </li>
-        <li class="nav-item" v-if="user_role == 'admin' || user_role == 'tour operator'">
-            <a class="nav-link collapsed" :class="{ active: isActive('/homes') }" href="/homes">
-                <i class="bi bi-arrow-right me-2"></i>
-                <span>Quick Move In</span>
-            </a>
-        </li>
+        
         <li class="nav-item" v-if="user_role == 'admin'">
             <a class="nav-link collapsed" data-bs-target="#icons-nav-emails" data-bs-toggle="collapse" :class="{ active: isActive('/welcome-email') }" href="#">
                 <i class="bi bi-envelope me-2"></i>
@@ -381,9 +393,26 @@ main {
 /* Quick Move Homes Css*/
 .c-theme-text-color {
     color: #174696 !important;
-    text-decoration: none !important;
+    text-decoration: none !important; 
 }
 
+.accordion-button {
+    color: #174696 !important;
+    font-weight: bold !important;
+}
+
+.multiselect-tag {
+    background-color: #174696 !important;
+}
+
+.multiselect-option.is-selected {
+    background-color: #174696 !important;
+    
+}
+.multiselect-option.is-active {
+    box-shadow: #174696 !important;
+    
+}
 .c-search-box-corners {
     border-radius: 0px;
 }
@@ -420,7 +449,7 @@ main {
     border-radius: 1rem;
 }
 .c-searchbox-radius {
-    border-radius: 0;
+    border-radius: 0 !important;
 }
 
 /* Quick Move Homes Css*/

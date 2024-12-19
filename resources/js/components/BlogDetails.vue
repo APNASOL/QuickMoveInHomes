@@ -13,7 +13,7 @@
             </div>
         </div>
 
-        <div class="c-tour-details container my-4">
+        <div class="c-section-main-details container my-4">
             <div class="blog-post">
                 <h1 class="my-4">{{ blog_post_details.title }}</h1>
                 <div class="content ql-editor" v-html="blog_post_details.content"></div>
@@ -84,7 +84,7 @@ export default {
     margin-top: 10px;
 }
 
-.c-tour-details {
+.c-section-main-details {
     margin-top: -40px; /* To overlap with the top section for a seamless look */
     padding: 20px;
     background-color: #f9f9f9f3; /* Light background for content area */

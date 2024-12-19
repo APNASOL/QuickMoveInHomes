@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agent;
+use App\Models\Community;
 use App\Models\CustomerAgentConnection;
-use App\Models\CustomPage;
-use App\Models\Office;
+  
 use App\Models\Property;
 use App\Models\Upload;
-use App\Models\Tour;
-use App\Models\TourCountry;
+  
 use App\Models\User;
 use Auth;
 use Illuminate\Http\Request;
@@ -18,12 +17,12 @@ class AdminController extends Controller
 {
     public function dashboard_data_count()
     {
-        $offices_count = Office::count();
-        $custom_pages_count = CustomPage::count();
-        $tour_count = Tour::count();
-        $tour_country_count = TourCountry::count();
-
-        return ['offices' => $offices_count, 'custom_pages' => $custom_pages_count, 'tours' => $tour_count, 'tour_countries' => $tour_country_count];
+        $peroperties_count = Property::count();
+        $communities_count = Community::count();
+        $agents_count = Agent::count();
+      
+       
+        return ['peroperties_count' => $peroperties_count, 'communities_count' => $communities_count, 'agents_count' => $agents_count];
     }
     public function login(Request $request)
     {

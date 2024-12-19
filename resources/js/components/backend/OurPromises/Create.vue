@@ -186,7 +186,7 @@ export default {
                     setTimeout(() => {
                          
                          window.location.href = "/our-promises";
-                         // this.getCustomPageRecords();
+                          
                      }, 2000); // Delay of 2000 milliseconds (2 seconds)
                 })
                 .catch((error) => {

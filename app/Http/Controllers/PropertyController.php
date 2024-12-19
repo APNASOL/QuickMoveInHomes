@@ -21,9 +21,26 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\PropertiesImport; 
+
 class PropertyController extends Controller
 {
 
+public function upload() {
+    $name = 'index';
+        return view('app', compact('name'));
+}
+    public function uploadProperties(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:xlsx',
+        ]);
+    
+        Excel::import(new PropertiesImport, $request->file('file'));
+    return 'success'; 
+    }
+    
     public function index()
     {
         $name = 'index';
@@ -85,24 +102,24 @@ class PropertyController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'address' => 'required|string|max:255',
-            'city' => 'nullable|string|max:255',
-            'state' => 'nullable|string|max:255',
-            'zip_code' => 'nullable|string|max:255',
+            'city' => 'required|string|max:255',
+            'state' => 'required|string|max:255',
+            'zip_code' => 'required|string|max:255',
             'latitude' => 'required|string|max:255',
             'longitude' => 'required|string|max:255',
             'price' => 'required|numeric',
-            'bedrooms' => 'nullable|integer|min:0',
-            'square_feet' => 'nullable|numeric',
-            'lot_size' => 'nullable|numeric',
-            'property_type' => 'nullable|string|max:255',
-            'listing_type' => 'nullable|string|max:255',
-            'year_built' => 'nullable|integer|digits:4',
+            'bedrooms' => 'required|integer|min:0',
+            'square_feet' => 'required|numeric',
+            'lot_size' => 'required|numeric',
+            'property_type' => 'required|string|max:255',
+            'listing_type' => 'required|string|max:255',
+            'year_built' => 'required|integer|digits:4',
             'hoa_id' => 'required',
-            'association_fee' => 'nullable|numeric',
-            'cic' => 'nullable',
+            'association_fee' => 'required|numeric',
+            'cic' => 'required',
             'school_id' => 'required',
             'community_id' => 'required',
-            'home_main_image' => 'required',
+            'home_main_image' => 'nullable',
 
             // Property Features Fields
             'feature.name' => 'nullable|string|max:255',
@@ -186,9 +203,18 @@ class PropertyController extends Controller
             PropertyIncentive::where('property_id', $property->property_id)->delete();
         }
 
-        // Handle file uploads
+       // Handle file uploads
         if ($request->file('files')) {
             $files_ids = [];
+            
+            // If there are existing file IDs in the property, decode them
+            if ($property->files) {
+                $existing_files_ids = json_decode($property->files, true);
+            } else {
+                $existing_files_ids = [];
+            }
+
+            // Loop through new files and add their IDs
             foreach ($request->file('files') as $file) {
                 $file_name_with_path = $file->store('real_public/PropertiesFiles/');
 
@@ -202,8 +228,13 @@ class PropertyController extends Controller
 
                 $files_ids[] = $upload->id;
             }
-            // Assuming you want to save these file IDs in the community object (or an event)
-            $property->files = json_encode($files_ids);
+
+            // Merge the new file IDs with the existing ones
+            $all_files_ids = array_merge($existing_files_ids, $files_ids);
+            
+            // Save the updated file IDs as a JSON string
+            $property->files = json_encode($all_files_ids);
+            $property->save();
         }
 
         // Save the property
@@ -221,6 +252,7 @@ class PropertyController extends Controller
         $quickMoveInHome->property_id = $property->property_id;
         $quickMoveInHome->move_in_date = $formattedDate;
         $quickMoveInHome->incentives = $request->incentives;
+        // dd("Test",$request->home_main_image);
         if ($request->home_main_image) {
 
             $existingInUploads = Upload::where('id', $quickMoveInHome->home_main_image)->first();
@@ -342,8 +374,30 @@ class PropertyController extends Controller
     }
     public function getPropertyDetails($id)
     {
+
+        $property_main_image = '';
         // Fetch the property along with its relationships
         $property = Property::with(['feature', 'hoa', 'school'])->findOrFail($id);
+
+        
+        $quickMove = QuickMoveHome::where('property_id', $property->property_id)->first();
+        if($quickMove)
+        { 
+            // $property->home_main_image = $property;
+
+            
+            // Process main image
+            if ($quickMove->main_image) {
+                $uploaded_image = Upload::find($quickMove->main_image);
+
+                if ($uploaded_image) {
+                    $property_main_image = get_storage_url($uploaded_image->file_name);
+                }
+            }
+
+        }
+
+            
         // Initialize OpenHouse data
         $openHouseData = [];
 
@@ -381,6 +435,9 @@ class PropertyController extends Controller
             'address' => $property->address,
             'city' => $property->city,
             'state' => $property->state,
+            'zip_code' => $property->zip_code,
+            'latitude' => $property->latitude,
+            'longitude' => $property->longitude,
             'zip_code' => $property->zip_code,
             'price' => $property->price,
             'bedrooms' => $property->bedrooms,
@@ -423,6 +480,7 @@ class PropertyController extends Controller
             'hoa' => optional($property->hoa)->name,
             'school' => optional($property->school)->name,
             'incentives' => $property->incentives,
+            'main_image' => $property_main_image,
         ];
 
         // Merge the open house data into property data if available
@@ -434,7 +492,7 @@ class PropertyController extends Controller
         $propertyData['files'] = []; // Initialize files array
 
         if ($property->files) {
-            $uploads = Upload::whereIn('id', json_decode($property->files))->orderBy('extension')->get(['file_original_name', 'file_name', 'extension', 'type']);
+            $uploads = Upload::whereIn('id', json_decode($property->files))->orderBy('extension')->get(['id','file_original_name', 'file_name', 'extension', 'type']);
 
             foreach ($uploads as $upload) {
                 $upload->file_name = get_storage_url($upload->file_name); // Update the file name with the storage URL
@@ -575,6 +633,29 @@ class PropertyController extends Controller
             
         }
         return $agreements;
+    }
+
+    public function property_photo_delete($id, $property_id)
+    {
+
+        $merged_id = [];
+        $property = Property::findOrFail($property_id);
+
+        if ($property->files) {
+            $merged_id = array_values(array_diff(json_decode($property->files), array($id)));
+        }
+
+        $property->files = json_encode($merged_id);
+
+        $property->save();
+        $upload = Upload::where('id', $id)->first();
+
+        if ($upload) {
+            Storage::delete($upload->file_name);
+            $upload->delete();
+        }
+
+        return 'success';
     }
 
 }

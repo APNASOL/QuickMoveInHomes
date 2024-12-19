@@ -4,19 +4,16 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\AmenityController;
 use App\Http\Controllers\BlogPostsController;
-use App\Http\Controllers\BuilderController;
-use App\Http\Controllers\CallMeNowController;
-use App\Http\Controllers\IndexController;
-use App\Http\Controllers\CommunitiesController;
+use App\Http\Controllers\BuilderController; 
+use App\Http\Controllers\IndexController; 
 use App\Http\Controllers\HOAController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HomesController;
 use App\Http\Controllers\IncentivesController;
+use App\Http\Controllers\CommunitiesController;
 use App\Http\Controllers\OurPromisesController;
 use App\Http\Controllers\LanguageController;
-use App\Http\Controllers\LasVegasRegionController;
-
-// Homes Quick Move Controllers
+use App\Http\Controllers\LasVegasRegionController; 
 use App\Http\Controllers\NeighborhoodController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\SchoolController;
@@ -44,8 +41,7 @@ Route::get('/', function ($message = null) {
     return view('app');
 })->name('website');
 
-Route::get('/tour-details/{tour_id}/{tour_name}', [HomeController::class, 'tour_details'])->name('tour-details');
-
+ 
 Route::get('/recommendation', function () {
     return view('app');
 })->name('recommendation');
@@ -79,8 +75,7 @@ Route::get('/help', function () {
 })->name('help');
 
 Route::get('/profile-settings', [UserController::class, 'profile_settings'])->name('profile-settings');
-
-Route::get('/tour-payment-details/{dates_id}/{tour_id}/{adults}/{children}/{infants}', [HomeController::class, 'tour_payment'])->name('tour-payment-details');
+ 
 Route::get('/contact', [HomeController::class, 'contact_us'])->name('contact');
 Route::get('/blogs', [HomeController::class, 'blogs'])->name('blogs');
 
@@ -115,17 +110,16 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/neighborhoods', [NeighborhoodController::class, 'index'])->name('neighborhoods');
     Route::get('/neighborhood/create', [NeighborhoodController::class, 'create'])->name('neighborhood.create');
     Route::get('/neighborhood/edit/{id}', [NeighborhoodController::class, 'edit'])->name('neighborhood.edit');
-    //  neighborhoods
+    //  amenities
     Route::get('/amenities', [AmenityController::class, 'index'])->name('amenities');
     Route::get('/amenity/create', [AmenityController::class, 'create'])->name('amenity.create');
     Route::get('/amenity/edit/{id}', [AmenityController::class, 'edit'])->name('amenity.edit');
 
-    //  communities
-    Route::get('/communities', [CommunitiesController::class, 'index'])->name('communities');
-    Route::get('/community/create', [CommunitiesController::class, 'create'])->name('community.create');
-    Route::get('/community/edit/{id}', [CommunitiesController::class, 'edit'])->name('community.edit');
-    Route::get('/community/details/{id}', [CommunitiesController::class, 'details'])->name('community.details');
-
+   //  communities
+   Route::get('/communities', [CommunitiesController::class, 'index'])->name('communities');
+   Route::get('/community/create', [CommunitiesController::class, 'create'])->name('community.create');
+   Route::get('/community/edit/{id}', [CommunitiesController::class, 'edit'])->name('community.edit');
+   Route::get('/community/details/{id}', [CommunitiesController::class, 'details'])->name('community.details');
     //  homes
     Route::get('/homes', [HomesController::class, 'index'])->name('homes');
     Route::get('/home/create', [HomesController::class, 'create'])->name('home.create');
@@ -139,8 +133,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     //  dynamic emails
     Route::get('/welcome-email', [SettingController::class, 'welcome_email'])->name('welcome-email');
     Route::get('/reset-password-email', [SettingController::class, 'reset_password_email'])->name('reset-password-email');
-
+    
     //  homes
+    Route::get('/upload', [PropertyController::class, 'upload'])->name('upload');
     Route::get('/properties', [PropertyController::class, 'index'])->name('properties');
     Route::get('/property/create', [PropertyController::class, 'create'])->name('property.create');
     Route::get('/property/edit/{id}', [PropertyController::class, 'edit'])->name('property.edit');
@@ -188,8 +183,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/contact-details/{id}', [UserController::class, 'contact_details'])->name('contact-details');
 
     //  call-now
-    Route::get('/call-now', [CallMeNowController::class, 'index'])->name('call-now');
-
+ 
 });
 
 Route::get('/all/homes', [HomeController::class, 'visit_all_homes'])->name('all.homes');

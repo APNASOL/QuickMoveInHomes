@@ -30,267 +30,305 @@
 
         <section class="section">
             <div class="card c-card-border">
-                <a
-                    class="d-flex justify-content-end text-success btn-sm fs-6 p-2"
-                    type="button"
-                    :title="translate('Edit')"
-                    :href="'/community/edit/' + community_id"
-                >
-                    <i class="bi bi-pencil"></i>
-                </a>
                 <div class="card-body pt-4">
-                    <div class="container">
-                        <div class="row g-3" v-if="Community">
-                            <div class="col-md-6">
-                                <h4 class="c-theme-text-color">
-                                    Community Details
-                                </h4>
-                                <div class="form-group">
-                                    <label>Name:</label>
+                    <div class="container-fluid">
+                        <div v-if="Community">
+                            <div class="row g-3">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h1 class="c-theme-text-color">
+                                           {{ Community.name }} 
+                                        </h1>
+                                    </div>
+                                    <div>
+                                        <a
+                                            class="text-end btn text-success btn-sm fs-6 p-2"
+                                            type="button"
+                                            :title="translate('Edit')"
+                                            :href="
+                                                '/community/edit/' +
+                                                community_id
+                                            "
+                                        >
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Name</label>
                                     <p>{{ Community.name }}</p>
                                 </div>
-                                <div class="form-group">
-                                    <label>Description:</label>
+                                <div class="col-md-6">
+                                    <label>Description</label>
                                     <p>{{ Community.description }}</p>
                                 </div>
-                                <div class="form-group">
-                                    <label>Location:</label>
+                                <div class="col-md-6">
+                                    <label>Location</label>
                                     <p>{{ Community.location }}</p>
                                 </div>
-                                <div class="form-group">
-                                    <label>HOA ID:</label>
-                                    <p>{{ Community.hoa_id }}</p>
+                                <div class="col-md-6">
+                                    <label>Longitude</label>
+                                    <p>{{ Community.longitude }}</p>
                                 </div>
-                                <div class="form-group">
-                                    <label>Legal Subdivision:</label>
+                                <div class="col-md-6">
+                                    <label>Latitude</label>
+                                    <p>{{ Community.latitude }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>HOA</label>
+                                    <p>{{ Community.hoa }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Legal Subdivision</label>
                                     <p>{{ Community.legal_subdivision }}</p>
                                 </div>
-                                <div class="form-group">
-                                    <label>Nearby Properties:</label>
+                                <div class="col-md-6">
+                                    <label>Nearby Properties</label>
                                     <p>{{ Community.nearby_properties }}</p>
                                 </div>
-                                <div class="form-group">
-                                    <label>Masterplan:</label>
+                                <div class="col-md-6">
+                                    <label>Masterplan</label>
                                     <p>{{ Community.masterplan }}</p>
                                 </div>
+                                <div class="col-md-6">
+                                    <label>Amenities</label>
+                                    <p>
+                                        {{
+                                            Community.amenities
+                                                ? Community.amenities.join(", ")
+                                                : "No amenities listed"
+                                        }}
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Regions</label>
+                                    <p>
+                                        {{
+                                            Community.regions
+                                                ? Community.regions.join(", ")
+                                                : "No regions listed"
+                                        }}
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Neighborhoods</label>
+                                    <p>
+                                        {{
+                                            Community.neighborhoods
+                                                ? Community.neighborhoods.join(
+                                                      ", "
+                                                  )
+                                                : "No neighborhoods listed"
+                                        }}
+                                    </p>
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                <h4 class="c-theme-text-color">
+                            <hr />
+                            <div class="row g-3 mt-3">
+                                <h3 class="c-theme-text-color">
                                     Additional Information
-                                </h4>
-                                <div class="form-group">
-                                    <label>Sub Association:</label>
+                                </h3>
+                                <div class="col-md-6">
+                                    <label>Sub Association</label>
                                     <p>{{ Community.sub_association }}</p>
                                 </div>
-                                <div class="form-group">
-                                    <label>CIC:</label>
+                                <div class="col-md-6">
+                                    <label>CIC</label>
                                     <p>{{ Community.cic }}</p>
                                 </div>
-                                <div class="form-group">
-                                    <label>LID:</label>
+                                <div class="col-md-6">
+                                    <label>LID</label>
                                     <p>{{ Community.lid }}</p>
                                 </div>
-                                <div class="form-group">
-                                    <label>CID:</label>
+                                <div class="col-md-6">
+                                    <label>CID</label>
                                     <p>{{ Community.cid }}</p>
                                 </div>
-                                <div class="form-group">
-                                    <label>Proximity to Strip:</label>
+                                <div class="col-md-6">
+                                    <label>Sid lid fee</label>
+                                    <p>{{ Community.sid_lid_fee }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Sid lid payment frequency</label>
+                                    <p>
+                                        {{
+                                            Community.sid_lid_payment_frequency
+                                        }}
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Map location</label>
+                                    <p>{{ Community.map_location }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Proximity to Strip</label>
                                     <p>{{ Community.proximity_to_strip }}</p>
                                 </div>
-                                <div class="form-group">
-                                    <label>Proximity to Airport:</label>
+                                <div class="col-md-6">
+                                    <label>Proximity to Airport</label>
                                     <p>{{ Community.proximity_to_airport }}</p>
                                 </div>
-                                <div class="form-group">
-                                    <label>Nearby Attractions:</label>
+                                <div class="col-md-6">
+                                    <label>Nearby Attractions</label>
                                     <p>{{ Community.nearby_attractions }}</p>
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <h4 class="c-theme-text-color">
-                                    Images & Videos
-                                </h4>
-                                <div class="form-group">
-                                    <label>Main image</label>
-                                    <br />
+                            <hr />
 
-                                    <image-zooming-component
-                                        :file="
-                                            Community.main_image ?? 'empty.png'
-                                        "
-                                        :width="160"
-                                    />
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Other:</label>
-                                    <br />
-                                    <div class="card p-1">
-                                        <div class="card-body">
-                                            <!-- start of the loop -->
+                            <h3 class="c-theme-text-color">Main Image</h3>
+
+                            <image-zooming-component
+                                :file="Community.main_image ?? 'empty.png'"
+                                :width="260"
+                            />
+
+                            <div
+                                class="col-md-12 mt-4"
+                                v-if="Community.files && Community.files.length"
+                            >
+                                <div class="form-group mt-2">
+                                    <h3 class="c-theme-text-color">
+                                        Community Photo Gallery
+                                    </h3>
+
+                                    <!-- start of the loop -->
+                                    <div class="row">
+                                        <div
+                                            class="col-sm-2 col-lg-2 mb-4"
+                                            v-for="file in Community.files"
+                                            :key="file.id"
+                                        >
+                                            <!-- images -->
+
                                             <div
-                                                class="row"
-                                                data-masonry='{"percentPosition": true }'
+                                                class=""
+                                                v-if="file.type.match('image')"
                                             >
-                                                <div
-                                                    class="col-sm-6 col-lg-4 mb-4"
-                                                    v-for="file in Community.files"
+                                                <div class="text-center">
+                                                    <DeleteModal
+                                                        :deleteId="file.id"
+                                                        @deleteThis="deleteThis"
+                                                    />
+                                                </div>
+
+                                                <image-zooming-component
+                                                    :file="file.file_name"
+                                                    @loaded="fileLoaded"
+                                                />
+                                            </div>
+
+                                            <!-- videos -->
+
+                                            <div
+                                                v-if="file.type.match('video')"
+                                                class="card"
+                                            >
+                                                <video
+                                                    style="border-radius: 5px"
+                                                    class="video-js img-fluid img-thumbnail"
+                                                    controls
+                                                    preload="auto"
+                                                    data-setup="{}"
+                                                    @load="fileLoaded"
                                                 >
-                                                    <!-- images -->
+                                                    <source
+                                                        :src="file.file_name"
+                                                        :type="file.type"
+                                                    />
+                                                </video>
+                                            </div>
 
-                                                    <div
-                                                        class="card"
-                                                        v-if="
-                                                            file.type.match(
-                                                                'image'
-                                                            )
-                                                        "
+                                            <!-- files -->
+                                            <div v-else class="card">
+                                                <div
+                                                    v-if="
+                                                        file.extension == 'pdf'
+                                                    "
+                                                    class="card card-body p-2 text-center"
+                                                >
+                                                    <img
+                                                        src="/images/pdf.svg"
+                                                        height="50"
+                                                        alt="file logo"
+                                                    />
+                                                    <a
+                                                        download
+                                                        :href="file.file_name"
                                                     >
-                                                        <image-zooming-component
-                                                            :file="
-                                                                file.file_name
-                                                            "
-                                                            @loaded="fileLoaded"
-                                                        />
-                                                    </div>
-
-                                                    <!-- videos -->
-
-                                                    <div
-                                                        v-if="
-                                                            file.type.match(
-                                                                'video'
-                                                            )
-                                                        "
-                                                        class="card"
+                                                        {{
+                                                            file.file_original_name
+                                                        }}
+                                                    </a>
+                                                </div>
+                                                <div
+                                                    v-if="
+                                                        file.extension ==
+                                                            'docx' ||
+                                                        file.extension == 'doc'
+                                                    "
+                                                    class="card card-body p-2 text-center"
+                                                >
+                                                    <img
+                                                        src="/images/word.svg"
+                                                        height="50"
+                                                        alt="file logo"
+                                                    />
+                                                    <a
+                                                        download
+                                                        :href="file.file_name"
                                                     >
-                                                        <video
-                                                            style="
-                                                                border-radius: 5px;
-                                                            "
-                                                            class="video-js img-fluid img-thumbnail"
-                                                            controls
-                                                            preload="auto"
-                                                            data-setup="{}"
-                                                            @load="fileLoaded"
-                                                        >
-                                                            <source
-                                                                :src="
-                                                                    file.file_name
-                                                                "
-                                                                :type="
-                                                                    file.type
-                                                                "
-                                                            />
-                                                        </video>
-                                                    </div>
-
-                                                    <!-- files -->
-                                                    <div v-else class="card">
-                                                        <div
-                                                            v-if="
-                                                                file.extension ==
-                                                                'pdf'
-                                                            "
-                                                            class="card card-body p-2 text-center"
-                                                        >
-                                                            <img
-                                                                src="/images/pdf.svg"
-                                                                height="50"
-                                                                alt="file logo"
-                                                            />
-                                                            <a
-                                                                download
-                                                                :href="
-                                                                    file.file_name
-                                                                "
-                                                            >
-                                                                {{
-                                                                    file.file_original_name
-                                                                }}
-                                                            </a>
-                                                        </div>
-                                                        <div
-                                                            v-if="
-                                                                file.extension ==
-                                                                    'docx' ||
-                                                                file.extension ==
-                                                                    'doc'
-                                                            "
-                                                            class="card card-body p-2 text-center"
-                                                        >
-                                                            <img
-                                                                src="/images/word.svg"
-                                                                height="50"
-                                                                alt="file logo"
-                                                            />
-                                                            <a
-                                                                download
-                                                                :href="
-                                                                    file.file_name
-                                                                "
-                                                            >
-                                                                {{
-                                                                    file.file_original_name
-                                                                }}
-                                                            </a>
-                                                        </div>
-                                                        <div
-                                                            v-if="
-                                                                file.extension ==
-                                                                    'pptx' ||
-                                                                file.extension ==
-                                                                    'ppt'
-                                                            "
-                                                            class="card card-body p-2 text-center"
-                                                        >
-                                                            <img
-                                                                src="/images/powerpoint.svg"
-                                                                height="50"
-                                                                alt="file logo"
-                                                            />
-                                                            <a
-                                                                download
-                                                                :href="
-                                                                    file.file_name
-                                                                "
-                                                            >
-                                                                {{
-                                                                    file.file_original_name
-                                                                }}
-                                                            </a>
-                                                        </div>
-                                                        <div
-                                                            v-if="
-                                                                file.extension ==
-                                                                'excel'
-                                                            "
-                                                            class="card card-body p-2 text-center"
-                                                        >
-                                                            <img
-                                                                src="images/excel.svg"
-                                                                height="50"
-                                                                alt="file logo"
-                                                            />
-                                                            <a
-                                                                download
-                                                                :href="
-                                                                    file.file_name
-                                                                "
-                                                            >
-                                                                {{
-                                                                    file.file_original_name
-                                                                }}
-                                                            </a>
-                                                        </div>
-                                                    </div>
+                                                        {{
+                                                            file.file_original_name
+                                                        }}
+                                                    </a>
+                                                </div>
+                                                <div
+                                                    v-if="
+                                                        file.extension ==
+                                                            'pptx' ||
+                                                        file.extension == 'ppt'
+                                                    "
+                                                    class="card card-body p-2 text-center"
+                                                >
+                                                    <img
+                                                        src="/images/powerpoint.svg"
+                                                        height="50"
+                                                        alt="file logo"
+                                                    />
+                                                    <a
+                                                        download
+                                                        :href="file.file_name"
+                                                    >
+                                                        {{
+                                                            file.file_original_name
+                                                        }}
+                                                    </a>
+                                                </div>
+                                                <div
+                                                    v-if="
+                                                        file.extension ==
+                                                        'excel'
+                                                    "
+                                                    class="card card-body p-2 text-center"
+                                                >
+                                                    <img
+                                                        src="images/excel.svg"
+                                                        height="50"
+                                                        alt="file logo"
+                                                    />
+                                                    <a
+                                                        download
+                                                        :href="file.file_name"
+                                                    >
+                                                        {{
+                                                            file.file_original_name
+                                                        }}
+                                                    </a>
                                                 </div>
                                             </div>
-                                            <!-- end of the loop -->
                                         </div>
                                     </div>
+                                    <!-- end of the loop -->
                                 </div>
                             </div>
                         </div>
@@ -304,26 +342,18 @@
 <script>
 import Master from "@components/backend/layout/Master.vue";
 
-import Masonry from "masonry-layout";
-
 export default {
     components: {
         Master,
-        Masonry,
     },
     props: ["community_id"],
     created() {
         this.getCommunityDetails();
     },
-    mounted() {
-        this.$nextTick(() => {
-            this.initMasonry();
-        });
-    },
+
     data() {
         return {
             Community: [],
-            masonryInstance: null,
         };
     },
     methods: {
@@ -332,46 +362,29 @@ export default {
                 .get("/api/get/community/details/" + this.community_id)
                 .then((response) => {
                     this.Community = response.data;
-                    this.$nextTick(() => {
-                        this.initMasonry(); // Re-initialize Masonry after data is set
-                    });
                 })
                 .catch((error) => {
                     toastr.error(error.response.data.message);
                 });
         },
-        initMasonry() {
-            const grid = this.$el.querySelector(".row[data-masonry]");
-            const images = grid.querySelectorAll("img");
-            const videos = grid.querySelectorAll("video");
 
-            let mediaLoaded = 0;
-            const totalMedia = images.length + videos.length;
-
-            const onMediaLoad = () => {
-                mediaLoaded++;
-                if (mediaLoaded === totalMedia) {
-                    // All images and videos are loaded, now initialize Masonry
-                    this.masonryInstance = new Masonry(grid, {
-                        itemSelector: ".col-sm-6", // Adjust this based on your item structure
-                        columnWidth: ".col-sm-6", // Adjust this based on your item structure
-                        percentPosition: true,
-                    });
-                }
-            };
-
-            // Add load event listeners to all images and videos
-            images.forEach((img) => {
-                if (img.complete) {
-                    onMediaLoad();
-                } else {
-                    img.addEventListener("load", onMediaLoad);
-                }
-            });
-
-            videos.forEach((video) => {
-                video.addEventListener("loadeddata", onMediaLoad);
-            });
+        deleteThis(id) {
+            axios
+                .post(
+                    "/api/community/photo/gallery/delete/" +
+                        id +
+                        "/" +
+                        this.community_id
+                )
+                .then(() => {
+                    toastr.success(
+                        this.translate("Photo deleted successfully.")
+                    );
+                    this.getPropertyDetails();
+                })
+                .catch((error) => {
+                    toastr.error(error.response.data.message);
+                });
         },
     },
 };
@@ -384,5 +397,9 @@ export default {
 .c-mouse-over {
     cursor: pointer;
     font-weight: bold;
+}
+.c-theme-text-color {
+    color: #174696 !important;
+    text-decoration: none !important;
 }
 </style>

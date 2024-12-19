@@ -29,91 +29,103 @@
         </div>
 
         <section class="section">
-            <div class="card c-card-border">
-                <a
-                    class="d-flex justify-content-end text-success btn-sm fs-6 p-2"
-                    type="button"
-                    :title="translate('Edit')"
-                    :href="'/property/edit/' + property_id"
-                >
-                    <i class="bi bi-pencil"></i>
-                </a>
-
+            <div class="card c-card-border container-fluid">
                 <div class="card-body pt-4">
-                    <div class="table-responsive">
-                        <div class="row g-3">
-                            <div class="col-12">
-                                <b>{{ translate("Is this open house") }}</b
-                                ><br />
-                                <div class="d-inline-block me-2">
-                                    {{ translate("No") }}
-                                </div>
-                                <div
-                                    class="form-check form-switch d-inline-block"
-                                >
-                                    <input
-                                        class="form-check-input"
-                                        type="checkbox"
-                                        :class="{
-                                            'invalid-bg': formErrors.status,
-                                        }"
-                                        v-model="form.status"
-                                        checked
-                                        @change="initOpenHouse(form.status)"
-                                    />
-                                    <label class="form-check-label">{{
-                                        translate("Yes")
-                                    }}</label>
-                                </div>
-                                <div
-                                    class="invalid-feedback animated fadeIn"
-                                    v-if="formErrors.status"
-                                >
-                                    {{ formErrors.status[0] }}
-                                </div>
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h1 class="c-theme-text-color">
+                                {{ property.title }}
+                            </h1>
+                        </div>
+                        <div>
+                            <a
+                                class="text-end btn text-success btn-sm fs-6 p-2"
+                                type="button"
+                                :title="translate('Edit')"
+                                :href="'/property/edit/' + property_id"
+                            >
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <b>{{ translate("Is this open house") }}</b
+                            ><br />
+                            <div class="d-inline-block me-2">
+                                {{ translate("No") }}
+                            </div>
+                            <div class="form-check form-switch d-inline-block">
+                                <input
+                                    class="form-check-input"
+                                    type="checkbox"
+                                    :class="{
+                                        'invalid-bg': formErrors.status,
+                                    }"
+                                    v-model="form.status"
+                                    checked
+                                    @change="initOpenHouse(form.status)"
+                                />
+                                <label class="form-check-label">{{
+                                    translate("Yes")
+                                }}</label>
                             </div>
                             <div
-                                class="row g-3"
-                                v-if="
-                                    property.is_open_house &&
-                                    property.is_open_house != 0
-                                "
+                                class="invalid-feedback animated fadeIn"
+                                v-if="formErrors.status"
                             >
-                                <b>Open house details</b>
-                                <div class="col-12 col-md-6">
-                                    <b>{{ translate("Date") }}</b
-                                    ><br />
-                                    {{ property.open_house_date }}
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <b>{{ translate("Start time") }}</b
-                                    ><br />
-                                    {{ property.open_house_start_time }}
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <b>{{ translate("End time") }}</b
-                                    ><br />
-                                    {{ property.open_house_end_time }}
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <b>{{ translate("Description") }}</b
-                                    ><br />
-                                    {{ property.open_house_description }}
-                                </div>
+                                {{ formErrors.status[0] }}
                             </div>
+                        </div>
+                        <div
+                            class="row g-3"
+                            v-if="
+                                property.is_open_house &&
+                                property.is_open_house != 0
+                            "
+                        >
+                            <h3 class="c-theme-text-color">
+                                Open house details
+                            </h3>
 
-                            <div class="col-12">
-                                <b>{{ translate("Title") }}</b
+                            <div class="col-12 col-md-6">
+                                <b>{{ translate("Date") }}</b
                                 ><br />
-                                {{ property.title }}
+                                {{ property.open_house_date }}
                             </div>
+                            <div class="col-12 col-md-6">
+                                <b>{{ translate("Start time") }}</b
+                                ><br />
+                                {{ property.open_house_start_time }}
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <b>{{ translate("End time") }}</b
+                                ><br />
+                                {{ property.open_house_end_time }}
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <b>{{ translate("Description") }}</b
+                                ><br />
+                                {{ property.open_house_description }}
+                            </div>
+                            <hr />
+                        </div>
 
-                            <div class="col-12">
-                                <b>{{ translate("Community") }}</b
-                                ><br />
-                                {{ property.community_name }}
-                            </div>
-                            <div class="col-12" v-if="property.incentives">
+                        <h3 class="c-theme-text-color">
+                            Property information details
+                        </h3>
+                        <div class="col-12">
+                            <b>{{ translate("Title") }}</b
+                            ><br />
+                            {{ property.title }}
+                        </div>
+
+                        <div class="col-12">
+                            <b>{{ translate("Community") }}</b
+                            ><br />
+                            {{ property.community_name }}
+                        </div>
+                        <!-- <div class="col-12" v-if="property.incentives">
                                 <b>{{ translate("Incentives") }}</b>
                                 <ul>
                                     <li
@@ -123,375 +135,378 @@
                                         {{ incentive }}
                                     </li>
                                 </ul>
-                            </div>
+                            </div> -->
 
-                            <div class="col-12">
-                                <b>{{ translate("Description") }}</b
-                                ><br />
-                                {{ property.description }}
-                            </div>
-
-                            <div class="col-12">
-                                <b>{{ translate("Address") }}</b
-                                ><br />
-                                {{ property.address }}<br />
-                                {{ property.city }}, {{ property.state }}
-                                {{ property.zip_code }}
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <b>{{ translate("Price") }}</b
-                                ><br />
-                                {{ property.price }}
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <b>{{ translate("Bedrooms") }}</b
-                                ><br />
-                                {{ property.bedrooms }}
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <b>{{ translate("Square Feet") }}</b
-                                ><br />
-                                {{ property.square_feet }}
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <b>{{ translate("Lot Size") }}</b
-                                ><br />
-                                {{ property.lot_size }}
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <b>{{ translate("Property Type") }}</b
-                                ><br />
-                                {{ property.property_type }}
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <b>{{ translate("Listing Type") }}</b
-                                ><br />
-                                {{ property.listing_type }}
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <b>{{ translate("Year Built") }}</b
-                                ><br />
-                                {{ property.year_built }}
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <b>{{ translate("HOA ID") }}</b
-                                ><br />
-                                {{ property.hoa_name }}
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <b>{{ translate("Association Fee") }}</b
-                                ><br />
-                                {{ property.association_fee }}
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <b>{{ translate("CIC") }}</b
-                                ><br />
-                                {{ property.cic }}
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <b>{{ translate("School ID") }}</b
-                                ><br />
-                                {{ property.school_name }}
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <b>{{ translate("Feature Name") }}</b
-                                ><br />
-                                {{ property.name }}
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <b>{{ translate("Fireplace Type") }}</b
-                                ><br />
-                                {{ property.fireplace_type }}
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <b>{{ translate("Kitchen Pantry Type") }}</b
-                                ><br />
-                                {{ property.kitchen_pantry_type }}
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <b>{{ translate("Reach-In Closet") }}</b
-                                ><br />
-                                {{ property.reach_in }}
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <b>{{ translate("Walk-In Closet") }}</b
-                                ><br />
-                                {{ property.walk_in }}
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <b>{{ translate("Laundry Closet") }}</b
-                                ><br />
-                                {{ property.laundry_closet }}
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <b>{{ translate("Closet Location") }}</b
-                                ><br />
-                                {{ property.closet_location }}
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <b>{{ translate("Bedroom Location") }}</b
-                                ><br />
-                                {{ property.bedroom_location }}
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <b>{{ translate("Bathroom Type") }}</b
-                                ><br />
-                                {{ property.bathroom_type }}
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <b>{{ translate("Bathroom Status") }}</b
-                                ><br />
-                                {{ property.bathroom_status }}
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <b>{{ translate("Pool Shape") }}</b
-                                ><br />
-                                {{ property.pool_shape }}
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <b>{{ translate("Water Features") }}</b
-                                ><br />
-                                {{ property.water_features }}
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <b>{{ translate("Pool Status") }}</b
-                                ><br />
-                                {{ property.pool_status }}
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <b>{{ translate("Spa") }}</b
-                                ><br />
-                                {{ property.spa }}
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <b>{{ translate("Fencing Material") }}</b
-                                ><br />
-                                {{ property.fencing_material }}
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <b>{{ translate("Fencing Status") }}</b
-                                ><br />
-                                {{ property.fencing_status }}
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <b>{{ translate("Parking Enclosure") }}</b
-                                ><br />
-                                {{ property.parking_enclosure }}
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <b>{{ translate("Private Bath") }}</b
-                                ><br />
-                                {{ property.private_bath }}
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <b>{{ translate("Outdoor Shower") }}</b
-                                ><br />
-                                {{ property.outdoor_shower }}
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <b>{{ translate("Landscape Maintenance") }}</b
-                                ><br />
-                                {{ property.landscape_maintenance }}
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <b>{{ translate("Foundation Conditions") }}</b
-                                ><br />
-                                {{ property.foundation_conditions }}
-                            </div>
+                        <div class="col-12">
+                            <b>{{ translate("Description") }}</b
+                            ><br />
+                            {{ property.description }}
                         </div>
 
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label>Some photos</label>
-                                <br />
-                                <div class="p-1">
-                                    <div class="card-body">
-                                        <!-- start of the loop -->
+                        <div class="col-12">
+                            <b>{{ translate("Address") }}</b
+                            ><br />
+                            {{ property.address }}<br />
+                            {{ property.city }}, {{ property.state }}
+                            {{ property.zip_code }}
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Price") }}</b
+                            ><br />
+                            ${{ property.price }}
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Bedrooms") }}</b
+                            ><br />
+                            {{ property.bedrooms }}
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Square Feet") }}</b
+                            ><br />
+                            {{ property.square_feet }}
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Lot Size") }}</b
+                            ><br />
+                            {{ property.lot_size }}
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Property Type") }}</b
+                            ><br />
+                            {{ property.property_type }}
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Listing Type") }}</b
+                            ><br />
+                            {{ property.listing_type }}
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Latitude") }}</b
+                            ><br />
+                            {{ property.latitude }}
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Longitude") }}</b
+                            ><br />
+                            {{ property.longitude }}
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Year Built") }}</b
+                            ><br />
+                            {{ property.year_built }}
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("HOA") }}</b
+                            ><br />
+                            {{ property.hoa_name }}
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Association Fee") }}</b
+                            ><br />
+                            {{ property.association_fee }}
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("CIC") }}</b
+                            ><br />
+                            {{ property.cic ? "Yes" : "NO" }}
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("School") }}</b
+                            ><br />
+                            {{ property.school_name }}
+                        </div>
+
+                        <hr />
+                        <h3 class="c-theme-text-color">
+                            Property Features details
+                        </h3>
+
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Feature Name") }}</b
+                            ><br />
+                            {{ property.name }}
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Fireplace Type") }}</b
+                            ><br />
+                            {{ property.fireplace_type }}
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Kitchen Pantry Type") }}</b
+                            ><br />
+                            {{ property.kitchen_pantry_type }}
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Reach-In Closet") }}</b
+                            ><br />
+                            {{ property.reach_in }}
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Walk-In Closet") }}</b
+                            ><br />
+                            {{ property.walk_in }}
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Laundry Closet") }}</b
+                            ><br />
+                            {{ property.laundry_closet }}
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Closet Location") }}</b
+                            ><br />
+                            {{ property.closet_location }}
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Bedroom Location") }}</b
+                            ><br />
+                            {{ property.bedroom_location }}
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Bathroom Type") }}</b
+                            ><br />
+                            {{ property.bathroom_type }}
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Bathroom Status") }}</b
+                            ><br />
+                            {{ property.bathroom_status }}
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Pool Shape") }}</b
+                            ><br />
+                            {{ property.pool_shape }}
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Water Features") }}</b
+                            ><br />
+                            {{ property.water_features }}
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Pool Status") }}</b
+                            ><br />
+                            {{ property.pool_status }}
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Spa") }}</b
+                            ><br />
+                            {{ property.spa }}
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Fencing Material") }}</b
+                            ><br />
+                            {{ property.fencing_material }}
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Fencing Status") }}</b
+                            ><br />
+                            {{ property.fencing_status }}
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Parking Enclosure") }}</b
+                            ><br />
+                            {{ property.parking_enclosure }}
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Private Bath") }}</b
+                            ><br />
+                            {{ property.private_bath }}
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Outdoor Shower") }}</b
+                            ><br />
+                            {{ property.outdoor_shower }}
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Landscape Maintenance") }}</b
+                            ><br />
+                            {{ property.landscape_maintenance }}
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Foundation Conditions") }}</b
+                            ><br />
+                            {{ property.foundation_conditions }}
+                        </div>
+                        <hr />
+                        <div class="col-12 col-md-6">
+                            <h3 class="c-theme-text-color">
+                                {{ translate("Main image") }}
+                            </h3    >
+                            <image-zooming-component
+                                :file="property.main_image"
+                                :width="250"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mt-3">
+                        <h3 class="c-theme-text-color">
+                            Property Photo Gallery
+                        </h3>
+                        
+                        <div>
+                            <div class="card-body">
+                                <!-- start of the loop -->
+                                <div class="row">
+                                    <div
+                                        class="col-sm-2 col-lg-2 mb-4"
+                                        v-for="file in property.files"
+                                        :key="file.id"
+                                    >
+                                        <!-- images -->
+
                                         <div
-                                            class="row"
-                                            data-masonry='{"percentPosition": true }'
+                                            class=""
+                                            v-if="file.type.match('image')"
                                         >
-                                            <div
-                                                class="col-sm-6 col-lg-4 mb-4"
-                                                v-for="file in property.files"
+                                            <div class="text-center">
+                                                <DeleteModal
+                                                    :deleteId="file.id"
+                                                    @deleteThis="deleteThis"
+                                                />
+                                            </div>
+
+                                            <image-zooming-component
+                                                :file="file.file_name"
+                                                @loaded="fileLoaded"
+                                            />
+                                        </div>
+
+                                        <!-- videos -->
+
+                                        <div
+                                            v-if="file.type.match('video')"
+                                            class="card"
+                                        >
+                                            <video
+                                                style="border-radius: 5px"
+                                                class="video-js img-fluid img-thumbnail"
+                                                controls
+                                                preload="auto"
+                                                data-setup="{}"
+                                                @load="fileLoaded"
                                             >
-                                                <!-- images -->
+                                                <source
+                                                    :src="file.file_name"
+                                                    :type="file.type"
+                                                />
+                                            </video>
+                                        </div>
 
-                                                <div
-                                                    class="card"
-                                                    v-if="
-                                                        file.type.match('image')
-                                                    "
+                                        <!-- files -->
+                                        <div v-else class="card">
+                                            <div
+                                                v-if="file.extension == 'pdf'"
+                                                class="card card-body p-2 text-center"
+                                            >
+                                                <img
+                                                    src="/images/pdf.svg"
+                                                    height="50"
+                                                    alt="file logo"
+                                                />
+                                                <a
+                                                    download
+                                                    :href="file.file_name"
                                                 >
-                                                    <image-zooming-component
-                                                        :file="file.file_name"
-                                                        @loaded="fileLoaded"
-                                                    />
-                                                </div>
-
-                                                <!-- videos -->
-
-                                                <div
-                                                    v-if="
-                                                        file.type.match('video')
-                                                    "
-                                                    class="card"
+                                                    {{
+                                                        file.file_original_name
+                                                    }}
+                                                </a>
+                                            </div>
+                                            <div
+                                                v-if="
+                                                    file.extension == 'docx' ||
+                                                    file.extension == 'doc'
+                                                "
+                                                class="card card-body p-2 text-center"
+                                            >
+                                                <img
+                                                    src="/images/word.svg"
+                                                    height="50"
+                                                    alt="file logo"
+                                                />
+                                                <a
+                                                    download
+                                                    :href="file.file_name"
                                                 >
-                                                    <video
-                                                        style="
-                                                            border-radius: 5px;
-                                                        "
-                                                        class="video-js img-fluid img-thumbnail"
-                                                        controls
-                                                        preload="auto"
-                                                        data-setup="{}"
-                                                        @load="fileLoaded"
-                                                    >
-                                                        <source
-                                                            :src="
-                                                                file.file_name
-                                                            "
-                                                            :type="file.type"
-                                                        />
-                                                    </video>
-                                                </div>
-
-                                                <!-- files -->
-                                                <div v-else class="card">
-                                                    <div
-                                                        v-if="
-                                                            file.extension ==
-                                                            'pdf'
-                                                        "
-                                                        class="card card-body p-2 text-center"
-                                                    >
-                                                        <img
-                                                            src="/images/pdf.svg"
-                                                            height="50"
-                                                            alt="file logo"
-                                                        />
-                                                        <a
-                                                            download
-                                                            :href="
-                                                                file.file_name
-                                                            "
-                                                        >
-                                                            {{
-                                                                file.file_original_name
-                                                            }}
-                                                        </a>
-                                                    </div>
-                                                    <div
-                                                        v-if="
-                                                            file.extension ==
-                                                                'docx' ||
-                                                            file.extension ==
-                                                                'doc'
-                                                        "
-                                                        class="card card-body p-2 text-center"
-                                                    >
-                                                        <img
-                                                            src="/images/word.svg"
-                                                            height="50"
-                                                            alt="file logo"
-                                                        />
-                                                        <a
-                                                            download
-                                                            :href="
-                                                                file.file_name
-                                                            "
-                                                        >
-                                                            {{
-                                                                file.file_original_name
-                                                            }}
-                                                        </a>
-                                                    </div>
-                                                    <div
-                                                        v-if="
-                                                            file.extension ==
-                                                                'pptx' ||
-                                                            file.extension ==
-                                                                'ppt'
-                                                        "
-                                                        class="card card-body p-2 text-center"
-                                                    >
-                                                        <img
-                                                            src="/images/powerpoint.svg"
-                                                            height="50"
-                                                            alt="file logo"
-                                                        />
-                                                        <a
-                                                            download
-                                                            :href="
-                                                                file.file_name
-                                                            "
-                                                        >
-                                                            {{
-                                                                file.file_original_name
-                                                            }}
-                                                        </a>
-                                                    </div>
-                                                    <div
-                                                        v-if="
-                                                            file.extension ==
-                                                            'excel'
-                                                        "
-                                                        class="card card-body p-2 text-center"
-                                                    >
-                                                        <img
-                                                            src="images/excel.svg"
-                                                            height="50"
-                                                            alt="file logo"
-                                                        />
-                                                        <a
-                                                            download
-                                                            :href="
-                                                                file.file_name
-                                                            "
-                                                        >
-                                                            {{
-                                                                file.file_original_name
-                                                            }}
-                                                        </a>
-                                                    </div>
-                                                </div>
+                                                    {{
+                                                        file.file_original_name
+                                                    }}
+                                                </a>
+                                            </div>
+                                            <div
+                                                v-if="
+                                                    file.extension == 'pptx' ||
+                                                    file.extension == 'ppt'
+                                                "
+                                                class="card card-body p-2 text-center"
+                                            >
+                                                <img
+                                                    src="/images/powerpoint.svg"
+                                                    height="50"
+                                                    alt="file logo"
+                                                />
+                                                <a
+                                                    download
+                                                    :href="file.file_name"
+                                                >
+                                                    {{
+                                                        file.file_original_name
+                                                    }}
+                                                </a>
+                                            </div>
+                                            <div
+                                                v-if="file.extension == 'excel'"
+                                                class="card card-body p-2 text-center"
+                                            >
+                                                <img
+                                                    src="images/excel.svg"
+                                                    height="50"
+                                                    alt="file logo"
+                                                />
+                                                <a
+                                                    download
+                                                    :href="file.file_name"
+                                                >
+                                                    {{
+                                                        file.file_original_name
+                                                    }}
+                                                </a>
                                             </div>
                                         </div>
-                                        <!-- end of the loop -->
                                     </div>
                                 </div>
+                                <!-- end of the loop -->
                             </div>
                         </div>
                     </div>
@@ -657,27 +672,23 @@
 
 <script>
 import Master from "@components/backend/layout/Master.vue";
-import Masonry from "masonry-layout";
+
 import Datepicker from "@vuepic/vue-datepicker";
 export default {
     components: {
         Master,
-        Masonry,
+
         Datepicker,
     },
     props: ["property_id"],
     created() {
         this.getPropertyDetails();
     },
-    mounted() {
-        this.$nextTick(() => {
-            this.initMasonry();
-        });
-    },
+
     data() {
         return {
             property: [],
-            masonryInstance: null,
+
             form: {
                 property_id: this.property_id,
                 status: "",
@@ -697,47 +708,12 @@ export default {
                 .then((response) => {
                     this.property = response.data;
                     this.form.status = response.data.is_open_house;
-                    this.$nextTick(() => {
-                        this.initMasonry(); // Re-initialize Masonry after data is set
-                    });
                 })
                 .catch((error) => {
                     toastr.error(error.response.data.message);
                 });
         },
-        initMasonry() {
-            const grid = this.$el.querySelector(".row[data-masonry]");
-            const images = grid.querySelectorAll("img");
-            const videos = grid.querySelectorAll("video");
 
-            let mediaLoaded = 0;
-            const totalMedia = images.length + videos.length;
-
-            const onMediaLoad = () => {
-                mediaLoaded++;
-                if (mediaLoaded === totalMedia) {
-                    // All images and videos are loaded, now initialize Masonry
-                    this.masonryInstance = new Masonry(grid, {
-                        itemSelector: ".col-sm-6", // Adjust this based on your item structure
-                        columnWidth: ".col-sm-6", // Adjust this based on your item structure
-                        percentPosition: true,
-                    });
-                }
-            };
-
-            // Add load event listeners to all images and videos
-            images.forEach((img) => {
-                if (img.complete) {
-                    onMediaLoad();
-                } else {
-                    img.addEventListener("load", onMediaLoad);
-                }
-            });
-
-            videos.forEach((video) => {
-                video.addEventListener("loadeddata", onMediaLoad);
-            });
-        },
         initOpenHouse(status) {
             if (status == true) {
                 this.$refs.openOpenHouseModal.click();
@@ -817,6 +793,25 @@ export default {
                     toastr.error(error.response.data.message);
                 });
         },
+
+        deleteThis(id) {
+            axios
+                .post(
+                    "/api/property/photo/gallery/delete/" +
+                        id +
+                        "/" +
+                        this.property_id
+                )
+                .then(() => {
+                    toastr.success(
+                        this.translate("Photo deleted successfully.")
+                    );
+                    this.getPropertyDetails();
+                })
+                .catch((error) => {
+                    toastr.error(error.response.data.message);
+                });
+        },
     },
 };
 </script>
@@ -828,5 +823,9 @@ export default {
 .c-mouse-over {
     cursor: pointer;
     font-weight: bold;
+}
+.c-theme-text-color {
+    color: #174696 !important;
+    text-decoration: none !important;
 }
 </style>

@@ -33,12 +33,12 @@
                                             <div
                                                 class="card-icon rounded-circle d-flex align-items-center justify-content-center"
                                             >
-                                                <i
-                                                    class="bi bi-people-fill"
-                                                ></i>
+                                               
                                             </div>
                                             <div class="ps-3">
-                                                <h6>5</h6>
+                                                <h4> <i
+                                                    class="bi bi-house-fill"
+                                                ></i> {{ peroperties_count }}</h4>
                                             </div>
                                         </div>
                                     </div>
@@ -55,36 +55,11 @@
                                             <div
                                                 class="card-icon rounded-circle d-flex align-items-center justify-content-center"
                                             >
-                                                <i
-                                                    class="bi bi-people-fill"
-                                                ></i>
+                                              
                                             </div>
                                             <div class="ps-3">
-                                                <h6>6</h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-xxl-4 col-md-4">
-                            <a class="nav-link collapsed" href="/homes">
-                                <div class="card info-card sales-card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">
-                                            Quick Move In
-                                        </h5>
-
-                                        <div class="d-flex align-items-center">
-                                            <div
-                                                class="card-icon rounded-circle d-flex align-items-center justify-content-center"
-                                            >
-                                                <i
-                                                    class="bi bi-people-fill"
-                                                ></i>
-                                            </div>
-                                            <div class="ps-3">
-                                                <h6>8</h6>
+                                                
+                                                <h4><i class="bi bi-people-fill"></i> {{ communities_count }}</h4>
                                             </div>
                                         </div>
                                     </div>
@@ -95,46 +70,31 @@
                             <a class="nav-link collapsed" href="/agents">
                                 <div class="card info-card sales-card">
                                     <div class="card-body">
-                                        <h5 class="card-title">Agents</h5>
+                                        <h5 class="card-title">
+                                            Agents
+                                        </h5>
 
                                         <div class="d-flex align-items-center">
                                             <div
                                                 class="card-icon rounded-circle d-flex align-items-center justify-content-center"
                                             >
-                                                <i
-                                                    class="bi bi-people-fill"
-                                                ></i>
+                                             
+
                                             </div>
                                             <div class="ps-3">
-                                                <h6>8</h6>
+                                                 
+                                                
+
+
+                                                <h4><i class="bi bi-chat-dots-fill"></i> {{ agents_count }}</h4>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </a>
                         </div>
-                        <div class="col-xxl-4 col-md-4">
-                            <a class="nav-link collapsed" href="/amenities">
-                                <div class="card info-card sales-card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Amenities</h5>
-
-                                        <div class="d-flex align-items-center">
-                                            <div
-                                                class="card-icon rounded-circle d-flex align-items-center justify-content-center"
-                                            >
-                                                <i
-                                                    class="bi bi-people-fill"
-                                                ></i>
-                                            </div>
-                                            <div class="ps-3">
-                                                <h6>8</h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
+                        
+                         
                     </div>
                 </div>
                 <!-- End Left side columns -->
@@ -429,7 +389,7 @@ export default {
         Multiselect,
     },
     created() {
-        // this.getDataCount();
+        this.getDataCount();
         if (logged_in_user.role == "agent") {
             this.agentHistory();
         }
@@ -439,10 +399,10 @@ export default {
     },
     data() {
         return {
-            offices: "",
-            tour_countries: "",
-            tours: "",
-            custom_pages: "",
+            peroperties_count: "",
+            communities_count: "",
+            agents_count: "",
+          
             user_role: "test",
             logged_in_user: logged_in_user,
             agent_history: "",
@@ -473,10 +433,10 @@ export default {
             axios
                 .get("/api/dashboard-data-count")
                 .then((response) => {
-                    this.offices = response.data.offices;
-                    this.tour_countries = response.data.tour_countries;
-                    this.tours = response.data.tours;
-                    this.custom_pages = response.data.custom_pages;
+                    this.peroperties_count = response.data.peroperties_count;
+                    this.communities_count = response.data.communities_count;
+                    this.agents_count = response.data.agents_count;
+                    
                 })
                 .catch((error) => {
                     toastr.error(error.response.data.message);
@@ -505,8 +465,4 @@ export default {
     },
 };
 </script>
-<style>
-.accordion-button {
-    color: blue !important;
-}
-</style>
+ 

@@ -22,7 +22,7 @@
         <section class="section">
             <div class="card c-card-border">
                 <div class="card-body pt-4">
-                    <div class="accordion" id="customerVisitsAccordion">
+                    <div class="accordion" id="customerVisitsAccordion" v-if="homeVisits && homeVisits.length">
                         <div
                             v-for="(customer, customerIndex) in homeVisits"
                             :key="customer.customer_id"
@@ -139,6 +139,9 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div v-else>
+                        Currently, there are no recorded customer visits for the homes.
                     </div>
                 </div>
             </div>

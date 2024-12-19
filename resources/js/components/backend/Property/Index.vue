@@ -106,7 +106,7 @@
                                         <a
                                             type="button"
                                             class="c-linked c-mouse-over c-theme-text-color"
-                                            title="Edit"
+                                            title="Details"
                                             :href="
                                                 '/property/details/' +
                                                 property.property_id
@@ -241,8 +241,9 @@ export default {
                         this.translate("Property deleted successfully.")
                     );
                     setTimeout(() => {
-                        window.location.href = "/properties";
-                    }, 2000);
+                        this.search(null);
+                        // window.location.href = "/properties";
+                    }, 1000);
                 })
                 .catch((error) => {
                     toastr.error(error.response.data.message);
@@ -260,4 +261,8 @@ export default {
     cursor: pointer;
     font-weight: bold;
 }
+.c-searchbox-radius {
+    border-radius: 0 !important;
+}
+
 </style>

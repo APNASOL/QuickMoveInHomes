@@ -298,7 +298,7 @@
             </div>
         </div>
 
-        <div class="c-tour-details container-fluid mt-1">
+        <div class="c-section-main-details container-fluid mt-1">
             <div class="row">
                 <div class="col-md-6">
                     <div class="row mx-4">

@@ -50,21 +50,9 @@ app.component("ImageDropper", ImageDropper);
 import index from "@components/Index.vue";
 app.component("index-component", index);
 
+ 
 
-// import external_tour_details from "@components/TourDetails.vue";
-// app.component("external-tour-details-component", external_tour_details);
-
-// Booking from external website
-import TourPaymentDetails from "@components/TourPaymentDetails.vue";
-app.component("tour-payment-details-component", TourPaymentDetails);
-
-import booking_using_account from "@components/BookingAccountOptions.vue";
-app.component("booking-using-account-component", booking_using_account);
-
-import booking_payment_options from "@components/BookingPaymentOptions.vue";
-app.component("booking-payment-options-component", booking_payment_options);
-
-
+  
 import register from "@components/Register.vue";
 app.component("register-component", register);
 
@@ -83,24 +71,9 @@ app.component("profile-settings-component", profileSettings);
 // backend components
 import dashboard from "@components/backend/Dashboard.vue";
 app.component("dashboard-component", dashboard);
+ 
 
-import tour from "@components/backend/tour/Index.vue";
-app.component("tour-index-component", tour);  
-import create_tour from "@components/backend/tour/CreateTour.vue";
-app.component("create-tour-component", create_tour);
-import details_tour from "@components/backend/tour/Details.vue";
-app.component("tour-details-component", details_tour);
-
-// Booked tours
-import booked_tours from "@components/backend/tour/BookedTours.vue";
-app.component("booked-tours-component", booked_tours);
-
-import review_add from "@components/backend/tour/TourReviewAdd.vue";
-app.component("add-review-on-tour-component", review_add);
-import review_see from "@components/backend/tour/TourReviewDetails.vue";
-app.component("see-review-on-tour-component", review_see);
-import user_review_for_super_admin from "@components/backend/tour/AllReviews.vue";
-app.component("user-reviews-for-superadmin-component", user_review_for_super_admin);
+ 
 
 // our promisese
 import our_promises from "@components/backend/OurPromises/Index.vue";
@@ -108,20 +81,7 @@ app.component("our-promises-index-component", our_promises);
 import create_our_promises from "@components/backend/OurPromises/Create.vue";
 app.component("our-promises-create-component", create_our_promises);
 
-
-// tour countries
-import tour_countries from "@components/backend/TourCountries/Index.vue";
-app.component("tour-countries", tour_countries);
-import tour_countries_details_create from "@components/backend/TourCountries/Create.vue";
-app.component("tour-countries-details-create", tour_countries_details_create);
-// custom pages 
-import custom_pages from "@components/backend/CustomPages/Index.vue";
-app.component("custom-pages-component", custom_pages);
-import create_custom_page_component from "@components/backend/CustomPages/Create.vue";
-app.component("create-custom-page-component", create_custom_page_component);
-import custom_page_details from "@components/backend/CustomPages/Details.vue";
-app.component("custom-page-details-component", custom_page_details);
-// external website custom pages
+ 
  
 import searchedHomes from  "@components/SearchingFilter.vue";
 app.component("search-homes", searchedHomes);
@@ -143,23 +103,7 @@ app.component("front-all-events-component", allEvents);
 import detatiledCommunity from "@components/CommunityDetails.vue";
 app.component("front-community-details-component", detatiledCommunity);
 
-
-// itinerary components
-import create_itinerary from "@components/backend/tour/CreateItinerary.vue";
-app.component("create-itinerary-component", create_itinerary);
-
-
-// activities components
-import create_activity from "@components/backend/tour/CreateActivity.vue";
-app.component("create-activity-component", create_activity);
-import details_activity from "@components/backend/tour/DetailsActivity.vue";
-app.component("details-activity-component", details_activity);
-// accommodation components
-import create_accomodation from "@components/backend/tour/CreateAccomodation.vue";
-app.component("create-accommodation-component", create_accomodation);
-import details_accomodation from "@components/backend/tour/DetailsAccomodation.vue";
-app.component("details-accommodation-component", details_accomodation);
-
+ 
 // Languages components
 import languages from "@components/backend/Language/Index.vue";
 app.component("language-component", languages);
@@ -196,16 +140,9 @@ import blog_detail from "@components/BlogDetails.vue";
 app.component("blog-details-component", blog_detail);
 import detailedIncentive from "@components/IncentiveDetails.vue";
 app.component("detailed-incentive-component", detailedIncentive);
-
-// Offices
-import office_index from "@components/backend/Offices/Index.vue";
-app.component("offices-index-component", office_index);
-import office_create from "@components/backend/Offices/Create.vue";
-app.component("create-office-component", office_create);
+ 
 
 // call-now-component
-import call_now from "@components/backend/CallNow/Index.vue";
-app.component("call-now-component", call_now);
  
 // stories
 import story_index from "@components/backend/Stories/Index.vue";
@@ -219,14 +156,9 @@ app.component("admin-side-user-contacted-us-component", be_contact_us);
 
 import be_contact_us_details from "@components/backend/Contact/Details.vue";
 app.component("admin-side-user-contacted-us-details-component", be_contact_us_details);
-
-import recommendation from "@components/Recommendation.vue";
-app.component("recommendation-component", recommendation);
  
-
-
-import tour_country_tours_list from "@components/CountryToursDetails.vue";
-app.component("tour-countries-tours-listing", tour_country_tours_list);
+ 
+ 
 
 // Quick Move Homes admin panel 
 // HOA's
@@ -287,6 +219,8 @@ import homes_create from "@components/backend/Homes/Create.vue";
 app.component("homes-create-component", homes_create);
 import homes_details from "@components/backend/Homes/Details.vue";
 app.component("home-details-component", homes_details);
+import uploads from "@components/backend/Property/Upload.vue";
+app.component("upload-properties-component", uploads);
 // Homes
 import property_index from "@components/backend/Property/Index.vue";
 app.component("property-index-component", property_index);

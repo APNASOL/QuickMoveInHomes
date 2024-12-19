@@ -89,9 +89,7 @@
                                     <th scope="col">
                                         {{ translate("Image") }}
                                     </th>
-                                    <th scope="col">
-                                        {{ translate("Action") }}
-                                    </th>
+                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -106,7 +104,7 @@
                                         <a
                                             type="button"
                                             class="c-linked c-mouse-over c-theme-text-color"
-                                            title="details"
+                                            title="Details"
                                             :href="
                                                 '/property/details/' +
                                                 home.property_record.property_id
@@ -125,11 +123,7 @@
                                         />
                                     </td>
 
-                                    <td>
-                                        <div class="btn-group">
-                                             Status Change
-                                        </div>
-                                    </td>
+                                    
                                 </tr>
                             </tbody>
                         </table>

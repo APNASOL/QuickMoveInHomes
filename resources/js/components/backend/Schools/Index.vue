@@ -103,18 +103,17 @@
                                         {{ index + 1 }}
                                     </th>
                                     <td>
-                                        <!-- <a
-                                                        type="button"
-                                                        class="c-linked c-mouse-over c-theme-text-color"
-                                                        title="Edit"
-                                                        :href="'/school-details/' + school.id"
-                                                    > -->
                                         {{ school.name }}
-                                        <!-- </a> -->
+                                        <br />
+                                        <span
+                                            class="c-linked c-mouse-over"
+                                            @click="copyToClipboard(school.id)"
+                                            style="cursor: pointer; color: blue"
+                                            >{{ school.id }}</span
+                                        >
                                     </td>
                                     <td>{{ school.type }}</td>
                                     <td>{{ school.directions_and_details }}</td>
-                                     
 
                                     <td>
                                         <div class="btn-group">
@@ -123,8 +122,7 @@
                                                 class="btn btn-sm fs-6"
                                                 title="Edit"
                                                 :href="
-                                                    '/school/edit/' +
-                                                    school.id
+                                                    '/school/edit/' + school.id
                                                 "
                                                 ><i
                                                     class="bi bi-pencil c-theme-text-color"
@@ -181,6 +179,16 @@ export default {
         };
     },
     methods: {
+        copyToClipboard(id) {
+            navigator.clipboard
+                .writeText(id)
+                .then(() => {
+                    toastr.success(this.translate("Copied to clipboard."));
+                })
+                .catch((err) => {
+                    console.error("Failed to copy text: ", err);
+                });
+        },
         makePagination(res) {
             let pagination = {
                 links: res.links,
@@ -208,9 +216,7 @@ export default {
                         this.schools = response.data.data;
                         this.firstTimeLoadCheck = 0;
                     } else {
-                        this.schools = this.schools.concat(
-                            response.data.data
-                        );
+                        this.schools = this.schools.concat(response.data.data);
                     }
                     this.formStatus = 1;
                     this.makePagination(response.data);

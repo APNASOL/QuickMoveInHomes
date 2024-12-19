@@ -20,7 +20,7 @@
         </div>
         
 
-        <div class="c-tour-details container">
+        <div class="c-section-main-details container">
             <div>
                 <div class="row">
                     <div

@@ -133,8 +133,8 @@
                                 <h5
                                     class="mt-3 c-theme-color"
                                     v-if="
-                                        (logged_in_user &&
-                                        !logged_in_user.agreement)
+                                        logged_in_user &&
+                                        !logged_in_user.agreement
                                     "
                                 >
                                     To access all information, please sign a
@@ -340,8 +340,8 @@
                     <div
                         class="middle-section row mt-2"
                         v-if="
-                            (logged_in_user &&
-                            logged_in_user.role === 'customer') &&
+                            logged_in_user &&
+                            logged_in_user.role === 'customer' &&
                             logged_in_user.agreement &&
                             user_home_visiting_history_count < 5
                         "
@@ -356,8 +356,8 @@
                         class="accordion mt-2"
                         id="accordionExample"
                         v-if="
-                            (logged_in_user &&
-                            logged_in_user.role === 'customer') &&
+                            logged_in_user &&
+                            logged_in_user.role === 'customer' &&
                             logged_in_user.agreement &&
                             user_home_visiting_history_count < 5
                         "
@@ -630,8 +630,8 @@
                     <h1>RELATED COMMUNITY MOVE IN HOMES</h1>
                 </div>
 
-                <div class=" pt-3">
-                    <div class=" row mx-4">
+                <div class="pt-3">
+                    <div class="row mx-4">
                         <div
                             v-for="home in community_homes"
                             :key="home.id"
@@ -660,38 +660,49 @@
                                     </div>
 
                                     <div class="card-body text-start">
-    <div class="row gy-2">
-        <!-- AREA -->
-        <div class="col-12 col-md-6">
-            <p class="mb-1">
-                <span class="text-muted">AREA (SQFT)</span><br />
-                <b>{{ home.square_feet }}</b>
-            </p>
-        </div>
-        <!-- BEDROOMS -->
-        <div class="col-12 col-md-6">
-            <p class="mb-1">
-                <span class="text-muted">Bedrooms</span><br />
-                <b>{{ home.bedrooms }}</b>
-            </p>
-        </div>
-        <!-- PROPERTY TYPE -->
-        <div class="col-12 col-md-6">
-            <p class="mb-1">
-                <span class="text-muted">Property Type</span><br />
-                <b>{{ home.property_type }}</b>
-            </p>
-        </div>
-        <!-- PRICE -->
-        <div class="col-12 col-md-6">
-            <p class="mb-1">
-                <span class="text-muted">Price</span><br />
-                <b>${{ home.price }}</b>
-            </p>
-        </div>
-    </div>
-</div>
-
+                                        <div class="row gy-2">
+                                            <!-- AREA -->
+                                            <div class="col-12 col-md-12">
+                                                <p class="mb-1">
+                                                    <span class="text-muted"
+                                                        >AREA (SQFT)</span
+                                                    ><br />
+                                                    <b
+                                                        >{{ home.square_feet }}
+                                                    </b>
+                                                </p>
+                                            </div>
+                                            <!-- BEDROOMS -->
+                                            <div class="col-12 col-md-6">
+                                                <p class="mb-1">
+                                                    <span class="text-muted"
+                                                        >Bedrooms</span
+                                                    ><br />
+                                                    <b>{{ home.bedrooms }}</b>
+                                                </p>
+                                            </div>
+                                            <!-- PROPERTY TYPE -->
+                                            <div class="col-12 col-md-6">
+                                                <p class="mb-1">
+                                                    <span class="text-muted"
+                                                        >Property Type</span
+                                                    ><br />
+                                                    <b>{{
+                                                        home.property_type
+                                                    }}</b>
+                                                </p>
+                                            </div>
+                                            <!-- PRICE -->
+                                            <div class="col-12 col-md-6">
+                                                <p class="mb-1">
+                                                    <span class="text-muted"
+                                                        >Price</span
+                                                    ><br />
+                                                    <b> ${{ home.price }}</b>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </a>
                         </div>
@@ -707,7 +718,7 @@ import Master from "@components/layout/Master.vue";
 import ProceedComponent from "@components/ProceedComponent.vue";
 import Multiselect from "@vueform/multiselect";
 import { addMonths, startOfMonth, endOfMonth } from "date-fns";
-import MoreTripsToDiscover from "@components/MoreTripsToDiscover.vue";
+
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 
 import "vue3-carousel/dist/carousel.css";
@@ -720,15 +731,13 @@ export default {
         Pagination,
         Navigation,
         Multiselect,
-        MoreTripsToDiscover,
     },
     props: ["home_id"],
 
     created() {
         this.fetchHomeDetails();
         this.backgroundImage = this.Home.property_main_image;
-        if(this.user_home_visiting_history_count > 2)
-        {
+        if (this.user_home_visiting_history_count > 2) {
             window.location.href = "/help";
         }
     },

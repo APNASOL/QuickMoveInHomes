@@ -81,7 +81,8 @@
                                 <tr>
                                     <th scope="col" class="text-center">#</th>
                                     <th scope="col">
-                                        {{ translate("Name") }}
+                                        {{ translate("Name") }} <br />
+                                        {{ translate("Id") }}
                                     </th>
                                     <th scope="col">
                                         {{ translate("Location") }}
@@ -107,14 +108,26 @@
                                         <a
                                             type="button"
                                             class="c-linked c-mouse-over c-theme-text-color"
-                                            title="Edit"
+                                            title="Detail"
                                             :href="
                                                 '/community/details/' +
                                                 community.id
                                             "
                                         >
-                                            {{ community.name }}
+                                            {{ community.name }} <br />
                                         </a>
+                                        <br>
+                                        <span
+                                            class="c-linked "
+                                            @click="
+                                                copyToClipboard(community.id)
+                                            " title="Copy"
+                                            style="
+                                                cursor: pointer;
+                                                color: blue; 
+                                            "
+                                            >{{ community.id }}</span
+                                        >
                                     </td>
                                     <td>{{ community.location }}</td>
                                     <td>
@@ -192,6 +205,16 @@ export default {
         };
     },
     methods: {
+        copyToClipboard(id) {
+            navigator.clipboard
+                .writeText(id)
+                .then(() => {
+                    toastr.success(this.translate("Copied to clipboard."));
+                })
+                .catch((err) => {
+                    console.error("Failed to copy text: ", err);
+                });
+        },
         makePagination(res) {
             let pagination = {
                 links: res.links,
@@ -260,5 +283,6 @@ export default {
 .c-mouse-over {
     cursor: pointer;
     font-weight: bold;
+    font-size: 18px;
 }
 </style>

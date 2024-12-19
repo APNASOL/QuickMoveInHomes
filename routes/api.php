@@ -4,20 +4,6 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\LanguageController;
-use App\Http\Controllers\OfficeController;
-use App\Http\Controllers\SettingController;
-use App\Http\Controllers\TourController;
-use App\Http\Controllers\TourCountriesController;
-use App\Http\Controllers\BookingController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\StoryController;
-use App\Http\Controllers\OurPromisesController;
-use App\Http\Controllers\CustomPagesController;
-use App\Http\Controllers\CallMeNowController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-
-// Homes Quick Move Controllers
 use App\Http\Controllers\CommunitiesController;
 use App\Http\Controllers\HomesController;
 use App\Http\Controllers\IncentivesController;
@@ -31,6 +17,14 @@ use App\Http\Controllers\AmenityController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\SettingController; 
+use App\Http\Controllers\UserController; 
+use App\Http\Controllers\OurPromisesController; 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
+ 
+
 
 
 /*
@@ -61,7 +55,7 @@ Route::get('/incentives-homes', [IndexController::class, 'incentives_properties'
 // Route::get('/incentive-details-fetch', [IndexController::class, 'incentive-details-fetch'])->name('incentive-details-fetch');
 Route::get('/incentive-details-fetch/{id}', [IndexController::class, 'selected_incentives_properties'])->name('incentive-details-fetch');
 Route::get('/overall-blogs', [BlogPostsController::class, 'overall_blogs'])->name('overall-blogs');
-Route::get('/more-tours-to-discover/{tour_id}', [IndexController::class, 'more_tours_to_discover'])->name('more-tours-to-discover');
+ 
 Route::get('/all-events', [IndexController::class, 'all_events'])->name('all-events');
 
 Route::get('/communities', [IndexController::class, 'communities_for_navbar'])->name('communities');
@@ -72,13 +66,10 @@ Route::get('/blog-details-fetch/{id}', [BlogPostsController::class, 'blog_detail
 Route::post('/missing-translations-store', [LanguageController::class, 'missing_translations_store'])->name('missing-translations-store');
 Route::get('/front-end-fetch-carousel', [SettingController::class, 'carousel_fetch'])->name('front-end-fetch-carousel');
 Route::get('/get-promises', [OurPromisesController::class, 'get_promises'])->name('get-promises');
-// Route::get('/front-end-tour-other-image/{tour_id}', [HomeController::class, 'tour_other_images_fetch'])->name('front-end-tour-other-image');
-Route::get('/front-end-tour-details/{tour_id}', [HomeController::class, 'tour_details_fetch'])->name('front-end-tour-details');
-Route::get('/get-tour-dates/{tour_id}', [HomeController::class, 'tour_dates_fetch'])->name('get-tour-dates');
-Route::post('/passenger-quantity-checking', [HomeController::class, 'passenger_quantity_base_tour_details_fetch'])->name('passenger-quantity-checking');
-Route::get('/front-end-tour-payment-dates/{dates_id}', [HomeController::class, 'tour_payment_dates_fetch'])->name('front-end-tour-payment-dates');
-// Route::get('/front-tours-flash_sale', [HomeController::class, 'flash_sales'])->name('front-tours-flash_sale');
-Route::get('/home/owners/pluck/', [HOAController::class, 'hoas_pluck'])->name('homw.owners.pluck');
+ 
+ 
+ 
+  Route::get('/home/owners/pluck/', [HOAController::class, 'hoas_pluck'])->name('homw.owners.pluck');
 Route::get('/schools/pluck', [SchoolController::class, 'schools_pluck'])->name('schools.pluck');
 Route::get('/communities/pluck', [CommunitiesController::class, 'communities_pluck'])->name('communities.pluck');
 
@@ -147,6 +138,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
    Route::get('/get/community/{id}', [CommunitiesController::class, 'getCommunity'])->name('community.edit');
    Route::post('/community/delete/{id}', [CommunitiesController::class, 'delete'])->name('community.delete');
    Route::get('/get/community/details/{id}', [CommunitiesController::class, 'getCommunityDetails'])->name('get.community.details');
+   Route::post('/community/photo/gallery/delete/{id}/{community_id}', [CommunitiesController::class, 'community_photo_delete'])->name('community.photo.gallery.delete');
+
+
+   Route::post('/properties/upload', [PropertyController::class, 'uploadProperties']);
 
    // homes
    Route::post('/fetch/homes', [PropertyController::class, 'fetchHomes'])->name('fetch.homes');
@@ -167,6 +162,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
    Route::post('/property/open/house/status/store', [PropertyController::class, 'store_property_as_open_house'])->name('property.open.house.status.store');
    
    Route::get('/get/property/open/house/{id}', [PropertyController::class, 'getPropertyOpenHouse'])->name('get.property.open.house');
+    
+   Route::post('/property/photo/gallery/delete/{id}/{property_id}', [PropertyController::class, 'property_photo_delete'])->name('property.photo.gallery.delete');
+
    Route::get('/remove/property/open/house/{id}', [PropertyController::class, 'removePropertyOpenHouse'])->name('remove.property.open.house');
 
    // incentives
@@ -191,61 +189,13 @@ Route::get('/get/agent/{id}', [AgentController::class, 'getAgent'])->name('agent
 Route::post('/agent/delete/{id}', [AgentController::class, 'delete'])->name('agent.delete');
    
    
-    // tours
-    Route::post('/tour-save', [TourController::class, 'tour_save'])->name('tour-save');
-    Route::post('/fetch-tours', [TourController::class, 'fetch_tours'])->name('fetch-tours');
-    Route::post('/tour-delete/{id}', [TourController::class, 'tour_delete'])->name('tour-delete');
-    Route::get('/get-tour/{id}', [TourController::class, 'get_tour'])->name('get-tour');
-    Route::get('/get-details-tour/{id}', [TourController::class, 'get_details_tour'])->name('get-details-tour');
-    Route::post('/tour-other-image-save', [TourController::class, 'tour_other_image_save'])->name('tour-other-image-save');
-    Route::post('/tour-other-image-delete/{id}', [TourController::class, 'tour_other_image_delete'])->name('tour-other-image-delete');
-    Route::post('/tour-status-change', [TourController::class, 'tour_status_change'])->name('tour-status-change');
     
     
-    // booked tours rotues
-    Route::post('/fetch-booked-tours', [TourController::class, 'booked_tours_fetch'])->name('fetch-booked-tours');
-  
+    
+    Route::post('/properties/upload', [PropertyController::class, 'uploadProperties']);
 
-    // itineraries
-    Route::get('/get-itineraries-tour/{id}', [TourController::class, 'get_itineraries_tour'])->name('get-itineraries-tour');
-    Route::post('/itinerary-save', [TourController::class, 'itinerary_save'])->name('itinerary-save');
-    Route::get('/get-itinerary-edit/{id}', [TourController::class, 'get_itinerary'])->name('get-itinerary-edit');
-    Route::post('/itinerary-delete/{id}', [TourController::class, 'itinerary_delete'])->name('itinerary-delete');
-
-    // activities
-
-    Route::get('/get-activities-tour/{id}', [TourController::class, 'get_activities_tour'])->name('get-activities-tour');
-    Route::post('/activity-save', [TourController::class, 'activity_save'])->name('activity-save');
-    Route::get('/get-activity-edit/{id}', [TourController::class, 'get_activity'])->name('get-activity-edit');
-    Route::post('/activity-delete/{id}', [TourController::class, 'activity_delete'])->name('activity-delete');
-    Route::get('/get-activity-details/{id}', [TourController::class, 'activity_details_fetch'])->name('get-activity-details');
-
-    Route::post('/activity-other-image-save', [TourController::class, 'activity_other_image_save'])->name('activity-other-image-save');
-    Route::post('/activity-image-delete/{id}', [TourController::class, 'activity_image_delete'])->name('activity-image-delete');
-
-    // accommodation
-    Route::get('/get-accommodations-tour/{id}', [TourController::class, 'get_accommodations_tour'])->name('get-accommodations-tour');
-    Route::post('/accommodation-save', [TourController::class, 'accommodation_save'])->name('accommodation-save');
-    Route::get('/get-accommodation-edit/{id}', [TourController::class, 'get_accommodation'])->name('get-accommodation-edit');
-    Route::post('/accommodation-delete/{id}', [TourController::class, 'accommodation_delete'])->name('accommodation-delete');
-    Route::get('/get-accommodation-details/{id}', [TourController::class, 'accommodation_details_fetch'])->name('get-accommodation-details');
-
-    Route::post('/accommodation-other-image-save', [TourController::class, 'accommodation_other_image_save'])->name('accommodation-other-image-save');
-    Route::post('/accommodation-image-delete/{id}', [TourController::class, 'accommodation_image_delete'])->name('accommodation-image-delete');
-
-    // Tour dates
-    Route::post('/tour-dates-save', [TourController::class, 'tour_dates_save'])->name('tour-dates-save');
-    Route::get('/tour-dates-fetch/{tour_id}', [TourController::class, 'fetch_tour_dates'])->name('tour-dates-fetch');
-    Route::post('/tour_date-delete/{record_id}', [TourController::class, 'tour_dates_delete'])->name('tour_date-delete');
-    Route::get('/edit-tour-date/{record_id}', [TourController::class, 'tour_dates_edit'])->name('/edit-tour-date');
-    // Tour trip hightlights
-    Route::post('/tour-trip-hightlights-save', [TourController::class, 'tour_trip_hightlights_save'])->name('tour-trip-hightlights-save');
-    Route::get('/tour-trip-hightlights-fetch/{tour_id}', [TourController::class, 'fetch_tour_trip_hightlights'])->name('tour-trip-hightlights-fetch');
-    Route::post('/tour-trip-hightlight-delete/{record_id}', [TourController::class, 'tour_trip_hightlights_delete'])->name('tour-trip-hightlight-delete');
-    Route::get('/edit-tour-trip-hightlight/{record_id}', [TourController::class, 'tour_trip_hightlights_edit'])->name('/edit-tour-trip-hightlight');
-    // Tour usefull-information-save
-    Route::post('/usefull-information-save', [TourController::class, 'tour_usefull_information_save'])->name('usefull-information-save');
-    // Route::get('/get-usefull-information/{tour_id}', [TourController::class, 'get_usefull_information'])->name('get-usefull-information');
+ 
+   
 
     // languages
     Route::get('/get-existing-languges', [LanguageController::class, 'languages_data'])->name('get-existing-languges');
@@ -317,50 +267,11 @@ Route::post('/agent/delete/{id}', [AgentController::class, 'delete'])->name('age
     Route::post('/fetch-users-contacts', [UserController::class, 'fetch_users_contacts'])->name('fetch-users-contacts');
     Route::get('/get-contact-details/{id}', [UserController::class, 'get_users_contacts_details'])->name('get-contact-details');
     Route::post('/admin-reply-to-user', [UserController::class, 'admin_reply_to_user'])->name('admin-reply-to-user');
-
-    // offices
-    Route::post('/office-save', [OfficeController::class, 'store'])->name('office-save');
-    Route::post('/fetch-offices', [OfficeController::class, 'fetch_offices'])->name('fetch-offices');
-    Route::post('/office-delete/{id}', [OfficeController::class, 'office_delete'])->name('office-delete');
-    Route::get('/get-office/{id}', [OfficeController::class, 'get_office'])->name('get-office');
-    Route::post('/offices-position-change', [OfficeController::class, 'office_position_change'])->name('offices-position-change');
-    // stories
-    Route::post('/review-save', [StoryController::class, 'store'])->name('review-save');
-    Route::post('/fetch-stories', [StoryController::class, 'fetch_stories'])->name('fetch-stories');
-    Route::post('/story-delete/{id}', [StoryController::class, 'story_delete'])->name('story-delete');
-    Route::get('/get-story/{id}', [StoryController::class, 'get_story'])->name('get-story');
-    Route::post('/stories-position-change', [StoryController::class, 'story_position_change'])->name('stories-position-change');
-    Route::get('/reviews-on-tour-fetch/{tour_id}', [StoryController::class, 'review_on_tour_fetch'])->name('reviews-on-tour-fetch');
-    Route::get('/all-reviews-fetch', [StoryController::class, 'all_reviews_fetch'])->name('all-reviews-fetch');
-    Route::post('/review-delete/{review_id}', [StoryController::class, 'review_delete'])->name('review-delete');
-    Route::post('/review-status-change', [StoryController::class, 'review_status_change'])->name('review-status-change');
-
-    // tour countries
-    Route::post('/tour-countries-save', [TourCountriesController::class, 'countries_store'])->name('tour-countries-save');
-    Route::post('/tour-countries-details-save', [TourCountriesController::class, 'details_store'])->name('tour-countries-details-save');
-    Route::post('/fetch-tour-countries', [TourCountriesController::class, 'fetch_tour_countries'])->name('fetch-tour-countries');
-    Route::post('/tour-countries-delete/{id}', [TourCountriesController::class, 'tour_country_delete'])->name('tour-countries-delete');
-    Route::get('/edit-tour-country/{id}', [TourCountriesController::class, 'edit_country'])->name('edit-tour-country');
-    
-    Route::get('/get-tour-countries/{id}', [TourCountriesController::class, 'get_tour_countries'])->name('get-tour-countries');
-
-     // tour countries faqs
-     Route::post('/country-faq-save', [TourCountriesController::class, 'country_faq_save'])->name('country-faq-save');
-     Route::get('/country-faqs-fetch/{tour_country_id}', [TourCountriesController::class, 'fetch_country_faqs'])->name('country-faqs-fetch');
-     Route::post('/country-faq-delete/{record_id}', [TourCountriesController::class, 'country_faq_delete'])->name('country-faq-delete');
-     Route::get('/edit-country-faq/{record_id}', [TourCountriesController::class, 'country_faq_edit'])->name('/edit-country-faq');
+  
+   
      
      
-     Route::get('/tours-pluck', [TourController::class, 'tours_pluck'])->name('/tours-pluck');
-     
-     
-    // custom pages
-    Route::post('/custom-page-save', [CustomPagesController::class, 'custom_page_store'])->name('custom-page-save');
-    Route::post('/custom-pages-details-save', [CustomPagesController::class, 'custom_page_details_store'])->name('custom-pages-details-save');
-    Route::post('/fetch-custom-pages', [CustomPagesController::class, 'fetch_custom_pages'])->name('fetch-custom-pages');
-    Route::post('/custom-page-delete/{id}', [CustomPagesController::class, 'custom_page_delete'])->name('custom-page-delete');
-    Route::get('/edit-custom-page/{id}', [CustomPagesController::class, 'get_custom_page'])->name('edit-custom-page');
-    Route::get('/details-fetch-custom-page/{id}', [CustomPagesController::class, 'details_fetch'])->name('details-fetch-custom-page');
+ 
     
     // services
     Route::post('/fetch-our-promises', [OurPromisesController::class, 'fetch_our_promises'])->name('fetch-our-promises');
@@ -378,11 +289,7 @@ Route::post('/agent/delete/{id}', [AgentController::class, 'delete'])->name('age
     
     Route::get('/countries-pluck', [HomeController::class, 'countries_pluck'])->name('countries-pluck');
     // call me now admin dashboard
-    Route::get('/call-me-now-fetch', [CallMeNowController::class, 'call_me_now_records_fetch'])->name('call-me-now-fetch');
-    Route::post('/call-me-now-delete/{id}', [CallMeNowController::class, 'call_me_now_record_delete'])->name('call-me-now-delete');
-    
-    
-    
+ 
     
 
 
@@ -391,8 +298,7 @@ Route::post('/agent/delete/{id}', [AgentController::class, 'delete'])->name('age
 // common routes
  Route::post('/contact-save', [HomeController::class, 'contact_store'])->name('contact-save');
 Route::get('/fetch-website-info', [SettingController::class, 'website_info_fetch'])->name('fetch-website-info');
- Route::get('/get-tour-country-faqs/{tour_country_id}', [TourCountriesController::class, 'external_website_fetch_country_faqs'])->name('get-tour-country-faqs');
-
+ 
  Route::get('/fetch-home-details/{home_id}', [HomeController::class, 'getPropertyDetails'])->name('fetch-home-details');
  Route::get('/fetch-community-all-homes/{community_id}', [HomeController::class, 'community_all_homes'])->name('fetch-community-all-homes');
  Route::get('/get-community-details/{community_id}', [HomeController::class, 'get_community_details'])->name('get-community-details');
@@ -405,24 +311,13 @@ Route::get('/fetch-website-info', [SettingController::class, 'website_info_fetch
 
 // external website communities pages
 Route::get('/get-communities', [IndexController::class, 'communities'])->name('get-communities');
-Route::get('/get-communities-details/{name}', [CustomPagesController::class, 'get_custom_page_details'])->name('get-communities-details');
-
-
-// Route::get('/get-communities-details-tours/{custom_page_name}', [CustomPagesController::class, 'get_custom_page_details_tours'])->name('get-communitiesdetails-tours');
-
-
-// booking routes from external website
-Route::post('/user-register', [BookingController::class, 'booking_using_registering_new_account'])->name('user-register');
-Route::post('/booking-using-existing-account-login', [BookingController::class, 'booking_using_existing_account_login'])->name('booking-using-existing-account-login');
-Route::post('/booking-using-email', [BookingController::class, 'booking_using_email'])->name('booking-using-email');
+ 
  
 // for external website
-Route::get('/tour-reviews-fetch', [StoryController::class, 'external_websit_tour_reviews'])->name('tour-reviews-fetch');
-
+ 
 Route::get('/external-website-languages', [LanguageController::class, 'frontend_languages_data'])->name('external-website-languages');
 Route::post('/user-default-language', [LanguageController::class, 'make_frontend_default_language'])->name('user-default-language');
-Route::post('/call-me-now', [CallMeNowController::class, 'call_me_now'])->name('call-me-now');
-
+ 
 
 // verification code
 Route::post('/match-verification-code', [HomeController::class, 'match_verification_code'])->name('match-verification-code');

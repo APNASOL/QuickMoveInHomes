@@ -48,8 +48,7 @@
                             v-if="logged_in_user && !logged_in_user.agreement"
                         >
                             <h5 class="mt-3 c-theme-color">
-                                To access all information, please sign a
-                                contract first while selecting your home.
+                                Access to full community information is available once a contract is signed while selecting your home.
                             </h5>
                         </div>
                         <!-- <div class="col-md-4 p-2">
@@ -599,7 +598,7 @@
 import Master from "@components/layout/Master.vue";
 import Multiselect from "@vueform/multiselect";
 import { addMonths, startOfMonth, endOfMonth } from "date-fns";
-import MoreTripsToDiscover from "@components/MoreTripsToDiscover.vue";
+ 
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 import ProceedComponent from "@components/ProceedComponent.vue";
 
@@ -612,7 +611,7 @@ export default {
         Pagination,
         Navigation,
         Multiselect,
-        MoreTripsToDiscover,
+    
         ProceedComponent,
     },
     props: ["community_id"],

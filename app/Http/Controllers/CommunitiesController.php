@@ -8,8 +8,10 @@ use App\Models\CommunityAmenity;
 use App\Models\CommunityLasVegasRegion;
 use App\Models\CommunityNeighborhood;
 use App\Models\LasVegasRegion;
+use App\Models\HOA;
 use App\Models\Neighborhood;
 use App\Models\Upload;
+use App\Models\Property;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -56,30 +58,34 @@ class CommunitiesController extends Controller
 
     public function store(Request $request)
     { 
+        
         $validatedData = $request->validate([
             'community_id' => 'nullable|string',
             'name' => 'required|string|max:255',
-            'latitude' => 'required|string|max:255',
-            'longitude' => 'required|string|max:255',
-            'description' => 'nullable|string|max:170',
-            'location' => 'nullable|string',
-            'hoa_id' => 'nullable|string',
-            'map_location' => 'nullable|string',
-            'legal_subdivision' => 'nullable|string',
-            'nearby_properties' => 'nullable|string',
-            'masterplan' => 'nullable|string',
-            'sub_association' => 'nullable|string',
-            'cic' => 'nullable|string',
-            'lid' => 'nullable|string',
-            'cid' => 'nullable|string',
-            'sid_lid_fee' => 'nullable|numeric',
-            'sid_lid_payment_frequency' => 'nullable|string',
-            'proximity_to_strip' => 'nullable|numeric',
-            'proximity_to_airport' => 'nullable|numeric',
-            'nearby_attractions' => 'nullable|string',
+            'latitude' => 'required',
+            'longitude' => 'required',
+            'description' => 'required|string|max:170',
+            'location' => 'required|string',
+            'hoa_id' => 'required|string',
+            'map_location' => 'required|string',
+            'legal_subdivision' => 'required|string',
+            'nearby_properties' => 'required|string',
+            'masterplan' => 'required|string',
+            'sub_association' => 'required|string',
+            'cic' => 'required|string',
+            'lid' => 'required|string',
+            'cid' => 'required|string',
+            'sid_lid_fee' => 'required|numeric',
+            'sid_lid_payment_frequency' => 'required|string',
+            'proximity_to_strip' => 'required|numeric',
+            'proximity_to_airport' => 'required|numeric',
+            'nearby_attractions' => 'required|string',
             'main_image' => 'nullable',
+            'regions' => 'nullable',
+            'neighborhood' => 'nullable',
+            'amenities' => 'nullable',
         ]);
-
+        
         // Create or update a new Community instance
  
         if ($request->id) {
@@ -111,6 +117,7 @@ class CommunitiesController extends Controller
         // Handle neighborhoods
         if ($request->neighborhood) {
             CommunityNeighborhood::where('community_id', $community->id)->delete();
+             
             $requested_neighborhoods = json_decode($request->neighborhood);
 
             foreach ($requested_neighborhoods as $neighborhood) {
@@ -139,9 +146,18 @@ class CommunitiesController extends Controller
         // Handle file uploads
         if ($request->file('files')) {
             $files_ids = [];
+            
+            // If there are existing file IDs in the community, decode them
+            if ($community->files) {
+                $existing_files_ids = json_decode($community->files, true);
+            } else {
+                $existing_files_ids = [];
+            }
+        
+            // Loop through new files and add their IDs
             foreach ($request->file('files') as $file) {
                 $file_name_with_path = $file->store('real_public/CommunitiesFiles/');
-
+        
                 $upload = new Upload();
                 $upload->file_original_name = $file->getClientOriginalName();
                 $upload->file_name = $file_name_with_path;
@@ -149,12 +165,18 @@ class CommunitiesController extends Controller
                 $upload->extension = $file->extension();
                 $upload->type = $file->getClientMimeType();
                 $upload->save();
-
+        
                 $files_ids[] = $upload->id;
             }
-            // Assuming you want to save these file IDs in the community object (or an event)
-            $community->files = json_encode($files_ids);
+        
+            // Merge the new file IDs with the existing ones
+            $all_files_ids = array_merge($existing_files_ids, $files_ids);
+            
+            // Save the updated file IDs as a JSON string
+            $community->files = json_encode($all_files_ids);
+            $community->save();
         }
+        
         
         if ($request->main_image) {
 
@@ -248,6 +270,11 @@ class CommunitiesController extends Controller
             $community->amenities = [];
         }
 
+        $hoa = HOA::where('id',$community->hoa_id)->first();
+        if($hoa)
+        {
+            $community->hoa = $hoa->name; 
+        }
         // Get regions
         $communityRegions = CommunityLasVegasRegion::where('community_id', $id)->pluck('las_vegas_regions_id');
         if ($communityRegions->isNotEmpty()) {
@@ -274,7 +301,7 @@ class CommunitiesController extends Controller
 
         if ($community->files) {
 
-            $uploads = Upload::whereIn('id', json_decode($community->files))->orderBy('extension')->get(['file_original_name', 'file_name', 'extension', 'type']);
+            $uploads = Upload::whereIn('id', json_decode($community->files))->orderBy('extension')->get(['id','file_original_name', 'file_name', 'extension', 'type']);
             $more_info_files = [];
             $more_info_images = [];
             $more_info_videos = [];
@@ -302,22 +329,84 @@ class CommunitiesController extends Controller
     }
 
     public function delete($id)
+{
+    $community = Community::findOrFail($id);
+
+    // Check for associations with other modules
+    $property = Property::where('community_id', $id)->exists();
+    $lasVegasRegion = CommunityLasVegasRegion::where('community_id', $community->id)->exists();
+    $neighborhood = CommunityNeighborhood::where('community_id', $community->id)->exists();
+    $amenity = CommunityAmenity::where('community_id', $community->id)->exists();
+
+    // If any associations exist, return an error with a specific message
+    if ($property || $lasVegasRegion || $neighborhood || $amenity) {
+        $message = 'This community cannot be deleted because:';
+        $reasons = [];
+
+        if ($property) {
+            $reasons[] = 'it is associated with one or more properties';
+        }
+
+        if ($lasVegasRegion) {
+            $reasons[] = 'it is associated with one or more Regions';
+        }
+
+        if ($neighborhood) {
+            $reasons[] = 'it is associated with one or more neighborhoods';
+        }
+
+        if ($amenity) {
+            $reasons[] = 'it is associated with one or more amenities';
+        }
+
+        // Combine the reasons into a single message
+        $message .= ' ' . implode(' and ', $reasons) . '. Please remove these associations before proceeding.';
+
+        return response()->json([
+            'status' => 'error',
+            'message' => $message
+        ], 400);
+    }
+
+    // Delete associated image if exists
+    $upload = Upload::where('id', $community->image)->first();
+    if ($upload) {
+        Storage::delete($upload->file_name);
+        $upload->delete();
+    }
+
+    // Delete the community
+    $community->delete();
+
+    return 'success';
+}
+
+
+    public function communities_pluck()
     {
-        $community = Community::findOrFail($id);
-        $upload = Upload::where('id', $community->image)->first();
+        return Community::pluck('name', 'id');
+    }
+    public function community_photo_delete($id, $community_id)
+    {
+
+        $merged_id = [];
+        $community = Community::findOrFail($community_id);
+
+        if ($community->files) {
+            $merged_id = array_values(array_diff(json_decode($community->files), array($id)));
+        }
+
+        $community->files = json_encode($merged_id);
+
+        $community->save();
+        $upload = Upload::where('id', $id)->first();
+
         if ($upload) {
             Storage::delete($upload->file_name);
             $upload->delete();
         }
 
-        $community->delete();
-
         return 'success';
-    }
-
-    public function communities_pluck()
-    {
-        return Community::pluck('name', 'id');
     }
 
 }

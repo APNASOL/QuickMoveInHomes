@@ -24,7 +24,7 @@
                     </a>
                 </div>
             </div>
-        <div class="c-tour-details container">
+        <div class="c-section-main-details container">
             <div v-if="homes && homes.length">
                 <div class="mx-4 pt-3">
                     <div class="row">

@@ -16,8 +16,8 @@
             </div>
         </div>
 
-        <div class="c-tour-details container">
-            <div class="row mx-4 d-flex justify-content-end mt-3">
+        <div class="c-section-main-details container">
+            <div class="row mx-4 d-flex justify-content-end p-3">
                 <div class="col-md-4">
                     <b>Incentive Sort By</b>
                     <div class="dropdown">
