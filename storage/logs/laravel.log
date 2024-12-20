@@ -19,3 +19,37 @@
 [2024-12-20 00:40:31] local.ERROR: Error processing row: [1,"9d264764-2e21-4869-b7e6-692c38c02bbd","Property Two","A modern apartment perfect for small families.","456 Paradise Road","Las Vegas","Nevada","89119",-115.1357,36.1013,350000,2,1200,0.25,"Apartment","Rent",2010,"9d09b3e5-20ea-4ad4-a16d-6d328bc8750e",150,0,"9d09a853-a044-4fd4-bbc6-5f57f0beb1fd",null,0,"Balcony View","Overlooks the city skyline.","Gas","Standard",1,0,0,"Hallway","Main Floor","Half","Good","Circular","Fountain","Clean",0,"Wood","Old",1,0,0,"Minimal","Solid","2024-02-01","Free parking for a year","test.jpg"] - Undefined variable $baseDirectory  
 [2024-12-20 00:42:06] local.ERROR: Error processing row: [1,"9d264764-2e21-4869-b7e6-692c38c02bbd","Property One","A beautiful villa located in the heart of Las Vegas.","123 Sunset Blvd","Las Vegas","Nevada","89109",-115.1728,36.1147,1250000,5,4500,0.75,"Villa","Sale",2015,"9d09b3e5-20ea-4ad4-a16d-6d328bc8750e",300,1,"9d09a853-a044-4fd4-bbc6-5f57f0beb1fd",null,0,"Modern Kitchen","Fully equipped with modern appliances.","Gas","Walk-in",1,1,1,"Second Floor","Main Floor","Full","Renovated","Rectangular","Fountain","Clean",1,"Metal","New",0,1,1,"Regular","Solid","2024-01-15","10% off","test.jpg"] - Undefined variable $baseDirectory  
 [2024-12-20 00:42:06] local.ERROR: Error processing row: [1,"9d264764-2e21-4869-b7e6-692c38c02bbd","Property Two","A modern apartment perfect for small families.","456 Paradise Road","Las Vegas","Nevada","89119",-115.1357,36.1013,350000,2,1200,0.25,"Apartment","Rent",2010,"9d09b3e5-20ea-4ad4-a16d-6d328bc8750e",150,0,"9d09a853-a044-4fd4-bbc6-5f57f0beb1fd",null,0,"Balcony View","Overlooks the city skyline.","Gas","Standard",1,0,0,"Hallway","Main Floor","Half","Good","Circular","Fountain","Clean",0,"Wood","Old",1,0,0,"Minimal","Solid","2024-02-01","Free parking for a year","test.jpg"] - Undefined variable $baseDirectory  
+[2024-12-20 22:07:26] local.INFO: File ids  
+[2024-12-20 22:07:26] local.INFO: array (
+  0 => 229,
+  1 => 230,
+  2 => 231,
+  3 => 232,
+  4 => 233,
+)  
+[2024-12-20 22:07:26] local.INFO: File ids  
+[2024-12-20 22:07:26] local.INFO: array (
+  0 => 235,
+  1 => 236,
+  2 => 237,
+  3 => 238,
+)  
+[2024-12-20 22:08:17] local.INFO: File ids  
+[2024-12-20 22:08:17] local.INFO: array (
+  0 => 240,
+  1 => 241,
+  2 => 242,
+  3 => 243,
+  4 => 244,
+)  
+[2024-12-20 22:08:17] local.INFO: File ids  
+[2024-12-20 22:08:17] local.INFO: array (
+  0 => 246,
+  1 => 247,
+  2 => 248,
+  3 => 249,
+)  
+[2024-12-20 22:10:33] local.ERROR: Folder not found: C:/Users/Lenovo/Downloads/Folder1  
+[2024-12-20 22:10:33] local.ERROR: File not found: C:/Users/Lenovo/Downloads/test.jpg  
+[2024-12-20 22:10:33] local.ERROR: Folder not found: C:/Users/Lenovo/Downloads/Folder2  
+[2024-12-20 22:10:33] local.ERROR: File not found: C:/Users/Lenovo/Downloads/test.jpg  
