@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\File\File; // Import the correct File class
  
 use App\Models\PropertyFeature;
 use App\Models\QuickMoveInHome;   
-use Carbon\Carbon;  
+// use Carbon\Carbon;  
 class PropertiesImport implements ToCollection
 {
     /**
@@ -138,8 +138,8 @@ class PropertiesImport implements ToCollection
         $property = new Property();
         $property->property_id = (string) Str::uuid(); // Generate UUID
         $property->fill($data);
-        $property->created_at = Carbon::now();
-        $property->updated_at = Carbon::now();
+        // $property->created_at = Carbon::now();
+        // $property->updated_at = Carbon::now();
         $property->save();
 
         return $property->property_id;
@@ -176,8 +176,8 @@ class PropertiesImport implements ToCollection
             'landscape_maintenance' => $data['landscape_maintenance'],
             'foundation_conditions' => $data['foundation_conditions']
         ]);
-        $feature->created_at = Carbon::now();
-        $feature->updated_at = Carbon::now();
+       //  $feature->created_at = Carbon::now();
+        // $feature->updated_at = Carbon::now();
         $feature->save();
     }
 
@@ -212,7 +212,7 @@ class PropertiesImport implements ToCollection
         // Create the QuickMoveInHome record with the uploaded image ID
         $quickMoveIn = new QuickMoveInHome();
         $quickMoveIn->property_id = $propertyId;
-        $quickMoveIn->move_in_date = Carbon::parse($data['move_in_date']);
+        $quickMoveIn->move_in_date = $data['move_in_date'];
         $quickMoveIn->incentives = $data['incentives'];
         $quickMoveIn->main_image = $upload->id; // Store the file ID
         $quickMoveIn->save();
