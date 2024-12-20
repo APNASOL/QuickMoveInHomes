@@ -6,7 +6,7 @@
                 <div
                     v-for="(promise, index) in Promises"
                     :key="promise"
-                    class="col-12 col-md-6 col-lg-3"
+                     class="col-12 col-sm-6 col-md-4 col-lg-3"
                 >
                     <div class="card card-body c-border-promis-design h-100">
                         <div class="d-flex justify-content-between c-h-fix text-dark">

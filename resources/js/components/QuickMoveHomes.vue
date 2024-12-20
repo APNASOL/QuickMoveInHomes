@@ -1,5 +1,6 @@
 <template>
-    <div class="c-bg-color" style="height: 550px" v-if="homes && homes.length">
+    <div class="c-bg-color" v-if="homes && homes.length">
+        
         <div class="mx-4">
             <div class="d-flex justify-content-between">
                 <div>

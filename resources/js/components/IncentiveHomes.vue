@@ -101,6 +101,11 @@
                     </div>
                 </div>
             </div>
+            <div v-else>
+                <div class="text-center p-4">
+                    <h4>No incentives found</h4>
+                </div>
+            </div>
         </div>
     </Master>
 </template>
