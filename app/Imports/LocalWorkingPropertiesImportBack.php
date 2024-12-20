@@ -278,9 +278,7 @@ class PropertiesImport implements ToCollection
                 Log::error("Error uploading file: " . $filePath . " - " . $e->getMessage());
             }
         }
-
-        Log::info('File ids');
-        Log::info($uploadedFileIds);
+  
         return $uploadedFileIds;
     }
 }

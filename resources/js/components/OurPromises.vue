@@ -6,10 +6,12 @@
                 <div
                     v-for="(promise, index) in Promises"
                     :key="promise"
-                     class="col-12 col-sm-6 col-md-4 col-lg-3"
+                    class="col-12 col-sm-6 col-md-4 col-lg-3"
                 >
                     <div class="card card-body c-border-promis-design h-100">
-                        <div class="d-flex justify-content-between c-h-fix text-dark">
+                        <div
+                            class="d-flex justify-content-between c-h-fix text-dark"
+                        >
                             <h5>
                                 {{ promise.title }}
                             </h5>
@@ -80,9 +82,9 @@ export default {
     right: 0;
 }
 .c-border-promis-design {
-    border-radius:  0.25rem;
+    border-radius: 0.25rem;
 }
-.c-h-fix{
+.c-h-fix {
     min-height: 50px;
 }
 </style>
