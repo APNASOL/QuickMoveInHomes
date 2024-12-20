@@ -546,15 +546,16 @@
                         >
                             <div class="card c-border-design">
                                  
+                             
                                 <img
-                                    :src="community_details.main_image"
+                                    :src="home.home_data.main_image"
                                     class="card-img-top c-card-img-border"
                                     :alt="home.title"
                                     @error="setAltImg"
                                 />
 
                                 <div
-                                    v-if="home.is_open_house"
+                                    v-if="home.is_open_house == 1"
                                     class="card-img-overlay c-card-img-overlay-flash-sale"
                                 >
                                     <span

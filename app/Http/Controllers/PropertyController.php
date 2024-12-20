@@ -425,7 +425,7 @@ class PropertyController extends Controller
         $propertyData = [
             'id' => $property->id,
             'title' => $property->title,
-            'is_open_house' => $property->is_open_house,
+            'is_open_house' => $property->is_open_house ? true : false,
             'description' => $property->description,
             'address' => $property->address,
             'city' => $property->city,
@@ -540,8 +540,8 @@ class PropertyController extends Controller
             $OpenHouse->id = Str::orderedUuid();
         }
         $property = Property::where('property_id', $request->property_id)->first();
-
-        $property->is_open_house = $request->status;
+ 
+        $property->is_open_house = $request->status == 'true' ? 1 : 0;
         $property->save();
         $OpenHouse->property_id = $request->property_id;
         $OpenHouse->date = Carbon::parse($request->date);
@@ -564,7 +564,7 @@ class PropertyController extends Controller
 
         $property = Property::where('property_id', $property_id)->first();
 
-        $property->is_open_house = null;
+        $property->is_open_house = 0;
         $property->save();
 
         $OpenHouse->delete();

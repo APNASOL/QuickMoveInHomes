@@ -630,84 +630,59 @@
                     <h1>RELATED COMMUNITY MOVE IN HOMES</h1>
                 </div>
 
-                <div class="pt-3">
-                    <div class="row mx-4">
-                        <div
-                            v-for="home in community_homes"
-                            :key="home.id"
-                            class="col-md-3 mb-2"
+                <div class="container pt-3">
+                <div class="row">
+                    <div
+                        v-for="home in community_homes"
+                        :key="home.id"
+                        class="col-md-3 mb-2"
+                    >
+                        <a
+                            class="text-decoration-none"
+                            :href="'/home-details/' + home.property_id"
                         >
-                            <a
-                                class="text-decoration-none"
-                                :href="'/home-details/' + home.property_id"
-                            >
-                                <div class="card c-border-design">
-                                    <img
-                                        :src="home.home_data.main_image"
-                                        class="card-img-top"
-                                        :alt="home.title"
-                                        @error="setAltImg"
-                                    />
+                            <div class="card c-border-design">
+                                 
+                             
+                                <img
+                                    :src="home.home_data.main_image"
+                                    class="card-img-top c-card-img-border"
+                                    :alt="home.title"
+                                    @error="setAltImg"
+                                />
 
-                                    <div
-                                        v-if="home.is_open_house"
-                                        class="card-img-overlay c-card-img-overlay-flash-sale"
+                                <div
+                                    v-if="home.is_open_house == 1"
+                                    class="card-img-overlay c-card-img-overlay-flash-sale"
+                                >
+                                    <span
+                                        class="badge rounded-pill bg-white text-dark"
+                                        >Open House</span
                                     >
-                                        <span
-                                            class="badge rounded-pill bg-white text-dark"
-                                            >Open House</span
-                                        >
-                                    </div>
-
-                                    <div class="card-body text-start">
-                                        <div class="row gy-2">
-                                            <!-- AREA -->
-                                            <div class="col-12 col-md-12">
-                                                <p class="mb-1">
-                                                    <span class="text-muted"
-                                                        >AREA (SQFT)</span
-                                                    ><br />
-                                                    <b
-                                                        >{{ home.square_feet }}
-                                                    </b>
-                                                </p>
-                                            </div>
-                                            <!-- BEDROOMS -->
-                                            <div class="col-12 col-md-6">
-                                                <p class="mb-1">
-                                                    <span class="text-muted"
-                                                        >Bedrooms</span
-                                                    ><br />
-                                                    <b>{{ home.bedrooms }}</b>
-                                                </p>
-                                            </div>
-                                            <!-- PROPERTY TYPE -->
-                                            <div class="col-12 col-md-6">
-                                                <p class="mb-1">
-                                                    <span class="text-muted"
-                                                        >Property Type</span
-                                                    ><br />
-                                                    <b>{{
-                                                        home.property_type
-                                                    }}</b>
-                                                </p>
-                                            </div>
-                                            <!-- PRICE -->
-                                            <div class="col-12 col-md-6">
-                                                <p class="mb-1">
-                                                    <span class="text-muted"
-                                                        >Price</span
-                                                    ><br />
-                                                    <b> ${{ home.price }}</b>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
-                            </a>
-                        </div>
+
+                                <div class="card-body text-start">
+                                    <p>
+                                        AREA (SQFT)
+                                        <b>{{ home.square_feet }} </b><br />
+                                        Bedrooms
+                                        <b>
+                                            {{ home.bedrooms }}
+                                        </b>
+                                        <br />
+                                        Property type
+                                        <b>{{ home.property_type }}</b>
+                                        <br />
+
+                                        Price
+                                        <b>${{ home.price }}</b>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
                     </div>
                 </div>
+            </div>
             </div>
         </div>
     </Master>

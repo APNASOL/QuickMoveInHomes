@@ -6,7 +6,7 @@
                     <h2 class="mt-4">
                         {{ translate("Discover Your Dream Home") }}
                         |
-                        {{ translate("Brand New Homes Vegas") }}
+                        {{ translate("Quick Move In") }}
                     </h2>
                 </div>
                 <!-- <div>
@@ -49,7 +49,7 @@
                                 >
                                     <span
                                         class="badge rounded-pill bg-white text-dark"
-                                        >Brand New Homes Vegas</span
+                                        >Quick Move In</span
                                     >
                                 </div>
 

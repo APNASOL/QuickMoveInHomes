@@ -104,15 +104,29 @@
             </a>
         </li>
         <li class="nav-item" v-if="user_role == 'admin'">
-            <a class="nav-link collapsed" :class="{ active: isActive('/agents') }" href="/agents">
-                <i class="bi bi-person-check me-2"></i>
-                <span>{{ translate("Agents") }}</span>
+            <a class="nav-link collapsed" :class="{ active: isActive('/homes') }" href="/homes">
+                <i class="bi bi-arrow-right me-2"></i>
+                <span>Quick Move In</span>
+            </a>
+        </li>
+
+
+        <li class="nav-item" v-if="user_role == 'admin'">
+            <a class="nav-link collapsed" :class="{ active: isActive('/properties') }" href="/properties">
+                <i class="bi bi-file-earmark-text me-2"></i>
+                <span>Properties</span>
             </a>
         </li>
         <li class="nav-item" v-if="user_role == 'admin'">
             <a class="nav-link collapsed" :class="{ active: isActive('/upload') }" href="/upload">
                 <i class="bi bi-person-check me-2"></i>
                 <span>{{ translate("Upload") }}</span>
+            </a>
+        </li>
+        <li class="nav-item" v-if="user_role == 'admin'">
+            <a class="nav-link collapsed" :class="{ active: isActive('/agents') }" href="/agents">
+                <i class="bi bi-person-check me-2"></i>
+                <span>{{ translate("Agents") }}</span>
             </a>
         </li>
         <li class="nav-item" v-if="user_role == 'admin'">
@@ -177,20 +191,7 @@
             </a>
         </li>
         
-        <li class="nav-item" v-if="user_role == 'admin'">
-            <a class="nav-link collapsed" :class="{ active: isActive('/homes') }" href="/homes">
-                <i class="bi bi-arrow-right me-2"></i>
-                <span>Brand New Homes Vegas</span>
-            </a>
-        </li>
-
-
-        <li class="nav-item" v-if="user_role == 'admin'">
-            <a class="nav-link collapsed" :class="{ active: isActive('/properties') }" href="/properties">
-                <i class="bi bi-file-earmark-text me-2"></i>
-                <span>Properties</span>
-            </a>
-        </li>
+       
         
 
         <li class="nav-item" v-if="user_role == 'admin'">

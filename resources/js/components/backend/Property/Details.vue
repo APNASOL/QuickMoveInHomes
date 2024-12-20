@@ -50,6 +50,7 @@
                     </div>
                     <div class="row g-3">
                         <div class="col-12">
+                            {{ form.status }}
                             <b>{{ translate("Is this open house") }}</b
                             ><br />
                             <div class="d-inline-block me-2">

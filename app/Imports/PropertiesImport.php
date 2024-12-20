@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\File\File; // Import the correct File class
- 
+use Carbon\Carbon;
 use App\Models\PropertyFeature;
 use App\Models\QuickMoveInHome;   
 // use Carbon\Carbon;  
@@ -211,8 +211,8 @@ class PropertiesImport implements ToCollection
  
         // Create the QuickMoveInHome record with the uploaded image ID
         $quickMoveIn = new QuickMoveInHome();
-        $quickMoveIn->property_id = $propertyId;
-        $quickMoveIn->move_in_date = $data['move_in_date'];
+        $quickMoveIn->property_id = $propertyId; 
+        $quickMoveIn->move_in_date = Carbon::parse($data['move_in_date']);
         $quickMoveIn->incentives = $data['incentives'];
         $quickMoveIn->main_image = $upload->id; // Store the file ID
         $quickMoveIn->save();

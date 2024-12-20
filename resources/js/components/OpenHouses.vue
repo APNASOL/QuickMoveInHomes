@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-theme" style="height: 500px;" v-if="homes && homes.length">
+    <div class="bg-theme" style="height: 500px;">
         <div class="mx-4">
             <div class="d-flex justify-content-between text-white">
                 <div class="mt-4">

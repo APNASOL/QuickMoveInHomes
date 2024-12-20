@@ -85,7 +85,7 @@ class HomeController extends Controller
 
         $currentDate = now()->format('Y-m-d');
         // Fetch the property along with its relationships
-        
+
         $property = Property::with(['feature', 'hoa', 'school'])->findOrFail($id);
 
         // Initialize variables
@@ -111,25 +111,25 @@ class HomeController extends Controller
             if ($image) {
                 $property_main_image = get_storage_url($image->file_name);
             }
-        } 
+        }
         // Fetch Open House details if the property is marked as an open house
         if ($property->is_open_house) {
             $openHouse = OpenHouse::where('property_id', $id)->first();
+
             if ($openHouse) {
                 // Get the current date and time
                 $currentDateTime = now();
 
-                // Check if the open house date and time have passed
-                $openHouseStartDateTime = $openHouse->date . ' ' . $openHouse->start_time;
-                $openHouseEndDateTime = $openHouse->date . ' ' . $openHouse->end_time;
+                // Combine date and time to create full datetime strings for comparison
+                $openHouseStartDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $openHouse->date . ' ' . $openHouse->start_time);
+                $openHouseEndDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $openHouse->date . ' ' . $openHouse->end_time);
 
-                // If the current date/time is past the open house end time, set is_open_house to false
-                if ($currentDateTime > $openHouseEndDateTime) {
-                    $property->is_open_house = false;
-                }
-
-                // Prepare the open house data if is_open_house is still true
-                if ($property->is_open_house) {
+                // Check if the open house end time has expired
+                if ($currentDateTime->greaterThan($openHouseEndDateTime)) {
+                    $property->update(['is_open_house' => false]); // Set is_open_house to false
+                    $openHouse->delete(); // Delete the expired open house record
+                } else {
+                    // Prepare the valid open house data
                     $openHouseData = [
                         'open_house_date' => $openHouse->date,
                         'open_house_start_time' => $openHouse->start_time,
@@ -251,17 +251,46 @@ class HomeController extends Controller
 
     public function community_all_homes($community_id)
     {
+        // $properties = Property::where('community_id', $community_id)->get();
+        // $randomProperties = Property::where('community_id', $community_id)
+        //     ->inRandomOrder() // Orders the records randomly
+        //     ->limit(8) // Limits the result to 3 random records
+        //     ->get(); // Retrieves the records
+            $properties = Property::where('community_id', $community_id)
+                      ->inRandomOrder() // Orders the results randomly
+                      ->get();
 
-        $properties = Property::where('community_id', $community_id)->get();
 
         foreach ($properties as $property) {
             // Fetch related property record
             $home = QuickMoveHome::where('property_id', $property->property_id)->first();
+
+            // Check if the property has an open house
             if ($property->is_open_house) {
 
                 $open_house = OpenHouse::where('property_id', $property->property_id)->first();
-                $property->open_house_data = $open_house;
+
+                if ($open_house) {
+                    // Get the current date and time
+                    $currentDateTime = now();
+
+                    // Combine date and time for comparison
+                    $openHouseEndDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $open_house->date . ' ' . $open_house->end_time);
+
+                    // Check if the open house is expired
+                    if ($currentDateTime->greaterThan($openHouseEndDateTime)) {
+                        // Expired: Delete the open house record and update the property
+                        $open_house->delete();
+                        $property->update(['is_open_house' => 0]);
+                    } else {
+                        // Not expired: Attach the open house data to the property
+                        $property->is_open_house = 1;
+                    }
+                }
+            } else {
+                $property->open_house_data = 0;
             }
+
             // Process main image
             if ($home && $home->main_image) {
                 $uploaded_image = Upload::find($home->main_image);
@@ -270,11 +299,39 @@ class HomeController extends Controller
                     $home->main_image = get_storage_url($uploaded_image->file_name);
                 }
             }
+
             $property->home_data = $home;
         }
 
         return $properties;
     }
+
+    // public function community_all_homes($community_id)
+    // {
+
+    //     $properties = Property::where('community_id', $community_id)->get();
+
+    //     foreach ($properties as $property) {
+    //         // Fetch related property record
+    //         $home = QuickMoveHome::where('property_id', $property->property_id)->first();
+    //         if ($property->is_open_house) {
+
+    //             $open_house = OpenHouse::where('property_id', $property->property_id)->first();
+    //             $property->open_house_data = $open_house;
+    //         }
+    //         // Process main image
+    //         if ($home && $home->main_image) {
+    //             $uploaded_image = Upload::find($home->main_image);
+
+    //             if ($uploaded_image) {
+    //                 $home->main_image = get_storage_url($uploaded_image->file_name);
+    //             }
+    //         }
+    //         $property->home_data = $home;
+    //     }
+
+    //     return $properties;
+    // }
 
     public function detailed_community($community_id)
     {
@@ -560,8 +617,7 @@ class HomeController extends Controller
                     $builder = Builder::where('id', $community_builder->builder_id)->first();
                     if ($builder) {
                         $incentive_record = Incentive::where('builder_id', $builder->id)->where('end_date', '>=', $currentDate)->first();
-                        if($incentive_record)
-                        {
+                        if ($incentive_record) {
                             $home->incentive = $incentive_record->title ?? "";
                         }
                     }
@@ -747,9 +803,8 @@ class HomeController extends Controller
         $agents = Agent::all();
         foreach ($agents as $key => $agent) {
 
-            $agreements_count = CustomerAgentConnection::where('agent_id', $agent->id)->where('current_status','!=','Completed')->count();
-            if($agreements_count > 2)
-            { 
+            $agreements_count = CustomerAgentConnection::where('agent_id', $agent->id)->where('current_status', '!=', 'Completed')->count();
+            if ($agreements_count > 2) {
                 $agents = $agents->forget($key);
             }
             $user = User::where('id', $agent->user_id)->first();
