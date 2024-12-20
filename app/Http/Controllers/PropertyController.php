@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Agent;
 use App\Models\Community;
 use App\Models\CustomerAgentConnection;
 use App\Models\CustomerVisitingHomesHistory;
@@ -13,34 +13,34 @@ use App\Models\PropertyIncentive;
 use App\Models\QuickMoveHome;
 use App\Models\QuickMoveInHome;
 use App\Models\Upload;
-use App\Models\Agent;
 use App\Models\User;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-
 use Maatwebsite\Excel\Facades\Excel;
-use App\Imports\PropertiesImport; 
+use App\Imports\PropertiesImport;
 
 class PropertyController extends Controller
 {
-
-public function upload() {
-    $name = 'index';
-        return view('app', compact('name'));
-}
+ 
     public function uploadProperties(Request $request)
     {
         $request->validate([
             'file' => 'required|file|mimes:xlsx',
         ]);
-    
+
         Excel::import(new PropertiesImport, $request->file('file'));
-    return 'success'; 
+        return 'success';
     }
-    
+
+    public function upload()
+    {
+        $name = 'index';
+        return view('app', compact('name'));
+    }
+
     public function index()
     {
         $name = 'index';
@@ -203,10 +203,10 @@ public function upload() {
             PropertyIncentive::where('property_id', $property->property_id)->delete();
         }
 
-       // Handle file uploads
+        // Handle file uploads
         if ($request->file('files')) {
             $files_ids = [];
-            
+
             // If there are existing file IDs in the property, decode them
             if ($property->files) {
                 $existing_files_ids = json_decode($property->files, true);
@@ -231,7 +231,7 @@ public function upload() {
 
             // Merge the new file IDs with the existing ones
             $all_files_ids = array_merge($existing_files_ids, $files_ids);
-            
+
             // Save the updated file IDs as a JSON string
             $property->files = json_encode($all_files_ids);
             $property->save();
@@ -379,13 +379,10 @@ public function upload() {
         // Fetch the property along with its relationships
         $property = Property::with(['feature', 'hoa', 'school'])->findOrFail($id);
 
-        
         $quickMove = QuickMoveHome::where('property_id', $property->property_id)->first();
-        if($quickMove)
-        { 
+        if ($quickMove) {
             // $property->home_main_image = $property;
 
-            
             // Process main image
             if ($quickMove->main_image) {
                 $uploaded_image = Upload::find($quickMove->main_image);
@@ -397,7 +394,6 @@ public function upload() {
 
         }
 
-            
         // Initialize OpenHouse data
         $openHouseData = [];
 
@@ -492,7 +488,7 @@ public function upload() {
         $propertyData['files'] = []; // Initialize files array
 
         if ($property->files) {
-            $uploads = Upload::whereIn('id', json_decode($property->files))->orderBy('extension')->get(['id','file_original_name', 'file_name', 'extension', 'type']);
+            $uploads = Upload::whereIn('id', json_decode($property->files))->orderBy('extension')->get(['id', 'file_original_name', 'file_name', 'extension', 'type']);
 
             foreach ($uploads as $upload) {
                 $upload->file_name = get_storage_url($upload->file_name); // Update the file name with the storage URL
@@ -625,12 +621,12 @@ public function upload() {
             $property_record = Property::where('property_id', $agreement->property_id)->first();
             $agreement->home_title = $property_record ? $property_record->title : "N/A";
 
-            $customer_record = User::where('id',$agreement->customer_id)->first();
+            $customer_record = User::where('id', $agreement->customer_id)->first();
             $agreement->customer_name = $customer_record ? $customer_record->name : "N/A";
 
-            $agent_record = Agent::where('id',$agreement->agent_id)->first();
+            $agent_record = Agent::where('id', $agreement->agent_id)->first();
             $agreement->agent_name = $agent_record ? $agent_record->name : "N/A";
-            
+
         }
         return $agreements;
     }

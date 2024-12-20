@@ -141,7 +141,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
    Route::post('/community/photo/gallery/delete/{id}/{community_id}', [CommunitiesController::class, 'community_photo_delete'])->name('community.photo.gallery.delete');
 
 
-   Route::post('/properties/upload', [PropertyController::class, 'uploadProperties']);
+   Route::post('/properties/upload', [PropertyController::class, 'uploadProperties'])->name('properties,upload');
 
    // homes
    Route::post('/fetch/homes', [PropertyController::class, 'fetchHomes'])->name('fetch.homes');
