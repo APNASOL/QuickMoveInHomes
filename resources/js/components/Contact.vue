@@ -44,7 +44,7 @@
                                     </p>
                                 </div>
                                 <div>
-                                    <b class="c-title">Quick Move Homes</b>
+                                    <b class="c-title">QBrand New Homes Vegas</b>
                                     <p>
                                         10845 Griffith Peak Drive, Suite 2
                                         Las Vegas, NV, 89135

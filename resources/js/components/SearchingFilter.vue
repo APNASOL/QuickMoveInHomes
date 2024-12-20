@@ -303,13 +303,13 @@
                 <div class="col-md-6">
                     <div class="row mx-4">
                         <div class="col-md-4">
-                            <b>Quick Move In Homes</b>
+                            <b>Brand New Homes Vegas</b>
                             <br />
                             <small>{{ total_homes }} results</small>
                         </div>
                         <div class="col-md-2"></div>
                         <div class="col-md-6">
-                            <b>Sort Quick Move In Homes</b>
+                            <b>Sort Brand New Homes Vegas</b>
                             <br />
                             <div class="dropdown">
                                 <Multiselect

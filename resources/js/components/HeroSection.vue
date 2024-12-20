@@ -14,7 +14,7 @@
             <div
                 class="content position-absolute top-50 start-0 translate-middle-y ms-4"
             >
-                <h1 class="display-3 fw-bold mb-4">Quick Move In Homes</h1>
+                <h1 class="display-3 fw-bold mb-4">Brand New Homes Vegas</h1>
                 <div class="search-bar-container d-flex">
                     <div class="search-bar input-group">
                         <input

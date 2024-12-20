@@ -18,7 +18,7 @@
             <div class="row p-3">
                 <div class="col-md-12">
                     <p class="help-info">
-                        Welcome to Quick Move In Home! Here’s an important
+                        Welcome to Brand New Homes Vegas! Here’s an important
                         reminder: when you sign an agreement with an agent,
                         <b>
                             you’ll have limited permissions to visit a select
@@ -33,7 +33,7 @@
                         arrangements.
                     </p>
                     <p class="help-info">
-                        Property Viewing Guidelines "At Quick Move In Home, we
+                        Property Viewing Guidelines "At Brand New Homes Vegas, we
                         prioritize your satisfaction and safety when viewing
                         properties. Please note that upon signing an agreement
                         with one of our agents, you’ll be granted limited
@@ -55,7 +55,7 @@
                     </p>
                     <p class="help-info">
                         Agreement Terms and Conditions "When you engage with
-                        Quick Move In Home, an agreement is necessary to arrange
+                        Brand New Homes Vegas, an agreement is necessary to arrange
                         property viewings. This agreement defines your viewing
                         permissions and outlines the responsibilities of both
                         parties. Please review all terms carefully, including

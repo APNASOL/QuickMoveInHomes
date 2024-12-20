@@ -180,7 +180,7 @@
         <li class="nav-item" v-if="user_role == 'admin'">
             <a class="nav-link collapsed" :class="{ active: isActive('/homes') }" href="/homes">
                 <i class="bi bi-arrow-right me-2"></i>
-                <span>Quick Move In</span>
+                <span>Brand New Homes Vegas</span>
             </a>
         </li>
 
