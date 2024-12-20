@@ -72,7 +72,10 @@ export default {
     },
     methods: {
         activeSpinner() {
-            this.formStatus = false;
+            this.formStatus = false; // Set to false initially
+            setTimeout(() => {
+                this.formStatus = true; // Change to true after 2 seconds
+            }, 2000);
         },
     },
 };
