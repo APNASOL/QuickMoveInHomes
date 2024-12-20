@@ -5,10 +5,11 @@ namespace App\Imports;
 use App\Models\Property;
 use App\Models\PropertyFeature;
 use App\Models\QuickMoveInHome;
-use Maatwebsite\Excel\Concerns\ToCollection;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
+use Maatwebsite\Excel\Concerns\ToCollection;
+
 class PropertiesImport implements ToCollection
 {
     /**
@@ -40,8 +41,7 @@ class PropertiesImport implements ToCollection
                 Log::error("Error processing row: " . json_encode($row) . " - " . $e->getMessage());
             }
         }
-    }
-
+    } 
     /**
      * Map the row data to the Property model attributes.
      *
@@ -99,8 +99,7 @@ class PropertiesImport implements ToCollection
             'incentives' => $row[46] ?? null,
             'main_image' => $row[47] ?? null,
         ];
-    }
-
+    } 
     /**
      * Create a property record in the database.
      *
@@ -152,8 +151,8 @@ class PropertiesImport implements ToCollection
             'foundation_conditions' => $data['foundation_conditions'],
         ]);
         $feature->save();
-    }
-
+    } 
+ 
     /**
      * Create a quick move-in home record in the database.
      *
