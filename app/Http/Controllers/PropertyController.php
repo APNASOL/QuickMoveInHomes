@@ -23,8 +23,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\PropertiesImport;
 
 class PropertyController extends Controller
-{
- 
+{ 
     public function uploadProperties(Request $request)
     {
         $request->validate([
