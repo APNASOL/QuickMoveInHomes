@@ -115,7 +115,7 @@
                                             {{ property.title }}
                                         </a>
                                     </td>
-                                    <td>
+                                    <td v-if="property.community.id">
                                         <a
                                             type="button"
                                             class="c-linked c-mouse-over c-theme-text-color"
@@ -127,6 +127,11 @@
                                         >
                                             {{ property.community.name }}
                                         </a>
+                                    </td>
+                                    <td v-else>
+                                        <span class="c-theme-text-color"
+                                            >{{ translate("No community added") }}</span
+                                        > 
                                     </td>
                                     <!-- <td>{{ property.location }}</td> -->
                                     <td>
