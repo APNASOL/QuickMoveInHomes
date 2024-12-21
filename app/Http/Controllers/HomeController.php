@@ -291,17 +291,26 @@ class HomeController extends Controller
                 $property->open_house_data = 0;
             }
 
-            // Process main image
-            if ($home && $home->main_image) {
-                $uploaded_image = Upload::find($home->main_image);
 
-                if ($uploaded_image) {
-                    $home->main_image = get_storage_url($uploaded_image->file_name);
+            if ($home->main_image) {
+                $upload = Upload::where('id', $home->main_image)->first();
+                if ($upload) {
+                    $home->main_image = $upload->file_name ? get_storage_url($upload->file_name) : '';
+
                 }
-            }else
-            {
-                $home->main_image = '/images/default.jpg';
             }
+
+            // Process main image
+            // if ($home && $home->main_image) {
+            //     $uploaded_image = Upload::find($home->main_image);
+
+            //     if ($uploaded_image) {
+            //         $home->main_image = get_storage_url($uploaded_image->file_name);
+            //     }
+            // }else
+            // {
+            //     $home->main_image = 'abc.pn';
+            // }
 
             $property->home_data = $home;
         }
