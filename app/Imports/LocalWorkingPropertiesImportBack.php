@@ -7,7 +7,7 @@ use App\Models\Upload; // Assuming this is the Upload model to handle file uploa
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Log;
+// use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\File\File; // Import the correct File class
  
@@ -52,7 +52,7 @@ class PropertiesImport implements ToCollection
                 }
                 
             } catch (\Exception $e) {
-                Log::error("Error processing row: " . json_encode($row) . " - " . $e->getMessage());
+                // Log::error("Error processing row: " . json_encode($row) . " - " . $e->getMessage());
             }
 
             // Create Property record
@@ -218,7 +218,7 @@ class PropertiesImport implements ToCollection
         $quickMoveIn->save();
     } else {
         // Log error or handle file not found situation
-        Log::error("File not found: " . $folderPath);
+        // Log::error("File not found: " . $folderPath);
     }
 }
 
@@ -239,7 +239,7 @@ class PropertiesImport implements ToCollection
 
         // Check if the folder exists
         if (!is_dir($folderPath)) {
-            Log::error("Folder not found: " . $folderPath);
+            // Log::error("Folder not found: " . $folderPath);
             return [];
         }
 
@@ -275,7 +275,7 @@ class PropertiesImport implements ToCollection
                 $uploadedFileIds[] = $upload->id;
     
             }  catch (\Exception $e) {
-                Log::error("Error uploading file: " . $filePath . " - " . $e->getMessage());
+                // Log::error("Error uploading file: " . $filePath . " - " . $e->getMessage());
             }
         }
   
