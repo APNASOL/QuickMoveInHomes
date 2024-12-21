@@ -298,6 +298,9 @@ class HomeController extends Controller
                 if ($uploaded_image) {
                     $home->main_image = get_storage_url($uploaded_image->file_name);
                 }
+            }else
+            {
+                $home->main_image = null;
             }
 
             $property->home_data = $home;
