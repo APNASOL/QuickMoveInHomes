@@ -548,7 +548,7 @@
                                  
                              
                                 <img
-                                    :src="home.home_data.main_image"
+                                    :src="home.home_data.main_image ?? '/images/default.jpg'"
                                     class="card-img-top c-card-img-border"
                                     :alt="home.title"
                                     @error="setAltImg"
