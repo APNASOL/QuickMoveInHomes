@@ -37,7 +37,7 @@
                                 <div class="d-flex justify-content-between">
                                     <div>
                                         <h1 class="c-theme-text-color">
-                                           {{ Community.name }} 
+                                            {{ Community.name }}
                                         </h1>
                                     </div>
                                     <div>
@@ -175,12 +175,26 @@
                             </div>
                             <hr />
 
-                            <h3 class="c-theme-text-color">Main Image</h3>
-
-                            <image-zooming-component
-                                :file="Community.main_image ?? 'empty.png'"
-                                :width="260"
-                            />
+                            
+                            <div class="d-flex justify-content-left">
+                                
+                                <div>
+                                    <h3 class="c-theme-text-color">Main Image</h3>
+                                    <image-zooming-component
+                                        :file="
+                                            Community.main_image ?? 'empty.png'
+                                        "
+                                        :width="260"
+                                    />
+                                </div>
+                                <div class="ms-5">
+                                    <h3 class="c-theme-text-color">Banner</h3>
+                                    <image-zooming-component
+                                        :file="Community.banner ?? 'empty.png'"
+                                        :width="260"
+                                    />
+                                </div>
+                            </div>
 
                             <div
                                 class="col-md-12 mt-4"

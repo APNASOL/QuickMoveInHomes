@@ -45,6 +45,13 @@ class CommunitiesController extends Controller
                     $community->main_image = get_storage_url($uploaded_image->file_name);
                 }
             }
+            if ($community && $community->banner) {
+
+                $uploaded_image = Upload::where('id', $community->banner)->first();
+                if ($uploaded_image && $uploaded_image->file_name) {
+                    $community->banner = get_storage_url($uploaded_image->file_name);
+                }
+            }
         }
 
         return $communities;
@@ -57,8 +64,7 @@ class CommunitiesController extends Controller
     }
 
     public function store(Request $request)
-    { 
-        
+    {  
         $validatedData = $request->validate([
             'community_id' => 'nullable|string',
             'name' => 'required|string|max:255',
@@ -81,6 +87,7 @@ class CommunitiesController extends Controller
             'proximity_to_airport' => 'required|numeric',
             'nearby_attractions' => 'required|string',
             'main_image' => 'nullable',
+            'banner' => 'nullable',
             'regions' => 'nullable',
             'neighborhood' => 'nullable',
             'amenities' => 'nullable',
@@ -203,6 +210,31 @@ class CommunitiesController extends Controller
 
             $community->main_image = $Upload->id;
         }
+        if ($request->banner) {
+
+            $existingInUploads = Upload::where('id', $community->banner)->first();
+            if ($existingInUploads) {
+                Storage::delete($existingInUploads->file_name);
+                $existingInUploads->delete();
+            }
+
+            $data = substr($request->banner, strpos($request->banner, ',') + 1);
+            $data = base64_decode($data);
+
+            $image_name_with_path = 'real_public/CommunityBannerImages/' . Str::random(40) . '.png';
+            Storage::put($image_name_with_path, $data);
+
+            $Upload = new Upload;
+            $Upload->file_original_name = $image_name_with_path;
+
+            $Upload->extension = 'png';
+            $Upload->type = 'image/png';
+            $Upload->file_name = $image_name_with_path;
+
+            $Upload->save();
+
+            $community->banner = $Upload->id;
+        }
         $community->save(); // Save the community again if you added files
  
         return 'success';
@@ -226,11 +258,11 @@ class CommunitiesController extends Controller
         }
         $community->status = ($community->status == 1) ? true : false;
 
-        if ($community && $community->main_image) {
-            $uploaded_image = Upload::where('id', $community->main_image)->first();
+        if ($community && $community->banner) {
+            $uploaded_image = Upload::where('id', $community->banner)->first();
 
             if ($uploaded_image) {
-                $community->main_image = get_storage_url($uploaded_image->file_name);
+                $community->banner = get_storage_url($uploaded_image->file_name);
             }
         }
 
@@ -296,6 +328,13 @@ class CommunitiesController extends Controller
 
             if ($uploaded_image) {
                 $community->main_image = get_storage_url($uploaded_image->file_name);
+            }
+        }
+        if ($community && $community->banner) {
+            $uploaded_image = Upload::where('id', $community->banner)->first();
+
+            if ($uploaded_image) {
+                $community->banner = get_storage_url($uploaded_image->file_name);
             }
         }
 

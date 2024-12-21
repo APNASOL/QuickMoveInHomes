@@ -933,6 +933,41 @@
                                 {{ formErrors.home_main_image[0] }}
                             </div>
                         </div>
+                        <div class="col-12 col-md-12">
+                            <label for="banner">{{
+                                translate("Banner")
+                            }}</label>
+
+                            <div class="mt-3 mb-2">
+                                <img
+                                    v-if="form.banner"
+                                    :src="form.banner ?? '/images/default.jpg'"
+                                    :custom_class="'img-fluid img-thumbnail rounded'"
+                                    :width="125"
+                                />
+                                <img
+                                    v-else
+                                    :src="existing_banner ?? '/images/default.jpg'"
+                                    :custom_class="'img-fluid img-thumbnail rounded'"
+                                    :width="125"
+                                />
+                                 
+                                </div>
+                                <ImageCropper
+                                    @croppedImg="croppedBannerSubmit" 
+                                    :ratio="3"
+                                /> 
+                            <div>
+                                 
+                            </div>
+
+                            <div
+                                class="invalid-feedback animated fadeIn"
+                                v-if="formErrors.banner"
+                            >
+                                {{ formErrors.banner[0] }}
+                            </div>
+                        </div>
 
                         <div class="col-12 col-md-12">
                             <label for="files">{{
@@ -1063,8 +1098,10 @@ export default {
                 listing_date: "",
                 files: [],
                 home_main_image: "",
+                banner: "",
             },
             existing_home_main_image: "",
+            existing_banner: "",
             formErrors: [],
             formStatus: true,
             property_image: "",
@@ -1109,6 +1146,7 @@ export default {
                     this.form.community_id = property.community_id || ""; // Add if applicable
                     //this.form.home_main_image = property.home_main_image;
                     this.existing_home_main_image = property.home_main_image;
+                    this.existing_banner = property.banner;
                     // Populate Property Features
                     this.form.incentives = property.incentives; // Ensure this is an array
                     if (property.feature) {
@@ -1184,6 +1222,9 @@ export default {
         },
         croppedImgSubmit(img) {
             this.form.home_main_image = img;
+        },
+        croppedBannerSubmit(img) {
+            this.form.banner = img;
         },
 
         submit() {
@@ -1263,6 +1304,7 @@ export default {
             formData.append("listing_date", this.form.listing_date ?? "");
             formData.append("files", this.form.files ?? null); // Assuming `files` can be a File or Blob
             formData.append("home_main_image", this.form.home_main_image ?? "");
+            formData.append("banner", this.form.banner ?? "");
 
             // Append all selected files to FormData
             if (this.form.files && this.form.files.length > 0) {

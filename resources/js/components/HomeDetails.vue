@@ -1,11 +1,11 @@
 <template>
-    <Master>
+    <Master> 
         <div class="property-detail-section">
             <div class="property-detail-section" v-if="Home">
                 <div
                     class="top-section"
                     :style="{
-                        backgroundImage: `url(${Home.property_main_image})`,
+                        backgroundImage: `url(${Home.property_banner})`,
                     }"
                 >
                     <div class="info-overlay">
@@ -645,7 +645,7 @@
                                  
                              
                                 <img
-                                    :src="home.home_data.main_image"
+                                    :src="home.main_image ?? '/images/default.jpg'"
                                     class="card-img-top c-card-img-border"
                                     :alt="home.title"
                                     @error="setAltImg"

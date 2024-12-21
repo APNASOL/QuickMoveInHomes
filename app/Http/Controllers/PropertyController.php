@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Imports\PropertiesImport;
 use App\Models\Agent;
 use App\Models\Community;
 use App\Models\CustomerAgentConnection;
@@ -20,10 +22,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Imports\PropertiesImport;
 
 class PropertyController extends Controller
-{ 
+{
     public function uploadProperties(Request $request)
     {
         $request->validate([
@@ -88,62 +89,59 @@ class PropertyController extends Controller
     // }
 
     public function fetchProperties(Request $request)
-{
-    // Start building the properties query
-    $propertiesQuery = DB::table('properties');
+    {
+        // Start building the properties query
+        $propertiesQuery = DB::table('properties');
 
-    // Filter by title if provided
-    if ($request->filled('name') && $request->name !== "null") {
-        $propertiesQuery->where('title', 'LIKE', '%' . $request->name . '%');
-    }
-
-    // Paginate the results
-    $properties = $propertiesQuery->paginate(15);
-
-    // Process each property using foreach loop
-    foreach ($properties as $property) {
-        // Initialize main_image to null
-        $property->main_image = null;
-
-        // Check if files are available and decode them
-        if ($property->files) {
-            $files = json_decode($property->files, true);
-
-            // Fetch uploaded images if any
-            $uploads = Upload::whereIn('id', $files)->get();
-
-            // Filter for images (JPEG, PNG, etc.) and assign the first one to main_image
-            $image = $uploads->first(function ($upload) {
-                return in_array($upload->type, ['image/jpeg', 'image/png', 'image/gif']);
-            });
-
-            if ($image) {
-                $property->main_image = get_storage_url($image->file_name);
-            }
+        // Filter by title if provided
+        if ($request->filled('name') && $request->name !== "null") {
+            $propertiesQuery->where('title', 'LIKE', '%' . $request->name . '%');
         }
 
-        // Fetch property_main_image using QuickMoveHome
-        $quickMove = QuickMoveHome::where('property_id', $property->property_id)->first();
-        if ($quickMove) {
-            // Process main image from QuickMoveHome
-            if ($quickMove->main_image) {
-                $uploaded_image = Upload::find($quickMove->main_image);
+        // Paginate the results
+        $properties = $propertiesQuery->paginate(15);
 
+        // Process each property using foreach loop
+        foreach ($properties as $property) {
+            // Initialize main_image to null
+            
+
+            // Check if files are available and decode them
+            // if ($property->files) {
+            //     $files = json_decode($property->files, true);
+
+            //     // Fetch uploaded images if any
+            //     $uploads = Upload::whereIn('id', $files)->get();
+
+            //     // Filter for images (JPEG, PNG, etc.) and assign the first one to main_image
+            //     $image = $uploads->first(function ($upload) {
+            //         return in_array($upload->type, ['image/jpeg', 'image/png', 'image/gif']);
+            //     });
+
+            //     if ($image) {
+            //         $property->main_image = get_storage_url($image->file_name);
+            //     }
+            // }
+
+            // Fetch property_main_image using QuickMoveHome
+            // $quickMove = QuickMoveHome::where('property_id', $property->property_id)->first();
+
+            // Process main image from QuickMoveHome
+            
+            if ($property->main_image) {
+                $uploaded_image = Upload::find($property->main_image);
                 if ($uploaded_image) {
                     $property->main_image = get_storage_url($uploaded_image->file_name);
                 }
             }
+
+            $property->community = Community::where('id', $property->community_id)->first();
+
         }
 
-       $property->community = Community::where('id', $property->community_id)->first();
-
+        // Return the properties as JSON response
+        return response()->json($properties);
     }
-
-    // Return the properties as JSON response
-    return response()->json($properties);
-}
-
-
 
     public function create()
     {
@@ -177,6 +175,7 @@ class PropertyController extends Controller
             'school_id' => 'required',
             'community_id' => 'required',
             'home_main_image' => 'nullable',
+            'banner' => 'nullable',
 
             // Property Features Fields
             'feature.name' => 'nullable|string|max:255',
@@ -291,28 +290,12 @@ class PropertyController extends Controller
 
             // Save the updated file IDs as a JSON string
             $property->files = json_encode($all_files_ids);
-            $property->save();
+
         }
 
-        // Save the property
-        $property->save();
-
-        $listingDate = $request->listing_date;
-        // Remove the timezone part for parsing using regular expression
-        $cleanedDate = preg_replace('/ GMT[+-]\d{4} \(.*\)/', '', $listingDate);
-
-        // Convert to Carbon and format to 'Y-m-d'
-        $formattedDate = Carbon::parse($cleanedDate)->format('Y-m-d');
-
-        // Now save the formatted date in the database
-
-        $quickMoveInHome->property_id = $property->property_id;
-        $quickMoveInHome->move_in_date = $formattedDate;
-        $quickMoveInHome->incentives = $request->incentives;
-        // dd("Test",$request->home_main_image);
         if ($request->home_main_image) {
 
-            $existingInUploads = Upload::where('id', $quickMoveInHome->home_main_image)->first();
+            $existingInUploads = Upload::where('id', $property->home_main_image)->first();
             if ($existingInUploads) {
                 Storage::delete($existingInUploads->file_name);
                 $existingInUploads->delete();
@@ -321,7 +304,7 @@ class PropertyController extends Controller
             $data = substr($request->home_main_image, strpos($request->home_main_image, ',') + 1);
             $data = base64_decode($data);
 
-            $image_name_with_path = 'real_public/quickMoveInHomeMainImages/' . Str::random(40) . '.png';
+            $image_name_with_path = 'real_public/PropertyMainImages/' . Str::random(40) . '.png';
             Storage::put($image_name_with_path, $data);
 
             $Upload = new Upload;
@@ -333,8 +316,47 @@ class PropertyController extends Controller
 
             $Upload->save();
 
-            $quickMoveInHome->main_image = $Upload->id;
-        }
+            $property->main_image = $Upload->id;
+        } 
+        if ($request->banner) {
+
+            $existingInUploads = Upload::where('id', $property->banner)->first();
+            if ($existingInUploads) {
+                Storage::delete($existingInUploads->file_name);
+                $existingInUploads->delete();
+            }
+
+            $data = substr($request->banner, strpos($request->banner, ',') + 1);
+            $data = base64_decode($data);
+
+            $image_name_with_path = 'real_public/PropertyBannerImages/' . Str::random(40) . '.png';
+            Storage::put($image_name_with_path, $data);
+
+            $Upload = new Upload;
+            $Upload->file_original_name = $image_name_with_path;
+
+            $Upload->extension = 'png';
+            $Upload->type = 'image/png';
+            $Upload->file_name = $image_name_with_path;
+
+            $Upload->save();
+
+            $property->banner = $Upload->id;
+        } 
+        $property->save();
+
+        $listingDate = $request->listing_date;
+        // Remove the timezone part for parsing using regular expression
+        $cleanedDate = preg_replace('/ GMT[+-]\d{4} \(.*\)/', '', $listingDate); 
+        // Convert to Carbon and format to 'Y-m-d'
+        $formattedDate = Carbon::parse($cleanedDate)->format('Y-m-d');
+
+        // Now save the formatted date in the database
+
+        $quickMoveInHome->property_id = $property->property_id;
+        $quickMoveInHome->move_in_date = $formattedDate;
+        $quickMoveInHome->incentives = $request->incentives;
+
         $quickMoveInHome->save();
 
         // Below code is for feature, storing...
@@ -395,16 +417,23 @@ class PropertyController extends Controller
 
         $property->listing_date = $QuickMoveInHome->move_in_date;
 
-        if ($QuickMoveInHome->main_image) {
-            $uploads = Upload::where('id', $QuickMoveInHome->main_image)->first();
+        // if ($QuickMoveInHome->main_image) {
+        //     $uploads = Upload::where('id', $QuickMoveInHome->main_image)->first();
 
-        }
+        // }
 
-        if ($QuickMoveInHome->main_image) {
-            $uploaded_image = Upload::find($QuickMoveInHome->main_image);
+        if ($property->main_image) {
+            $uploaded_image = Upload::find($property->main_image);
 
             if ($uploaded_image) {
                 $property->home_main_image = get_storage_url($uploaded_image->file_name);
+            }
+        }
+        if ($property->banner) {
+            $uploaded_image = Upload::find($property->banner);
+
+            if ($uploaded_image) {
+                $property->banner = get_storage_url($uploaded_image->file_name);
             }
         }
 
@@ -433,23 +462,39 @@ class PropertyController extends Controller
     {
 
         $property_main_image = '';
+        $property_banner = '';
         // Fetch the property along with its relationships
         $property = Property::with(['feature', 'hoa', 'school'])->findOrFail($id);
 
-        $quickMove = QuickMoveHome::where('property_id', $property->property_id)->first();
-        if ($quickMove) {
-            // $property->home_main_image = $property;
+        if ($property->main_image) {
+            $uploaded_image = Upload::find($property->main_image);
 
-            // Process main image
-            if ($quickMove->main_image) {
-                $uploaded_image = Upload::find($quickMove->main_image);
-
-                if ($uploaded_image) {
-                    $property_main_image = get_storage_url($uploaded_image->file_name);
-                }
+            if ($uploaded_image) {
+                $property_main_image = get_storage_url($uploaded_image->file_name);
             }
-
         }
+        if ($property->banner) {
+            $uploaded_image = Upload::find($property->banner);
+
+            if ($uploaded_image) {
+                $property_banner = get_storage_url($uploaded_image->file_name);
+            }
+        }
+
+        // $quickMove = QuickMoveHome::where('property_id', $property->property_id)->first();
+        // if ($quickMove) {
+        //     // $property->home_main_image = $property;
+
+        //     // Process main image
+        //     if ($quickMove->main_image) {
+        //         $uploaded_image = Upload::find($quickMove->main_image);
+
+        //         if ($uploaded_image) {
+        //             $property_main_image = get_storage_url($uploaded_image->file_name);
+        //         }
+        //     }
+
+        // }
 
         // Initialize OpenHouse data
         $openHouseData = [];
@@ -534,6 +579,7 @@ class PropertyController extends Controller
             'school' => optional($property->school)->name,
             'incentives' => $property->incentives,
             'main_image' => $property_main_image,
+            'banner' => $property_banner,
         ];
 
         // Merge the open house data into property data if available
@@ -569,11 +615,18 @@ class PropertyController extends Controller
             $home->property_record = $property;
 
             // Process main image
-            if ($home->main_image) {
-                $uploaded_image = Upload::find($home->main_image);
+            if ($property->main_image) {
+                $uploaded_image = Upload::find($property->main_image);
 
                 if ($uploaded_image) {
-                    $home->main_image = get_storage_url($uploaded_image->file_name);
+                    $property->main_image = get_storage_url($uploaded_image->file_name);
+                }
+            }
+            if ($property->banner) {
+                $uploaded_image = Upload::find($property->banner);
+
+                if ($uploaded_image) {
+                    $property->banner = get_storage_url($uploaded_image->file_name);
                 }
             }
         }
@@ -598,7 +651,7 @@ class PropertyController extends Controller
             $OpenHouse->id = Str::orderedUuid();
         }
         $property = Property::where('property_id', $request->property_id)->first();
- 
+
         $property->is_open_house = $request->status == 'true' ? 1 : 0;
         $property->save();
         $OpenHouse->property_id = $request->property_id;

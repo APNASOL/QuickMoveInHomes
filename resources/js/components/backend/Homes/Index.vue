@@ -89,6 +89,9 @@
                                     <th scope="col">
                                         {{ translate("Image") }}
                                     </th>
+                                    <th scope="col">
+                                        {{ translate("Banner") }}
+                                    </th>
                                     
                                 </tr>
                             </thead>
@@ -117,7 +120,15 @@
                                     <td>
                                         <image-zooming-component
                                             :file="
-                                                home.main_image ?? 'empty.png'
+                                                home.property_record.main_image ?? 'empty.png'
+                                            "
+                                            :width="70"
+                                        />
+                                    </td>
+                                    <td>
+                                        <image-zooming-component
+                                            :file="
+                                                home.property_record.banner ?? 'empty.png'
                                             "
                                             :width="70"
                                         />

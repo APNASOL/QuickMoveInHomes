@@ -50,7 +50,6 @@
                     </div>
                     <div class="row g-3">
                         <div class="col-12">
-                            
                             <b>{{ translate("Is this open house") }}</b
                             ><br />
                             <div class="d-inline-block me-2">
@@ -359,14 +358,22 @@
                             {{ property.foundation_conditions }}
                         </div>
                         <hr />
-                        <div class="col-12 col-md-6">
-                            <h3 class="c-theme-text-color">
-                                {{ translate("Main image") }}
-                            </h3    >
-                            <image-zooming-component
-                                :file="property.main_image"
-                                :width="250"
-                            />
+
+                        <div class="d-flex justify-content-left">
+                            <div>
+                                <h3 class="c-theme-text-color">Main Image</h3>
+                                <image-zooming-component
+                                    :file="property.main_image"
+                                    :width="260"
+                                />
+                            </div>
+                            <div class="ms-5">
+                                <h3 class="c-theme-text-color">Banner</h3>
+                                <image-zooming-component
+                                    :file="property.banner"
+                                    :width="260"
+                                />
+                            </div>
                         </div>
                     </div>
 
@@ -374,7 +381,7 @@
                         <h3 class="c-theme-text-color">
                             Property Photo Gallery
                         </h3>
-                        
+
                         <div>
                             <div class="card-body">
                                 <!-- start of the loop -->

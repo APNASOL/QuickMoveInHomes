@@ -40,8 +40,8 @@ class IndexController extends Controller
             $home->property_record = $property;
 
             // Process main image
-            if ($home->main_image) {
-                $uploaded_image = Upload::find($home->main_image);
+            if ($property->main_image) {
+                $uploaded_image = Upload::find($property->main_image);
 
                 if ($uploaded_image) {
                     $home->main_image = get_storage_url($uploaded_image->file_name);
@@ -159,9 +159,9 @@ class IndexController extends Controller
                 $property->valid_incentives = $valid_incentives;
 
                 // Process main image (if applicable)
-                $home = QuickMoveHome::where('property_id', $property->property_id)->first();
-                if ($home->main_image) {
-                    $uploaded_image = Upload::find($home->main_image);
+                // $home = QuickMoveHome::where('property_id', $property->property_id)->first();
+                if ($property->main_image) {
+                    $uploaded_image = Upload::find($property->main_image);
                     if ($uploaded_image) {
                         $property->main_image = get_storage_url($uploaded_image->file_name);
                     }
@@ -322,9 +322,9 @@ class IndexController extends Controller
                 $property->valid_incentives = $valid_incentives;
 
                 // Process main image (if applicable)
-                $home = QuickMoveHome::where('property_id', $property->property_id)->first();
-                if ($home->main_image) {
-                    $uploaded_image = Upload::find($home->main_image);
+                // $home = QuickMoveHome::where('property_id', $property->property_id)->first();
+                if ($property->main_image) {
+                    $uploaded_image = Upload::find($property->main_image);
                     if ($uploaded_image) {
                         $property->main_image = get_storage_url($uploaded_image->file_name);
                     }

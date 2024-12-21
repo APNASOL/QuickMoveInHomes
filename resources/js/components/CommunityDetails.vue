@@ -1,11 +1,11 @@
 <template>
     <Master>
-        <div class="property-detail-section">
+        <div class="property-detail-section"> 
             <div class="property-detail-section">
                 <div
                     class="top-section"
                     :style="{
-                        backgroundImage: `url(${community_details.main_image})`,
+                        backgroundImage: `url(${community_details.banner})`,
                     }"
                 >
                     <div class="info-overlay">
@@ -548,7 +548,7 @@
                                  
                              
                                 <img
-                                    :src="home.home_data.main_image ?? '/images/default.jpg'"
+                                    :src="home.main_image ?? '/images/default.jpg'"
                                     class="card-img-top c-card-img-border"
                                     :alt="home.title"
                                     @error="setAltImg"
@@ -743,8 +743,7 @@ export default {
             axios
                 .get(`/api/fetch-community-all-homes/${this.community_id}`)
                 .then((response) => {
-                    this.community_homes = response.data; // Update community homes data
-                    console.log(response.data);
+                    this.community_homes = response.data; // Update community homes data 
                     this.initMap(); // Initialize map after fetching homes
                 })
                 .catch((error) => {

@@ -481,28 +481,64 @@
                             <div class="mt-3 mb-2">
                                 <img
                                     v-if="form.main_image"
-                                    :src="form.main_image ?? '/images/default.jpg'"
+                                    :src="
+                                        form.main_image ?? '/images/default.jpg'
+                                    "
                                     :custom_class="'img-fluid img-thumbnail rounded'"
                                     :width="125"
                                 />
                                 <img
                                     v-else
-                                    :src="existing_main_image ?? '/images/default.jpg'"
+                                    :src="
+                                        existing_main_image ??
+                                        '/images/default.jpg'
+                                    "
                                     :custom_class="'img-fluid img-thumbnail rounded'"
                                     :width="125"
                                 />
-                                 
-                                </div>
-                                <ImageCropper
-                                    @croppedImg="croppedImgSubmit"
-                                    :ratio="1"
-                                /> 
+                            </div>
+                            <ImageCropper
+                                @croppedImg="croppedImgSubmit"
+                                :ratio="1"
+                            />
 
                             <div
                                 class="invalid-feedback animated fadeIn"
                                 v-if="formErrors.main_image"
                             >
                                 {{ formErrors.main_image[0] }}
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label for="banner">{{
+                                translate("Banner")
+                            }}</label>
+                            <div class="mt-3 mb-2">
+                                <img
+                                    v-if="form.banner"
+                                    :src="form.banner ?? '/images/default.jpg'"
+                                    :custom_class="'img-fluid img-thumbnail rounded'"
+                                    :width="125"
+                                />
+                                <img
+                                    v-else
+                                    :src="
+                                        existing_banner ?? '/images/default.jpg'
+                                    "
+                                    :custom_class="'img-fluid img-thumbnail rounded'"
+                                    :width="125"
+                                />
+                            </div>
+                            <ImageCropper
+                                @croppedImg="croppedBannerSubmit"
+                                :ratio="3"
+                            />
+
+                            <div
+                                class="invalid-feedback animated fadeIn"
+                                v-if="formErrors.banner"
+                            >
+                                {{ formErrors.banner[0] }}
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
@@ -601,6 +637,7 @@ export default {
                 proximity_to_airport: null,
                 nearby_attractions: null,
                 main_image: null,
+                banner: null,
             },
             amenitesOptions: [],
             neighborhoodOptions: [],
@@ -655,6 +692,7 @@ export default {
                         data.nearby_attractions || null;
 
                     this.existing_main_image = data.main_image || null; // Set the main image
+                    this.existing_banner = data.banner || null; // Set the main image
                 })
                 .catch((error) => {
                     toastr.error(error.response.data.message);
@@ -663,6 +701,9 @@ export default {
 
         croppedImgSubmit(img) {
             this.form.main_image = img;
+        },
+        croppedBannerSubmit(img) {
+            this.form.banner = img;
         },
 
         pluckamenity() {
@@ -718,6 +759,7 @@ export default {
             // Append each field to the formData
             appendField("id", this.community_id);
             appendField("main_image", this.form.main_image);
+            appendField("banner", this.form.banner);
             appendField("name", this.form.name);
             appendField("description", this.form.description);
             appendField("location", this.form.location);

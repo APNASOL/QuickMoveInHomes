@@ -90,6 +90,9 @@
                                         {{ translate("Image") }}
                                     </th>
                                     <th>
+                                        {{ translate("Banner") }}
+                                    </th>
+                                    <th>
                                         {{ translate("Action") }}
                                     </th>
                                 </tr>
@@ -138,6 +141,15 @@
                                         <image-zooming-component
                                             :file="
                                                 property.main_image ??
+                                                'empty.png'
+                                            "
+                                            :width="70"
+                                        />
+                                    </td>
+                                    <td>
+                                        <image-zooming-component
+                                            :file="
+                                                property.banner ??
                                                 'empty.png'
                                             "
                                             :width="70"

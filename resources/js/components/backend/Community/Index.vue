@@ -91,6 +91,9 @@
                                         {{ translate("Image") }}
                                     </th>
                                     <th scope="col">
+                                        {{ translate("Banner") }}
+                                    </th>
+                                    <th scope="col">
                                         {{ translate("Action") }}
                                     </th>
                                 </tr>
@@ -134,6 +137,15 @@
                                         <image-zooming-component
                                             :file="
                                                 community.main_image ??
+                                                'empty.png'
+                                            "
+                                            :width="70"
+                                        />
+                                    </td>
+                                    <td>
+                                        <image-zooming-component
+                                            :file="
+                                                community.banner ??
                                                 'empty.png'
                                             "
                                             :width="70"
