@@ -541,6 +541,7 @@
                                 {{ formErrors.banner[0] }}
                             </div>
                         </div>
+                        
                         <div class="col-12 col-md-6">
                             <label for="files">{{
                                 translate("Upload Images/Videos")

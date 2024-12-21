@@ -830,7 +830,7 @@
                             </div>
                         </div>
 
-                        <div class="col-12 col-md-6">
+                        <div class="col-12 col-md-4">
                             <label for="landscape_maintenance">{{
                                 translate("Landscape Maintenance")
                             }}</label>
@@ -852,7 +852,7 @@
                             </div>
                         </div>
 
-                        <div class="col-12 col-md-6">
+                        <div class="col-12 col-md-4">
                             <label for="foundation_conditions">{{
                                 translate("Foundation Conditions")
                             }}</label>
@@ -874,7 +874,7 @@
                             </div>
                         </div>
 
-                        <div class="col-12 col-md-6">
+                        <div class="col-12 col-md-4">
                             <label for="listing_date">{{
                                 translate("Listing Date")
                             }}</label>
@@ -898,7 +898,9 @@
                                 {{ formErrors.listing_date[0] }}
                             </div>
                         </div>
-                        <div class="col-12 col-md-12">
+                         
+                           
+                        <div class="col-12 col-md-6">
                             <label for="home_main_image">{{
                                 translate("Main image")
                             }}</label>
@@ -933,7 +935,7 @@
                                 {{ formErrors.home_main_image[0] }}
                             </div>
                         </div>
-                        <div class="col-12 col-md-12">
+                        <div class="col-12 col-md-6">
                             <label for="banner">{{
                                 translate("Banner")
                             }}</label>
@@ -968,6 +970,7 @@
                                 {{ formErrors.banner[0] }}
                             </div>
                         </div>
+                        
 
                         <div class="col-12 col-md-12">
                             <label for="files">{{
