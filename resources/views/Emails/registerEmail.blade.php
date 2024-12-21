@@ -1307,7 +1307,7 @@ $external_website = getExternalWebsiteData();
                             <!-- <img src="{{ asset('images/email_logo.png') }}" width="125"
                                 style="display: block; border: 0px;" /> -->
                                 <!--  ($logo) -->
-                                <img src="{{ $external_website->black_logo }}" width="160" alt="Logo" />
+                                <img src="{{ $external_website->black_logo ?? '' }}" width="160" alt="Logo" />
 
 
                         </td>
