@@ -79,17 +79,17 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th scope="col" class="text-center">#</th>
-                                    <th scope="col">
+                                    <th class="text-center">#</th>
+                                    <th>
                                         {{ translate("Name") }}
                                     </th>
-                                    <!-- <th scope="col">
-                                        {{ translate("Location") }}
-                                    </th> -->
-                                    <th scope="col">
+                                    <th>
+                                        {{ translate("Property In Community") }}
+                                    </th>
+                                    <th>
                                         {{ translate("Image") }}
                                     </th>
-                                    <th scope="col">
+                                    <th>
                                         {{ translate("Action") }}
                                     </th>
                                 </tr>
@@ -113,6 +113,19 @@
                                             "
                                         >
                                             {{ property.title }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a
+                                            type="button"
+                                            class="c-linked c-mouse-over c-theme-text-color"
+                                            title="Details"
+                                            :href="
+                                                '/community/details/' +
+                                                property.community.id
+                                            "
+                                        >
+                                            {{ property.community.name }}
                                         </a>
                                     </td>
                                     <!-- <td>{{ property.location }}</td> -->
@@ -264,5 +277,4 @@ export default {
 .c-searchbox-radius {
     border-radius: 0 !important;
 }
-
 </style>

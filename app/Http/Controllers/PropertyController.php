@@ -46,46 +46,104 @@ class PropertyController extends Controller
         return view('app', compact('name'));
     }
 
-    public function fetchProperties(Request $request)
-    {
-        // Start building the properties query
-        $propertiesQuery = DB::table('properties');
+    // public function fetchProperties(Request $request)
+    // {
+    //     // Start building the properties query
+    //     $propertiesQuery = DB::table('properties');
 
-        // Filter by title if provided
-        if ($request->filled('name') && $request->name !== "null") {
-            $propertiesQuery->where('title', 'LIKE', '%' . $request->name . '%');
+    //     // Filter by title if provided
+    //     if ($request->filled('name') && $request->name !== "null") {
+    //         $propertiesQuery->where('title', 'LIKE', '%' . $request->name . '%');
+    //     }
+
+    //     // Paginate the results
+    //     $properties = $propertiesQuery->paginate(15);
+
+    //     // Process each property
+    //     $properties->getCollection()->transform(function ($property) {
+    //         // Initialize main_image to null
+    //         $property->main_image = null;
+
+    //         // Check if files are available and decode them
+    //         if ($property->files) {
+    //             $files = json_decode($property->files, true);
+
+    //             // Fetch uploaded images if any
+    //             $uploads = Upload::whereIn('id', $files)->get();
+
+    //             // Filter for images (JPEG, PNG, etc.) and assign the first one to main_image
+    //             $image = $uploads->first(function ($upload) {
+    //                 return in_array($upload->type, ['image/jpeg', 'image/png', 'image/gif']);
+    //             });
+
+    //             if ($image) {
+    //                 $property->main_image = get_storage_url($image->file_name);
+    //             }
+    //         }
+
+    //         return $property;
+    //     });
+
+    //     return response()->json($properties);
+    // }
+
+    public function fetchProperties(Request $request)
+{
+    // Start building the properties query
+    $propertiesQuery = DB::table('properties');
+
+    // Filter by title if provided
+    if ($request->filled('name') && $request->name !== "null") {
+        $propertiesQuery->where('title', 'LIKE', '%' . $request->name . '%');
+    }
+
+    // Paginate the results
+    $properties = $propertiesQuery->paginate(15);
+
+    // Process each property using foreach loop
+    foreach ($properties as $property) {
+        // Initialize main_image to null
+        $property->main_image = null;
+
+        // Check if files are available and decode them
+        if ($property->files) {
+            $files = json_decode($property->files, true);
+
+            // Fetch uploaded images if any
+            $uploads = Upload::whereIn('id', $files)->get();
+
+            // Filter for images (JPEG, PNG, etc.) and assign the first one to main_image
+            $image = $uploads->first(function ($upload) {
+                return in_array($upload->type, ['image/jpeg', 'image/png', 'image/gif']);
+            });
+
+            if ($image) {
+                $property->main_image = get_storage_url($image->file_name);
+            }
         }
 
-        // Paginate the results
-        $properties = $propertiesQuery->paginate(45);
+        // Fetch property_main_image using QuickMoveHome
+        $quickMove = QuickMoveHome::where('property_id', $property->property_id)->first();
+        if ($quickMove) {
+            // Process main image from QuickMoveHome
+            if ($quickMove->main_image) {
+                $uploaded_image = Upload::find($quickMove->main_image);
 
-        // Process each property
-        $properties->getCollection()->transform(function ($property) {
-            // Initialize main_image to null
-            $property->main_image = null;
-
-            // Check if files are available and decode them
-            if ($property->files) {
-                $files = json_decode($property->files, true);
-
-                // Fetch uploaded images if any
-                $uploads = Upload::whereIn('id', $files)->get();
-
-                // Filter for images (JPEG, PNG, etc.) and assign the first one to main_image
-                $image = $uploads->first(function ($upload) {
-                    return in_array($upload->type, ['image/jpeg', 'image/png', 'image/gif']);
-                });
-
-                if ($image) {
-                    $property->main_image = get_storage_url($image->file_name);
+                if ($uploaded_image) {
+                    $property->main_image = get_storage_url($uploaded_image->file_name);
                 }
             }
+        }
 
-            return $property;
-        });
+       $property->community = Community::where('id', $property->community_id)->first();
 
-        return response()->json($properties);
     }
+
+    // Return the properties as JSON response
+    return response()->json($properties);
+}
+
+
 
     public function create()
     {
