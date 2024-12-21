@@ -292,7 +292,7 @@ class HomeController extends Controller
             }
 
 
-            if ($home->main_image) {
+            if ($home && $home->main_image) {
                 $upload = Upload::where('id', $home->main_image)->first();
                 if ($upload) {
                     $home->main_image = $upload->file_name ? get_storage_url($upload->file_name) : '';
