@@ -300,7 +300,7 @@ class HomeController extends Controller
                 }
             }else
             {
-                $home->main_image = null;
+                $home->main_image = '/images/default.jpg';
             }
 
             $property->home_data = $home;
