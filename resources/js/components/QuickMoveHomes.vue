@@ -1,6 +1,5 @@
 <template>
     <div class="c-bg-color" v-if="homes && homes.length">
-        
         <div class="mx-4">
             <div class="d-flex justify-content-between">
                 <div>
@@ -219,6 +218,7 @@ export default defineComponent({
                     transition: "500",
                 },
             },
+            incentiveAvailable: null,
         };
     },
     created() {
@@ -230,19 +230,32 @@ export default defineComponent({
         Navigation,
     },
     mounted() {
-        this.openModal();
+        this.checkIncentives();
     },
     methods: {
         openModal() {
             setTimeout(() => {
                 this.$refs.openIncentivesModal.click();
-            }, 2000);
+            }, 1000);
         },
         async getHomes() {
             await axios
                 .get("/api/front-homes/all")
                 .then((response) => {
                     this.homes = response.data;
+                })
+                .catch((error) => {
+                    toastr.error(error.response.data.message);
+                });
+        },
+        async checkIncentives() {
+            await axios
+                .get("/api/check-incentives")
+                .then((response) => {
+                    this.incentiveAvailable = response.data;
+                    if (this.incentiveAvailable == 1) {
+                        this.openModal();
+                    }
                 })
                 .catch((error) => {
                     toastr.error(error.response.data.message);

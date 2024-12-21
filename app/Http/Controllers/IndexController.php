@@ -206,14 +206,14 @@ class IndexController extends Controller
 
     }
     public function fetch_sorted_incentives($sort_by)
-    { 
-      
+    {
+
         $currentDate = now()->format('Y-m-d');
-        
+
         // Initialize the query
         $query = Incentive::where('status', 1)
-            ->where('end_date', '>=',  $currentDate); // Filter out past incentives
-    
+            ->where('end_date', '>=', $currentDate); // Filter out past incentives
+
         // Apply sorting based on the $sort_by parameter
         if ($sort_by === 'Name') {
             $query->orderBy('title', 'asc'); // Sort by title in ascending order
@@ -227,17 +227,17 @@ class IndexController extends Controller
             // Default sorting (latest first) if the sort_by parameter is invalid
             $query->orderBy('created_at', 'desc');
         }
-    
+
         // Execute the query and get the results
         $incentives = $query->get();
-    
+
         foreach ($incentives as $incentive) {
             // Fetch and set builder name
             $builder = Builder::where('id', $incentive->builder_id)->first();
             if ($builder) {
                 $incentive->builder_name = $builder->name;
             }
-    
+
             // Format incentive_banner image URL
             if ($incentive && $incentive->incentive_banner) {
                 $uploaded_image = Upload::where('id', $incentive->incentive_banner)->first();
@@ -245,21 +245,18 @@ class IndexController extends Controller
                     $incentive->incentive_banner = get_storage_url($uploaded_image->file_name);
                 }
             }
-    
+
             // Format created_at and updated_at dates
             $incentive->created_at = Carbon::parse($incentive->created_at)->format('d-m-Y');
             $incentive->updated_at = Carbon::parse($incentive->updated_at)->format('d-m-Y');
         }
-    
+
         return $incentives;
     }
-    
-
     public function detailed_incentive($id)
     {
         return view('app', compact('id'));
     }
-
     public function selected_incentives_properties($id)
     {
 
@@ -352,44 +349,61 @@ class IndexController extends Controller
     }
 
     public function openhouses_for_navbar()
-{
-    // Get the current date and time
-    $currentDate = now();
-    $currentTime = $currentDate->format('H:i:s');
+    {
+        // Get the current date and time
+        $currentDate = now();
+        $currentTime = $currentDate->format('H:i:s');
 
-    // Fetch properties where 'is_open_house' is true
-    $properties = Property::where('is_open_house', 'true')
-        ->orWhere('is_open_house', true)
+        // Fetch properties where 'is_open_house' is true
+        $properties = Property::where('is_open_house', 'true')
+            ->orWhere('is_open_house', true)
+            ->get();
+
+        // Filter properties based on open house availability
+        $filteredProperties = $properties->reject(function ($property) use ($currentDate, $currentTime) {
+            // Fetch the open house record for the property
+            $open_house_record = OpenHouse::where('property_id', $property->property_id)->first();
+
+            // Check if open house record exists
+            if (!$open_house_record) {
+                return true; // Exclude if no open house record
+            }
+
+            // Check if the open house date is in the future or if it is today and the current time is within the open house hours
+            if ($open_house_record->date > $currentDate->toDateString()) {
+                return false; // Include property if the open house date is in the future
+            } elseif ($open_house_record->date == $currentDate->toDateString()) {
+                // If the open house is today, ensure the current time is within the start and end times
+                if ($open_house_record->end_time >= $currentTime) {
+                    return false; // Include property if within today's open house hours
+                }
+            }
+
+            // If conditions are not met, update the property and delete the open house record
+            $property->update(['is_open_house' => false]);
+            $open_house_record->delete();
+
+            return true; // Exclude property from the final result
+        });
+
+        return $filteredProperties;
+    }
+
+    public function check_incentives()
+{
+    $currentDate = now()->format('Y-m-d');
+
+    // Fetch all active incentives that have not expired
+    $incentives = Incentive::where('status', 1)
+        ->where('end_date', '>=', $currentDate)
         ->get();
 
-    // Filter properties based on open house availability
-    $filteredProperties = $properties->reject(function ($property) use ($currentDate, $currentTime) {
-        // Fetch the open house record for the property
-        $open_house_record = OpenHouse::where('property_id', $property->property_id)->first();
-
-        // Check if open house record exists
-        if (!$open_house_record) {
-            return true; // Exclude if no open house record
-        }
-
-        // Check if the open house date is in the future or if it is today and the current time is within the open house hours
-        if ($open_house_record->date > $currentDate->toDateString()) {
-            return false; // Include property if the open house date is in the future
-        } elseif ($open_house_record->date == $currentDate->toDateString()) {
-            // If the open house is today, ensure the current time is within the start and end times
-            if ($open_house_record->end_time >= $currentTime) {
-                return false; // Include property if within today's open house hours
-            }
-        }
-
-        // If conditions are not met, update the property and delete the open house record
-        $property->update(['is_open_house' => false]);
-        $open_house_record->delete();
-
-        return true; // Exclude property from the final result
-    });
-
-    return $filteredProperties;
+    // Check if any incentives were found
+    if ($incentives->isNotEmpty()) {
+        return 1;  
+    } else {
+        return 0;
+    }
 }
 
 

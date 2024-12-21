@@ -48,6 +48,7 @@ Route::post('/logout-user', [AdminController::class, 'logout'])->name('logout-us
 Route::post('/reset-password', [UserController::class, 'reset_password'])->name('reset-password');
 Route::post('/forgot-password', [UserController::class, 'forgot_password'])->name('forgot-password');
 
+Route::get('/check-incentives', [IndexController::class, 'check_incentives'])->name('check-incentives');
 Route::get('/front-homes/{type}', [IndexController::class, 'front_homes'])->name('front-homes');
 Route::get('/incentives-list', [IndexController::class, 'incentives_list'])->name('incentives-list');
 Route::get('/fetch-sorted-incentives/{sort_by}', [IndexController::class, 'fetch_sorted_incentives'])->name('fetch-sorted-incentives');
