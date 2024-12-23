@@ -3,168 +3,99 @@
 namespace App\Imports;
 
 use App\Models\Property;
-use App\Models\PropertyFeature;
-use App\Models\QuickMoveInHome;
-use Illuminate\Support\Collection; 
+use App\Models\Upload;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Concerns\Importable;
+// use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use Storage;
 
 class PropertiesImport implements ToCollection
 {
-    /**
-     * Process each row from the Excel file.
-     *
-     * @param Collection $rows
-     */
+    use Importable;
+
+    protected $extractPath;
+
+    public function __construct($extractPath)
+    {
+        $this->extractPath = $extractPath; // Store the extraction path
+        // Log::info('Extract path: ' . $this->extractPath);
+    }
+
     public function collection(Collection $rows)
     {
-        $rows->shift(); // Skip headers
+        DB::beginTransaction(); // Start a transaction to ensure data consistency
 
-        foreach ($rows as $row) {
-            $propertyData = $this->mapRowToPropertyData($row);
+        try {
+            // Skip the first row if it's the header row
+            $rows = $rows->skip(1); // Skip the first row
 
-            try {
-                // Create the property record
-                $propertyId = $this->createProperty($propertyData);
+            foreach ($rows as $row) { 
 
-                // Create Property Feature if applicable
-                if (!empty($propertyData['feature_name'])) {
-                    $this->createPropertyFeature($propertyId, $propertyData);
+                // Check if the row contains valid data
+                if (!isset($row[0], $row[1], $row[2], $row[3], $row[4], $row[5])) {
+                    // Log::warning('Skipping row due to missing data: ' . json_encode($row));
+                    continue; // Skip invalid rows
                 }
 
-                // Create Quick Move-In Home if applicable
-                if (!empty($propertyData['move_in_date'])) {
-                    $this->createQuickMoveInHome($propertyId, $propertyData);
+                // Handle property data
+                $property = new Property();
+                $property->property_id = Str::orderedUuid();
+                $property->user_id = $row[0]; // user_id (first column)
+                $property->community_id = $row[1]; // community_id (second column)
+                $property->title = $row[2]; // title (third column)
+                $property->description = $row[3]; // description (fourth column)
+                $property->address = $row[5]; // address (fifth are images and sixth column)
+                $property->longitude = $row[6]; // longitude (8th column)
+                $property->latitude = $row[7]; // latitude (9th column)
+                $property->save();
+
+                // Process images
+                $imageNames = explode(',', $row[4]); // images (fifth column)
+                $uploadedImageIds = [];
+
+                foreach ($imageNames as $imageName) {
+                    // Log::info("images ".$imageName);
+                    $imageName = trim($imageName); // Remove any extra spaces
+                    $imagePath = $this->extractPath . '/' . $imageName; // Get the full path of the image
+
+                    // Check if the image exists in the extracted folder
+                    if (file_exists($imagePath)) {
+                        // Create a new name for the image and store it
+                        $newImageName = 'real_public/PropertiesFiles/' . Str::random(40) . '.' . pathinfo($imageName, PATHINFO_EXTENSION);
+
+                        // Store the image in real_public disk
+                        Storage::disk('real_public')->put($newImageName, file_get_contents($imagePath));
+
+                        // Save image details in the Upload model
+                        $upload = new Upload();
+                        $upload->file_original_name = $imageName;
+                        $upload->file_name = $newImageName;
+                        $upload->extension = pathinfo($imageName, PATHINFO_EXTENSION);
+                        $upload->type = mime_content_type($imagePath);
+                        $upload->save();
+
+                        // Add the image ID to the uploaded images array
+                        $uploadedImageIds[] = $upload->id;
+                    } else {
+                        // Log missing image file
+                        // Log::error("Image file not found: " . $imagePath);
+                    }
                 }
-            } catch (\Exception $e) {
-                 
+
+                // Associate images with the property
+                $property->images = json_encode($uploadedImageIds); // Store image IDs in JSON format
+                $property->save();
             }
+
+            DB::commit(); // Commit the transaction
+        } catch (\Exception $e) {
+            DB::rollBack(); // Rollback the transaction in case of error
+            // Log::error('Error importing properties: ' . $e->getMessage());
+            throw $e; // Rethrow the exception
         }
-    } 
-    /**
-     * Map the row data to the Property model attributes.
-     *
-     * @param array $row
-     * @return array
-     */
-    private function mapRowToPropertyData($row)
-    {
-        return [
-            'user_id' => $row[0],
-            'community_id' => $row[1],
-            'title' => $row[2],
-            'description' => $row[3] ?? null,
-            'address' => $row[4],
-            'city' => $row[5],
-            'state' => $row[6],
-            'zip_code' => $row[7],
-            'longitude' => $row[8],
-            'latitude' => $row[9],
-            'price' => $row[10],
-            'bedrooms' => $row[11],
-            'square_feet' => $row[12],
-            'lot_size' => $row[13],
-            'property_type' => $row[14],
-            'listing_type' => $row[15],
-            'year_built' => $row[16],
-            'hoa_id' => $row[17],
-            'association_fee' => $row[18],
-            'cic' => $row[19] ?? null,
-            'school_id' => $row[20],
-            'is_open_house' => $row[22] ?? 0,
-            'feature_name' => $row[23] ?? null,
-            'feature_description' => $row[24] ?? null,
-            'fireplace_type' => $row[25] ?? null,
-            'kitchen_pantry_type' => $row[26] ?? null,
-            'reach_in' => $row[27] ?? null,
-            'walk_in' => $row[28] ?? null,
-            'laundry_closet' => $row[29] ?? null,
-            'closet_location' => $row[30] ?? null,
-            'bedroom_location' => $row[31] ?? null,
-            'bathroom_type' => $row[32] ?? null,
-            'bathroom_status' => $row[33] ?? null,
-            'pool_shape' => $row[34] ?? null,
-            'water_features' => $row[35] ?? null,
-            'pool_status' => $row[36] ?? null,
-            'spa' => $row[37] ?? 0,
-            'fencing_material' => $row[38] ?? null,
-            'fencing_status' => $row[39] ?? null,
-            'parking_enclosure' => $row[40] ?? null,
-            'private_bath' => $row[41] ?? 0,
-            'outdoor_shower' => $row[42] ?? 0,
-            'landscape_maintenance' => $row[43] ?? null,
-            'foundation_conditions' => $row[44] ?? null,
-            'move_in_date' => $row[45] ?? null,
-            'incentives' => $row[46] ?? null,
-            'main_image' => $row[47] ?? null,
-        ];
-    } 
-    /**
-     * Create a property record in the database.
-     *
-     * @param array $data
-     * @return string Property ID
-     */
-    private function createProperty($data)
-    {
-        $property = new Property();
-        $property->property_id = (string) Str::uuid(); // Generate UUID
-        $property->fill($data);
-        $property->save();
-
-        return $property->property_id;
     }
 
-    /**
-     * Create a property feature record in the database.
-     *
-     * @param string $propertyId
-     * @param array $data
-     */
-    private function createPropertyFeature($propertyId, $data)
-    {
-        $feature = new PropertyFeature();
-        $feature->property_id = $propertyId;
-        $feature->fill([
-            'name' => $data['feature_name'],
-            'description' => $data['feature_description'],
-            'fireplace_type' => $data['fireplace_type'],
-            'kitchen_pantry_type' => $data['kitchen_pantry_type'],
-            'reach_in' => $data['reach_in'],
-            'walk_in' => $data['walk_in'],
-            'laundry_closet' => $data['laundry_closet'],
-            'closet_location' => $data['closet_location'],
-            'bedroom_location' => $data['bedroom_location'],
-            'bathroom_type' => $data['bathroom_type'],
-            'bathroom_status' => $data['bathroom_status'],
-            'pool_shape' => $data['pool_shape'],
-            'water_features' => $data['water_features'],
-            'pool_status' => $data['pool_status'],
-            'spa' => $data['spa'],
-            'fencing_material' => $data['fencing_material'],
-            'fencing_status' => $data['fencing_status'],
-            'parking_enclosure' => $data['parking_enclosure'],
-            'private_bath' => $data['private_bath'],
-            'outdoor_shower' => $data['outdoor_shower'],
-            'landscape_maintenance' => $data['landscape_maintenance'],
-            'foundation_conditions' => $data['foundation_conditions'],
-        ]);
-        $feature->save();
-    } 
- 
-    /**
-     * Create a quick move-in home record in the database.
-     *
-     * @param string $propertyId
-     * @param array $data
-     */
-    private function createQuickMoveInHome($propertyId, $data)
-    {
-        $quickMoveIn = new QuickMoveInHome();
-        $quickMoveIn->property_id = $propertyId;
-        $quickMoveIn->move_in_date = $data['move_in_date'];
-        $quickMoveIn->incentives = $data['incentives'];
-        $quickMoveIn->main_image = null; // No file upload handling here
-        $quickMoveIn->save();
-    }
 }

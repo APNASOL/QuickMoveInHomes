@@ -19,21 +19,257 @@ use App\Models\User;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
+use ZipArchive;
 
 class PropertyController extends Controller
 {
+
+    // public function uploadProperties(Request $request)
+    // {
+    //     $request->validate([
+    //         'file' => 'required|file|mimes:xlsx',
+    //         'images' => 'required|file|mimes:zip',
+    //     ]);
+    
+    //     try {
+    //         // Step 1: Handle Images (Unzip)
+    //         $zipPath = $request->file('images')->store('temp', 'real_public');
+    //         $extractPath = Storage::disk('real_public')->path('temp/'); // Absolute path for extracting images
+    
+             
+    //         // Ensure the extraction directory exists
+    //         if (!File::exists($extractPath)) {
+    //             dd("ste");
+    //             File::makeDirectory($extractPath, 0755, true);
+    //         }
+    
+    //         // Step 2: Unzip the uploaded file
+    //         $zip = new ZipArchive;
+    //         $zipFilePath = Storage::disk('real_public')->path('temp/' . basename($zipPath)); // Absolute path for ZIP file
+    
+    //         if ($zip->open($zipFilePath) === true) {
+    //             $zip->extractTo($extractPath); // Extract to local path
+    //             $zip->close();
+    //         } else {
+    //             return response()->json(['error' => 'Failed to unzip the images.'], 500);
+    //         }
+    
+    //         dd($extractPath);
+    //         // Step 3: Import Properties from Excel
+    //         Excel::import(new PropertiesImport($extractPath), $request->file('file'));
+    
+    //         // Generate public URL for the extracted images
+    //         $imageUrls = [];
+    //         $imagePaths = glob($extractPath . '/*'); // Get all files from the extracted folder
+    //         foreach ($imagePaths as $imagePath) {
+    //             $imageUrl = get_storage_url('temp/' . basename($imagePath)); // Generate public URL
+    //             $imageUrls[] = $imageUrl;
+    //         }
+    
+    //         return response()->json(['message' => 'Properties uploaded successfully', 'image_urls' => $imageUrls], 200);
+    
+    //     } catch (\Exception $e) {
+    //         \Log::error('Error uploading properties: ' . $e->getMessage());
+    //         return response()->json(['error' => 'An error occurred while uploading properties.'], 500);
+    //     }
+    // }
+    
+
+
+    // public function uploadProperties(Request $request)
+    // {
+    //     // Validate the request input
+    //     $request->validate([
+    //         'file' => 'required|file|mimes:xlsx', // Excel file validation
+    //         'images' => 'required|file|mimes:zip', // ZIP file validation
+    //     ]);
+
+    //     try {
+    //         // Step 1: Handle Images (Unzip)
+    //         $zipPath = $request->file('images')->store('real_public/temp/', 'real_public');
+    //         $extractPath = public_path('real_public/temp/'); // Extract to temporary folder in real_public
+
+    //         dd(public_path('real_public/temp/'), get_storage_url('real_public/temp/'));
+    //         // Ensure the extraction directory exists
+    //         if (!File::exists($extractPath)) {
+    //             File::makeDirectory($extractPath, 0755, true);
+    //         }
+
+    //         // Step 2: Unzip the uploaded file
+    //         $zip = new ZipArchive;
+    //         $zipFilePath = get_storage_url('real_public/temp/' . basename($zipPath)); // Get full path of ZIP file
+    //     // dd($zipFilePath);
+    //     //         // Check if the ZIP file exists
+    //     //         if (!file_exists($zipFilePath)) {
+    //     //             return response()->json(['error' => 'ZIP file does not exist at the path: ' . $zipFilePath], 500);
+    //     //         }
+
+    //                 $zipFilePath = public_path('real_public/temp/' . basename($zipPath));
+    //     // Open and extract the ZIP file
+    //         if ($zip->open($zipFilePath) === true) {
+    //             \Log::info('Zip file opened successfully');
+    //             $zip->extractTo($extractPath); // Extract to local path within real_public
+    //             $zip->close();
+    //         } else {
+    //             \Log::error('Failed to open ZIP file: ' . $zipFilePath);
+    //             dd('Failed to open zip file');
+    //             return response()->json(['error' => 'Failed to unzip the images.'], 500);
+    //         }
+
+    //         // Step 3: Process images dynamically
+
+    //         // Get all files in the extracted folder
+    //         $extractedFiles = File::files($extractPath);
+
+    //         foreach ($extractedFiles as $file) {
+    //             // Get the image name and use the helper to get its full path
+    //             $imageName = basename($file);
+    //             $imagePath = get_storage_url($imageName);
+
+    //             // Check if the image exists at the specified path
+    //             if (file_exists($imagePath)) {
+    //                 // Process the image (e.g., store it in a database or perform other actions)
+    //                 dd('Processing image: ' . $imageName);
+    //             } else {
+    //                 // Log an error if the image does not exist
+    //                 dd("Image file not found: " . $imagePath);
+    //             }
+    //         }
+    //         dd($extractedFiles);
+
+    //         // Step 4: Import Properties from Excel
+    //         Excel::import(new PropertiesImport($extractPath), $request->file('file'));
+
+    //         // Clean up temporary files
+    //         // Storage::disk('real_public')->delete($zipPath); // Delete the ZIP from real_public disk
+    //         // File::deleteDirectory($extractPath); // Delete extracted images directory
+
+    //         // Return success response
+    //         return response()->json(['message' => 'Properties uploaded successfully'], 200);
+
+    //     } catch (\Exception $e) {
+    //         // Log and return an error message in case of exception
+    //         \Log::error('Error uploading properties: ' . $e->getMessage());
+    //         return response()->json(['error' => 'An error occurred while uploading properties. Details: ' . $e->getMessage()], 500);
+    //     }
+    // }
+
+    // public function uploadProperties(Request $request)
+    // {
+    //     $request->validate([
+    //         'file' => 'required|file|mimes:xlsx',
+    //     ]);
+
+    //     Excel::import(new PropertiesImport, $request->file('file'));
+    //     return 'success';
+    // }
+
+    // upto here code is working
     public function uploadProperties(Request $request)
     {
         $request->validate([
             'file' => 'required|file|mimes:xlsx',
+            'images' => 'required|file|mimes:zip',
         ]);
 
-        Excel::import(new PropertiesImport, $request->file('file'));
-        return 'success';
+        try {
+            // Step 1: Handle Images (Unzip)
+            $zipPath = $request->file('images')->store('real_public/temp', 'real_public');
+            $extractPath = public_path('real_public/temp/'); // Extract to temporary folder in real_public
+
+            // Ensure the extraction directory exists
+            if (!File::exists($extractPath)) {
+                File::makeDirectory($extractPath, 0755, true);
+            }
+
+            // Step 2: Unzip the uploaded file
+            $zip = new ZipArchive;
+            $zipFilePath = public_path('real_public/temp/' . basename($zipPath)); // Get full path of ZIP file
+
+            // Check if the ZIP file exists
+            if (!file_exists($zipFilePath)) {
+                return response()->json(['error' => 'ZIP file does not exist at the path: ' . $zipFilePath], 500);
+            }
+
+            // Open and extract the ZIP file
+            if ($zip->open($zipFilePath) === true) {
+                $zip->extractTo($extractPath); // Extract to local path within real_public
+                $zip->close();
+            } else {
+                return response()->json(['error' => 'Failed to unzip the images.'], 500);
+            }
+
+            // Step 3: Import Properties from Excel
+            Excel::import(new PropertiesImport($extractPath), $request->file('file'));
+
+            // Clean up temporary files
+            Storage::disk('real_public')->delete($zipPath); // Delete the ZIP from real_public disk
+            File::deleteDirectory($extractPath); // Delete extracted images directory
+
+            return response()->json(['message' => 'Properties uploaded successfully'], 200);
+
+        } catch (\Exception $e) {
+            // Log and return an error message
+            // \Log::error('Error uploading properties: ' . $e->getMessage());
+            return response()->json(['error' => 'An error occurred while uploading properties. Details: ' . $e->getMessage()], 500);
+        }
     }
+
+    // this code are working
+    // public function uploadProperties(Request $request)
+    // {
+    //     $request->validate([
+    //         'file' => 'required|file|mimes:xlsx',
+    //         'images' => 'required|file|mimes:zip',
+    //     ]);
+
+    //     try {
+    //         // Step 1: Handle Images (Unzip)
+    //         // Store the ZIP file in real_public/temp directory
+    //         $zipPath = $request->file('images')->store('real_public/temp', 'real_public');
+    //         $extractPath = public_path('real_public/temp_images'); // Extract to temporary folder in real_public
+
+    //         // Ensure the extraction directory exists
+    //         if (!File::exists($extractPath)) {
+    //             File::makeDirectory($extractPath, 0755, true);
+    //         }
+
+    //         // Step 2: Unzip the uploaded file
+    //         $zip = new ZipArchive;
+    //         $zipFilePath = public_path('real_public/temp/' . basename($zipPath)); // Get full path of ZIP file
+
+    //         // Check if the ZIP file exists
+    //         if (!file_exists($zipFilePath)) {
+    //             return response()->json(['error' => 'ZIP file does not exist at the path: ' . $zipFilePath], 500);
+    //         }
+
+    //         // Open and extract the ZIP file
+    //         if ($zip->open($zipFilePath) === true) {
+    //             $zip->extractTo($extractPath); // Extract to local path within real_public
+    //             $zip->close();
+    //         } else {
+    //             return response()->json(['error' => 'Failed to unzip the images.'], 500);
+    //         }
+
+    //         // Step 3: Import Properties from Excel
+    //         Excel::import(new PropertiesImport($extractPath), $request->file('file'));
+
+    //         // Clean up temporary files
+    //         Storage::disk('real_public')->delete($zipPath); // Delete the ZIP from real_public disk
+    //         File::deleteDirectory($extractPath); // Delete extracted images directory
+
+    //         return response()->json(['message' => 'Properties uploaded successfully'], 200);
+
+    //     } catch (\Exception $e) {
+    //         // Log and return an error message
+    //         \Log::error('Error uploading properties: ' . $e->getMessage());
+    //         return response()->json(['error' => 'An error occurred while uploading properties. Details: ' . $e->getMessage()], 500);
+    //     }
+    // }
 
     public function upload()
     {
@@ -66,8 +302,8 @@ class PropertyController extends Controller
     //         $property->main_image = null;
 
     //         // Check if files are available and decode them
-    //         if ($property->files) {
-    //             $files = json_decode($property->files, true);
+    //         if ($property->images) {
+    //             $files = json_decode($property->images, true);
 
     //             // Fetch uploaded images if any
     //             $uploads = Upload::whereIn('id', $files)->get();
@@ -104,11 +340,10 @@ class PropertyController extends Controller
         // Process each property using foreach loop
         foreach ($properties as $property) {
             // Initialize main_image to null
-            
 
             // Check if files are available and decode them
-            // if ($property->files) {
-            //     $files = json_decode($property->files, true);
+            // if ($property->images) {
+            //     $files = json_decode($property->images, true);
 
             //     // Fetch uploaded images if any
             //     $uploads = Upload::whereIn('id', $files)->get();
@@ -127,7 +362,7 @@ class PropertyController extends Controller
             // $quickMove = QuickMoveHome::where('property_id', $property->property_id)->first();
 
             // Process main image from QuickMoveHome
-            
+
             if ($property->main_image) {
                 $uploaded_image = Upload::find($property->main_image);
                 if ($uploaded_image) {
@@ -264,8 +499,8 @@ class PropertyController extends Controller
             $files_ids = [];
 
             // If there are existing file IDs in the property, decode them
-            if ($property->files) {
-                $existing_files_ids = json_decode($property->files, true);
+            if ($property->images) {
+                $existing_files_ids = json_decode($property->images, true);
             } else {
                 $existing_files_ids = [];
             }
@@ -289,7 +524,7 @@ class PropertyController extends Controller
             $all_files_ids = array_merge($existing_files_ids, $files_ids);
 
             // Save the updated file IDs as a JSON string
-            $property->files = json_encode($all_files_ids);
+            $property->images = json_encode($all_files_ids);
 
         }
 
@@ -317,7 +552,7 @@ class PropertyController extends Controller
             $Upload->save();
 
             $property->main_image = $Upload->id;
-        } 
+        }
         if ($request->banner) {
 
             $existingInUploads = Upload::where('id', $property->banner)->first();
@@ -342,12 +577,12 @@ class PropertyController extends Controller
             $Upload->save();
 
             $property->banner = $Upload->id;
-        } 
+        }
         $property->save();
 
         $listingDate = $request->listing_date;
         // Remove the timezone part for parsing using regular expression
-        $cleanedDate = preg_replace('/ GMT[+-]\d{4} \(.*\)/', '', $listingDate); 
+        $cleanedDate = preg_replace('/ GMT[+-]\d{4} \(.*\)/', '', $listingDate);
         // Convert to Carbon and format to 'Y-m-d'
         $formattedDate = Carbon::parse($cleanedDate)->format('Y-m-d');
 
@@ -466,6 +701,7 @@ class PropertyController extends Controller
         // Fetch the property along with its relationships
         $property = Property::with(['feature', 'hoa', 'school'])->findOrFail($id);
 
+      
         if ($property->main_image) {
             $uploaded_image = Upload::find($property->main_image);
 
@@ -590,8 +826,8 @@ class PropertyController extends Controller
         // Process additional files
         $propertyData['files'] = []; // Initialize files array
 
-        if ($property->files) {
-            $uploads = Upload::whereIn('id', json_decode($property->files))->orderBy('extension')->get(['id', 'file_original_name', 'file_name', 'extension', 'type']);
+        if ($property->images) {
+            $uploads = Upload::whereIn('id', json_decode($property->images))->orderBy('extension')->get(['id', 'file_original_name', 'file_name', 'extension', 'type']);
 
             foreach ($uploads as $upload) {
                 $upload->file_name = get_storage_url($upload->file_name); // Update the file name with the storage URL
@@ -747,11 +983,11 @@ class PropertyController extends Controller
         $merged_id = [];
         $property = Property::findOrFail($property_id);
 
-        if ($property->files) {
-            $merged_id = array_values(array_diff(json_decode($property->files), array($id)));
+        if ($property->images) {
+            $merged_id = array_values(array_diff(json_decode($property->images), array($id)));
         }
 
-        $property->files = json_encode($merged_id);
+        $property->images = json_encode($merged_id);
 
         $property->save();
         $upload = Upload::where('id', $id)->first();

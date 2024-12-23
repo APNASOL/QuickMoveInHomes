@@ -97,6 +97,12 @@ function get_storage_url($path)
 {
     return Storage::url($path);
 }
+function get_storage_path($path)
+{
+    return Storage::disk('real_public')->path($path);  // Correct path to the file on the server
+}
+
+
 
 function user_home_visiting_history_count()
 {
@@ -105,4 +111,10 @@ function user_home_visiting_history_count()
         $user_visits_how_much_homes = CustomerVisitingHomesHistory::where('customer_id', auth()->user()->id)->count(); 
         return $user_visits_how_much_homes; 
     }
+}
+
+function getImagePath($imageName)
+{
+    // Get the path to the image
+    return public_path('real_public/temp_images/' . $imageName);
 }

@@ -236,8 +236,8 @@ class HomeController extends Controller
 
         // Process additional files
         $propertyData['files'] = []; // Initialize files array
-        if ($property->files) {
-            $uploads = Upload::whereIn('id', json_decode($property->files))->orderBy('extension')->get(['file_original_name', 'file_name', 'extension', 'type']);
+        if ($property->images) {
+            $uploads = Upload::whereIn('id', json_decode($property->images))->orderBy('extension')->get(['file_original_name', 'file_name', 'extension', 'type']);
             foreach ($uploads as $upload) {
                 $upload->file_name = get_storage_url($upload->file_name);
                 $propertyData['files'][] = $upload;

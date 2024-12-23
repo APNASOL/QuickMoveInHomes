@@ -381,7 +381,7 @@
                         <h3 class="c-theme-text-color">
                             Property Photo Gallery
                         </h3>
-
+ 
                         <div>
                             <div class="card-body">
                                 <!-- start of the loop -->
@@ -403,7 +403,7 @@
                                                     @deleteThis="deleteThis"
                                                 />
                                             </div>
-
+ 
                                             <image-zooming-component
                                                 :file="file.file_name"
                                                 @loaded="fileLoaded"
