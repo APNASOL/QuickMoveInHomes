@@ -202,9 +202,10 @@ class PropertyController extends Controller
             } else {
                 return response()->json(['error' => 'Failed to unzip the images.'], 500);
             }
-
+dd("Tset");
             // Step 3: Import Properties from Excel
             Excel::import(new PropertiesImport($extractPath), $request->file('file'));
+
 
             // Clean up temporary files
             Storage::disk('real_public')->delete($zipPath); // Delete the ZIP from real_public disk
