@@ -154,7 +154,7 @@
       uploadFiles() {
         if (!this.excelFile || !this.imageZip) return;
   
-        // this.loading = true;
+        this.loading = true;
         const formData = new FormData();
         formData.append("file", this.excelFile);
         formData.append("images", this.imageZip);
@@ -165,7 +165,7 @@
           })
           .then(() => {
             toastr.success("Files uploaded successfully!");
-            // window.location.href = "properties";
+            window.location.href = "properties";
           })
           .catch((error) => {
             toastr.error(
