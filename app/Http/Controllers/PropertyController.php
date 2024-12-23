@@ -171,6 +171,7 @@ class PropertyController extends Controller
     // upto here code is working
     public function uploadProperties(Request $request)
     {
+        dd("Tset");
         $request->validate([
             'file' => 'required|file|mimes:xlsx',
             'images' => 'required|file|mimes:zip',
@@ -202,7 +203,7 @@ class PropertyController extends Controller
             } else {
                 return response()->json(['error' => 'Failed to unzip the images.'], 500);
             }
-dd("Tset");
+
             // Step 3: Import Properties from Excel
             Excel::import(new PropertiesImport($extractPath), $request->file('file'));
 
