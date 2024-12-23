@@ -193,7 +193,7 @@ Route::post('/agent/delete/{id}', [AgentController::class, 'delete'])->name('age
     
     
     
-    Route::post('/properties-upload', [PropertyController::class, 'uploadProperties'])->name('properties-upload');
+    Route::post('/scrap/data/upload', [PropertyController::class, 'uploadProperties'])->name('scrap.data.upload');
 
  
    

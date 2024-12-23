@@ -160,7 +160,7 @@
         formData.append("images", this.imageZip);
        
         axios
-          .post("/api/properties-upload", formData)
+          .post("/api/scrap/data/upload", formData)
           .then(() => {
             toastr.success("Files uploaded successfully!");
             window.location.href = "properties";
