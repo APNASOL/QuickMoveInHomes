@@ -170,8 +170,7 @@ class PropertyController extends Controller
 
     // upto here code is working
     public function uploadProperties(Request $request)
-    {
-        dd("Tset");
+    { 
         $request->validate([
             'file' => 'required|file|mimes:xlsx',
             'images' => 'required|file|mimes:zip',

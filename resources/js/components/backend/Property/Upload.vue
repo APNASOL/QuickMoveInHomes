@@ -158,11 +158,9 @@
         const formData = new FormData();
         formData.append("file", this.excelFile);
         formData.append("images", this.imageZip);
-  
+       
         axios
-          .post("/api/properties-upload", formData, {
-            headers: { "Content-Type": "multipart/form-data" },
-          })
+          .post("/api/properties-upload", formData)
           .then(() => {
             toastr.success("Files uploaded successfully!");
             window.location.href = "properties";
