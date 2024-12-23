@@ -160,7 +160,7 @@
         formData.append("images", this.imageZip);
   
         axios
-          .post("/api/properties/upload", formData, {
+          .post("/api/properties-upload", formData, {
             headers: { "Content-Type": "multipart/form-data" },
           })
           .then(() => {
