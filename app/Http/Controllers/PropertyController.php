@@ -12,8 +12,7 @@ use App\Models\OpenHouse;
 use App\Models\Property;
 use App\Models\PropertyFeature;
 use App\Models\PropertyIncentive;
-use App\Models\QuickMoveHome;
-use App\Models\QuickMoveInHome;
+use App\Models\QuickMoveHome; 
 use App\Models\Upload;
 use App\Models\User;
 use Carbon\Carbon;
@@ -327,51 +326,37 @@ class PropertyController extends Controller
 
     public function fetchProperties(Request $request)
     {
-        // Start building the properties query
-        $propertiesQuery = DB::table('properties');
+        $propertiesQuery = DB::table('properties')
+        ->select('property_id', 'title', 'community_id', DB::raw('COALESCE(images, \'[]\') as images'));
+    
+    if ($request->filled('name') && $request->name !== "null") {
+        $propertiesQuery->where('title', 'LIKE', '%' . $request->name . '%');
+    }
+    
+    // Paginate the results
+    $properties = $propertiesQuery->paginate(15);
+    
 
-        // Filter by title if provided
-        if ($request->filled('name') && $request->name !== "null") {
-            $propertiesQuery->where('title', 'LIKE', '%' . $request->name . '%');
-        }
-
-        // Paginate the results
-        $properties = $propertiesQuery->paginate(15);
-
-        // Process each property using foreach loop
         foreach ($properties as $property) {
-            // Initialize main_image to null
+            
+            $images = json_decode($property->images);
+            $uploads = Upload::whereIn('id', $images)->get();
+            $firstUpload = $uploads->first();
+            $lastUpload = $uploads->last();
 
-            // Check if files are available and decode them
-            // if ($property->images) {
-            //     $files = json_decode($property->images, true);
-
-            //     // Fetch uploaded images if any
-            //     $uploads = Upload::whereIn('id', $files)->get();
-
-            //     // Filter for images (JPEG, PNG, etc.) and assign the first one to main_image
-            //     $image = $uploads->first(function ($upload) {
-            //         return in_array($upload->type, ['image/jpeg', 'image/png', 'image/gif']);
-            //     });
-
-            //     if ($image) {
-            //         $property->main_image = get_storage_url($image->file_name);
-            //     }
-            // }
-
-            // Fetch property_main_image using QuickMoveHome
-            // $quickMove = QuickMoveHome::where('property_id', $property->property_id)->first();
-
-            // Process main image from QuickMoveHome
-
-            if ($property->main_image) {
-                $uploaded_image = Upload::find($property->main_image);
-                if ($uploaded_image) {
-                    $property->main_image = get_storage_url($uploaded_image->file_name);
-                }
+            // Check if the first upload exists, then assign its file_name to the property
+            if ($firstUpload) {
+                $file_image = $firstUpload->file_name;
+                $property->main_image = get_storage_url($file_image);
+                
             }
-
-            $property->community = Community::where('id', $property->community_id)->first();
+            if ($lastUpload) {
+                $file_image = $lastUpload->file_name; 
+                $property->banner = get_storage_url($file_image);
+            }
+             
+             
+            $property->community = Community::where('id', $property->community_id)->first() ?? "";
 
         }
 
@@ -443,7 +428,7 @@ class PropertyController extends Controller
 
             $property = Property::where('property_id', $request->property_id)->first();
             $propertyFeature = PropertyFeature::where('property_id', $property->property_id)->first();
-            $quickMoveInHome = QuickMoveInHome::where('property_id', $property->property_id)->first();
+            $quickMoveInHome = QuickMoveHome::where('property_id', $property->property_id)->first();
         } else {
             $property = new Property();
             $property->property_id = Str::orderedUuid();
@@ -451,7 +436,7 @@ class PropertyController extends Controller
             $propertyFeature = new PropertyFeature();
             // $propertyFeature->feature_id = Str::orderedUuid();
 
-            $quickMoveInHome = new QuickMoveInHome();
+            $quickMoveInHome = new QuickMoveHome();
             $quickMoveInHome->id = Str::orderedUuid();
         }
 
@@ -634,7 +619,7 @@ class PropertyController extends Controller
     {
         $property = Property::findOrFail($id);
         $features = PropertyFeature::where('property_id', $property->property_id)->first();
-        $QuickMoveInHome = QuickMoveInHome::where('property_id', $property->property_id)->first();
+        $QuickMoveHome = QuickMoveHome::where('property_id', $property->property_id)->first();
 
         $PropertyIncentive = PropertyIncentive::where('property_id', $property->property_id)->pluck('incentive_id');
 
@@ -651,13 +636,8 @@ class PropertyController extends Controller
         $property->feature['private_bath'] = $features->private_bath == 1 ? "Yes" : "No";
         $property->feature['outdoor_shower'] = $features->outdoor_shower == 1 ? "Yes" : "No";
 
-        $property->listing_date = $QuickMoveInHome->move_in_date;
-
-        // if ($QuickMoveInHome->main_image) {
-        //     $uploads = Upload::where('id', $QuickMoveInHome->main_image)->first();
-
-        // }
-
+        $property->listing_date = $QuickMoveHome->move_in_date;
+ 
         if ($property->main_image) {
             $uploaded_image = Upload::find($property->main_image);
 

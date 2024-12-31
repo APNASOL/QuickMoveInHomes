@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-theme">
+    <div class="bg-theme" v-if="properties && properties.length">
         <div class="mx-4">
             <div class="d-flex justify-content-between text-white">
                 <div class="mt-4">
@@ -20,20 +20,20 @@
                 :breakpoints="breakpoints"
                 :pauseAutoplayOnHover="true"
             >
-                <Slide v-for="home in homes" :key="home.id">
+                <Slide v-for="property in properties" :key="property.id">
                     <div class="carousel__item">
                         <a
                             class="text-decoration-none"
                             :href="
                                 '/home-details/' +
-                                home.property_record.property_id
+                                property.property_id
                             "
                         >
                             <div class="card c-border-design">
                                 <img
-                                    :src="home.main_image ?? '/images/default.jpg'"
+                                    :src="property.main_image ?? '/images/default.jpg'"
                                     class="card-img-top c-card-img-border"
-                                    :alt="home.title"
+                                    :alt="property.title"
                                     @error="setAltImg"
                                 />
 
@@ -49,24 +49,49 @@
                                 
                                 <div class="card-body text-start">
                                     <p>
+                                        <span v-if="property.title"> 
+                                            Title
+                                            <b>{{ property.title }} </b><br />
+                                        </span>
+                                        <span v-if="property.square_feet"> 
+                                            AREA (SQFT)
+                                            <b>{{ property.square_feet }} </b><br />
+                                        </span>
+                                        <span v-if="property.bedrooms">
+                                            Bedrooms
+                                            <b>
+                                                {{ property.bedrooms }}
+                                            </b>
+                                            <br />
+                                        </span>
+                                        <span v-if="property.property_type">
+                                            Property type
+                                            <b>{{ property.property_type }}</b>
+                                            <br />
+                                        </span>
+
+                                        Price
+                                        <b>${{ property.price }}</b>
+                                    </p>
+                                    <!-- <p>
                                             AREA (SQFT)
                                             <b
                                                 >{{
-                                                    home.property_record
+                                                    property
                                                         .square_feet
                                                 }} </b
                                             ><br />
                                             Bedrooms
                                             <b>
                                                 {{
-                                                    home.property_record
+                                                    property
                                                         .bedrooms
                                                 }}
                                             </b>
                                             <br />
                                             Property type
                                             <b>{{
-                                                home.property_record
+                                                property
                                                     .property_type
                                             }}</b>
                                             <br />
@@ -74,10 +99,10 @@
                                             Price
                                             <b
                                                 >${{
-                                                    home.property_record.price
+                                                    property.price
                                                 }}</b
                                             >
-                                        </p>
+                                        </p> -->
                                 </div>
                             </div>
                         </a>
@@ -107,7 +132,7 @@ export default defineComponent({
     },
     data() {
         return {
-            homes: [],
+            properties: [],
 
             settings: {
                 itemsToShow: 1.5,
@@ -148,7 +173,7 @@ export default defineComponent({
             await axios
                 .get("/api/front-homes/open_houses")
                 .then((response) => {
-                    this.homes = response.data;
+                    this.properties = response.data;
                 })
                 .catch((error) => {
                     toastr.error(error.response.data.message);
@@ -225,5 +250,10 @@ export default defineComponent({
     #fa-icon {
         display: inline-block;
     }
+}
+.card-img-top {
+    object-fit: cover;
+    width: 100%;  
+    height: 240px; /* Fixed height for uniformity */
 }
 </style>

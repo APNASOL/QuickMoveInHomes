@@ -96,38 +96,26 @@ class HomeController extends Controller
         $total_incentives_percentage = 0;
         $current_date = now();
 
-        if ($property->main_image) {
-            $uploaded_image = Upload::find($property->main_image);
-            if ($uploaded_image) {
-                $property_main_image = get_storage_url($uploaded_image->file_name);
+
+        $images = json_decode($property->images);
+            $uploads = Upload::whereIn('id', $images)->get();
+            $firstUpload = $uploads->first();
+            $lastUpload = $uploads->last();
+
+            // Check if the first upload exists, then assign its file_name to the property
+            if ($firstUpload) {
+                $file_image = $firstUpload->file_name;
+                $property_main_image = get_storage_url($file_image);
+                
             }
-        }
-        if ($property->banner) {
-            $uploaded_image = Upload::find($property->banner);
-            if ($uploaded_image) {
-                $property_banner = get_storage_url($uploaded_image->file_name);
+            if ($lastUpload) {
+                $file_image = $lastUpload->file_name; 
+                $property_banner = get_storage_url($file_image);
             }
-        }
+            
         
-        // if ($property->main_image) {
-        //     $property_main_image = get_storage_url($image->file_name);
-        // }
-        // Check and handle files
-        // if ($property->files) {
-        //     $files = json_decode($property->files, true);
-
-        //     // Fetch uploaded images
-        //     $uploads = Upload::whereIn('id', $files)->get();
-
-        //     // Filter for images (JPEG, PNG, etc.)
-        //     $image = $uploads->first(function ($upload) {
-        //         return in_array($upload->type, ['image/jpeg', 'image/png', 'image/gif']);
-        //     });
-
-        //     if ($image) {
-        //         $property_main_image = get_storage_url($image->file_name);
-        //     }
-        // }
+        
+        
         // Fetch Open House details if the property is marked as an open house
         if ($property->is_open_house) {
             $openHouse = OpenHouse::where('property_id', $id)->first();
@@ -271,21 +259,13 @@ class HomeController extends Controller
     }
 
     public function community_all_homes($community_id)
-    {
-        // $properties = Property::where('community_id', $community_id)->get();
-        // $randomProperties = Property::where('community_id', $community_id)
-        //     ->inRandomOrder() // Orders the records randomly
-        //     ->limit(8) // Limits the result to 3 random records
-        //     ->get(); // Retrieves the records
+    { 
         $properties = Property::where('community_id', $community_id)
                       ->inRandomOrder() // Orders the results randomly
-                      ->get();
-
+                      ->limit(8)->get(); // Limit the results to 8 records
 
         foreach ($properties as $property) {
-            // Fetch related property record
-            $home = QuickMoveHome::where('property_id', $property->property_id)->first();
-
+            
             // Check if the property has an open house
             if ($property->is_open_house) {
 
@@ -313,66 +293,28 @@ class HomeController extends Controller
             }
 
 
-            if ($property && $property->main_image) {
-                $upload = Upload::where('id', $property->main_image)->first();
-                if ($upload) {
-                    $property->main_image = $upload->file_name ? get_storage_url($upload->file_name) : '';
+            $images = json_decode($property->images);
+            $uploads = Upload::whereIn('id', $images)->get();
+            $firstUpload = $uploads->first();
+            $lastUpload = $uploads->last();
 
-                }
+            // Check if the first upload exists, then assign its file_name to the property
+            if ($firstUpload) {
+                $file_image = $firstUpload->file_name;
+                $property->main_image = get_storage_url($file_image);
+                
             }
-            if ($property && $property->banner) {
-                $upload = Upload::where('id', $property->banner)->first();
-                if ($upload) {
-                    $property->banner = $upload->file_name ? get_storage_url($upload->file_name) : '';
-
-                }
+            if ($lastUpload) {
+                $file_image = $lastUpload->file_name; 
+                $property->banner = get_storage_url($file_image);
             }
           
-
-            // Process main image
-            // if ($home && $home->main_image) {
-            //     $uploaded_image = Upload::find($home->main_image);
-
-            //     if ($uploaded_image) {
-            //         $home->main_image = get_storage_url($uploaded_image->file_name);
-            //     }
-            // }else
-            // {
-            //     $home->main_image = 'abc.pn';
-            // }
-
-            $property->home_data = $home;
+ 
         }
 
         return $properties;
     }
-
-    // public function community_all_homes($community_id)
-    // {
-
-    //     $properties = Property::where('community_id', $community_id)->get();
-
-    //     foreach ($properties as $property) {
-    //         // Fetch related property record
-    //         $home = QuickMoveHome::where('property_id', $property->property_id)->first();
-    //         if ($property->is_open_house) {
-
-    //             $open_house = OpenHouse::where('property_id', $property->property_id)->first();
-    //             $property->open_house_data = $open_house;
-    //         }
-    //         // Process main image
-    //         if ($home && $home->main_image) {
-    //             $uploaded_image = Upload::find($home->main_image);
-
-    //             if ($uploaded_image) {
-    //                 $home->main_image = get_storage_url($uploaded_image->file_name);
-    //             }
-    //         }
-    //         $property->home_data = $home;
-    //     }
-
-    //     return $properties;
-    // }
+ 
 
     public function detailed_community($community_id)
     {
@@ -511,26 +453,27 @@ class HomeController extends Controller
 
         foreach ($properties as $property) {
             // Fetch related property record
-            // $home = QuickMoveHome::where('property_id', $property->property_id)->first();
             if ($property->is_open_house) {
                 $open_house = OpenHouse::where('property_id', $property->property_id)->first();
                 $property->open_house_data = $open_house;
             }
             // Process main image
-            if ($property && $property->main_image) {
-                $uploaded_image = Upload::find($property->main_image);
-                if ($uploaded_image) {
-                    $property->main_image = get_storage_url($uploaded_image->file_name);
-                }
-            }
-            if ($property && $property->banner) {
-                $uploaded_image = Upload::find($property->banner);
-                if ($uploaded_image) {
-                    $property->banner = get_storage_url($uploaded_image->file_name);
-                }
-            }
+            $images = json_decode($property->images);
+            $uploads = Upload::whereIn('id', $images)->get();
+            $firstUpload = $uploads->first();
+            $lastUpload = $uploads->last();
 
-            $property->home_data = $home;
+            // Check if the first upload exists, then assign its file_name to the property
+            if ($firstUpload) {
+                $file_image = $firstUpload->file_name;
+                $property->main_image = get_storage_url($file_image);
+                
+            }
+            if ($lastUpload) {
+                $file_image = $lastUpload->file_name; 
+                $property->banner = get_storage_url($file_image);
+            }
+ 
         }
 
         return ['properties' => $properties, 'total_homes' => $total_homes];
@@ -644,25 +587,31 @@ class HomeController extends Controller
 
         foreach ($properties as $property) {
             // Fetch related property record
-            $home = QuickMoveHome::where('property_id', $property->property_id)->first();
+             
+            $images = json_decode($property->images);
+            $uploads = Upload::whereIn('id', $images)->get();
+            $firstUpload = $uploads->first();
+            $lastUpload = $uploads->last();
+
+            // Check if the first upload exists, then assign its file_name to the property
+            if ($firstUpload) {
+                $file_image = $firstUpload->file_name;
+                $property->main_image = get_storage_url($file_image);
+                
+            }
+            if ($lastUpload) {
+                $file_image = $lastUpload->file_name; 
+                $property->banner = get_storage_url($file_image);
+            }
+            
             if ($property->is_open_house) {
                 $open_house = OpenHouse::where('property_id', $property->property_id)->first();
+                dd("ind");
                 $property->open_house_data = $open_house;
             }
-
-            // Process main image
-            if ($property && $property->main_image) {
-                $uploaded_image = Upload::find($property->main_image);
-                if ($uploaded_image) {
-                    $property->main_image = get_storage_url($uploaded_image->file_name);
-                }
-            }
-            if ($property && $property->banner) {
-                $uploaded_image = Upload::find($property->banner);
-                if ($uploaded_image) {
-                    $property->banner = get_storage_url($uploaded_image->file_name);
-                }
-            }
+            
+      
+             
 
             // Fetch community details
             $community = Community::find($property->community_id);
@@ -672,22 +621,27 @@ class HomeController extends Controller
                     $community->banner = get_storage_url($community_upload->file_name);
                 }
 
+                $community_builder = BuildersCommunity::where('community_id', $community->id)->first();
                 
-            }
-            $community_builder = BuildersCommunity::where('community_id', $community->id)->first();
-            if ($community_builder) {
-                $builder = Builder::where('id', $community_builder->builder_id)->first();
-                if ($builder) {
-                    $incentive_record = Incentive::where('builder_id', $builder->id)->where('end_date', '>=', $currentDate)->first();
-                    if ($incentive_record) {
-                        $home->incentive = $incentive_record->title ?? "";
+                if ($community_builder) {
+                    $builder = Builder::where('id', $community_builder->builder_id)->first();
+                    if ($builder) {
+                        $incentive_record = Incentive::where('builder_id', $builder->id)->where('end_date', '>=', $currentDate)->first();
+                        if ($incentive_record) {
+                            $property->incentive = $incentive_record->title ?? "";
+                            
+                        }
                     }
                 }
+                
+                
             }
 
-            $property->home_data = $home;
-        }
+             
 
+            
+        }
+ 
         return ['properties' => $properties ?? "", 'total_homes' => $total_homes ?? ""];
     }
 
@@ -828,20 +782,22 @@ class HomeController extends Controller
                 $property->open_house_data = $open_house;
             }
             // Process main image
-            if ($property && $property->main_image) {
-                $uploaded_image = Upload::find($property->main_image);
+            $images = json_decode($property->images);
+            $uploads = Upload::whereIn('id', $images)->get();
+            $firstUpload = $uploads->first();
+            $lastUpload = $uploads->last();
 
-                if ($uploaded_image) {
-                    $property->main_image = get_storage_url($uploaded_image->file_name);
-                }
+            // Check if the first upload exists, then assign its file_name to the property
+            if ($firstUpload) {
+                $file_image = $firstUpload->file_name;
+                $property->main_image = get_storage_url($file_image);
+                
             }
-            if ($property && $property->main_image) {
-                $uploaded_image = Upload::find($property->main_image);
-
-                if ($uploaded_image) {
-                    $property->main_image = get_storage_url($uploaded_image->file_name);
-                }
+            if ($lastUpload) {
+                $file_image = $lastUpload->file_name; 
+                $property->banner = get_storage_url($file_image);
             }
+            
 
             $property->home_data = $home;
         }

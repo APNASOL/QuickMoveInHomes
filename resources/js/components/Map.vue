@@ -36,8 +36,8 @@ onMounted(async () => {
 // Function to initialize the map
 function initializeMap() {
     map.value = new google.maps.Map(mapContainer.value, {
-        center: { lat: 36.1147, lng: -115.1728 },
-        zoom: 14,
+        center: { lat: 36.1699, lng: -115.1398 },
+        zoom: 11,
         mapTypeId: "roadmap",
         mapTypeControl: true,
         zoomControl: true,
@@ -63,20 +63,23 @@ function initializeMap() {
 
 function addMarkers() {
     // Clear previous markers and clusters
-    markers.forEach(marker => marker.setMap(null));
+    markers.forEach((marker) => marker.setMap(null));
     markers.length = 0; // Clear the markers array
-     // Check if the markerClusterer exists before attempting to clear it
+    // Check if the markerClusterer exists before attempting to clear it
     if (markerClusterer) {
         markerClusterer.clearMarkers(); // Clear markers from the clusterer
     }
-   
+
     // Ensure homes prop is an array and contains valid home data
     if (Array.isArray(props.homes) && props.homes.length > 0) {
         props.homes.forEach((home) => {
             // Validate home properties
             if (home.latitude && home.longitude) {
                 const marker = new google.maps.Marker({
-                    position: { lat: parseFloat(home.latitude), lng: parseFloat(home.longitude) },
+                    position: {
+                        lat: parseFloat(home.latitude),
+                        lng: parseFloat(home.longitude),
+                    },
                     map: map.value,
                     label: {
                         text: `$${(parseFloat(home.price) / 1000).toFixed(0)}K`,
@@ -85,16 +88,22 @@ function addMarkers() {
                 });
 
                 const infoWindowContent = `
-                    <a href="/home-details/${home.property_id}" style="text-decoration: none; color: inherit;">
-                        <div style="width:150px; cursor: pointer;">
-                            <img src="${home.home_data.main_image}" alt="Image" style="width:100%; height:auto; border-radius:6px;">
-                            <p><strong>${home.title}</strong><br>
-                            <b>$${parseFloat(home.price).toLocaleString()}</b><br>
-                            ${home.bedrooms} bds | ${parseFloat(home.square_feet).toLocaleString()} sqft<br>
-                            ${home.property_type}</p>
-                        </div>
-                    </a>
-                `;
+    <a href="/home-details/${home.property_id}" style="text-decoration: none; color: inherit;">
+        <div style="width:150px; cursor: pointer;">
+            <img src="${home.main_image ? home.main_image : '/images/default.jpg'}" 
+                 alt="Image" 
+                 style="width:100%; height:auto; border-radius:6px;">
+            <p style="margin-top:10px; font-weight:bold;">
+                <strong>${home.title || ''}</strong><br>
+                ${home.price ? `<b>$${parseFloat(home.price).toLocaleString()}</b><br>` : ''}
+                ${home.bedrooms ? `${home.bedrooms} bds | ` : ''}
+                ${home.square_feet ? `${parseFloat(home.square_feet).toLocaleString()} sqft<br>` : ''}
+                ${home.property_type || ''}
+            </p>
+        </div>
+    </a>
+`;
+
 
                 const infoWindow = new google.maps.InfoWindow({
                     content: infoWindowContent,
@@ -112,7 +121,7 @@ function addMarkers() {
 
                 markers.push(marker); // Store marker in markers array
             } else {
-                console.error('Invalid home data:', home); // Log invalid home data
+                console.error("Invalid home data:", home); // Log invalid home data
             }
         });
 
@@ -125,15 +134,17 @@ function addMarkers() {
             markerClusterer = new MarkerClusterer({ markers, map: map.value });
         }
     } else {
-        
-        console.warn('No homes available for clustering.');
+        console.warn("No homes available for clustering.");
     }
 }
 
 // Watch for changes to the homes prop and update markers accordingly
-watch(() => props.homes, (newHomes) => {
-    addMarkers(); // Call function to add markers when homes data changes
-});
+watch(
+    () => props.homes,
+    (newHomes) => {
+        addMarkers(); // Call function to add markers when homes data changes
+    }
+);
 </script>
 
 <style>
@@ -143,7 +154,7 @@ watch(() => props.homes, (newHomes) => {
 }
 
 .price-tag {
-    background-color: #EA4335 !important;
+    background-color: #ea4335 !important;
     color: white !important;
     padding: 2px 6px;
     border-radius: 8px;
@@ -152,7 +163,7 @@ watch(() => props.homes, (newHomes) => {
 }
 
 .price-tag {
-    background-color: #EA4335 !important;
+    background-color: #ea4335 !important;
     color: white;
 
     font-weight: bold;
@@ -177,7 +188,7 @@ watch(() => props.homes, (newHomes) => {
     height: 0;
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
-    border-top: 6px solid #EA4335;
+    border-top: 6px solid #ea4335;
     transition: border-top-color 0.3s ease;
 }
 </style>

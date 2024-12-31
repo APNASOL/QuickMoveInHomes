@@ -1,5 +1,5 @@
 <template>
-    <div class="c-bg-color" v-if="homes && homes.length">
+    <div class="c-bg-color" v-if="properties && properties.length">
         <div class="mx-4">
             <div class="d-flex justify-content-between">
                 <div>
@@ -12,7 +12,7 @@
                 <!-- <div>
                     <a
                         class="searchHome"
-                        href="/search/homes"
+                        href="/search/properties"
                         id="navbarDropdownDeals"
                         role="button"
                     >
@@ -27,20 +27,20 @@
                 :breakpoints="breakpoints"
                 :pauseAutoplayOnHover="true"
             >
-                <Slide v-for="home in homes" :key="home.id">
+                <Slide v-for="property in properties" :key="property.id">
                     <div class="carousel__item">
                         <a
                             class="text-decoration-none"
                             :href="
                                 '/home-details/' +
-                                home.property_record.property_id
+                                property.property_id
                             "
                         >
                             <div class="card c-border-design">
                                 <img
-                                    :src="home.main_image ?? '/images/default.jpg'"
+                                    :src="property.main_image ?? '/images/default.jpg'"
                                     class="card-img-top c-card-img-border"
-                                    :alt="home.title"
+                                    :alt="property.title"
                                     @error="setAltImg"
                                 />
 
@@ -53,53 +53,34 @@
                                     >
                                 </div>
 
-                                <!-- <div
-                                    class="card-img-overlay c-card-img-overlay-name info-card-overlay text-center"
-                                >
-                                    <p>
-                                        AREA (SQFT)
-                                        <b
-                                            >{{
-                                                home.property_record.square_feet
-                                            }} </b
-                                        ><br />
-                                        Bedrooms
-                                        <b>
-                                            {{ home.property_record.bedrooms }}
-                                        </b>
-                                        <br />
-                                        Property type
-                                        <b>{{
-                                            home.property_record.property_type
-                                        }}</b>
-                                        <br />
-
-                                        Price
-                                        <b>${{ home.property_record.price }}</b>
-                                    </p>
-                                </div> -->
+                                 
                                 <div class="card-body text-start">
                                     <p>
-                                        AREA (SQFT)
-                                        <b
-                                            >{{
-                                                home.property_record.square_feet
-                                            }} </b
-                                        ><br />
-                                        Bedrooms
-                                        <b>
-                                            {{ home.property_record.bedrooms }}
-                                        </b>
-                                        <br />
-                                        Property type
-                                        <b>{{
-                                            home.property_record.property_type
-                                        }}</b>
-                                        <br />
+                                        <span v-if="property.title"> 
+                                            Title
+                                            <b>{{ property.title }} </b><br />
+                                        </span>
+                                        <span v-if="property.square_feet"> 
+                                            AREA (SQFT)
+                                            <b>{{ property.square_feet }} </b><br />
+                                        </span>
+                                        <span v-if="property.bedrooms">
+                                            Bedrooms
+                                            <b>
+                                                {{ property.bedrooms }}
+                                            </b>
+                                            <br />
+                                        </span>
+                                        <span v-if="property.property_type">
+                                            Property type
+                                            <b>{{ property.property_type }}</b>
+                                            <br />
+                                        </span>
 
                                         Price
-                                        <b>${{ home.property_record.price }}</b>
+                                        <b>${{ property.price }}</b>
                                     </p>
+                                     
                                 </div>
                             </div>
                         </a>
@@ -186,7 +167,7 @@ export default defineComponent({
     name: "Flash Sale",
     data() {
         return {
-            homes: [],
+            properties: [],
             incentives_homes: [],
 
             settings: {
@@ -242,7 +223,7 @@ export default defineComponent({
             await axios
                 .get("/api/front-homes/all")
                 .then((response) => {
-                    this.homes = response.data;
+                    this.properties = response.data;
                 })
                 .catch((error) => {
                     toastr.error(error.response.data.message);
@@ -389,5 +370,10 @@ export default defineComponent({
 /* Hover state */
 .searchHome:hover img {
     transform: scale(1.2); /* Zoom in the image */
+}
+.card-img-top {
+    object-fit: cover;
+    width: 100%;  
+    height: 240px; /* Fixed height for uniformity */
 }
 </style>

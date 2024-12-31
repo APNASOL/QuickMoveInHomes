@@ -349,8 +349,8 @@
                                             <div class="image-wrapper">
                                                 <img
                                                     :src="
-                                                        home.home_data
-                                                            .main_image
+                                                        home.main_image ??
+                                                        '/images/default.jpg'
                                                     "
                                                     class="card-img-top"
                                                     :alt="home.title"
@@ -371,9 +371,7 @@
 
                                                 <!-- Incentive Home bar positioned at the bottom of the image -->
                                                 <div
-                                                    v-if="
-                                                        home.home_data.incentive
-                                                    "
+                                                    v-if="home.incentive"
                                                     class="bottom-bar text-white"
                                                 >
                                                     Incentive Home
@@ -382,26 +380,48 @@
 
                                             <div class="card-body text-start">
                                                 <p>
-                                                    <i
-                                                        class="bi bi-currency-dollar"
-                                                    ></i>
-                                                    {{ home.price }} <br />
-                                                    <i
-                                                        class="bi bi-aspect-ratio"
-                                                    ></i>
-                                                    {{ home.square_feet }} sq
-                                                    ft<br />
-                                                    <i
-                                                        class="bi bi-house-door"
-                                                    ></i>
-                                                    {{ home.bedrooms }} <br />
-                                                    <i
-                                                        class="bi bi-building"
-                                                    ></i>
-                                                    <small>{{
-                                                        home.property_type
-                                                    }}</small
-                                                    ><br />
+                                                    <span v-if="home.title">
+                                                        <b>{{ home.title }} </b
+                                                        ><br />
+                                                    </span>
+                                                    <span v-if="home.price">
+                                                        <b>
+                                                            ${{
+                                                                home.price
+                                                            }} </b
+                                                        ><br />
+                                                    </span>
+                                                    <span
+                                                        v-if="home.square_feet"
+                                                    >
+                                                        <i
+                                                            class="bi bi-aspect-ratio"
+                                                        ></i>
+                                                        {{
+                                                            home.square_feet
+                                                        }}
+                                                        sq ft<br />
+                                                    </span>
+                                                    <span v-if="home.bedrooms">
+                                                        <i
+                                                            class="bi bi-house-door"
+                                                        ></i>
+                                                        {{ home.bedrooms }}
+                                                        <br />
+                                                    </span>
+                                                    <span
+                                                        v-if="
+                                                            home.property_type
+                                                        "
+                                                    >
+                                                        <i
+                                                            class="bi bi-building"
+                                                        ></i>
+                                                        <small>{{
+                                                            home.property_type
+                                                        }}</small
+                                                        ><br />
+                                                    </span>
                                                 </p>
                                             </div>
                                         </div>
@@ -411,7 +431,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div
                     class="col-md-6"
                     style="
@@ -421,7 +440,7 @@
                         overflow: auto;
                     "
                 >
-                    <Map :homes="homes" />
+                    <Map v-if="loadmap" :homes="homes" />
                     <!-- <div
                         class="container mb-2"
                         ref="map"
@@ -1351,6 +1370,7 @@ export default {
                 outdoor_shower: null,
             },
             formStatus: 1,
+            loadmap: false,
 
             main_search_field: this.location ?? "",
             min_price: "",
@@ -1411,7 +1431,7 @@ export default {
         //             lng: parseFloat(home.longitude), // Assuming longitude is part of the home object
         //             title: home.title,
         //             description: home.description,
-        //             home_image: home.home_data.main_image,
+        //             home_image: home.main_image,
         //             url: "/home-details/" + home.property_id || "#", // Default to "#" if no URL is provided
         //         };
 
@@ -1501,6 +1521,7 @@ export default {
                 .then((response) => {
                     this.formStatus = 1;
                     this.homes = response.data.properties;
+                    this.loadmap = true;
                     this.total_homes = response.data.total_homes;
 
                     // Check if the response data is an array and has elements
@@ -1550,6 +1571,7 @@ export default {
                     this.formStatus = 1;
                     this.homes = response.data.properties;
                     this.total_homes = response.data.total_homes;
+                    this.loadmap = true;
 
                     // Check if the response data is an array and has elements
                     this.formStatus = 1;
@@ -1636,6 +1658,7 @@ export default {
                     this.formStatus = 1;
                     this.homes = response.data.properties;
                     this.total_homes = response.data.total_homes;
+                    this.loadmap = true;
 
                     // Check if the response data is an array and has elements
                     this.formStatus = 1;
@@ -1739,7 +1762,8 @@ export default {
     object-fit: cover;
     width: 100%;
 
-    min-height: 100%;
+    width: 100%; /* Ensures the image spans the full width of its container */
+    height: 140px; /* Fixed height for uniformity */
 }
 .scrollable-content {
     height: 500px; /* Adjust height as needed */

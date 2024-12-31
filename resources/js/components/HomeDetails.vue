@@ -256,7 +256,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="mt-2">
+                                    <div class="mt-2" v-if="Community">
                                         <div class="open-house-tag mb-2">
                                             COMMUNITY
                                         </div>
@@ -273,7 +273,7 @@
                                         ></i>
                                         {{ Community.location }}
                                     </div>
-                                    <div class="highlights mt-2">
+                                    <div class="highlights mt-2" v-if="Home.address">
                                         <div>
                                             <div class="open-house-tag mb-2">
                                                 LOCATION
@@ -281,11 +281,14 @@
                                             <i
                                                 class="bi bi-geo-alt-fill text-warning fs-5"
                                             ></i>
-                                            {{ Home.address }}, {{ Home.city }},
-                                            {{ Home.state }} {{ Home.zip_code }}
+                                            <span v-if="Home.address">{{ Home.address }}</span>
+                                            <span v-if="Home.city">,{{ Home.city }}</span>
+                                            <span v-if="Home.state">,{{ Home.state }}</span>
+                                            <span v-if="Home.zip_code">,{{ Home.zip_code }}</span>
+                                            
                                         </div>
                                     </div>
-                                    <div class="highlights mt-2">
+                                    <div class="highlights mt-2" v-if="Home.school_name">
                                         <div>
                                             <div class="open-house-tag mb-2">
                                                 SCHOOL
@@ -296,7 +299,7 @@
                                             {{ Home.school_name }}
                                         </div>
                                     </div>
-                                    <div class="highlights mt-2">
+                                    <div class="highlights mt-2" v-if="Home.hoa_name">
                                         <div>
                                             <div class="open-house-tag mb-2">
                                                 HOA
@@ -346,8 +349,8 @@
                             user_home_visiting_history_count < 50
                         "
                     >
-                        <h2 class="feature-state">SUMMARY</h2>
-                        <p>
+                        <h2 class="feature-state" v-if="Home.description">SUMMARY</h2>
+                        <p v-if="Home.description">
                             {{ Home.description }}
                         </p>
                     </div>
@@ -661,18 +664,30 @@
                                     >
                                 </div>
 
+                               
                                 <div class="card-body text-start">
+                                     
                                     <p>
-                                        AREA (SQFT)
-                                        <b>{{ home.square_feet }} </b><br />
-                                        Bedrooms
-                                        <b>
-                                            {{ home.bedrooms }}
-                                        </b>
-                                        <br />
-                                        Property type
-                                        <b>{{ home.property_type }}</b>
-                                        <br />
+                                        <span v-if="home.title"> 
+                                            Title
+                                            <b>{{ home.title }} </b><br />
+                                        </span>
+                                        <span v-if="home.square_feet"> 
+                                            AREA (SQFT)
+                                            <b>{{ home.square_feet }} </b><br />
+                                        </span>
+                                        <span v-if="home.bedrooms">
+                                            Bedrooms
+                                            <b>
+                                                {{ home.bedrooms }}
+                                            </b>
+                                            <br />
+                                        </span>
+                                        <span v-if="home.property_type">
+                                            Property type
+                                            <b>{{ home.property_type }}</b>
+                                            <br />
+                                        </span>
 
                                         Price
                                         <b>${{ home.price }}</b>
@@ -997,5 +1012,10 @@ export default {
 .c-anchor-style:hover {
     cursor: pointer;
     font-weight: bold;
+}
+.card-img-top
+{
+    height: 240px;
+    object-fit: cover;
 }
 </style>

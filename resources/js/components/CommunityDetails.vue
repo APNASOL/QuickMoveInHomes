@@ -1,6 +1,6 @@
 <template>
     <Master>
-        <div class="property-detail-section"> 
+        <div class="property-detail-section">
             <div class="property-detail-section">
                 <div
                     class="top-section"
@@ -48,7 +48,9 @@
                             v-if="logged_in_user && !logged_in_user.agreement"
                         >
                             <h5 class="mt-3 c-theme-color">
-                                Access to full community information is available once a contract is signed while selecting your home.
+                                Access to full community information is
+                                available once a contract is signed while
+                                selecting your home.
                             </h5>
                         </div>
                         <!-- <div class="col-md-4 p-2">
@@ -545,10 +547,10 @@
                             :href="'/home-details/' + home.property_id"
                         >
                             <div class="card c-border-design">
-                                 
-                             
                                 <img
-                                    :src="home.main_image ?? '/images/default.jpg'"
+                                    :src="
+                                        home.main_image ?? '/images/default.jpg'
+                                    "
                                     class="card-img-top c-card-img-border"
                                     :alt="home.title"
                                     @error="setAltImg"
@@ -566,16 +568,27 @@
 
                                 <div class="card-body text-start">
                                     <p>
-                                        AREA (SQFT)
-                                        <b>{{ home.square_feet }} </b><br />
-                                        Bedrooms
-                                        <b>
-                                            {{ home.bedrooms }}
-                                        </b>
-                                        <br />
-                                        Property type
-                                        <b>{{ home.property_type }}</b>
-                                        <br />
+                                        <span v-if="home.title"> 
+                                            Title
+                                            <b>{{ home.title }} </b><br />
+                                        </span>
+                                        
+                                        <span v-if="home.square_feet"> 
+                                            AREA (SQFT)
+                                            <b>{{ home.square_feet }} </b><br />
+                                        </span>
+                                        <span v-if="home.bedrooms">
+                                            Bedrooms
+                                            <b>
+                                                {{ home.bedrooms }}
+                                            </b>
+                                            <br />
+                                        </span>
+                                        <span v-if="home.property_type">
+                                            Property type
+                                            <b>{{ home.property_type }}</b>
+                                            <br />
+                                        </span>
 
                                         Price
                                         <b>${{ home.price }}</b>
@@ -599,7 +612,7 @@
 import Master from "@components/layout/Master.vue";
 import Multiselect from "@vueform/multiselect";
 import { addMonths, startOfMonth, endOfMonth } from "date-fns";
- 
+
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 import ProceedComponent from "@components/ProceedComponent.vue";
 
@@ -612,7 +625,7 @@ export default {
         Pagination,
         Navigation,
         Multiselect,
-    
+
         ProceedComponent,
     },
     props: ["community_id"],
@@ -743,7 +756,7 @@ export default {
             axios
                 .get(`/api/fetch-community-all-homes/${this.community_id}`)
                 .then((response) => {
-                    this.community_homes = response.data; // Update community homes data 
+                    this.community_homes = response.data; // Update community homes data
                     this.initMap(); // Initialize map after fetching homes
                 })
                 .catch((error) => {
@@ -900,5 +913,10 @@ export default {
     font-size: 18px;
     color: #333;
     margin-bottom: 10px;
+}
+.card-img-top
+{
+    height: 240px;
+    object-fit: cover;
 }
 </style>

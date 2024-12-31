@@ -1,18 +1,21 @@
 <?php
 
+ 
 namespace App\Imports;
 
 use App\Models\Property;
+use App\Models\PropertyFeature;
+use App\Models\QuickMoveHome;
 use App\Models\Upload;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\Importable;
-// use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Storage;
 
-class PropertiesImport implements ToCollection
+class PropertiesImport implements ToCollection, WithHeadingRow
 {
     use Importable;
 
@@ -21,7 +24,6 @@ class PropertiesImport implements ToCollection
     public function __construct($extractPath)
     {
         $this->extractPath = $extractPath; // Store the extraction path
-        // Log::info('Extract path: ' . $this->extractPath);
     }
 
     public function collection(Collection $rows)
@@ -29,47 +31,53 @@ class PropertiesImport implements ToCollection
         DB::beginTransaction(); // Start a transaction to ensure data consistency
 
         try {
-            // Skip the first row if it's the header row
-            $rows = $rows->skip(1); // Skip the first row
-
-            foreach ($rows as $row) { 
-
-                // Check if the row contains valid data
-                if (!isset($row[0], $row[1], $row[2], $row[3], $row[4], $row[5])) {
-                    // Log::warning('Skipping row due to missing data: ' . json_encode($row));
-                    continue; // Skip invalid rows
-                }
-
+            foreach ($rows as $row) {
                 // Handle property data
                 $property = new Property();
-                $property->property_id = Str::orderedUuid();
-                $property->user_id = $row[0]; // user_id (first column)
-                $property->community_id = $row[1]; // community_id (second column)
-                $property->title = $row[2]; // title (third column)
-                $property->description = $row[3]; // description (fourth column)
-                $property->address = $row[5]; // address (fifth are images and sixth column)
-                $property->longitude = $row[6]; // longitude (8th column)
-                $property->latitude = $row[7]; // latitude (9th column)
-                $property->save();
+                $property->property_id = Str::orderedUuid(); // UUID for property_id
+                $property->user_id = 1;
+                $property->community_id = $row['community_id'] ?? null;
+                $property->title = $row['title'] ?? null;
+                $property->description = $row['description'] ?? null;
+                $property->address = $row['address'] ?? null;
+                $property->city = $row['city'] ?? null;
+                $property->state = $row['state'] ?? null;
+                $property->zip_code = $row['zip_code'] ?? null;
+                $property->longitude = $row['longitude'] ?? null;
+                $property->latitude = $row['latitude'] ?? null;
+                $price = $row['price']; // Get the price from the row
 
-                // Process images
-                $imageNames = explode(',', $row[4]); // images (fifth column)
+// Remove any dollar signs and commas, then cast to integer
+$cleanedPrice = (int)str_replace([',', '$'], '', $price);
+
+// Now you can store the cleaned price in the database
+$property->price = $cleanedPrice;
+
+                // $property->price = $row['price'] ?? null;
+                $property->bedrooms = $row['bedrooms'] ?? null;
+                $property->square_feet = $row['square_feet'] ?? null;
+                $property->lot_size = $row['lot_size'] ?? null;
+                $property->property_type = $row['property_type'] ?? null;
+                $property->listing_type = $row['listing_type'] ?? null;
+                $property->year_built = $row['year_built'] ?? null;
+                $property->hoa_id = $row['hoa_id'] ?? null;
+                $property->association_fee = $row['association_fee'] ?? null;
+                $property->cic = $row['cic'] ?? null;
+                $property->school_id = $row['school_id'] ?? null;
+                $property->is_open_house = $row['is_open_house'] ?? null;
+
+                // Handle images
+                $imageNames = isset($row['images']) ? explode(',', $row['images']) : [];
                 $uploadedImageIds = [];
 
                 foreach ($imageNames as $imageName) {
-                    // Log::info("images ".$imageName);
-                    $imageName = trim($imageName); // Remove any extra spaces
-                    $imagePath = $this->extractPath . '/' . $imageName; // Get the full path of the image
+                    $imageName = trim($imageName);
+                    $imagePath = $this->extractPath . '/' . $imageName;
 
-                    // Check if the image exists in the extracted folder
                     if (file_exists($imagePath)) {
-                        // Create a new name for the image and store it
                         $newImageName = 'real_public/PropertiesFiles/' . Str::random(40) . '.' . pathinfo($imageName, PATHINFO_EXTENSION);
-
-                        // Store the image in real_public disk
                         Storage::disk('real_public')->put($newImageName, file_get_contents($imagePath));
 
-                        // Save image details in the Upload model
                         $upload = new Upload();
                         $upload->file_original_name = $imageName;
                         $upload->file_name = $newImageName;
@@ -77,25 +85,58 @@ class PropertiesImport implements ToCollection
                         $upload->type = mime_content_type($imagePath);
                         $upload->save();
 
-                        // Add the image ID to the uploaded images array
                         $uploadedImageIds[] = $upload->id;
-                    } else {
-                        // Log missing image file
-                        // Log::error("Image file not found: " . $imagePath);
                     }
                 }
 
-                // Associate images with the property
-                $property->images = json_encode($uploadedImageIds); // Store image IDs in JSON format
+                // Save property with images
+                $property->images = !empty($uploadedImageIds) ? json_encode($uploadedImageIds) : null;
+                $property->main_image = $uploadedImageIds[0] ?? null; // Set first image as main or NULL
+                $property->banner = $uploadedImageIds[1] ?? null; // Set second image as banner or NULL
                 $property->save();
+
+                // Create PropertyFeature entry
+                $propertyFeature = new PropertyFeature();
+                $propertyFeature->property_id = $property->property_id;
+                $propertyFeature->name = $row['feature_name'] ?? null;
+                $propertyFeature->description = $row['feature_description'] ?? null;
+                $propertyFeature->fireplace_type = $row['fireplace_type'] ?? null;
+                $propertyFeature->kitchen_pantry_type = $row['kitchen_pantry_type'] ?? null;
+                $propertyFeature->reach_in = $row['reach_in'] ?? null;
+                $propertyFeature->walk_in = $row['walk_in'] ?? null;
+                $propertyFeature->laundry_closet = $row['laundry_closet'] ?? null;
+                $propertyFeature->closet_location = $row['closet_location'] ?? null;
+                $propertyFeature->bedroom_location = $row['bedroom_location'] ?? null;
+                $propertyFeature->bathroom_type = $row['bathroom_type'] ?? null;
+                $propertyFeature->bathroom_status = $row['bathroom_status'] ?? null;
+                $propertyFeature->pool_shape = $row['pool_shape'] ?? null;
+                $propertyFeature->water_features = $row['water_features'] ?? null;
+                $propertyFeature->pool_status = $row['pool_status'] ?? null;
+                $propertyFeature->spa = $row['spa'] ?? null;
+                $propertyFeature->fencing_material = $row['fencing_material'] ?? null;
+                $propertyFeature->fencing_status = $row['fencing_status'] ?? null;
+                $propertyFeature->parking_enclosure = $row['parking_enclosure'] ?? null;
+                $propertyFeature->private_bath = $row['private_bath'] ?? null;
+                $propertyFeature->outdoor_shower = $row['outdoor_shower'] ?? null;
+                $propertyFeature->landscape_maintenance = $row['landscape_maintenance'] ?? null;
+                $propertyFeature->foundation_conditions = $row['foundation_conditions'] ?? null;
+                $propertyFeature->save();
+
+                // Create QuickMoveHome entry
+                $quickMoveInHome = new QuickMoveHome();
+                $quickMoveInHome->id  = Str::orderedUuid();
+                $quickMoveInHome->property_id = $property->property_id;
+                $quickMoveInHome->move_in_date = now(); // current date
+                $quickMoveInHome->incentives = null; // Set incentives to NULL
+                $quickMoveInHome->main_image = null; // Set main_image to NULL
+                $quickMoveInHome->save();
             }
 
-            DB::commit(); // Commit the transaction
+            DB::commit();
         } catch (\Exception $e) {
-            DB::rollBack(); // Rollback the transaction in case of error
-            // Log::error('Error importing properties: ' . $e->getMessage());
-            throw $e; // Rethrow the exception
+            DB::rollBack();
+            throw $e;
         }
     }
-
 }
+

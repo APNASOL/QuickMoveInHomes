@@ -9,7 +9,6 @@ use App\Models\Incentive;
 use App\Models\OpenHouse;
 use App\Models\Property;
 use App\Models\PropertyIncentive;
-use App\Models\QuickMoveHome;
 use App\Models\Upload;
 use Carbon\Carbon;
 use DB;
@@ -17,40 +16,34 @@ use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
+
     public function front_homes($type)
     {
         if ($type == 'all') {
-            // Get all homes
-            $homes = QuickMoveHome::all()->filter(function ($home) {
-                $property = Property::first();
-                return $property;
-            });
+            // Get all properties
+            $properties = Property::limit(10)->get();
         } else if ($type == 'open_houses') {
-            // Get homes where the related property's is_open_house field is true
-            $homes = QuickMoveHome::all()->filter(function ($home) {
-                $property = Property::where('property_id', $home->property_id)->first();
-                return $property && ($property->is_open_house == 'true' || $property->is_open_house == true);
-            });
-
+            // Get properties where is_open_house is true
+            $properties = Property::where('is_open_house', true)->orWhere('is_open_house', 1)->limit(10)->get();
         }
 
-        foreach ($homes as $home) {
-            // Fetch related property record
-            $property = Property::where('property_id', $home->property_id)->first();
-            $home->property_record = $property;
+        foreach ($properties as $property) {
+            
+            $images = json_decode($property->images);
+            $uploads = Upload::whereIn('id', $images)->get();
+            $firstUpload = $uploads->first();
 
-            // Process main image
-            if ($property->main_image) {
-                $uploaded_image = Upload::find($property->main_image);
-
-                if ($uploaded_image) {
-                    $home->main_image = get_storage_url($uploaded_image->file_name);
-                }
+            // Check if the first upload exists, then assign its file_name to the property
+            if ($firstUpload) {
+                $file_image = $firstUpload->file_name;
+                $property->main_image = get_storage_url($file_image);
             }
+            
         }
 
-        return $homes;
+        return $properties;
     }
+ 
 
     public function communities(Request $request)
     {
@@ -159,8 +152,7 @@ class IndexController extends Controller
                 $property->valid_incentives = $valid_incentives;
 
                 // Process main image (if applicable)
-                // $home = QuickMoveHome::where('property_id', $property->property_id)->first();
-                if ($property->main_image) {
+                 if ($property->main_image) {
                     $uploaded_image = Upload::find($property->main_image);
                     if ($uploaded_image) {
                         $property->main_image = get_storage_url($uploaded_image->file_name);
@@ -320,10 +312,9 @@ class IndexController extends Controller
 
                 // Store valid incentives in the property object
                 $property->valid_incentives = $valid_incentives;
-
+                
                 // Process main image (if applicable)
-                // $home = QuickMoveHome::where('property_id', $property->property_id)->first();
-                if ($property->main_image) {
+                 if ($property->main_image) {
                     $uploaded_image = Upload::find($property->main_image);
                     if ($uploaded_image) {
                         $property->main_image = get_storage_url($uploaded_image->file_name);
@@ -390,21 +381,20 @@ class IndexController extends Controller
     }
 
     public function check_incentives()
-{
-    $currentDate = now()->format('Y-m-d');
+    {
+        $currentDate = now()->format('Y-m-d');
 
-    // Fetch all active incentives that have not expired
-    $incentives = Incentive::where('status', 1)
-        ->where('end_date', '>=', $currentDate)
-        ->get();
+        // Fetch all active incentives that have not expired
+        $incentives = Incentive::where('status', 1)
+            ->where('end_date', '>=', $currentDate)
+            ->get();
 
-    // Check if any incentives were found
-    if ($incentives->isNotEmpty()) {
-        return 1;  
-    } else {
-        return 0;
+        // Check if any incentives were found
+        if ($incentives->isNotEmpty()) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
-}
-
 
 }
