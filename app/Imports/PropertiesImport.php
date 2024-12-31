@@ -1,6 +1,5 @@
 <?php
 
- 
 namespace App\Imports;
 
 use App\Models\Property;
@@ -48,10 +47,10 @@ class PropertiesImport implements ToCollection, WithHeadingRow
                 $price = $row['price']; // Get the price from the row
 
 // Remove any dollar signs and commas, then cast to integer
-$cleanedPrice = (int)str_replace([',', '$'], '', $price);
+                $cleanedPrice = (int) str_replace([',', '$'], '', $price);
 
 // Now you can store the cleaned price in the database
-$property->price = $cleanedPrice;
+                $property->price = $cleanedPrice;
 
                 // $property->price = $row['price'] ?? null;
                 $property->bedrooms = $row['bedrooms'] ?? null;
@@ -124,7 +123,7 @@ $property->price = $cleanedPrice;
 
                 // Create QuickMoveHome entry
                 $quickMoveInHome = new QuickMoveHome();
-                $quickMoveInHome->id  = Str::orderedUuid();
+                $quickMoveInHome->id = Str::orderedUuid();
                 $quickMoveInHome->property_id = $property->property_id;
                 $quickMoveInHome->move_in_date = now(); // current date
                 $quickMoveInHome->incentives = null; // Set incentives to NULL
@@ -139,4 +138,3 @@ $property->price = $cleanedPrice;
         }
     }
 }
-
