@@ -29,15 +29,28 @@ class IndexController extends Controller
 
         foreach ($properties as $property) {
             
-            $images = json_decode($property->images);
-            $uploads = Upload::whereIn('id', $images)->get();
-            $firstUpload = $uploads->first();
+         
+            $property->main_image =NULL;
 
-            // Check if the first upload exists, then assign its file_name to the property
-            if ($firstUpload) {
-                $file_image = $firstUpload->file_name;
-                $property->main_image = get_storage_url($file_image);
+            
+            $images = json_decode($property->images);
+            if ($images) {
+                $uploads = Upload::whereIn('id', $images)->get();
+                $firstUpload = $uploads->first();
+
+                if ($firstUpload) {
+                    $file_image = $firstUpload->file_name;
+                    $property->main_image = get_storage_url($file_image);
+                }
             }
+            // $uploads = Upload::whereIn('id', $images)->get();
+            // $firstUpload = $uploads->first();
+
+            // // Check if the first upload exists, then assign its file_name to the property
+            // if ($firstUpload) {
+            //     $file_image = $firstUpload->file_name;
+            //     $property->main_image = get_storage_url($file_image);
+            // }
             
         }
 

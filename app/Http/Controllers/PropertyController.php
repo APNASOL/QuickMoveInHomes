@@ -339,21 +339,39 @@ class PropertyController extends Controller
 
         foreach ($properties as $property) {
             
+            $property->banner =NULL;
+            $property->main_image =NULL;
             $images = json_decode($property->images);
-            $uploads = Upload::whereIn('id', $images)->get();
-            $firstUpload = $uploads->first();
-            $lastUpload = $uploads->last();
+            if (is_array($images) && count($images) > 0) { 
+                $uploads = Upload::whereIn('id', $images)->get();
+                $firstUpload = $uploads->first();
+                $lastUpload = $uploads->last();
 
-            // Check if the first upload exists, then assign its file_name to the property
-            if ($firstUpload) {
-                $file_image = $firstUpload->file_name;
-                $property->main_image = get_storage_url($file_image);
+                // Check if the first upload exists, then assign its file_name to the property
+                if ($firstUpload) {
+                    $file_image = $firstUpload->file_name;
+                    $property->main_image = get_storage_url($file_image);
+                    
+                }
+                if ($lastUpload) {
+                    $file_image = $lastUpload->file_name; 
+                    $property->banner = get_storage_url($file_image);
+                }
+            }
+            // $uploads = Upload::whereIn('id', $images)->get();
+            // $firstUpload = $uploads->first();
+            // $lastUpload = $uploads->last();
+
+            // // Check if the first upload exists, then assign its file_name to the property
+            // if ($firstUpload) {
+            //     $file_image = $firstUpload->file_name;
+            //     $property->main_image = get_storage_url($file_image);
                 
-            }
-            if ($lastUpload) {
-                $file_image = $lastUpload->file_name; 
-                $property->banner = get_storage_url($file_image);
-            }
+            // }
+            // if ($lastUpload) {
+            //     $file_image = $lastUpload->file_name; 
+            //     $property->banner = get_storage_url($file_image);
+            // }
              
              
             $property->community = Community::where('id', $property->community_id)->first() ?? "";

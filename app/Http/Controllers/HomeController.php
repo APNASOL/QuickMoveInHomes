@@ -97,20 +97,36 @@ class HomeController extends Controller
         $current_date = now();
 
         $images = json_decode($property->images);
-        $uploads = Upload::whereIn('id', $images)->get();
-        $firstUpload = $uploads->first();
-        $lastUpload = $uploads->last();
+        if (is_array($images) && count($images) > 0) {
+            $uploads = Upload::whereIn('id', $images)->get();
+            $firstUpload = $uploads->first();
+            $lastUpload = $uploads->last();
 
-        // Check if the first upload exists, then assign its file_name to the property
-        if ($firstUpload) {
-            $file_image = $firstUpload->file_name;
-            $property_main_image = get_storage_url($file_image);
+            // Check if the first upload exists, then assign its file_name to the property
+            if ($firstUpload) {
+                $file_image = $firstUpload->file_name;
+                $property_main_image = get_storage_url($file_image);
 
+            }
+            if ($lastUpload) {
+                $file_image = $lastUpload->file_name;
+                $property_banner = get_storage_url($file_image);
+            }
         }
-        if ($lastUpload) {
-            $file_image = $lastUpload->file_name;
-            $property_banner = get_storage_url($file_image);
-        }
+        // $uploads = Upload::whereIn('id', $images)->get();
+        // $firstUpload = $uploads->first();
+        // $lastUpload = $uploads->last();
+
+        // // Check if the first upload exists, then assign its file_name to the property
+        // if ($firstUpload) {
+        //     $file_image = $firstUpload->file_name;
+        //     $property_main_image = get_storage_url($file_image);
+
+        // }
+        // if ($lastUpload) {
+        //     $file_image = $lastUpload->file_name;
+        //     $property_banner = get_storage_url($file_image);
+        // }
 
         // Fetch Open House details if the property is marked as an open house
         if ($property->is_open_house) {
@@ -291,21 +307,40 @@ class HomeController extends Controller
                 $property->open_house_data = 0;
             }
 
+            $property->banner =NULL;
+            $property->main_image =NULL;
+            
             $images = json_decode($property->images);
-            $uploads = Upload::whereIn('id', $images)->get();
-            $firstUpload = $uploads->first();
-            $lastUpload = $uploads->last();
+            if (is_array($images) && count($images) > 0) {
+                $uploads = Upload::whereIn('id', $images)->get();
+                $firstUpload = $uploads->first();
+                $lastUpload = $uploads->last();
 
-            // Check if the first upload exists, then assign its file_name to the property
-            if ($firstUpload) {
-                $file_image = $firstUpload->file_name;
-                $property->main_image = get_storage_url($file_image);
+                // Check if the first upload exists, then assign its file_name to the property
+                if ($firstUpload) {
+                    $file_image = $firstUpload->file_name;
+                    $property->main_image = get_storage_url($file_image);
 
+                }
+                if ($lastUpload) {
+                    $file_image = $lastUpload->file_name;
+                    $property->banner = get_storage_url($file_image);
+                }
             }
-            if ($lastUpload) {
-                $file_image = $lastUpload->file_name;
-                $property->banner = get_storage_url($file_image);
-            }
+            // $uploads = Upload::whereIn('id', $images)->get();
+            // $firstUpload = $uploads->first();
+            // $lastUpload = $uploads->last();
+
+            // // Check if the first upload exists, then assign its file_name to the property
+            // if ($firstUpload) {
+            //     $file_image = $firstUpload->file_name;
+            //     $property->main_image = get_storage_url($file_image);
+
+            // }
+            // if ($lastUpload) {
+            //     $file_image = $lastUpload->file_name;
+            //     $property->banner = get_storage_url($file_image);
+            // }
 
         }
 
@@ -448,6 +483,8 @@ class HomeController extends Controller
         $total_homes = $properties->count();
 
         foreach ($properties as $property) {
+            $property->banner =NULL;
+            $property->main_image =NULL;
             // Fetch related property record
             if ($property->is_open_house) {
                 $open_house = OpenHouse::where('property_id', $property->property_id)->first();
@@ -455,20 +492,36 @@ class HomeController extends Controller
             }
             // Process main image
             $images = json_decode($property->images);
-            $uploads = Upload::whereIn('id', $images)->get();
-            $firstUpload = $uploads->first();
-            $lastUpload = $uploads->last();
+            if (is_array($images) && count($images) > 0) {
+                $uploads = Upload::whereIn('id', $images)->get();
+                $firstUpload = $uploads->first();
+                $lastUpload = $uploads->last();
 
-            // Check if the first upload exists, then assign its file_name to the property
-            if ($firstUpload) {
-                $file_image = $firstUpload->file_name;
-                $property->main_image = get_storage_url($file_image);
+                // Check if the first upload exists, then assign its file_name to the property
+                if ($firstUpload) {
+                    $file_image = $firstUpload->file_name;
+                    $property->main_image = get_storage_url($file_image);
 
+                }
+                if ($lastUpload) {
+                    $file_image = $lastUpload->file_name;
+                    $property->banner = get_storage_url($file_image);
+                }
             }
-            if ($lastUpload) {
-                $file_image = $lastUpload->file_name;
-                $property->banner = get_storage_url($file_image);
-            }
+            // $uploads = Upload::whereIn('id', $images)->get();
+            // $firstUpload = $uploads->first();
+            // $lastUpload = $uploads->last();
+
+            // // Check if the first upload exists, then assign its file_name to the property
+            // if ($firstUpload) {
+            //     $file_image = $firstUpload->file_name;
+            //     $property->main_image = get_storage_url($file_image);
+
+            // }
+            // if ($lastUpload) {
+            //     $file_image = $lastUpload->file_name;
+            //     $property->banner = get_storage_url($file_image);
+            // }
 
         }
 
@@ -584,21 +637,40 @@ class HomeController extends Controller
         foreach ($properties as $property) {
             // Fetch related property record
 
+            $property->banner =NULL;
+            $property->main_image =NULL;
+
             $images = json_decode($property->images);
-            $uploads = Upload::whereIn('id', $images)->get();
-            $firstUpload = $uploads->first();
-            $lastUpload = $uploads->last();
+            if (is_array($images) && count($images) > 0) {
+                $uploads = Upload::whereIn('id', $images)->get();
+                $firstUpload = $uploads->first();
+                $lastUpload = $uploads->last();
 
-            // Check if the first upload exists, then assign its file_name to the property
-            if ($firstUpload) {
-                $file_image = $firstUpload->file_name;
-                $property->main_image = get_storage_url($file_image);
+                // Check if the first upload exists, then assign its file_name to the property
+                if ($firstUpload) {
+                    $file_image = $firstUpload->file_name;
+                    $property->main_image = get_storage_url($file_image);
 
+                }
+                if ($lastUpload) {
+                    $file_image = $lastUpload->file_name;
+                    $property->banner = get_storage_url($file_image);
+                }
             }
-            if ($lastUpload) {
-                $file_image = $lastUpload->file_name;
-                $property->banner = get_storage_url($file_image);
-            }
+            // $uploads = Upload::whereIn('id', $images)->get();
+            // $firstUpload = $uploads->first();
+            // $lastUpload = $uploads->last();
+
+            // // Check if the first upload exists, then assign its file_name to the property
+            // if ($firstUpload) {
+            //     $file_image = $firstUpload->file_name;
+            //     $property->main_image = get_storage_url($file_image);
+
+            // }
+            // if ($lastUpload) {
+            //     $file_image = $lastUpload->file_name;
+            //     $property->banner = get_storage_url($file_image);
+            // }
 
             if ($property->is_open_house) {
                 $open_house = OpenHouse::where('property_id', $property->property_id)->first();
@@ -763,6 +835,9 @@ class HomeController extends Controller
         $total_homes = $properties->count();
 
         foreach ($properties as $property) {
+            $property->banner =NULL;
+            $property->main_image =NULL;
+
             // Fetch related property record
             $home = QuickMoveHome::where('property_id', $property->property_id)->first();
             if ($property->is_open_house) {
@@ -772,20 +847,36 @@ class HomeController extends Controller
             }
             // Process main image
             $images = json_decode($property->images);
-            $uploads = Upload::whereIn('id', $images)->get();
-            $firstUpload = $uploads->first();
-            $lastUpload = $uploads->last();
+            if (is_array($images) && count($images) > 0) {
+                $uploads = Upload::whereIn('id', $images)->get();
+                $firstUpload = $uploads->first();
+                $lastUpload = $uploads->last();
 
-            // Check if the first upload exists, then assign its file_name to the property
-            if ($firstUpload) {
-                $file_image = $firstUpload->file_name;
-                $property->main_image = get_storage_url($file_image);
+                // Check if the first upload exists, then assign its file_name to the property
+                if ($firstUpload) {
+                    $file_image = $firstUpload->file_name;
+                    $property->main_image = get_storage_url($file_image);
 
+                }
+                if ($lastUpload) {
+                    $file_image = $lastUpload->file_name;
+                    $property->banner = get_storage_url($file_image);
+                }
             }
-            if ($lastUpload) {
-                $file_image = $lastUpload->file_name;
-                $property->banner = get_storage_url($file_image);
-            }
+            // $uploads = Upload::whereIn('id', $images)->get();
+            // $firstUpload = $uploads->first();
+            // $lastUpload = $uploads->last();
+
+            // // Check if the first upload exists, then assign its file_name to the property
+            // if ($firstUpload) {
+            //     $file_image = $firstUpload->file_name;
+            //     $property->main_image = get_storage_url($file_image);
+
+            // }
+            // if ($lastUpload) {
+            //     $file_image = $lastUpload->file_name;
+            //     $property->banner = get_storage_url($file_image);
+            // }
 
             $property->home_data = $home;
         }

@@ -44,6 +44,8 @@ class CommunitiesController extends Controller
                 if ($uploaded_image && $uploaded_image->file_name) {
                     $community->main_image = get_storage_url($uploaded_image->file_name);
                 }
+            }else{
+                $community->main_image = null;
             }
             if ($community && $community->banner) {
 
@@ -51,6 +53,8 @@ class CommunitiesController extends Controller
                 if ($uploaded_image && $uploaded_image->file_name) {
                     $community->banner = get_storage_url($uploaded_image->file_name);
                 }
+            }else{
+                $community->banner = null;
             }
         }
 
