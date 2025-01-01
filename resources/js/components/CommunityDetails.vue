@@ -591,7 +591,7 @@
                                         </span>
 
                                         From
-                                        <b>${{ home.price }}</b>
+                                        <b>${{ formatPrice(home.price) }}</b>
                                     </p>
                                 </div>
                             </div>
@@ -767,6 +767,9 @@ export default {
         setAltImg(event) {
             event.target.src = "/images/default.jpg";
         },
+        formatPrice(price) {
+      return Math.floor(price); // Removes the decimal portion
+    }
     },
 };
 </script>

@@ -25,11 +25,11 @@
                                     v-if="Home.new_price_after_incentive"
                                     class="price ms-2 text-danger mt-3"
                                 >
-                                    <del>${{ Home.price }}</del>
+                                    <del>${{ formatPrice(Home.price) }}</del>
                                 </span>
                                 <span class="price ms-2 mt-3" v-else>
                                     <br />
-                                    ${{ Home.price }}
+                                    ${{ formatPrice(Home.price) }}
                                 </span>
                                 <b v-if="Home.new_price_after_incentive">
                                     <br />
@@ -916,7 +916,7 @@ export default {
 }
 
 .interactive-banner {
-    background-color: rgba(22,50,89,255)
+    background-color: rgba(22,50,89,255);
     color: white;
     text-align: center;
     padding: 20px 0;

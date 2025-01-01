@@ -387,7 +387,9 @@
                                                     <span v-if="home.price">
                                                         <b>
                                                             ${{
-                                                                home.price
+                                                                formatPrice(
+                                                                    home.price
+                                                                )
                                                             }} </b
                                                         ><br />
                                                     </span>
@@ -397,9 +399,7 @@
                                                         <i
                                                             class="bi bi-aspect-ratio"
                                                         ></i>
-                                                        {{
-                                                            home.square_feet
-                                                        }}
+                                                        {{ home.square_feet }}
                                                         sq ft<br />
                                                     </span>
                                                     <span v-if="home.bedrooms">
@@ -1678,6 +1678,9 @@ export default {
                         this.formErrors = error.response.data.errors;
                     }
                 });
+        },
+        formatPrice(price) {
+            return Math.floor(price); // Removes the decimal portion
         },
     },
 };
