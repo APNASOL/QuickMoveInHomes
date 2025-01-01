@@ -1303,7 +1303,7 @@ export default {
         this.pluckCommunities();
         this.pluckHoas();
         this.pluckSchools();
-        this.quickSearch();
+        this.sortProperties();
     },
 
     mounted() {},
@@ -1318,7 +1318,7 @@ export default {
                 "Square Feet",
                 "Lot Size",
             ],
-            sort_by: "", // Default value
+            sort_by: "Newest", // Default value
             bathroom: 0,
             bedrooms: 0,
             total_homes: 0,
@@ -1403,7 +1403,7 @@ export default {
             this.bathroom = "";
             this.bedrooms = "";
             this.is_open_house = "";
-            this.quickSearch();
+            this.sortProperties();
         },
         // initMap() {
         //     const mapOptions = {
