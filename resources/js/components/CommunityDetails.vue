@@ -569,7 +569,7 @@
                                 <div class="card-body text-start">
                                     <p>
                                         <span v-if="home.title"> 
-                                            Title
+                                            
                                             <b>{{ home.title }} </b><br />
                                         </span>
                                         
@@ -590,7 +590,7 @@
                                             <br />
                                         </span>
 
-                                        Price
+                                        From
                                         <b>${{ home.price }}</b>
                                     </p>
                                 </div>
@@ -859,7 +859,7 @@ export default {
 }
 
 .interactive-banner {
-    background-color: #002855;
+    background-color: rgba(22,50,89,255);
     color: white;
     text-align: center;
     padding: 20px 0;
@@ -885,7 +885,7 @@ export default {
     border-radius: 0px !important;
 }
 .open-house-tag {
-    background-color: #002855;
+    background-color: rgba(22,50,89,255);
     color: white;
     padding: 5px 10px;
     font-size: 14px;

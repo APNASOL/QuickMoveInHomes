@@ -50,7 +50,7 @@
                                 <div class="card-body text-start">
                                     <p>
                                         <span v-if="property.title"> 
-                                            Title
+                                            
                                             <b>{{ property.title }} </b><br />
                                         </span>
                                         <span v-if="property.square_feet"> 
@@ -70,7 +70,7 @@
                                             <br />
                                         </span>
 
-                                        Price
+                                        From
                                         <b>${{ property.price }}</b>
                                     </p>
                                     <!-- <p>

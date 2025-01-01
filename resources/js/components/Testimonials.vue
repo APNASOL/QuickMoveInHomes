@@ -2,8 +2,8 @@
     <div v-if="videos && videos.length > 0">
         <div class="mx-4 pb-2 pt-2 mt-3">
             <div>
-                <h2>Testimonials</h2>
-                <p>
+                <h2 class="c-theme-color">Testimonials</h2>
+                <p class="c-theme-color">
                     Welcome to your premier digital gateway with Yvonne Khoo,
                     offering comprehensive real estate solutions in the Las
                     Vegas community. Stay informed with live updates on property

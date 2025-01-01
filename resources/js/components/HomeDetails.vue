@@ -669,7 +669,7 @@
                                      
                                     <p>
                                         <span v-if="home.title"> 
-                                            Title
+                                            
                                             <b>{{ home.title }} </b><br />
                                         </span>
                                         <span v-if="home.square_feet"> 
@@ -689,8 +689,8 @@
                                             <br />
                                         </span>
 
-                                        Price
-                                        <b>${{ home.price }}</b>
+                                        From
+                                        <b>${{ formatPrice(home.price) }}</b>
                                     </p>
                                 </div>
                             </div>
@@ -821,6 +821,9 @@ export default {
             // Return the formatted time with AM/PM
             return `${formattedHours}:${minutes}:${seconds} ${period}`;
         },
+        formatPrice(price) {
+      return Math.floor(price); // Removes the decimal portion
+    }
     },
 };
 </script>
@@ -913,7 +916,7 @@ export default {
 }
 
 .interactive-banner {
-    background-color: #002855;
+    background-color: rgba(22,50,89,255)
     color: white;
     text-align: center;
     padding: 20px 0;

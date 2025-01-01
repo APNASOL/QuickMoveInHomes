@@ -1,7 +1,7 @@
 <template>
     <div class="c-bg-color" v-if="properties && properties.length">
         <div class="mx-4">
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between c-theme-color">
                 <div>
                     <h2 class="mt-4">
                         {{ translate("Discover Your Dream Home") }}
@@ -57,7 +57,7 @@
                                 <div class="card-body text-start">
                                     <p>
                                         <span v-if="property.title"> 
-                                            Title
+                                            
                                             <b>{{ property.title }} </b><br />
                                         </span>
                                         <span v-if="property.square_feet"> 
@@ -77,8 +77,8 @@
                                             <br />
                                         </span>
 
-                                        Price
-                                        <b>${{ property.price }}</b>
+                                        From
+                                        <b>${{ formatPrice(property.price) }}</b>
                                     </p>
                                      
                                 </div>
@@ -251,6 +251,9 @@ export default defineComponent({
         setAltImg(event) {
             event.target.src = "/images/default.jpg";
         },
+        formatPrice(price) {
+      return Math.floor(price); // Removes the decimal portion
+    }
     },
 });
 </script>

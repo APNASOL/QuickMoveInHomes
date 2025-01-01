@@ -1279,13 +1279,15 @@ export default {
 <style>
 body {
     font-family: "Oakes Grotesk", sans-serif !important;
+    background-color: rgba(238, 238, 238, 1);
+
 }
 p {
     margin: 0;
     padding: 0;
 }
 .c-top-bar-section {
-    background-color: #e58b15;
+    background-color: rgba(218, 224, 231, 1);
     text-indent: 20px;
     font-size: 0.875rem;
     color: white;
@@ -1294,11 +1296,11 @@ p {
     display: none !important;
 }
 .c-theme-color {
-    color: #e58b15 !important;
+    color: #163259 !important;
 }
 .c-bg-color {
-    background-color: #e58b15 !important;
-    color: white;
+    background-color: rgba(218, 224, 231, 1) !important;
+    color: white !important;
 }
 .c-image-brightness {
     filter: brightness(60%);
@@ -1313,7 +1315,7 @@ p {
 }
 .carousel__prev,
 .carousel__next {
-    background: #002855 !important;
+    background: #163259!important;
     border-radius: 50% !important;
     transform: unset !important;
     color: white !important;
@@ -1419,13 +1421,16 @@ p {
 }
 
 .navbar {
-    height: 50px !important;
+    height: 80px !important;
+    color:white !important;
+    font-weight: bold !important;
 }
 /* Media query for screens smaller than or equal to 768px (typically mobile devices) */
 @media (max-width: 576px) {
     .navbar {
         height: auto !important;
-        background-color: #002855 !important;
+        background-color: #163259!important;
+        
     }
     .dropdown-menu.show {
         position: absolute;
@@ -1470,7 +1475,7 @@ p {
 @media (min-width: 577px) and (max-width: 768px) {
     .navbar {
         height: auto !important;
-        background-color: #002855 !important;
+        background-color: #163259!important;
     }
     .dropdown-menu.show {
         position: absolute;
@@ -1517,7 +1522,7 @@ p {
 @media (min-width: 769px) and (max-width: 991px) {
     .navbar {
         height: auto !important;
-        background-color: #002855 !important;
+        background-color: #163259!important;
     }
     .dropdown-menu.show {
         position: absolute;
@@ -1576,58 +1581,59 @@ p {
 /* Global Css ////////////////////////////////////////////////////////////////////// */
 /* Global Css ////////////////////////////////////////////////////////////////////// */
 .c-btn-theme-yellow {
-    background: #e58b15 !important;
+    background-color: rgba(0, 27, 159, 1);
     color: white !important;
 }
 .c-btn-theme-yellow:hover,
 .c-btn-theme-yellow:active,
 .c-btn-theme-yellow:visited {
-    background-color: #fba638 !important;
+    background-color: rgba(0, 27, 159, 0.8) !important;
 }
 
 .c-btn-theme-yellow:focus {
-    box-shadow: 0 0 0 0.2rem #e58b15 !important;
+    box-shadow: 0 0 0 0.2rem rgba(0, 27, 159, 0.5) !important;
 }
 .c-btn-theme-yellow:active {
-    box-shadow: 0 0 0 0.2rem #e58b15 !important;
+    box-shadow: 0 0 0 0.2rem rgba(0, 27, 159, 0.5) !important;
 }
 
 .c-btn-theme-yellow-outline {
-    color: #e58b15 !important;
-    border: 1px solid #e58b15 !important;
+    color: rgba(0, 27, 159, 1) !important;
+    border: 1px solid rgba(0, 27, 159, 1) !important;
 }
 
 .c-btn-theme-yellow-outline:hover {
-    background-color: #e58b15 !important;
+    background-color: rgba(0, 27, 159, 1) !important;
     color: white !important;
 }
 
 .c-btn-theme-yellow-outline:focus,
 .c-btn-theme-yellow-outline.focus {
-    background: #e58b15 !important;
-    border-color: #e58b15 !important;
+    background: rgba(0, 27, 159, 1) !important;
+    border-color: rgba(0, 27, 159, 1) !important;
     color: white !important;
-    box-shadow: 0 0 0 0.25rem #e58b15 !important;
+    box-shadow: 0 0 0 0.25rem rgba(0, 27, 159, 0.5) !important;
 }
 
 .c-btn-theme-yellow-outline:active,
 .c-btn-theme-yellow-outline.active,
 .show > .c-btn-theme-yellow-outline.dropdown-toggle {
-    background: #e58b15 !important;
-    border-color: #e58b15 !important;
+    background: rgba(0, 27, 159, 1) !important;
+    border-color: rgba(0, 27, 159, 1) !important;
 }
 
 .c-btn-theme-yellow-outline:active:focus,
 .c-btn-theme-yellow-outline.active:focus,
 .show > .c-btn-theme-yellow-outline.dropdown-toggle:focus {
-    box-shadow: 0 0 0 0.25rem #e58b15 !important;
+    box-shadow: 0 0 0 0.25rem rgba(0, 27, 159, 0.5) !important;
 }
 
 .c-btn-theme-yellow-outline :active:focus,
 .c-btn-theme-yellow-outline .active:focus,
 .show > .c-btn-theme-yellow-outline .dropdown-toggle:focus {
-    box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.5) !important;
+    box-shadow: 0 0 0 0.25rem rgba(0, 27, 159, 0.5) !important;
 }
+
 
 /* //////////////////////////////////////////////////////////////////////////////////// */
 /* TourDetails page css ////////////////////////////////////////////////////////////////*/
@@ -1783,11 +1789,12 @@ label {
 }
 
 .bg-theme {
-    background-color: #002855 !important;
+    background-color: #163259!important;
+    
 }
 
 .interactive-banner {
-    background-color: #002855;
+    background-color: rgba(22,50,89,255);
     color: white;
     text-align: center;
     padding: 20px 0;
@@ -1800,7 +1807,7 @@ label {
     background: linear-gradient(#c2a01e 9%, #debf46, #c2a01e 84%);
 }
 .btn-primary {
-    background: #002855;
+    background: #0C0F24;
 }
 .btn-primary:hover {
     background: #023f86;
@@ -1823,7 +1830,7 @@ label {
     overflow-x: auto; /* Allows horizontal scrolling */
 }
 .dropdown-item:hover {
-    background-color: #002855;
+    background-color: #0C0F24;
     color: white; /* Adjust text color for better readability, if needed */
 }
 .c-dec-none {
