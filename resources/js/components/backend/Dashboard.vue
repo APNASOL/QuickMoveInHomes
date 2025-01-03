@@ -110,9 +110,10 @@
                 <div class="col-lg-12">
                     <div class="row g-3">
                         <div class="col-ms-12">
-                            <div class="card card-body">
+                            <div class="card card-body" v-if="agent_history && agent_history.length">
                                 <h3>Property Dealing History</h3>
                                 <div class="accordion" id="historyAccordion">
+                                
                                     <div
                                         v-for="(entry, index) in agent_history"
                                         :key="entry.id"
@@ -247,6 +248,12 @@
                                     </div>
                                 </div>
                             </div>
+                            <div v-else>
+                                <div class="alert alert-info">
+                                    No history found
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -256,12 +263,13 @@
             class="section dashboard"
             v-if="logged_in_user.role == 'customer'"
         >
+      
             <div class="row">
                 <!-- Left side columns -->
                 <div class="col-lg-12">
                     <div class="row g-3">
                         <div class="col-ms-12">
-                            <div class="card card-body">
+                            <div class="card card-body" v-if="customer_history && customer_history.length">
                                 <h3>Property Dealing History</h3>
                                 <div class="accordion" id="historyAccordion">
                                     <div
@@ -372,6 +380,12 @@
                                     </div>
                                 </div>
                             </div>
+                            <div v-else>
+                                <div class="alert alert-info">
+                                    No history found
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -388,12 +402,13 @@ export default {
         Master,
         Multiselect,
     },
-    created() {
+    created() {     
         this.getDataCount();
         if (logged_in_user.role == "agent") {
             this.agentHistory();
         }
         if (logged_in_user.role == "customer") {
+             
             this.customerHistory();
         }
     },
