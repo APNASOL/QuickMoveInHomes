@@ -95,13 +95,13 @@
                                             '/homes-list/' + searching_location
                                         "
                                         type="submit"
-                                        class="btn c-btn-theme-yellow"
+                                        class="btn c-btn-theme-primary"
                                         @click="activeSpinner"
                                     >
                                         {{ translate("Search") }}
                                     </a>
                                     <a
-                                        class="btn c-btn-theme-yellow"
+                                        class="btn c-btn-theme-primary"
                                         type="button"
                                         disabled
                                         v-else

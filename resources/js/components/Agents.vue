@@ -59,7 +59,7 @@
                                     <div class="mt-3">
                                         <button
                                             type="button"
-                                            class="btn c-btn-theme-yellow"
+                                            class="btn c-btn-theme-primary"
                                             @click="openModal(agent.id)"
                                         >
                                             {{ translate("Contract") }}
@@ -280,7 +280,7 @@
                     <div class="modal-footer">
                         <button
                             type="button"
-                            class="btn c-btn-theme-yellow"
+                            class="btn c-btn-theme-primary"
                             :disabled="!termsAgreed"
                             @click="submitContract"
                         >

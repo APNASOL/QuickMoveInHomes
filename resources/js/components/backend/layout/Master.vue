@@ -20,7 +20,7 @@
                 </button>
             </div>
             <a
-                class="nav-link nav-icon ms-3"
+                class="nav-link nav-icon ms-3 c-theme-text-color"
                 href="/"
                 target="_blank"
                 title="Browse Website"
@@ -28,7 +28,7 @@
                 <i class="bi bi-globe"></i>
             </a>
 
-            <nav class="ms-auto">
+            <nav class="ms-auto c-theme-text-color">
                 <ul class="d-flex align-items-center c-navbar-dropdown">
                     <li class="nav-item dropdown pe-3">
                         <a
@@ -87,163 +87,263 @@
         </header>
 
         <aside
-    class="sidebar"
-    :class="{
-        'sidebar-toggle': isSidebarToggled,
-    }"
->
-    <ul class="sidebar-nav">
-        <li class="nav-item">
-            <a
-                class="nav-link collapsed"
-                :class="{ active: isActive('/dashboard') }"
-                href="/dashboard"
-            >
-                <i class="bi bi-speedometer2 me-2"></i>
-                <span>Dashboard</span>
-            </a>
-        </li>
-        <li class="nav-item" v-if="user_role == 'admin'">
-            <a class="nav-link collapsed" :class="{ active: isActive('/homes') }" href="/homes">
-                <i class="bi bi-arrow-right me-2"></i>
-                <span>Quick Move In</span>
-            </a>
-        </li>
-
-
-        <li class="nav-item" v-if="user_role == 'admin'">
-            <a class="nav-link collapsed" :class="{ active: isActive('/properties') }" href="/properties">
-                <i class="bi bi-file-earmark-text me-2"></i>
-                <span>Properties</span>
-            </a>
-        </li>
-        <li class="nav-item" v-if="user_role == 'admin'">
-            <a class="nav-link collapsed" :class="{ active: isActive('/upload') }" href="/upload">
-                <i class="bi bi-person-check me-2"></i>
-                <span>{{ translate("Upload") }}</span>
-            </a>
-        </li>
-        <li class="nav-item" v-if="user_role == 'admin'">
-            <a class="nav-link collapsed" :class="{ active: isActive('/agents') }" href="/agents">
-                <i class="bi bi-person-check me-2"></i>
-                <span>{{ translate("Agents") }}</span>
-            </a>
-        </li>
-        <li class="nav-item" v-if="user_role == 'admin'">
-            <a class="nav-link collapsed" :class="{ active: isActive('/customer-agreements') }" href="/customer-agreements">
-                <i class="bi bi-file-earmark-text me-2"></i>
-                <span>Customer Agreements</span>
-            </a>
-        </li>
-        <li class="nav-item" v-if="user_role == 'admin'">
-            <a class="nav-link collapsed" :class="{ active: isActive('/customer-visits') }" href="/customer-visits">
-                <i class="bi bi-people me-2"></i>
-                <span>Customer Visits</span>
-            </a>
-        </li>
-        <li class="nav-item" v-if="user_role == 'admin'">
-            <a class="nav-link collapsed" :class="{ active: isActive('/builders') }" href="/builders">
-                <i class="bi bi-tools me-2"></i>
-                <span>{{ translate("Builders") }}</span>
-            </a>
-        </li>
-        <li class="nav-item" v-if="user_role == 'admin'">
-            <a class="nav-link collapsed" :class="{ active: isActive('/blogs/posts') }" href="/blogs/posts">
-                <i class="bi bi-journal me-2"></i>
-                <span>Blog posts</span>
-            </a>
-        </li>
-        <li class="nav-item" v-if="user_role == 'admin'">
-            <a class="nav-link collapsed" :class="{ active: isActive('/communities') }" href="/communities">
-                <i class="bi bi-person-heart me-2"></i>
-                <span>{{ translate("Communities") }}</span>
-            </a>
-        </li>
-        <li class="nav-item" v-if="user_role == 'admin'">
-            <a class="nav-link collapsed" :class="{ active: isActive('/events') }" href="/events">
-                <i class="bi bi-calendar-check me-2"></i>
-                <span>Events</span>
-            </a>
-        </li>
-        
-        <li class="nav-item" v-if="user_role == 'admin'">
-            <a class="nav-link collapsed" :class="{ active: isActive('/home-owners') }" href="/home-owners">
-                <i class="bi bi-people me-2"></i>
-                <span>{{ translate("HOA") }}</span>
-            </a>
-        </li>
-        <li class="nav-item" v-if="user_role == 'admin'">
-            <a class="nav-link collapsed" :class="{ active: isActive('/incentives') }" href="/incentives">
-                <i class="bi bi-star me-2"></i>
-                <span>Incentives</span>
-            </a>
-        </li>
-        <li class="nav-item" v-if="user_role == 'admin'">
-            <a class="nav-link collapsed" :class="{ active: isActive('/neighborhoods') }" href="/neighborhoods">
-                <i class="bi bi-map me-2"></i>
-                <span>{{ translate("Neighborhood") }}</span>
-            </a>
-        </li>
-        <li class="nav-item" v-if="user_role == 'admin'">
-            <a class="nav-link collapsed" :class="{ active: isActive('/our-promises') }" href="/our-promises">
-                <i class="bi bi-question-circle me-2"></i>
-                <span>{{ translate("Why choose") }}</span>
-            </a>
-        </li>
-        
-       
-        
-
-        <li class="nav-item" v-if="user_role == 'admin'">
-            <a class="nav-link collapsed" :class="{ active: isActive('/regions') || isActive('/region/create') || isActive('/region/edit') }" href="/regions">
-                <i class="bi bi-globe me-2"></i>
-                <span>{{ translate("Regions") }}</span>
-            </a>
-        </li>
-        <li class="nav-item" v-if="user_role == 'admin'">
-            <a class="nav-link collapsed" :class="{ active: isActive('/user-contacted-us') }" href="/user-contacted-us">
-                <i class="bi bi-person me-2"></i>
-                <span>{{ translate("User contact") }}</span>
-            </a>
-        </li>
-        <li class="nav-item" v-if="user_role == 'admin'">
-            <a class="nav-link collapsed" :class="{ active: isActive('/external-website') }" href="/external-website">
-                <i class="bi bi-gear me-2"></i>
-                <span>{{ translate("Settings") }}</span>
-            </a>
-        </li>
-        <li class="nav-item" v-if="user_role == 'admin'">
-            <a class="nav-link collapsed" :class="{ active: isActive('/schools') }" href="/schools">
-                <i class="bi bi-book me-2"></i>
-                <span>{{ translate("Schools") }}</span>
-            </a>
-        </li>
-        <li class="nav-item" v-if="user_role == 'admin'">
-            <a class="nav-link collapsed" :class="{ active: isActive('/amenities') }" href="/amenities">
-                <i class="bi bi-bag me-2"></i>
-                <span>{{ translate("Amenities") }}</span>
-            </a>
-        </li>
-        
-        <li class="nav-item" v-if="user_role == 'admin'">
-            <a class="nav-link collapsed" data-bs-target="#icons-nav-emails" data-bs-toggle="collapse" :class="{ active: isActive('/welcome-email') }" href="#">
-                <i class="bi bi-envelope me-2"></i>
-                <span>{{ translate("Emails") }}</span>
-                <i class="bi bi-chevron-down  ms-5"></i>
-            </a>
-            <ul id="icons-nav-emails" class="nav-content collapse" data-bs-parent="#sidebar-nav" v-if="user_role == 'admin'">
+            class="sidebar mt-3"
+            :class="{
+                'sidebar-toggle': isSidebarToggled,
+            }"
+        >
+            <ul class="sidebar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="/welcome-email"><i class="bi bi-envelope-arrow-up-fill me-2"></i><span>{{ translate("Welcome email") }}</span></a>
+                    <a
+                        class="nav-link collapsed"
+                        :class="{ active: isActive('/dashboard') }"
+                        href="/dashboard"
+                    >
+                        <i class="bi bi-speedometer2 me-2"></i>
+                        <span>Dashboard</span>
+                    </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/reset-password-email"><i class="bi bi-envelope-arrow-up-fill me-2"></i><span>{{ translate("Reset password email") }}</span></a>
+                <li class="nav-item" v-if="user_role == 'admin'">
+                    <a
+                        class="nav-link collapsed"
+                        :class="{ active: isActive('/homes') }"
+                        href="/homes"
+                    >
+                        <i class="bi bi-arrow-right me-2"></i>
+                        <span>Quick Move In</span>
+                    </a>
+                </li>
+
+                <li class="nav-item" v-if="user_role == 'admin'">
+                    <a
+                        class="nav-link collapsed"
+                        :class="{ active: isActive('/properties') }"
+                        href="/properties"
+                    >
+                        <i class="bi bi-file-earmark-text me-2"></i>
+                        <span>Properties</span>
+                    </a>
+                </li>
+                <li class="nav-item" v-if="user_role == 'admin'">
+                    <a
+                        class="nav-link collapsed"
+                        :class="{ active: isActive('/upload') }"
+                        href="/upload"
+                    >
+                        <i class="bi bi-person-check me-2"></i>
+                        <span>{{ translate("Upload") }}</span>
+                    </a>
+                </li>
+                <li class="nav-item" v-if="user_role == 'admin'">
+                    <a
+                        class="nav-link collapsed"
+                        :class="{ active: isActive('/agents') }"
+                        href="/agents"
+                    >
+                        <i class="bi bi-person-check me-2"></i>
+                        <span>{{ translate("Agents") }}</span>
+                    </a>
+                </li>
+                <li class="nav-item" v-if="user_role == 'admin'">
+                    <a
+                        class="nav-link collapsed"
+                        :class="{ active: isActive('/customer-agreements') }"
+                        href="/customer-agreements"
+                    >
+                        <i class="bi bi-file-earmark-text me-2"></i>
+                        <span>Customer Agreements</span>
+                    </a>
+                </li>
+                <li class="nav-item" v-if="user_role == 'admin'">
+                    <a
+                        class="nav-link collapsed"
+                        :class="{ active: isActive('/customer-visits') }"
+                        href="/customer-visits"
+                    >
+                        <i class="bi bi-people me-2"></i>
+                        <span>Customer Visits</span>
+                    </a>
+                </li>
+                <li class="nav-item" v-if="user_role == 'admin'">
+                    <a
+                        class="nav-link collapsed"
+                        :class="{ active: isActive('/builders') }"
+                        href="/builders"
+                    >
+                        <i class="bi bi-tools me-2"></i>
+                        <span>{{ translate("Builders") }}</span>
+                    </a>
+                </li>
+                <li class="nav-item" v-if="user_role == 'admin'">
+                    <a
+                        class="nav-link collapsed"
+                        :class="{ active: isActive('/blogs/posts') }"
+                        href="/blogs/posts"
+                    >
+                        <i class="bi bi-journal me-2"></i>
+                        <span>Blog posts</span>
+                    </a>
+                </li>
+                <li class="nav-item" v-if="user_role == 'admin'">
+                    <a
+                        class="nav-link collapsed"
+                        :class="{ active: isActive('/communities') }"
+                        href="/communities"
+                    >
+                        <i class="bi bi-person-heart me-2"></i>
+                        <span>{{ translate("Communities") }}</span>
+                    </a>
+                </li>
+                <li class="nav-item" v-if="user_role == 'admin'">
+                    <a
+                        class="nav-link collapsed"
+                        :class="{ active: isActive('/events') }"
+                        href="/events"
+                    >
+                        <i class="bi bi-calendar-check me-2"></i>
+                        <span>Events</span>
+                    </a>
+                </li>
+
+                <li class="nav-item" v-if="user_role == 'admin'">
+                    <a
+                        class="nav-link collapsed"
+                        :class="{ active: isActive('/home-owners') }"
+                        href="/home-owners"
+                    >
+                        <i class="bi bi-people me-2"></i>
+                        <span>{{ translate("HOA") }}</span>
+                    </a>
+                </li>
+                <li class="nav-item" v-if="user_role == 'admin'">
+                    <a
+                        class="nav-link collapsed"
+                        :class="{ active: isActive('/incentives') }"
+                        href="/incentives"
+                    >
+                        <i class="bi bi-star me-2"></i>
+                        <span>Incentives</span>
+                    </a>
+                </li>
+                <li class="nav-item" v-if="user_role == 'admin'">
+                    <a
+                        class="nav-link collapsed"
+                        :class="{ active: isActive('/neighborhoods') }"
+                        href="/neighborhoods"
+                    >
+                        <i class="bi bi-map me-2"></i>
+                        <span>{{ translate("Neighborhood") }}</span>
+                    </a>
+                </li>
+                <li class="nav-item" v-if="user_role == 'admin'">
+                    <a
+                        class="nav-link collapsed"
+                        :class="{ active: isActive('/our-promises') }"
+                        href="/our-promises"
+                    >
+                        <i class="bi bi-question-circle me-2"></i>
+                        <span>{{ translate("Why choose") }}</span>
+                    </a>
+                </li>
+
+                <li class="nav-item" v-if="user_role == 'admin'">
+                    <a
+                        class="nav-link collapsed"
+                        :class="{
+                            active:
+                                isActive('/regions') ||
+                                isActive('/region/create') ||
+                                isActive('/region/edit'),
+                        }"
+                        href="/regions"
+                    >
+                        <i class="bi bi-globe me-2"></i>
+                        <span>{{ translate("Regions") }}</span>
+                    </a>
+                </li>
+                <li class="nav-item" v-if="user_role == 'admin'">
+                    <a
+                        class="nav-link collapsed"
+                        :class="{ active: isActive('/user-contacted-us') }"
+                        href="/user-contacted-us"
+                    >
+                        <i class="bi bi-person me-2"></i>
+                        <span>{{ translate("User contact") }}</span>
+                    </a>
+                </li>
+                <li class="nav-item" v-if="user_role == 'admin'">
+                    <a
+                        class="nav-link collapsed"
+                        :class="{ active: isActive('/external-website') }"
+                        href="/external-website"
+                    >
+                        <i class="bi bi-gear me-2"></i>
+                        <span>{{ translate("Settings") }}</span>
+                    </a>
+                </li>
+                <li class="nav-item" v-if="user_role == 'admin'">
+                    <a
+                        class="nav-link collapsed"
+                        :class="{ active: isActive('/schools') }"
+                        href="/schools"
+                    >
+                        <i class="bi bi-book me-2"></i>
+                        <span>{{ translate("Schools") }}</span>
+                    </a>
+                </li>
+                <li class="nav-item" v-if="user_role == 'admin'">
+                    <a
+                        class="nav-link collapsed"
+                        :class="{ active: isActive('/amenities') }"
+                        href="/amenities"
+                    >
+                        <i class="bi bi-bag me-2"></i>
+                        <span>{{ translate("Amenities") }}</span>
+                    </a>
+                </li>
+
+                <li class="nav-item" v-if="user_role == 'admin'">
+                    <a
+                        class="nav-link collapsed"
+                        data-bs-target="#icons-nav-emails"
+                        data-bs-toggle="collapse"
+                        :class="{ active: isActive('/welcome-email') }"
+                        href="#"
+                    >
+                        <i class="bi bi-envelope me-2"></i>
+                        <span>{{ translate("Emails") }}</span>
+                        <i class="bi bi-chevron-down ms-5"></i>
+                    </a>
+                    <ul
+                        id="icons-nav-emails"
+                        class="nav-content collapse"
+                        data-bs-parent="#sidebar-nav"
+                        v-if="user_role == 'admin'"
+                    >
+                        <li class="nav-item">
+                            <a class="nav-link" href="/welcome-email"
+                                ><i
+                                    class="bi bi-envelope-arrow-up-fill me-2"
+                                ></i
+                                ><span>{{
+                                    translate("Welcome email")
+                                }}</span></a
+                            >
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/reset-password-email"
+                                ><i
+                                    class="bi bi-envelope-arrow-up-fill me-2"
+                                ></i
+                                ><span>{{
+                                    translate("Reset password email")
+                                }}</span></a
+                            >
+                        </li>
+                    </ul>
                 </li>
             </ul>
-        </li>
-        
-    </ul>
-</aside>
-
+        </aside>
 
         <main
             class="min-vh-100"
@@ -394,7 +494,7 @@ main {
 /* Quick Move Homes Css*/
 .c-theme-text-color {
     color: #174696 !important;
-    text-decoration: none !important; 
+    text-decoration: none !important;
 }
 
 .accordion-button {
@@ -408,11 +508,9 @@ main {
 
 .multiselect-option.is-selected {
     background-color: #174696 !important;
-    
 }
 .multiselect-option.is-active {
     box-shadow: #174696 !important;
-    
 }
 .c-search-box-corners {
     border-radius: 0px;
@@ -452,6 +550,4 @@ main {
 .c-searchbox-radius {
     border-radius: 0 !important;
 }
-
-/* Quick Move Homes Css*/
 </style>

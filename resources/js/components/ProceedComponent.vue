@@ -2,7 +2,7 @@
     <Master v-if="page != 'community'">
         <a
             :href="'/homes-agents/' + home_id"
-            class="btn c-btn-theme-yellow c-theme-rounded-btn mt-5 w-100 beat"
+            class="btn c-btn-theme-primary c-theme-rounded-btn mt-5 w-100 beat"
             v-if="user_status === 'logedin'"
         >
             {{ user_name }} Click to proceed
@@ -10,7 +10,7 @@
         </a>
 
         <a
-            class="btn c-btn-theme-yellow c-theme-rounded-btn mt-5 w-100 beat"
+            class="btn c-btn-theme-primary c-theme-rounded-btn mt-5 w-100 beat"
             ref="openCustomerLoginModal"
             data-bs-toggle="modal"
             data-bs-target="#CustomerLoginModal"
@@ -69,14 +69,14 @@
                                     <div class="mt-2">
                                         <button
                                             v-if="formStatus == 1"
-                                            class="btn c-btn-theme-yellow w-100"
+                                            class="btn c-btn-theme-primary w-100"
                                             type="submit"
                                         >
                                             {{ translate("Login") }}
                                         </button>
 
                                         <button
-                                            class="btn c-btn-theme-yellow w-100"
+                                            class="btn c-btn-theme-primary w-100"
                                             type="submit"
                                             disabled
                                             v-else
@@ -223,7 +223,7 @@
                                     <div class="mt-2">
                                         <button
                                             v-if="registerFormStatus == 1"
-                                            class="btn c-btn-theme-yellow w-100"
+                                            class="btn c-btn-theme-primary w-100"
                                             type="submit"
                                             @click="register"
                                         >
@@ -231,7 +231,7 @@
                                         </button>
 
                                         <button
-                                            class="btn c-btn-theme-yellow w-100"
+                                            class="btn c-btn-theme-primary w-100"
                                             type="submit"
                                             disabled
                                             v-else

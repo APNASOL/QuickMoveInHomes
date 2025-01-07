@@ -423,17 +423,16 @@
                                 <div class="mt-2">
                                     <button
                                         v-if="formStatus == 1"
-                                        class="btn c-btn-theme-yellow w-100"
+                                        class="btn c-btn-theme-primary w-100"
                                         type="submit"
                                     >
                                         {{ translate("Login") }}
                                     </button>
 
                                     <button
-                                        class="btn c-btn-theme-yellow w-100"
-                                        type="submit"
-                                        disabled
                                         v-else
+                                        class="btn c-btn-theme-primary w-100"
+                                        type="submit"
                                     >
                                         {{ translate("Login") }}
                                         <span
@@ -543,15 +542,15 @@
                                         <button
                                             type="button"
                                             @click="resetPassword"
-                                            class="btn c-btn-theme-yellow w-100"
+                                            class="btn c-btn-theme-primary w-100"
                                             v-if="resetFormStatus == 1"
                                         >
                                             {{ translate("Reset") }}
                                         </button>
                                         <button
-                                            class="btn c-btn-theme-yellow w-100"
+                                            class="btn c-btn-theme-primary w-100"
                                             type="button"
-                                            disabled
+                                       
                                             v-else
                                         >
                                             {{ translate("Reseting") }}
@@ -597,7 +596,7 @@
                                     <div class="mt-2">
                                         <button
                                             v-if="forgotPasswordFormStatus == 1"
-                                            class="btn c-btn-theme-yellow w-100"
+                                            class="btn c-btn-theme-primary w-100"
                                             type="submit"
                                             @click="forgotPassword"
                                         >
@@ -605,9 +604,8 @@
                                         </button>
 
                                         <button
-                                            class="btn c-btn-theme-yellow w-100"
-                                            type="submit"
-                                            disabled
+                                            class="btn c-btn-theme-primary w-100"
+                                            type="submit" 
                                             v-else
                                         >
                                             {{ translate("Submit") }}
@@ -742,7 +740,7 @@
                                 <div class="mt-2">
                                     <button
                                         v-if="registerFormStatus == 1"
-                                        class="btn c-btn-theme-yellow w-100"
+                                        class="btn c-btn-theme-primary w-100"
                                         type="submit"
                                         @click="register"
                                     >
@@ -750,9 +748,8 @@
                                     </button>
 
                                     <button
-                                        class="btn c-btn-theme-yellow w-100"
-                                        type="submit"
-                                        disabled
+                                        class="btn c-btn-theme-primary w-100"
+                                        type="submit" 
                                         v-else
                                     >
                                         {{ translate("Register") }}
@@ -1280,7 +1277,6 @@ export default {
 body {
     font-family: "Oakes Grotesk", sans-serif !important;
     background-color: rgba(238, 238, 238, 1);
-
 }
 p {
     margin: 0;
@@ -1307,7 +1303,7 @@ p {
 }
 
 .c-top-card {
-    background-color: #fec110;
+    background-color: rgba(0, 27, 159, 1);
     padding: 4px 24px;
     font-size: 0.875rem;
     text-align: center;
@@ -1315,7 +1311,7 @@ p {
 }
 .carousel__prev,
 .carousel__next {
-    background: #163259!important;
+    background: #163259 !important;
     border-radius: 50% !important;
     transform: unset !important;
     color: white !important;
@@ -1376,32 +1372,8 @@ p {
 .c-font-size {
     font-size: 0.9rem;
 }
-.c-book-expert-section {
-    background-color: #fec110 !important;
-    border-radius: 30px;
-}
-.c-book-expert-section img {
-    border: 2px solid white;
-}
-
-/* Responsive styles */
-
-/* @media (max-width: 576px) {
-    
-    .dropdown-menu.show {
-        width: 100% !important;
-        max-width: 100%;
-    }
-
-    .select-field {
-        padding: 6px;
-    }
-
-    .c-font-size {
-        font-size: 0.7rem;
-    }
-} */
-
+ 
+ 
 .c-border-design {
     margin-bottom: 1rem !important;
 
@@ -1422,15 +1394,14 @@ p {
 
 .navbar {
     height: 80px !important;
-    color:white !important;
+    color: white !important;
     font-weight: bold !important;
 }
 /* Media query for screens smaller than or equal to 768px (typically mobile devices) */
 @media (max-width: 576px) {
     .navbar {
         height: auto !important;
-        background-color: #163259!important;
-        
+        background-color: #163259 !important;
     }
     .dropdown-menu.show {
         position: absolute;
@@ -1444,14 +1415,7 @@ p {
         text-overflow: ellipsis; /* Truncate text with ellipsis */
         white-space: normal;
     }
-    .c-book-expert-section {
-        background-color: #fec110 !important;
-        border-radius: 30px;
-        height: 100px !important;
-    }
-    .c-book-expert-section img {
-        height: 50px;
-    }
+   
     /* Hide c-top-bar-section on smaller screens */
     .c-top-bar-section {
         display: none !important;
@@ -1475,7 +1439,7 @@ p {
 @media (min-width: 577px) and (max-width: 768px) {
     .navbar {
         height: auto !important;
-        background-color: #163259!important;
+        background-color: #163259 !important;
     }
     .dropdown-menu.show {
         position: absolute;
@@ -1489,14 +1453,7 @@ p {
         text-overflow: ellipsis; /* Truncate text with ellipsis */
         white-space: normal;
     }
-    .c-book-expert-section {
-        background-color: #fec110 !important;
-        border-radius: 30px;
-        height: 100px !important;
-    }
-    .c-book-expert-section img {
-        height: 50px;
-    }
+   
     /* Hide c-top-bar-section within this range */
     .c-top-bar-section {
         display: none !important;
@@ -1522,7 +1479,7 @@ p {
 @media (min-width: 769px) and (max-width: 991px) {
     .navbar {
         height: auto !important;
-        background-color: #163259!important;
+        background-color: #163259 !important;
     }
     .dropdown-menu.show {
         position: absolute;
@@ -1536,12 +1493,7 @@ p {
         text-overflow: ellipsis; /* Truncate text with ellipsis */
         white-space: normal;
     }
-    .c-book-expert-section {
-        background-color: #fec110 !important;
-        border-radius: 30px;
-        text-align: left;
-        widows: 100px;
-    }
+     
 
     /* Show c-top-bar-section on larger screens */
     .c-top-bar-section {
@@ -1580,60 +1532,59 @@ p {
 /* Global Css ////////////////////////////////////////////////////////////////////// */
 /* Global Css ////////////////////////////////////////////////////////////////////// */
 /* Global Css ////////////////////////////////////////////////////////////////////// */
-.c-btn-theme-yellow {
+.c-btn-theme-primary {
     background-color: rgba(0, 27, 159, 1);
     color: white !important;
 }
-.c-btn-theme-yellow:hover,
-.c-btn-theme-yellow:active,
-.c-btn-theme-yellow:visited {
+.c-btn-theme-primary:hover,
+.c-btn-theme-primary:active,
+.c-btn-theme-primary:visited {
     background-color: rgba(0, 27, 159, 0.8) !important;
 }
 
-.c-btn-theme-yellow:focus {
+.c-btn-theme-primary:focus {
     box-shadow: 0 0 0 0.2rem rgba(0, 27, 159, 0.5) !important;
 }
-.c-btn-theme-yellow:active {
+.c-btn-theme-primary:active {
     box-shadow: 0 0 0 0.2rem rgba(0, 27, 159, 0.5) !important;
 }
 
-.c-btn-theme-yellow-outline {
+.c-btn-theme-primary-outline {
     color: rgba(0, 27, 159, 1) !important;
     border: 1px solid rgba(0, 27, 159, 1) !important;
 }
 
-.c-btn-theme-yellow-outline:hover {
+.c-btn-theme-primary-outline:hover {
     background-color: rgba(0, 27, 159, 1) !important;
     color: white !important;
 }
 
-.c-btn-theme-yellow-outline:focus,
-.c-btn-theme-yellow-outline.focus {
+.c-btn-theme-primary-outline:focus,
+.c-btn-theme-primary-outline.focus {
     background: rgba(0, 27, 159, 1) !important;
     border-color: rgba(0, 27, 159, 1) !important;
     color: white !important;
     box-shadow: 0 0 0 0.25rem rgba(0, 27, 159, 0.5) !important;
 }
 
-.c-btn-theme-yellow-outline:active,
-.c-btn-theme-yellow-outline.active,
-.show > .c-btn-theme-yellow-outline.dropdown-toggle {
+.c-btn-theme-primary-outline:active,
+.c-btn-theme-primary-outline.active,
+.show > .c-btn-theme-primary-outline.dropdown-toggle {
     background: rgba(0, 27, 159, 1) !important;
     border-color: rgba(0, 27, 159, 1) !important;
 }
 
-.c-btn-theme-yellow-outline:active:focus,
-.c-btn-theme-yellow-outline.active:focus,
-.show > .c-btn-theme-yellow-outline.dropdown-toggle:focus {
+.c-btn-theme-primary-outline:active:focus,
+.c-btn-theme-primary-outline.active:focus,
+.show > .c-btn-theme-primary-outline.dropdown-toggle:focus {
     box-shadow: 0 0 0 0.25rem rgba(0, 27, 159, 0.5) !important;
 }
 
-.c-btn-theme-yellow-outline :active:focus,
-.c-btn-theme-yellow-outline .active:focus,
-.show > .c-btn-theme-yellow-outline .dropdown-toggle:focus {
+.c-btn-theme-primary-outline :active:focus,
+.c-btn-theme-primary-outline .active:focus,
+.show > .c-btn-theme-primary-outline .dropdown-toggle:focus {
     box-shadow: 0 0 0 0.25rem rgba(0, 27, 159, 0.5) !important;
 }
-
 
 /* //////////////////////////////////////////////////////////////////////////////////// */
 /* TourDetails page css ////////////////////////////////////////////////////////////////*/
@@ -1642,24 +1593,24 @@ p {
     white-space: normal;
     overflow: visible;
     text-overflow: clip;
-    background-color: #fec110;
+    background-color: rgba(0, 27, 159, 1);
     color: black !important;
 }
 
 .calendar-container .fc-h-event .fc-event-main:hover {
-    background-color: #e6aa00 !important;
-    border: #e6aa00 !important;
+    background-color: rgba(0, 27, 159, 1) !important;
+    border: rgba(0, 27, 159, 1) !important;
     cursor: pointer;
 }
 
 .fc-h-event {
-    border: 0px solid #fec110;
+    border: 0px solid rgba(0, 27, 159, 1);
     background-color: white;
 }
 
 .calendar-container .fc-h-event .fc-event-main {
     color: black !important;
-    background-color: #fec110 !important;
+    background-color: rgba(0, 27, 159, 1) !important;
     font-weight: bold;
 
     text-align: center;
@@ -1686,38 +1637,38 @@ label {
 }
 
 .fc .fc-button-primary:disabled {
-    background-color: #fec110 !important;
+    background-color: rgba(0, 27, 159, 1) !important;
 }
 .fc .fc-button-primary {
-    background-color: #fec110 !important;
+    background-color: rgba(0, 27, 159, 1) !important;
     color: black !important;
 }
 .fc .fc-button-primary:hover {
-    background-color: #e6aa00 !important;
+    background-color: rgba(0, 27, 159, 1) !important;
 }
 
 .fc .fc-button-primary {
-    border: 0px solid #fec110;
+    border: 0px solid rgba(0, 27, 159, 1);
 }
 
 .c-step-dropdown {
     width: 100% !important;
-    background-color: #fec110 !important;
+    background-color: rgba(0, 27, 159, 1) !important;
     color: black !important;
 }
 
 .c-step-dropdown:hover,
 .c-step-dropdown:active,
 .c-step-dropdown:visited {
-    background-color: #e6aa00 !important;
+    background-color: rgba(0, 27, 159, 1) !important;
     color: black !important;
 }
 
 .c-step-dropdown:focus {
-    box-shadow: 0 0 0 0.2rem #ffd540 !important;
+    box-shadow: 0 0 0 0.2rem rgba(0, 27, 159, 1) !important;
 }
 .c-step-dropdown:active {
-    box-shadow: 0 0 0 0.2rem #ffd540 !important;
+    box-shadow: 0 0 0 0.2rem rgba(0, 27, 159, 1) !important;
 }
 .dropdown-menu {
     width: 100% !important;
@@ -1777,9 +1728,7 @@ label {
 .card-title {
     color: black !important;
 }
-.c-link-theme-yellow {
-    color: #fec110;
-}
+ 
 .info-card-overlay {
     background: #bcd6f5b2;
     padding: 10px;
@@ -1789,12 +1738,11 @@ label {
 }
 
 .bg-theme {
-    background-color: #163259!important;
-    
+    background-color: #163259 !important;
 }
 
 .interactive-banner {
-    background-color: rgba(22,50,89,255);
+    background-color: rgba(22, 50, 89, 255);
     color: white;
     text-align: center;
     padding: 20px 0;
@@ -1807,7 +1755,7 @@ label {
     background: linear-gradient(#c2a01e 9%, #debf46, #c2a01e 84%);
 }
 .btn-primary {
-    background: #0C0F24;
+    background: #0c0f24;
 }
 .btn-primary:hover {
     background: #023f86;
@@ -1830,7 +1778,7 @@ label {
     overflow-x: auto; /* Allows horizontal scrolling */
 }
 .dropdown-item:hover {
-    background-color: #0C0F24;
+    background-color: #0c0f24;
     color: white; /* Adjust text color for better readability, if needed */
 }
 .c-dec-none {

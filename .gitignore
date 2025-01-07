@@ -18,3 +18,11 @@ yarn-error.log
 /.idea
 /.vscode
 /public/real_public
+# /public/real_public/PropertiesFiles
+# /public/real_public/PropertyBannerImages
+# /public/real_public/PropertyMainImages
+# /public/real_public/CommunitiesFiles
+# /public/real_public/CommunityBannerImages
+# /public/real_public/CommunityMainImages
+# /public/real_public/website_logos
+# /public/real_public/.gitignore

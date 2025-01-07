@@ -27,13 +27,13 @@
                             v-if="formStatus"
                             :href="'/homes-list/' + searching_location"
                             type="submit"
-                            class="btn c-btn-theme-yellow"
+                            class="btn c-btn-theme-primary"
                             @click="activeSpinner"
                         >
                             <i class="bi bi-search"></i>
                         </a>
                         <a
-                            class="btn c-btn-theme-yellow"
+                            class="btn c-btn-theme-primary"
                             type="button"
                             disabled
                             v-else
@@ -82,7 +82,7 @@ export default {
 </script>
 
 <style scoped>
-.c-btn-theme-yellow {
+.c-btn-theme-primary {
     border-radius: 0rem 0.25rem 0.25rem 0rem !important;
     display: flex;
     align-items: center;

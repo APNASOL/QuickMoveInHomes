@@ -132,7 +132,7 @@
                                     </button> -->
 
                                     <button
-                                        class="btn c-btn-theme-yellow me-2 mt-2"
+                                        class="btn c-btn-theme-primary me-2 mt-2"
                                         @click="showForm('Agent')"
                                         type="button"
                                         data-bs-toggle="collapse"
@@ -147,7 +147,7 @@
                                         }}
                                     </button>
                                     <button
-                                        class="btn c-btn-theme-yellow w-30 mt-2"
+                                        class="btn c-btn-theme-primary w-30 mt-2"
                                         @click="showForm('Customer')"
                                         type="button"
                                         data-bs-toggle="collapse"
@@ -261,14 +261,14 @@
                                 <div class="mt-3">
                                     <button
                                         type="submit"
-                                        class="btn c-btn-theme-yellow"
+                                        class="btn c-btn-theme-primary"
                                         v-if="formStatus"
                                         @click="save"
                                     >
                                         {{ translate("Send") }}
                                     </button>
                                     <button
-                                        class="btn c-btn-theme-yellow"
+                                        class="btn c-btn-theme-primary"
                                         type="button"
                                         disabled
                                         v-else

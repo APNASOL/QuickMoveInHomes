@@ -40,13 +40,13 @@
                                             v-if="codeConfirmationStatus == 1"
                                             type="button"
                                             @click="matchVerificationCode"
-                                            class="btn c-btn-theme-yellow text-white w-100"
+                                            class="btn c-btn-theme-primary text-white w-100"
                                         >
                                             {{ translate("Verify") }}
                                         </button>
                                         <button
                                             v-else
-                                            class="btn c-btn-theme-yellow text-white w-100"
+                                            class="btn c-btn-theme-primary text-white w-100"
                                             type="button"
                                             disabled
                                         >
@@ -64,13 +64,13 @@
                                         v-if="resenBtnStatus == 1"
                                         type="button"
                                         @click="checkStatus"
-                                        class="btn c-btn-theme-yellow text-white w-100"
+                                        class="btn c-btn-theme-primary text-white w-100"
                                     >
                                         {{ translate("Resend code") }}
                                     </button>
                                     <button
                                         v-else
-                                        class="btn c-btn-theme-yellow text-white w-100"
+                                        class="btn c-btn-theme-primary text-white w-100"
                                         type="button"
                                         disabled
                                     >
