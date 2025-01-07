@@ -38,10 +38,10 @@
                         >
                             <div class="card c-border-design">
                                 <img
-                                    :src="property.main_image ?? '/images/default.jpg'"
+                                    :src="property.main_image ?? '/images/default-home-image.png'"
                                     class="card-img-top c-card-img-border"
                                     :alt="property.title"
-                                    @error="setAltImg"
+                                   
                                 />
 
                                 <div
@@ -249,7 +249,7 @@ export default defineComponent({
             return Math.round(discountedPrice);
         },
         setAltImg(event) {
-            event.target.src = "/images/default.jpg";
+            event.target.src = "/images/default-home-image.png";
         },
         formatPrice(price) {
       return Math.floor(price); // Removes the decimal portion
@@ -375,8 +375,8 @@ export default defineComponent({
     transform: scale(1.2); /* Zoom in the image */
 }
 .card-img-top {
-    object-fit: cover;
-    width: 100%;  
-    height: 240px; /* Fixed height for uniformity */
+    object-fit: cover !important;
+    width: 100% !important;  
+    height: 240px !important; /* Fixed height for uniformity */
 }
 </style>
