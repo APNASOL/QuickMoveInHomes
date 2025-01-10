@@ -34,6 +34,7 @@ class AgentController extends Controller
 
                 $customer_record = User::where('id', $agreement->customer_id)->first();
                 $agreement->customer_name = $customer_record ? $customer_record->name : "N/A";
+                $agreement->customer_email = $customer_record ? $customer_record->email : "N/A";
 
             }
 

@@ -136,7 +136,7 @@
                                                             Customer
                                                         </th>
                                                         <th scope="col">
-                                                            Property
+                                                            Email
                                                         </th>
                                                         <th scope="col">
                                                             Date
@@ -170,7 +170,7 @@
                                                         </td>
                                                         <td>
                                                             {{
-                                                                agreement.customer_name
+                                                                agreement.customer_email
                                                             }}
                                                         </td>
                                                         <td>
