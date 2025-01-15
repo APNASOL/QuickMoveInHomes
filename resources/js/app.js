@@ -47,6 +47,9 @@ app.component("DeleteModal", DeleteModal);
 import ImageDropper from "@components/global/ImageDropper.vue";
 app.component("ImageDropper", ImageDropper);
 
+import GlobalCard from "@components/global/CardComponent.vue";
+app.component("GlobalCard", GlobalCard);
+
 import index from "@components/Index.vue";
 app.component("index-component", index);
 

@@ -31,7 +31,7 @@
                         >
                             <div class="card c-border-design">
                                 <img
-                                    :src="property.main_image ?? '/images/default.jpg'"
+                                    :src="property.main_image ?? '/images/default-home-image.png'"
                                     class="card-img-top c-card-img-border"
                                     :alt="property.title"
                                     @error="setAltImg"

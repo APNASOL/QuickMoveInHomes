@@ -638,17 +638,32 @@
                     <div
                         v-for="home in community_homes"
                         :key="home.id"
-                        class="col-md-3 mb-2"
+                        class="col-md-3 mb-3"
                     >
                         <a
                             class="text-decoration-none"
                             :href="'/home-details/' + home.property_id"
                         >
-                            <div class="card c-border-design">
+                         
+
+                            <GlobalCard  
+    :badge="home.is_open_house === 1 ? 'Open House' : 'Quick Move In'"
+    :main_image="home.main_image ?? '/images/default-home-image.png'"
+    :title="home.title"
+    :address="home.address"
+    :bedrooms="home.bedrooms"
+    :price="home.price"
+    :bathrooms="home.bathrooms"
+    :square_feet="home.square_feet"
+    :garages="home.garages"
+/>
+
+
+                            <!-- <div class="card c-border-design">
                                  
                              
                                 <img
-                                    :src="home.main_image ?? '/images/default.jpg'"
+                                    :src="home.main_image ?? '/images/default-home-image.png'"
                                     class="card-img-top c-card-img-border"
                                     :alt="home.title"
                                     @error="setAltImg"
@@ -693,7 +708,7 @@
                                         <b>${{ formatPrice(home.price) }}</b>
                                     </p>
                                 </div>
-                            </div>
+                            </div> -->
                         </a>
                     </div>
                 </div>
@@ -804,7 +819,7 @@ export default {
         },
 
         setAltImg(event) {
-            event.target.src = "/images/default.jpg";
+            event.target.src = "/images/default-home-image.png";
         },
         formatDate(date) {
             const options = { year: "numeric", month: "long", day: "numeric" };

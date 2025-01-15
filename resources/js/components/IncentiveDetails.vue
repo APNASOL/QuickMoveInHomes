@@ -134,7 +134,7 @@ export default {
         },
 
         setAltImg(event) {
-            event.target.src = "/images/default.jpg";
+            event.target.src = "/images/default-home-image.png";
         },
 
         formatDate(date) {

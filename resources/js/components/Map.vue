@@ -90,7 +90,7 @@ function addMarkers() {
                 const infoWindowContent = `
     <a href="/home-details/${home.property_id}" style="text-decoration: none; color: inherit;">
         <div style="width:150px; cursor: pointer;">
-            <img src="${home.main_image ? home.main_image : '/images/default.jpg'}" 
+            <img src="${home.main_image ? home.main_image : '/images/default-home-image.png'}" 
                  alt="Image" 
                  style="width:100%; height:auto; border-radius:6px;">
             <p style="margin-top:10px; font-weight:bold;">

@@ -34,19 +34,24 @@
                             class="text-decoration-none"
                             :href="'/home-details/' + property.property_id"
                         >
-                            <div class="">
+                        <GlobalCard 
+                            :badge="'Quick Move In'"
+                            :main_image="property.main_image"
+                            :title="property.title"
+                            :address="property.address"
+                            :bedrooms="3"
+                            :price="property.price"
+                            :bathrooms="3"
+                            :square_feet="property.square_feet"
+                            :garages="3"
+                            />
+
+                            <!-- <div class="">
                                 <div class="property-card position-relative">
                                     <span class="badge sale"
                                         >Quick Move In</span
                                     >
-                                    <img
-                                        :src="
-                                            property.main_image ??
-                                            '/images/default-home-image.png'
-                                        "
-                                        class="card-img-top c-card-img-border"
-                                        :alt="property.title"
-                                    />
+                                    
                                     <div class="card-body">
                                         <h5 class="card-title">
                                             {{ property.title }}
@@ -72,7 +77,7 @@
                                                     />
                                                     
                                                 </svg>
-                                                <!-- <b class="fs-6 mt-1">{{ property.bedrooms }}</b> -->
+                                                
                                                 <b class="fs-6 mt-1">3</b>
                                             </span>
                                             <span
@@ -190,7 +195,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <!-- <div class="card c-border-design">
                                 <img

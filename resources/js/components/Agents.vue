@@ -32,7 +32,7 @@
                             <div class="card-body">
                                 <img
                                 class="c-agent-image"
-                                    :src="agent.image ?? '/images/default.jpg'"
+                                    :src="agent.image ?? '/images/default-home-image.png'"
                                     height="150px"
                                     width="150px"
                                 />

@@ -237,7 +237,7 @@
                         :key="agent.id"
                     >
                         <img
-                            :src="agent.image ?? '/images/default.jpg'"
+                            :src="agent.image ?? '/images/default-home-image.png'"
                             height="150px"
                         />
                         <h5 class="mt-1">{{ agent.name }}</h5>
@@ -284,7 +284,7 @@ export default {
                 });
         },
         setAltImg(event) {
-            event.target.src = "/images/default.jpg";
+            event.target.src = "/images/default-home-image.png";
         },
     },
 };

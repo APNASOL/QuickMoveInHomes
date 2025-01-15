@@ -82,7 +82,7 @@ onMounted(() => {
                         <p><strong>${home.title}</strong></p>
                         <p>Price: ${home.price}</p>
                         <p>Bedrooms: ${home.bedrooms}</p>
-                        <img src="${home.home_data.main_image ? home.home_data.main_image : '/images/default.jpg'}" style="width:100%; height:auto;">
+                        <img src="${home.home_data.main_image ? home.home_data.main_image : '/images/default-home-image.png'}" style="width:100%; height:auto;">
                     </div>
                 `);
 

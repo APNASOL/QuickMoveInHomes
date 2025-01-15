@@ -482,7 +482,7 @@
                                 <img
                                     v-if="form.main_image"
                                     :src="
-                                        form.main_image ?? '/images/default.jpg'
+                                        form.main_image ?? '/images/default-home-image.png'
                                     "
                                     :custom_class="'img-fluid img-thumbnail rounded'"
                                     :width="125"
@@ -491,7 +491,7 @@
                                     v-else
                                     :src="
                                         existing_main_image ??
-                                        '/images/default.jpg'
+                                        '/images/default-home-image.png'
                                     "
                                     :custom_class="'img-fluid img-thumbnail rounded'"
                                     :width="125"
@@ -516,14 +516,14 @@
                             <div class="mt-3 mb-2">
                                 <img
                                     v-if="form.banner"
-                                    :src="form.banner ?? '/images/default.jpg'"
+                                    :src="form.banner ?? '/images/default-home-image.png'"
                                     :custom_class="'img-fluid img-thumbnail rounded'"
                                     :width="125"
                                 />
                                 <img
                                     v-else
                                     :src="
-                                        existing_banner ?? '/images/default.jpg'
+                                        existing_banner ?? '/images/default-home-image.png'
                                     "
                                     :custom_class="'img-fluid img-thumbnail rounded'"
                                     :width="125"

@@ -33,7 +33,7 @@
                             <image-zooming-component
                                 :file="
                                     currentUserRecord.image ??
-                                    '/images/default.jpg'
+                                    '/images/default-home-image.png'
                                 "
                                 :custom_class="'img-fluid img-thumbnail rounded-circle'"
                                 :width="'120px'"
@@ -136,7 +136,7 @@
                                                     "
                                                     :file="
                                                         formProfile.profile_image ??
-                                                        '/images/default.jpg'
+                                                        '/images/default-home-image.png'
                                                     "
                                                     :custom_class="'img-fluid img-thumbnail'"
                                                     :width="'100px'"
@@ -145,7 +145,7 @@
                                                     v-else
                                                     :file="
                                                         currentUserRecord.image ??
-                                                        '/images/default.jpg'
+                                                        '/images/default-home-image.png'
                                                     "
                                                     :custom_class="'img-fluid img-thumbnail'"
                                                     :width="'100px'"

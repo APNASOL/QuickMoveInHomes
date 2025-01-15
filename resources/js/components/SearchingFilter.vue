@@ -337,7 +337,7 @@
                                 <div
                                     v-for="home in homes"
                                     :key="home.id"
-                                    class="col-md-4 mb-3"
+                                    class="col-md-6 mb-3"
                                 >
                                     <a
                                         class="text-decoration-none"
@@ -345,19 +345,40 @@
                                             '/home-details/' + home.property_id
                                         "
                                     >
-                                        <div class="card">
+                                        <GlobalCard
+                                            :badge="
+                                                home.is_open_house
+                                                    ? 'Open House'
+                                                    : home.incentive
+                                                    ? 'Incentive Home'
+                                                    : 'Quick Move In'
+                                            "
+                                            :main_image="
+                                                home.main_image ??
+                                                '/images/default-home-image.png'
+                                            "
+                                            :title="home.title"
+                                            :address="home.address"
+                                            :bedrooms="home.bedrooms"
+                                            :price="home.price"
+                                            :bathrooms="home.bathrooms"
+                                            :square_feet="home.square_feet"
+                                            :garages="home.garages"
+                                        />
+
+                                        <!-- <div class="card">
                                             <div class="image-wrapper">
                                                 <img
                                                     :src="
                                                         home.main_image ??
-                                                        '/images/default.jpg'
+                                                        '/images/default-home-image.png'
                                                     "
                                                     class="card-img-top"
                                                     :alt="home.title"
                                                     @error="setAltImg"
                                                 />
 
-                                                <!-- Open House badge positioned at the top of the image -->
+                                               
                                                 <div
                                                     v-if="home.is_open_house"
                                                     class="card-img-overlay c-card-img-overlay-flash-sale"
@@ -369,7 +390,7 @@
                                                     </span>
                                                 </div>
 
-                                                <!-- Incentive Home bar positioned at the bottom of the image -->
+                                                
                                                 <div
                                                     v-if="home.incentive"
                                                     class="bottom-bar text-white"
@@ -424,7 +445,7 @@
                                                     </span>
                                                 </p>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </a>
                                 </div>
                             </div>
@@ -1473,7 +1494,7 @@ export default {
         },
 
         setAltImg(event) {
-            event.target.src = "/images/default.jpg";
+            event.target.src = "/images/default-home-image.png";
         },
 
         pluckCommunities() {

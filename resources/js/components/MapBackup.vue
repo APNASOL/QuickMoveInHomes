@@ -140,7 +140,7 @@ onMounted(() => {
                         <img src="${
                             home.home_data.main_image
                                 ? home.home_data.main_image
-                                : "/images/default.jpg"
+                                : "/images/default-home-image.png"
                         }" style="width:100%; height:auto;">
                     </div>
                 `);

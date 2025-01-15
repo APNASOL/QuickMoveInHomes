@@ -229,7 +229,7 @@ export default {
     data() {
         return {
             randId: Math.ceil(Math.random() * 1000000),
-            imgSrc: "/images/default.jpg",
+            imgSrc: "/images/default-home-image.png",
             cropImg: "",
             data: null,
         };
@@ -241,7 +241,7 @@ export default {
             this.$refs.imageInput.value = null;
 
             // Trigger the file input click event
-            this.imgSrc = "/images/default.jpg";
+            this.imgSrc = "/images/default-home-image.png";
             this.$refs.imageInput.click();
         },
 

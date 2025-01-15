@@ -205,7 +205,7 @@ export default {
     data() {
         return {
             randId: Math.ceil(Math.random() * 1000000),
-            imgSrc: "/images/default.jpg",
+            imgSrc: "/images/default-home-image.png",
             cropImg: "",
             data: null,
             defaultAspectedRatio:16 / 9,
