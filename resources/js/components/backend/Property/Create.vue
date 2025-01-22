@@ -182,7 +182,7 @@
                                 translate("ZIP Code")
                             }}</label>
                             <input
-                                type="text"
+                                type="number"
                                 class="form-control"
                                 id="zip_code"
                                 v-model="form.zip_code"
@@ -296,7 +296,7 @@
                                 translate("Lot Size")
                             }}</label>
                             <input
-                                type="text"
+                                type="number"
                                 class="form-control"
                                 id="lot_size"
                                 v-model="form.lot_size"
@@ -451,6 +451,213 @@
                             </div>
                         </div>
 
+                        <!-- New Fields  -->
+
+                        <div class="col-12 col-md-6">
+                            <label for="school_id">{{
+                                translate("Price from")
+                            }}</label>
+                            <input
+                                type="number"
+                                class="form-control"
+                                id="price_from"
+                                v-model="form.price_from"
+                                :class="{
+                                    'is-invalid': formErrors.price_from,
+                                }"
+                            />
+                            <div
+                                class="invalid-feedback"
+                                v-if="formErrors.price_from"
+                            >
+                                {{ formErrors.price_from[0] }}
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label for="price to">{{
+                                translate("Price to")
+                            }}</label>
+                            <input
+                                type="number"
+                                class="form-control"
+                                id="price_to"
+                                v-model="form.price_to"
+                                :class="{
+                                    'is-invalid': formErrors.price_to,
+                                }"
+                            />
+                            <div
+                                class="invalid-feedback"
+                                v-if="formErrors.price_to"
+                            >
+                                {{ formErrors.price_to[0] }}
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label for="price to">{{
+                                translate("Stories")
+                            }}</label>
+                            <input
+                                type="number"
+                                class="form-control"
+                                id="stories"
+                                v-model="form.stories"
+                                :class="{
+                                    'is-invalid': formErrors.stories,
+                                }"
+                            />
+                            <div
+                                class="invalid-feedback"
+                                v-if="formErrors.stories"
+                            >
+                                {{ formErrors.stories[0] }}
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label for="price to">{{
+                                translate("Full bath")
+                            }}</label>
+                            <input
+                                type="number"
+                                class="form-control"
+                                id="full_bath"
+                                v-model="form.full_bath"
+                                :class="{
+                                    'is-invalid': formErrors.full_bath,
+                                }"
+                            />
+                            <div
+                                class="invalid-feedback"
+                                v-if="formErrors.full_bath"
+                            >
+                                {{ formErrors.full_bath[0] }}
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label for="price to">{{
+                                translate("Half bath")
+                            }}</label>
+                            <input
+                                type="number"
+                                class="form-control"
+                                id="half_bath"
+                                v-model="form.half_bath"
+                                :class="{
+                                    'is-invalid': formErrors.half_bath,
+                                }"
+                            />
+                            <div
+                                class="invalid-feedback"
+                                v-if="formErrors.half_bath"
+                            >
+                                {{ formErrors.half_bath[0] }}
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label for="size_from">{{
+                                translate("Size from")
+                            }}</label>
+                            <input
+                                type="number"
+                                class="form-control"
+                                id="size_from"
+                                v-model="form.size_from"
+                                :class="{
+                                    'is-invalid': formErrors.size_from,
+                                }"
+                            />
+                            <div
+                                class="invalid-feedback"
+                                v-if="formErrors.size_from"
+                            >
+                                {{ formErrors.size_from[0] }}
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label for="size_to">{{
+                                translate("Size to")
+                            }}</label>
+                            <input
+                                type="number"
+                                class="form-control"
+                                id="size_to"
+                                v-model="form.size_to"
+                                :class="{
+                                    'is-invalid': formErrors.size_to,
+                                }"
+                            />
+                            <div
+                                class="invalid-feedback"
+                                v-if="formErrors.size_to"
+                            >
+                                {{ formErrors.size_to[0] }}
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label for="construction_status">{{
+                                translate("Construction status")
+                            }}</label>
+                            <Multiselect
+                                v-model="form.construction_status"
+                                :options="construction_statusOptions"
+                                :placeholder="translate('Choose')"
+                                :searchable="true"
+                                :class="{
+                                    'invalid-bg':
+                                        formErrors.construction_status,
+                                }"
+                            />
+                            <div
+                                class="invalid-feedback"
+                                v-if="formErrors.construction_status"
+                            >
+                                {{ formErrors.construction_status[0] }}
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label for="listing_status">{{
+                                translate("Construction status")
+                            }}</label>
+                            <Multiselect
+                                v-model="form.listing_status"
+                                :options="listing_statusOptions"
+                                :placeholder="translate('Choose')"
+                                :searchable="true"
+                                :class="{
+                                    'invalid-bg': formErrors.listing_status,
+                                }"
+                            />
+                            <div
+                                class="invalid-feedback"
+                                v-if="formErrors.listing_status"
+                            >
+                                {{ formErrors.listing_status[0] }}
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label for="average_price_per_square">{{
+                                translate("Average price per square")
+                            }}</label>
+                            <input
+                                type="number"
+                                class="form-control"
+                                id="average_price_per_square"
+                                v-model="form.average_price_per_square"
+                                :class="{
+                                    'is-invalid':
+                                        formErrors.average_price_per_square,
+                                }"
+                            />
+                            <div
+                                class="invalid-feedback"
+                                v-if="formErrors.average_price_per_square"
+                            >
+                                {{ formErrors.average_price_per_square[0] }}
+                            </div>
+                        </div>
+
+                        <!-- New Fields  -->
                         <!-- Property Features Section -->
                         <div class="col-12">
                             <h3 class="mt-4">
@@ -898,8 +1105,152 @@
                                 {{ formErrors.listing_date[0] }}
                             </div>
                         </div>
-                         
-                           
+
+                        <!-- The plans code -->
+                        <!-- The plans code -->
+                        <div class="mt-5">
+                            <h2>Floor Plans</h2>
+                            <div
+                                class="row mb-3"
+                                v-for="(plan, index) in FloorPlanList"
+                                :key="index"
+                            >
+                                <hr />
+                                <div class="col-12">
+                                    <h2>Floor Plan {{ index + 1 }}</h2>
+                                </div>
+                                <!-- Name -->
+                                <div class="col-12 col-md-4">
+                                    <label>{{ translate("Name") }}</label>
+                                    <div class="c-input-group">
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            v-model="plan.name"
+                                        />
+                                    </div>
+                                </div>
+
+                                <!-- Size -->
+                                <div class="col-12 col-md-4">
+                                    <label>{{
+                                        translate("Size (sq ft)")
+                                    }}</label>
+                                    <div class="c-input-group">
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            v-model="plan.size"
+                                        />
+                                    </div>
+                                </div>
+
+                                <!-- Beds -->
+                                <div class="col-12 col-md-4">
+                                    <label>{{ translate("Beds") }}</label>
+                                    <div class="c-input-group">
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            v-model="plan.beds"
+                                        />
+                                    </div>
+                                </div>
+
+                                <!-- Full Baths -->
+                                <div class="col-12 col-md-4">
+                                    <label>{{ translate("Full Baths") }}</label>
+                                    <div class="c-input-group">
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            v-model="plan.full_baths"
+                                        />
+                                    </div>
+                                </div>
+
+                                <!-- Half Baths -->
+                                <div class="col-12 col-md-4">
+                                    <label>{{ translate("Half Baths") }}</label>
+                                    <div class="c-input-group">
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            v-model="plan.half_baths"
+                                        />
+                                    </div>
+                                </div>
+
+                                <!-- Price -->
+                                <div class="col-12 col-md-4">
+                                    <label>{{ translate("Price") }}</label>
+                                    <div class="c-input-group">
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            v-model="plan.price"
+                                        />
+                                    </div>
+                                </div>
+
+                                <!-- Special Features -->
+                                <div class="col-12 col-md-12">
+                                    <label>{{
+                                        translate("Special Features")
+                                    }}</label>
+                                    <div class="c-input-group">
+                                        <textarea
+                                            class="form-control"
+                                            v-model="plan.special_features"
+                                        ></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- Images -->
+                                <div class="col-12 col-md-12">
+                                    <label>{{ translate("Images") }}</label>
+                                    <div class="c-input-group">
+                                        <input
+                                            type="file"
+                                            class="form-control"
+                                            single
+                                            @change="
+                                                handleImageUpload($event, index)
+                                            "
+                                        />
+                                    </div>
+                                </div>
+
+                                <!-- Actions -->
+                                <div class="col-12 col-md-1">
+                                    <label>&nbsp;</label>
+                                    <button
+                                        type="button"
+                                        class="btn mt-4"
+                                        v-if="index != FloorPlanList.length - 1"
+                                        @click="removeFloorPlan(index, plan)"
+                                    >
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+
+                                    <div
+                                        class="c-input-group"
+                                        v-if="
+                                            index === FloorPlanList.length - 1
+                                        "
+                                    >
+                                        <span
+                                            @click="addFloorPlan"
+                                            class="btn btn-success ms-1"
+                                            >+</span
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- The plans  code -->
+                        <hr />
                         <div class="col-12 col-md-6">
                             <label for="home_main_image">{{
                                 translate("Main image")
@@ -908,25 +1259,28 @@
                             <div class="mt-3 mb-2">
                                 <img
                                     v-if="form.home_main_image"
-                                    :src="form.home_main_image ?? '/images/default-home-image.png'"
+                                    :src="
+                                        form.home_main_image ??
+                                        '/images/default-home-image.png'
+                                    "
                                     :custom_class="'img-fluid img-thumbnail rounded'"
                                     :width="125"
                                 />
                                 <img
                                     v-else
-                                    :src="existing_home_main_image ?? '/images/default-home-image.png'"
+                                    :src="
+                                        existing_home_main_image ??
+                                        '/images/default-home-image.png'
+                                    "
                                     :custom_class="'img-fluid img-thumbnail rounded'"
                                     :width="125"
                                 />
-                                 
-                                </div>
-                                <ImageCropper
-                                    @croppedImg="croppedImgSubmit"
-                                    :ratio="1"
-                                /> 
-                            <div>
-                                 
                             </div>
+                            <ImageCropper
+                                @croppedImg="croppedImgSubmit"
+                                :ratio="1"
+                            />
+                            <div></div>
 
                             <div
                                 class="invalid-feedback animated fadeIn"
@@ -943,25 +1297,28 @@
                             <div class="mt-3 mb-2">
                                 <img
                                     v-if="form.banner"
-                                    :src="form.banner ?? '/images/default-home-image.png'"
+                                    :src="
+                                        form.banner ??
+                                        '/images/default-home-image.png'
+                                    "
                                     :custom_class="'img-fluid img-thumbnail rounded'"
                                     :width="125"
                                 />
                                 <img
                                     v-else
-                                    :src="existing_banner ?? '/images/default-home-image.png'"
+                                    :src="
+                                        existing_banner ??
+                                        '/images/default-home-image.png'
+                                    "
                                     :custom_class="'img-fluid img-thumbnail rounded'"
                                     :width="125"
                                 />
-                                 
-                                </div>
-                                <ImageCropper
-                                    @croppedImg="croppedBannerSubmit" 
-                                    :ratio="3"
-                                /> 
-                            <div>
-                                 
                             </div>
+                            <ImageCropper
+                                @croppedImg="croppedBannerSubmit"
+                                :ratio="3"
+                            />
+                            <div></div>
 
                             <div
                                 class="invalid-feedback animated fadeIn"
@@ -970,7 +1327,6 @@
                                 {{ formErrors.banner[0] }}
                             </div>
                         </div>
-                        
 
                         <div class="col-12 col-md-12">
                             <label for="files">{{
@@ -1048,6 +1404,18 @@ export default {
     data() {
         return {
             YesNoOptions: ["Yes", "No"],
+            FloorPlanList: [
+                {
+                    name: "",
+                    size: "",
+                    beds: "",
+                    full_baths: "",
+                    half_baths: "",
+                    price: "",
+                    special_features: "",
+                    image: "",
+                },
+            ],
             form: {
                 property_id: this.property_id ?? "",
 
@@ -1102,7 +1470,25 @@ export default {
                 files: [],
                 home_main_image: "",
                 banner: "",
+                price_from: "",
+                price_to: "",
+                stories: "",
+                full_bath: "",
+                half_bath: "",
+                size_from: "",
+                size_to: "",
+                construction_status: "",
+                listing_status: "",
+                average_price_per_square: "",
             },
+
+            construction_statusOptions: [
+                "Under Construction",
+                "Completed",
+                "Not Started",
+            ],
+            listing_statusOptions: ["Active", "Sold", "Pending", "Expired"],
+
             existing_home_main_image: "",
             existing_banner: "",
             formErrors: [],
@@ -1115,6 +1501,32 @@ export default {
         };
     },
     methods: {
+        handleImageUpload(event, index) {
+            const files = event.target.files;
+            if (files && files.length) {
+                const fileList = Array.from(files); // Convert FileList to Array
+                this.FloorPlanList[index].images.push(...fileList); // Add files to the specific plan's images array
+            }
+        },
+        addFloorPlan() {
+            this.FloorPlanList.push({
+                name: "",
+                size: "",
+                beds: "",
+                full_baths: "",
+                half_baths: "",
+                price: "",
+                special_features: "",
+                image: "",
+            });
+        },
+        removeFloorPlan(index, list) {
+            var idx = this.FloorPlanList.indexOf(list);
+
+            if (idx > -1) {
+                this.FloorPlanList.splice(idx, 1);
+            }
+        },
         moreInfoDropperDataPassing(files) {
             this.form.files = files;
         },
@@ -1152,6 +1564,10 @@ export default {
                     this.existing_banner = property.banner;
                     // Populate Property Features
                     this.form.incentives = property.incentives; // Ensure this is an array
+                    if (response.data.tour_price_includes.length) {
+                        this.FloorPlanList = response.data.tour_price_includes;
+                    }
+
                     if (property.feature) {
                         this.form.feature_id = property.feature.id || null;
                         this.form.name = property.feature.name || "";
@@ -1192,6 +1608,17 @@ export default {
                             property.feature.landscape_maintenance || "";
                         this.form.foundation_conditions =
                             property.feature.foundation_conditions || "";
+
+                            this.form.price_from = response.data.price_from || "";
+                            this.form.price_to = response.data.price_to || "";
+                            this.form.stories = response.data.stories || "";
+                            this.form.full_bath = response.data.full_bath || "";
+                            this.form.half_bath = response.data.half_bath || "";
+                            this.form.size_from = response.data.size_from || "";
+                            this.form.size_to = response.data.size_to || "";
+                            this.form.construction_status = response.data.construction_status || "";
+                            this.form.listing_status = response.data.listing_status || "";
+                            this.form.average_price_per_square = response.data.average_price_per_square || "";
                     }
 
                     // Optional: If there's an image field
@@ -1223,6 +1650,7 @@ export default {
                     toastr.error(error.response.data.message);
                 });
         },
+
         croppedImgSubmit(img) {
             this.form.home_main_image = img;
         },
@@ -1235,7 +1663,14 @@ export default {
 
             // Create a FormData object
             let formData = new FormData();
-
+            function isFieldEmpty(field) {
+                return (
+                    field === null ||
+                    field === undefined ||
+                    field === "" ||
+                    (Array.isArray(field) && field.length === 0)
+                );
+            }
             // Append each form field individually
             formData.append("property_id", this.form.property_id ?? "");
             formData.append("user_id", this.form.user_id ?? null);
@@ -1255,6 +1690,17 @@ export default {
             formData.append("listing_type", this.form.listing_type ?? "");
             formData.append("year_built", this.form.year_built ?? null);
             formData.append("hoa_id", this.form.hoa_id ?? null);
+            formData.append("price_from", this.form.price_from ?? null);
+            formData.append("price_to", this.form.price_to ?? null);
+            formData.append("stories", this.form.stories ?? null);
+            formData.append("full_bath", this.form.full_bath ?? null);
+            formData.append("half_bath", this.form.half_bath ?? null);
+            formData.append("size_from", this.form.size_from ?? null);
+            formData.append("size_to", this.form.size_to ?? null);
+            formData.append("construction_status", this.form.construction_status ?? null);
+            formData.append("listing_status", this.form.listing_status ?? null);
+            formData.append("average_price_per_square", this.form.average_price_per_square ?? null);
+
             formData.append(
                 "association_fee",
                 this.form.association_fee ?? null
@@ -1308,6 +1754,13 @@ export default {
             formData.append("files", this.form.files ?? null); // Assuming `files` can be a File or Blob
             formData.append("home_main_image", this.form.home_main_image ?? "");
             formData.append("banner", this.form.banner ?? "");
+
+            if (!isFieldEmpty(this.FloorPlanList)) {
+                formData.append(
+                    "price_includes",
+                    JSON.stringify(this.FloorPlanList)
+                );
+            }
 
             // Append all selected files to FormData
             if (this.form.files && this.form.files.length > 0) {

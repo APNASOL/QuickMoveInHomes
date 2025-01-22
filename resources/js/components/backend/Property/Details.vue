@@ -253,19 +253,19 @@
                         <div class="col-12 col-md-6">
                             <b>{{ translate("Reach-In Closet") }}</b
                             ><br />
-                            {{ property.reach_in }}
+                            {{ property.reach_in ? "Yes" : "No" }}
                         </div>
 
                         <div class="col-12 col-md-6">
                             <b>{{ translate("Walk-In Closet") }}</b
                             ><br />
-                            {{ property.walk_in }}
+                            {{ property.walk_in ? "Yes" : "No" }}
                         </div>
 
                         <div class="col-12 col-md-6">
                             <b>{{ translate("Laundry Closet") }}</b
                             ><br />
-                            {{ property.laundry_closet }}
+                            {{ property.laundry_closet ? "Yes" : "No" }}
                         </div>
 
                         <div class="col-12 col-md-6">
@@ -311,9 +311,60 @@
                         </div>
 
                         <div class="col-12 col-md-6">
+                            <b>{{ translate("Price From") }}</b
+                            ><br />
+                            {{ property.price_from }}
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Price To") }}</b
+                            ><br />
+                            {{ property.price_to }}
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Stories") }}</b
+                            ><br />
+                            {{ property.stories }}
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Full Bath") }}</b
+                            ><br />
+                            {{ property.full_bath }}
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Half Bath") }}</b
+                            ><br />
+                            {{ property.half_bath }}
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Size From") }}</b
+                            ><br />
+                            {{ property.size_from }}
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Size To") }}</b
+                            ><br />
+                            {{ property.size_to }}
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Construction Status") }}</b
+                            ><br />
+                            {{ property.construction_status }}
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Listing Status") }}</b
+                            ><br />
+                            {{ property.listing_status }}
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <b>{{ translate("Average Price Per Square") }}</b
+                            ><br />
+                            {{ property.average_price_per_square }}
+                        </div>
+
+                        <div class="col-12 col-md-6">
                             <b>{{ translate("Spa") }}</b
                             ><br />
-                            {{ property.spa }}
+                            {{ property.spa ? "Yes" : "No" }}
                         </div>
 
                         <div class="col-12 col-md-6">
@@ -331,19 +382,19 @@
                         <div class="col-12 col-md-6">
                             <b>{{ translate("Parking Enclosure") }}</b
                             ><br />
-                            {{ property.parking_enclosure }}
+                            {{ property.parking_enclosure ? "Yes" : "No" }}
                         </div>
 
                         <div class="col-12 col-md-6">
                             <b>{{ translate("Private Bath") }}</b
                             ><br />
-                            {{ property.private_bath }}
+                            {{ property.private_bath ? "Yes" : "No" }}
                         </div>
 
                         <div class="col-12 col-md-6">
                             <b>{{ translate("Outdoor Shower") }}</b
                             ><br />
-                            {{ property.outdoor_shower }}
+                            {{ property.outdoor_shower ? "Yes" : "No" }}
                         </div>
 
                         <div class="col-12 col-md-6">
@@ -358,6 +409,56 @@
                             {{ property.foundation_conditions }}
                         </div>
                         <hr />
+                        <div class="col-md-12 mt-3">
+                            <h3 class="c-theme-text-color">Floor Plans</h3>
+                            <div class="card-body">
+                                <!-- Correct way to access the floorplans -->
+                                <div v-if="property.floorplans.length == 0">
+                                    <p>No floor plans available</p>
+                                </div>
+                                <div v-else>
+                                    <div
+                                        v-for="(
+                                            floor, index
+                                        ) in property.floorplans"
+                                        :key="index"
+                                        class="floor-plan"
+                                    >
+                                        <div>
+                                            <strong>Name:</strong>
+                                            {{ floor.name }}
+                                            <br />
+                                            <strong>Size:</strong>
+                                            {{ floor.size }} sq ft
+                                            <br />
+                                            <strong>Beds:</strong>
+                                            {{ floor.beds }}
+                                            <br />
+                                            <strong>Full Baths:</strong>
+                                            {{ floor.full_baths }}
+                                            <br />
+                                            <strong>Half Baths:</strong>
+                                            {{ floor.half_baths }}
+                                            <br />
+                                            <strong>Price:</strong> ${{
+                                                floor.price
+                                            }}
+                                            <br />
+                                            <strong>Special Features:</strong>
+                                            {{ floor.special_features }}
+                                            <br />
+                                            <strong>Image:</strong>
+                                            {{
+                                                floor.image
+                                                    ? floor.image
+                                                    : "No image available"
+                                            }}
+                                        </div>
+                                        <hr />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="d-flex justify-content-left">
                             <div>
@@ -377,11 +478,13 @@
                         </div>
                     </div>
 
+                    <!-- Loop through the floorplans associated with the property -->
+
                     <div class="col-md-12 mt-3">
                         <h3 class="c-theme-text-color">
                             Property Photo Gallery
                         </h3>
- 
+
                         <div>
                             <div class="card-body">
                                 <!-- start of the loop -->
@@ -403,7 +506,7 @@
                                                     @deleteThis="deleteThis"
                                                 />
                                             </div>
- 
+
                                             <image-zooming-component
                                                 :file="file.file_name"
                                                 @loaded="fileLoaded"
