@@ -67,28 +67,12 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="mt-2">
-                                        <button
-                                            v-if="formStatus == 1"
-                                            class="btn c-btn-theme-primary w-100"
-                                            type="submit"
-                                        >
-                                            {{ translate("Login") }}
-                                        </button>
+    <button class="btn c-btn-theme-primary w-100" type="submit" :disabled="formStatus != 1">
+        {{ translate("Login") }}
+        <span v-if="formStatus != 1" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    </button>
+</div>
 
-                                        <button
-                                            class="btn c-btn-theme-primary w-100"
-                                            type="submit"
-                                            disabled
-                                            v-else
-                                        >
-                                            {{ translate("Login") }}
-                                            <span
-                                                class="spinner-border spinner-border-sm"
-                                                role="status"
-                                                aria-hidden="true"
-                                            ></span>
-                                        </button>
-                                    </div>
                                 </div>
                             </form>
                             <div class="col-12 theme-color-red">
@@ -221,28 +205,16 @@
                                 <br />
                                 <div class="col-12">
                                     <div class="mt-2">
-                                        <button
-                                            v-if="registerFormStatus == 1"
-                                            class="btn c-btn-theme-primary w-100"
-                                            type="submit"
-                                            @click="register"
-                                        >
-                                            {{ translate("Register") }}
-                                        </button>
+                                        <button 
+    class="btn c-btn-theme-primary w-100" 
+    type="submit" 
+    @click="register" 
+    :disabled="registerFormStatus != 1"
+>
+    {{ translate("Register") }}
+    <span v-if="registerFormStatus != 1" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+</button>
 
-                                        <button
-                                            class="btn c-btn-theme-primary w-100"
-                                            type="submit"
-                                            disabled
-                                            v-else
-                                        >
-                                            {{ translate("Register") }}
-                                            <span
-                                                class="spinner-border spinner-border-sm"
-                                                role="status"
-                                                aria-hidden="true"
-                                            ></span>
-                                        </button>
 
                                         <button
                                             type="button"

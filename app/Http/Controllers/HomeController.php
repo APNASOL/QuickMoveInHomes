@@ -191,6 +191,11 @@ class HomeController extends Controller
             'state' => $property->state,
             'zip_code' => $property->zip_code,
             'price' => $property->price,
+            'price_from' => $property->price_from,
+            'price_to' => $property->price_to,
+            'full_bath' => $property->full_bath,
+            'half_bath' => $property->half_bath,
+            'construction_status' => $property->construction_status,
 
             'bedrooms' => $property->bedrooms,
             'square_feet' => $property->square_feet,
