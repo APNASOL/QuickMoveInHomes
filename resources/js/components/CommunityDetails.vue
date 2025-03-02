@@ -294,34 +294,12 @@
                         </div>
                     </div>
 
-                    <div class="middle-section row mt-2">
-                        <div
-                            class="accordion"
-                            id="accordionExample"
-                            v-if="logged_in_user && logged_in_user.agreement"
-                        >
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button
-                                        class="accordion-button collapsed"
-                                        type="button"
-                                        data-bs-toggle="collapse"
-                                        data-bs-target="#collapseCommunity"
-                                        aria-expanded="true"
-                                        aria-controls="collapseCommunity"
-                                    >
-                                        <h2 class="feature-title">
+                    <div class="card mt-4">
+                        <div class="card-body">
+                            <h2 class="feature-title">
                                             Community Details
                                         </h2>
-                                    </button>
-                                </h2>
-                                <div
-                                    id="collapseCommunity"
-                                    class="accordion-collapse collapse hide"
-                                    data-bs-parent="#accordionExample"
-                                >
-                                    <div class="accordion-body">
-                                        <div class="row">
+                            <div class="row">
                                             <!-- Basic Community Details Section -->
                                             <div class="col-6">
                                                 <h5 class="c-feature-title">
@@ -513,6 +491,221 @@
                                                 </p>
                                             </div>
                                         </div>
+                        </div>
+                    </div>
+                    <!-- <div class="middle-section row mt-2">
+                        <div
+                            class="accordion"
+                            id="accordionExample"
+                            v-if="logged_in_user && logged_in_user.agreement"
+                        >
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseCommunity"
+                                        aria-expanded="true"
+                                        aria-controls="collapseCommunity"
+                                    >
+                                        <h2 class="feature-title">
+                                            Community Details
+                                        </h2>
+                                    </button>
+                                </h2>
+                                <div
+                                    id="collapseCommunity"
+                                    class="accordion-collapse collapse hide"
+                                    data-bs-parent="#accordionExample"
+                                >
+                                    <div class="accordion-body">
+                                        <div class="row">
+                                             <div class="col-6">
+                                                <h5 class="c-feature-title">
+                                                    Location & Info
+                                                </h5>
+                                                <p>
+                                                    <strong
+                                                        >Map Location:</strong
+                                                    >
+                                                    {{
+                                                        community_details.map_location ||
+                                                        "N/A"
+                                                    }}
+                                                </p>
+                                                <p>
+                                                    <strong
+                                                        >Legal
+                                                        Subdivision:</strong
+                                                    >
+                                                    {{
+                                                        community_details.legal_subdivision ||
+                                                        "N/A"
+                                                    }}
+                                                </p>
+                                                <p>
+                                                    <strong
+                                                        >Nearby
+                                                        Properties:</strong
+                                                    >
+                                                    {{
+                                                        community_details.nearby_properties ||
+                                                        "N/A"
+                                                    }}
+                                                </p>
+                                                <p>
+                                                    <strong>Masterplan:</strong>
+                                                    {{
+                                                        community_details.masterplan ||
+                                                        "N/A"
+                                                    }}
+                                                </p>
+                                                <p>
+                                                    <strong
+                                                        >Sub
+                                                        Association:</strong
+                                                    >
+                                                    {{
+                                                        community_details.sub_association
+                                                            ? "Yes"
+                                                            : "No"
+                                                    }}
+                                                </p>
+                                            </div>
+
+                                             <div class="col-6">
+                                                <h5 class="c-feature-title">
+                                                    HOA & Fees
+                                                </h5>
+                                                <p>
+                                                    <strong>HOA:</strong>
+                                                    {{
+                                                        community_details.hoa ||
+                                                        "N/A"
+                                                    }}
+                                                </p>
+                                                <p>
+                                                    <strong
+                                                        >SID/LID Fee:</strong
+                                                    >
+                                                    ${{
+                                                        community_details.sid_lid_fee ||
+                                                        "N/A"
+                                                    }}
+                                                </p>
+                                                <p>
+                                                    <strong
+                                                        >Payment
+                                                        Frequency:</strong
+                                                    >
+                                                    {{
+                                                        community_details.sid_lid_payment_frequency ||
+                                                        "N/A"
+                                                    }}
+                                                </p>
+                                                <p>
+                                                    <strong>CIC:</strong>
+                                                    {{
+                                                        community_details.cic
+                                                            ? "Yes"
+                                                            : "No"
+                                                    }}
+                                                </p>
+                                                <p>
+                                                    <strong>LID:</strong>
+                                                    {{
+                                                        community_details.lid
+                                                            ? "Yes"
+                                                            : "No"
+                                                    }}
+                                                </p>
+                                            </div>
+
+                                             <div class="col-6">
+                                                <h5 class="c-feature-title">
+                                                    Proximity
+                                                </h5>
+                                                <p>
+                                                    <strong
+                                                        >Proximity to
+                                                        Strip:</strong
+                                                    >
+                                                    {{
+                                                        community_details.proximity_to_strip ||
+                                                        "N/A"
+                                                    }}
+                                                    miles
+                                                </p>
+                                                <p>
+                                                    <strong
+                                                        >Proximity to
+                                                        Airport:</strong
+                                                    >
+                                                    {{
+                                                        community_details.proximity_to_airport ||
+                                                        "N/A"
+                                                    }}
+                                                    miles
+                                                </p>
+                                                <p>
+                                                    <strong
+                                                        >Nearby
+                                                        Attractions:</strong
+                                                    >
+                                                    {{
+                                                        community_details.nearby_attractions ||
+                                                        "N/A"
+                                                    }}
+                                                </p>
+                                            </div>
+
+                                             <div class="col-6">
+                                                <h5 class="c-feature-title">
+                                                    Amenities
+                                                </h5>
+                                                <p>
+                                                    <strong>Amenities:</strong>
+                                                    {{
+                                                        community_details.amenities
+                                                            ? community_details.amenities.join(
+                                                                  ", "
+                                                              )
+                                                            : "N/A"
+                                                    }}
+                                                </p>
+                                            </div>
+
+                                            <div class="col-6">
+                                                <h5 class="c-feature-title">
+                                                    Regions
+                                                </h5>
+                                                <p>
+                                                    {{
+                                                        community_details.regions
+                                                            ? community_details.regions.join(
+                                                                  ", "
+                                                              )
+                                                            : "N/A"
+                                                    }}
+                                                </p>
+                                            </div>
+
+                                             <div class="col-6">
+                                                <h5 class="c-feature-title">
+                                                    Neighborhoods
+                                                </h5>
+                                                <p>
+                                                    {{
+                                                        community_details.neighborhoods
+                                                            ? community_details.neighborhoods.join(
+                                                                  ", "
+                                                              )
+                                                            : "N/A"
+                                                    }}
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -528,7 +721,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="container-fluid interactive-banner mt-3">
