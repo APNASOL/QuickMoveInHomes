@@ -155,10 +155,7 @@
 
                                 <!-- Show actual data if user is logged in and not a customer -->
                                 <div
-                                    v-if="
-                                        logged_in_user &&
-                                        logged_in_user.agreement
-                                    "
+                                     
                                 >
                                     <div
                                         v-if="
@@ -269,7 +266,7 @@
                                 </div>
 
                                 <!-- Blurred placeholder when user is a customer or not logged in -->
-                                <div v-else class="blurred-content">
+                                <!-- <div v-else class="blurred-content">
                                     <div class="placeholder-title">
                                         HIGHLIGHTS
                                     </div>
@@ -289,7 +286,7 @@
                                         HOA information is available upon
                                         request.
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>

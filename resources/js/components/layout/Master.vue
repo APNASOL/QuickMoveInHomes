@@ -887,7 +887,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-md-4">
                     <hr />
                 </div>
@@ -897,7 +897,7 @@
                 <div class="col-md-4">
                     <hr />
                 </div>
-            </div>
+            </div> -->
         </div>
     </footer>
     <!-- <div id="preloader" ref="preloader" v-if="preLoader"></div>
