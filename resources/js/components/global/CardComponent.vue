@@ -1,13 +1,13 @@
 <template>
     <div class="">
-        <div class="property-card position-relative">
+        <div class="property-card position-relative rounded-5">
             <span class="badge sale">{{ badge }}</span>
             <img
                 :src="main_image ?? '/images/default-home-image.png'"
-                class="card-img-top c-card-img-border"
+                class="card-img-top c-card-img-border "
                 :alt="title"
             />
-            <div class="card-body">
+            <div class="card-body ">
                 <h5 class="card-title">
                     {{ title }}
                 </h5>
@@ -30,7 +30,7 @@
                             />
                         </svg>
                         <!-- <b class="fs-6 mt-1">{{ property.bedrooms }}</b> -->
-                        <b class="fs-6 mt-1">3</b>
+                        <b class="fs-6 mt-1">{{ bedrooms }}</b>
                     </span>
                     <span
                         ><i class="bi bi-bathtub"></i
@@ -73,7 +73,7 @@
                                 "
                             ></path>
                         </svg>
-                        <b class="fs-6 mt-1">3</b>
+                        <b class="fs-6 mt-1">{{ bathrooms }}</b>
                         <!-- <b class="fs-6 mt-1">{{ bedrooms }}</b> -->
                     </span>
                     <span
@@ -91,7 +91,7 @@
                             ></path>
                         </svg>
 
-                        <b class="fs-6 mt-1">{{ square_feet }} sq.ft</b>
+                        <b class="fs-6 mt-1">{{ square_feet }}  </b>
                     </span>
                     <span
                         ><i class="bi bi-garage"></i
@@ -128,7 +128,7 @@
                                 </g>
                             </g>
                         </svg>
-                        <b class="fs-6 mt-1">3</b>
+                        <b class="fs-6 mt-1">{{ garages }}</b>
                         <!-- <b class="fs-6 mt-1">{{ garags }}</b> -->
                     </span>
                 </div>

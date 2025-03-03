@@ -8,20 +8,20 @@
                     :key="promise"
                     class="col-12 col-sm-6 col-md-4 col-lg-3"
                 >
-                    <div class="card card-body c-border-promis-design h-100">
+                    <div class="card card-body c-border-promis-design h-100  rounded-5 ">
                         <div
                             class="d-flex justify-content-between c-h-fix text-dark"
                         >
                             <h5>
-                                {{ promise.title }}
+                                <b>{{ promise.title }}</b>
                             </h5>
-                            <img
+                            <!-- <img
                                 :src="promise.icon"
                                 @error="setAltImg"
                                 height="40"
-                            />
+                            /> -->
                         </div>
-                        <p class="text-dark">
+                        <p class="text-dark" style="text-align: justify;">
                             {{ promise.description }}
                         </p>
                     </div>

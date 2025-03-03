@@ -39,11 +39,11 @@
                             :main_image="property.main_image"
                             :title="property.title"
                             :address="property.address"
-                            :bedrooms="3"
+                            :bedrooms="property.bedrooms"
                             :price="property.price"
-                            :bathrooms="3"
+                            :bathrooms="property.bathrooms"
                             :square_feet="property.square_feet"
-                            :garages="3"
+                            :garages="property.parking_enclosure"
                             />
 
                             <!-- <div class="">

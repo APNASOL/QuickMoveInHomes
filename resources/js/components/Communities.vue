@@ -22,7 +22,7 @@
                         :href="'/detailed/community/' + community.id"
                     >
                         <div
-                            class="card border-0 c-overflow-hidden c-card-wrapper"
+                            class="card border-0 c-overflow-hidden c-card-wrapper rounded-5"
                         >
                             <img
                                 :src="community.main_image ?? 'empty.png'"

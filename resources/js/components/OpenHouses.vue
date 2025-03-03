@@ -29,25 +29,37 @@
                                 property.property_id
                             "
                         >
-                            <div class="card c-border-design">
-                                <img
+                            <!--  <div class="card c-border-design">
+                               <img
                                     :src="property.main_image ?? '/images/default-home-image.png'"
                                     class="card-img-top c-card-img-border"
                                     :alt="property.title"
                                     @error="setAltImg"
-                                />
+                                /> -->
 
-                                <div
+                                <GlobalCard 
+                            :badge="'Open House'"
+                            :main_image="property.main_image"
+                            :title="property.title"
+                            :address="property.address"
+                            :bedrooms="property.bedrooms"
+                            :price="property.price"
+                            :bathrooms="property.bathrooms"
+                            :square_feet="property.square_feet"
+                            :garages="property.parking_enclosure"
+                            />
+
+                                <!-- <div
                                     class="card-img-overlay c-card-img-overlay-flash-sale"
                                 >
                                     <span
                                         class="badge rounded-pill bg-white text-dark"
                                         >Open House</span
                                     >
-                                </div>
+                                </div> -->
 
                                 
-                                <div class="card-body text-start">
+                                <!-- <div class="card-body text-start">
                                     <p>
                                         <span v-if="property.title"> 
                                             
@@ -73,7 +85,7 @@
                                         From
                                         <b>${{ property.price }}</b>
                                     </p>
-                                    <!-- <p>
+                                    <p>
                                             AREA (SQFT)
                                             <b
                                                 >{{
@@ -102,9 +114,9 @@
                                                     property.price
                                                 }}</b
                                             >
-                                        </p> -->
+                                        </p>
                                 </div>
-                            </div>
+                            </div> -->
                         </a>
                     </div>
                 </Slide>

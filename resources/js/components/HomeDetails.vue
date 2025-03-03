@@ -75,27 +75,23 @@
                 <div class="container">
                     <div>
                         <div
-                            class="container bg-light p-5 rounded-2 mt-4 text-justify"
+                            class="container bg-light p-5 rounded-5 mt-4 text-justify"
                             style="
                                 box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.3),
                                     5px 5px 10px rgba(0, 0, 0, 0.15);
                             "
                         >
-                            
-                                <div>
-                                    <h1 id="overview feature-title">
-                                        Overview
-                                    </h1>
-                                </div>
-                                
-                          
+                            <div>
+                                <h1 id="overview feature-title">Overview</h1>
+                            </div>
+
                             <p class="py-4">
                                 {{ Home.description }}
                             </p>
                         </div>
                     </div>
 
-                    <div class="container m-5">
+                    <div class="container  p-3 mt-5">
                         <div class="row ms-5 icon-sec">
                             <div class="col-md-3 col-sm-12">
                                 <svg
@@ -365,7 +361,7 @@
                     </div> -->
 
                     <!-- Middle Section: Image Carousel and Highlights in Two Columns -->
-                    <div class="row">
+                    <div class="row mt-5">
                         <!-- Image Carousel in col-8 -->
                         <div class="col-12 col-md-8">
                             <div class="mt-2">
@@ -437,36 +433,33 @@
                         <!-- Community Highlights and Sales Office in col-4 -->
                         <div class="col-12 col-md-4">
                             <div class="">
-                                            <div
-                                                v-if="
-                                                    logged_in_user &&
-                                                    logged_in_user.role ===
-                                                        'customer'  
-                                                "
-                                            >
-                                                <h5
-                                                    class="mt-3 c-theme-color"
-                                                    v-if="
-                                                        logged_in_user &&
-                                                        !logged_in_user.agreement
-                                                    "
-                                                >
-                                                    To access all information,
-                                                    please sign a contract first
-                                                    while selecting your home.
-                                                </h5>
-                                                <ProceedComponent
-                                                    :home_id="home_id"
-                                                    :user_status="'logedin'"
-                                                    :user_name="
-                                                        logged_in_user.name
-                                                    "
-                                                />
-                                            </div>
-                                            <div v-else>
-                                                <ProceedComponent />
-                                            </div>
-                                        </div>
+                                <div
+                                    v-if="
+                                        logged_in_user &&
+                                        logged_in_user.role === 'customer'
+                                    "
+                                >
+                                    <h5
+                                        class="mt-3 c-theme-color"
+                                        v-if="
+                                            logged_in_user &&
+                                            !logged_in_user.agreement
+                                        "
+                                    >
+                                        To access all information, please sign a
+                                        contract first while selecting your
+                                        home.
+                                    </h5>
+                                    <ProceedComponent
+                                        :home_id="home_id"
+                                        :user_status="'logedin'"
+                                        :user_name="logged_in_user.name"
+                                    />
+                                </div>
+                                <div v-else>
+                                    <ProceedComponent />
+                                </div>
+                            </div>
                             <div class="highlights">
                                 <h4 class="feature-title">HIGHLIGHTS</h4>
 
@@ -623,7 +616,7 @@
 
                     <div class="row mt-5">
                         <div
-                            class="container bg-white p-5 rounded shadow-sm mt-4"
+                            class="container bg-white p-5  rounded-5 shadow-sm mt-4"
                         >
                             <h1 id="overview" class="mb-4 feature-title">
                                 Features

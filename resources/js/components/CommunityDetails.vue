@@ -154,9 +154,7 @@
                                 <h4 class="feature-title">HIGHLIGHTS</h4>
 
                                 <!-- Show actual data if user is logged in and not a customer -->
-                                <div
-                                     
-                                >
+                                <div>
                                     <div
                                         v-if="
                                             community_details.amenities &&
@@ -291,203 +289,161 @@
                         </div>
                     </div>
 
-                    <div class="card mt-4">
+                    <div class="card mt-4 rounded-5">
                         <div class="card-body">
-                            <h2 class="feature-title">
-                                            Community Details
-                                        </h2>
+                            <h2 class="feature-title">Community Details</h2>
                             <div class="row">
-                                            <!-- Basic Community Details Section -->
-                                            <div class="col-6">
-                                                <h5 class="c-feature-title">
-                                                    Location & Info
-                                                </h5>
-                                                <p>
-                                                    <strong
-                                                        >Map Location:</strong
-                                                    >
-                                                    {{
-                                                        community_details.map_location ||
-                                                        "N/A"
-                                                    }}
-                                                </p>
-                                                <p>
-                                                    <strong
-                                                        >Legal
-                                                        Subdivision:</strong
-                                                    >
-                                                    {{
-                                                        community_details.legal_subdivision ||
-                                                        "N/A"
-                                                    }}
-                                                </p>
-                                                <p>
-                                                    <strong
-                                                        >Nearby
-                                                        Properties:</strong
-                                                    >
-                                                    {{
-                                                        community_details.nearby_properties ||
-                                                        "N/A"
-                                                    }}
-                                                </p>
-                                                <p>
-                                                    <strong>Masterplan:</strong>
-                                                    {{
-                                                        community_details.masterplan ||
-                                                        "N/A"
-                                                    }}
-                                                </p>
-                                                <p>
-                                                    <strong
-                                                        >Sub
-                                                        Association:</strong
-                                                    >
-                                                    {{
-                                                        community_details.sub_association
-                                                            ? "Yes"
-                                                            : "No"
-                                                    }}
-                                                </p>
-                                            </div>
+                                <!-- Basic Community Details Section -->
+                                <div class="col-6">
+                                    <h5 class="c-feature-title">
+                                        Location & Info
+                                    </h5>
+                                    <p>
+                                        <strong>Map Location:</strong>
+                                        {{
+                                            community_details.map_location ||
+                                            "N/A"
+                                        }}
+                                    </p>
+                                    <p>
+                                        <strong>Legal Subdivision:</strong>
+                                        {{
+                                            community_details.legal_subdivision ||
+                                            "N/A"
+                                        }}
+                                    </p>
+                                    <p>
+                                        <strong>Nearby Properties:</strong>
+                                        {{
+                                            community_details.nearby_properties ||
+                                            "N/A"
+                                        }}
+                                    </p>
+                                    <p>
+                                        <strong>Masterplan:</strong>
+                                        {{
+                                            community_details.masterplan ||
+                                            "N/A"
+                                        }}
+                                    </p>
+                                    <p>
+                                        <strong>Sub Association:</strong>
+                                        {{
+                                            community_details.sub_association
+                                                ? "Yes"
+                                                : "No"
+                                        }}
+                                    </p>
+                                </div>
 
-                                            <!-- HOA & Fees Section -->
-                                            <div class="col-6">
-                                                <h5 class="c-feature-title">
-                                                    HOA & Fees
-                                                </h5>
-                                                <p>
-                                                    <strong>HOA:</strong>
-                                                    {{
-                                                        community_details.hoa ||
-                                                        "N/A"
-                                                    }}
-                                                </p>
-                                                <p>
-                                                    <strong
-                                                        >SID/LID Fee:</strong
-                                                    >
-                                                    ${{
-                                                        community_details.sid_lid_fee ||
-                                                        "N/A"
-                                                    }}
-                                                </p>
-                                                <p>
-                                                    <strong
-                                                        >Payment
-                                                        Frequency:</strong
-                                                    >
-                                                    {{
-                                                        community_details.sid_lid_payment_frequency ||
-                                                        "N/A"
-                                                    }}
-                                                </p>
-                                                <p>
-                                                    <strong>CIC:</strong>
-                                                    {{
-                                                        community_details.cic
-                                                            ? "Yes"
-                                                            : "No"
-                                                    }}
-                                                </p>
-                                                <p>
-                                                    <strong>LID:</strong>
-                                                    {{
-                                                        community_details.lid
-                                                            ? "Yes"
-                                                            : "No"
-                                                    }}
-                                                </p>
-                                            </div>
+                                <!-- HOA & Fees Section -->
+                                <div class="col-6">
+                                    <h5 class="c-feature-title">HOA & Fees</h5>
+                                    <p>
+                                        <strong>HOA:</strong>
+                                        {{ community_details.hoa || "N/A" }}
+                                    </p>
+                                    <p>
+                                        <strong>SID/LID Fee:</strong>
+                                        ${{
+                                            community_details.sid_lid_fee ||
+                                            "N/A"
+                                        }}
+                                    </p>
+                                    <p>
+                                        <strong>Payment Frequency:</strong>
+                                        {{
+                                            community_details.sid_lid_payment_frequency ||
+                                            "N/A"
+                                        }}
+                                    </p>
+                                    <p>
+                                        <strong>CIC:</strong>
+                                        {{
+                                            community_details.cic ? "Yes" : "No"
+                                        }}
+                                    </p>
+                                    <p>
+                                        <strong>LID:</strong>
+                                        {{
+                                            community_details.lid ? "Yes" : "No"
+                                        }}
+                                    </p>
+                                </div>
 
-                                            <!-- Proximity Section -->
-                                            <div class="col-6">
-                                                <h5 class="c-feature-title">
-                                                    Proximity
-                                                </h5>
-                                                <p>
-                                                    <strong
-                                                        >Proximity to
-                                                        Strip:</strong
-                                                    >
-                                                    {{
-                                                        community_details.proximity_to_strip ||
-                                                        "N/A"
-                                                    }}
-                                                    miles
-                                                </p>
-                                                <p>
-                                                    <strong
-                                                        >Proximity to
-                                                        Airport:</strong
-                                                    >
-                                                    {{
-                                                        community_details.proximity_to_airport ||
-                                                        "N/A"
-                                                    }}
-                                                    miles
-                                                </p>
-                                                <p>
-                                                    <strong
-                                                        >Nearby
-                                                        Attractions:</strong
-                                                    >
-                                                    {{
-                                                        community_details.nearby_attractions ||
-                                                        "N/A"
-                                                    }}
-                                                </p>
-                                            </div>
+                                <!-- Proximity Section -->
+                                <div class="col-6">
+                                    <h5 class="c-feature-title">Proximity</h5>
+                                    <p>
+                                        <strong>Proximity to Strip:</strong>
+                                        {{
+                                            community_details.proximity_to_strip ||
+                                            "N/A"
+                                        }}
+                                        miles
+                                    </p>
+                                    <p>
+                                        <strong>Proximity to Airport:</strong>
+                                        {{
+                                            community_details.proximity_to_airport ||
+                                            "N/A"
+                                        }}
+                                        miles
+                                    </p>
+                                    <p>
+                                        <strong>Nearby Attractions:</strong>
+                                        {{
+                                            community_details.nearby_attractions ||
+                                            "N/A"
+                                        }}
+                                    </p>
+                                </div>
 
-                                            <!-- Amenities Section -->
-                                            <div class="col-6">
-                                                <h5 class="c-feature-title">
-                                                    Amenities
-                                                </h5>
-                                                <p>
-                                                    <strong>Amenities:</strong>
-                                                    {{
-                                                        community_details.amenities
-                                                            ? community_details.amenities.join(
-                                                                  ", "
-                                                              )
-                                                            : "N/A"
-                                                    }}
-                                                </p>
-                                            </div>
+                                <!-- Amenities Section -->
+                                <div class="col-6">
+                                    <h5 class="c-feature-title">Amenities</h5>
+                                    <p>
+                                        <strong>Amenities:</strong>
+                                        {{
+                                            community_details.amenities
+                                                ? community_details.amenities.join(
+                                                      ", "
+                                                  )
+                                                : "N/A"
+                                        }}
+                                    </p>
+                                </div>
 
-                                            <!-- Regions Section -->
-                                            <div class="col-6">
-                                                <h5 class="c-feature-title">
-                                                    Regions
-                                                </h5>
-                                                <p>
-                                                    {{
-                                                        community_details.regions
-                                                            ? community_details.regions.join(
-                                                                  ", "
-                                                              )
-                                                            : "N/A"
-                                                    }}
-                                                </p>
-                                            </div>
+                                <!-- Regions Section -->
+                                <div class="col-6">
+                                    <h5 class="c-feature-title">Regions</h5>
+                                    <p>
+                                        {{
+                                            community_details.regions
+                                                ? community_details.regions.join(
+                                                      ", "
+                                                  )
+                                                : "N/A"
+                                        }}
+                                    </p>
+                                </div>
 
-                                            <!-- Neighborhoods Section -->
-                                            <div class="col-6">
-                                                <h5 class="c-feature-title">
-                                                    Neighborhoods
-                                                </h5>
-                                                <p>
-                                                    {{
-                                                        community_details.neighborhoods
-                                                            ? community_details.neighborhoods.join(
-                                                                  ", "
-                                                              )
-                                                            : "N/A"
-                                                    }}
-                                                </p>
-                                            </div>
-                                        </div>
+                                <!-- Neighborhoods Section -->
+                                <div class="col-6">
+                                    <h5 class="c-feature-title">
+                                        Neighborhoods
+                                    </h5>
+                                    <p>
+                                        {{
+                                            community_details.neighborhoods
+                                                ? community_details.neighborhoods.join(
+                                                      ", "
+                                                  )
+                                                : "N/A"
+                                        }}
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!-- <div class="middle-section row mt-2">
@@ -743,7 +699,8 @@
                                         : 'Quick Move In'
                                 "
                                 :main_image="
-                                    home.main_image ?? '/images/default-home-image.png'
+                                    home.main_image ??
+                                    '/images/default-home-image.png'
                                 "
                                 :title="home.title"
                                 :address="home.address"

@@ -11,6 +11,8 @@ use App\Models\Property;
 use App\Models\PropertyIncentive;
 use App\Models\Upload;
 use Carbon\Carbon;
+use App\Models\PropertyFeature;
+
 use DB;
 use Illuminate\Http\Request;
 
@@ -30,8 +32,8 @@ class IndexController extends Controller
         foreach ($properties as $property) {
             
          
-            $property->main_image =NULL;
-
+            $property->main_image = NULL; 
+            $property->bathrooms = $property->half_bathr +  $property->full_bath;
             
             $images = json_decode($property->images);
             if ($images) {
@@ -43,14 +45,9 @@ class IndexController extends Controller
                     $property->main_image = get_storage_url($file_image);
                 }
             }
-            // $uploads = Upload::whereIn('id', $images)->get();
-            // $firstUpload = $uploads->first();
-
-            // // Check if the first upload exists, then assign its file_name to the property
-            // if ($firstUpload) {
-            //     $file_image = $firstUpload->file_name;
-            //     $property->main_image = get_storage_url($file_image);
-            // }
+            
+            $propertyFeature = PropertyFeature::where('property_id', $property->property_id)->select('parking_enclosure')->first();
+            $property->parking_enclosure = $propertyFeature->parking_enclosure ?? 0;
             
         }
 

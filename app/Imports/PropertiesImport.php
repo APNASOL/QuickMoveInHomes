@@ -44,7 +44,17 @@ class PropertiesImport implements ToCollection, WithHeadingRow
                 $property->zip_code = $row['zip_code'] ?? null;
                 $property->longitude = $row['longitude'] ?? null;
                 $property->latitude = $row['latitude'] ?? null;
-                $price = $row['price']; // Get the price from the row
+                $price = $row['price']; 
+
+                $property->price_from = $row['price_from'] ?? null; 
+                $property->price_to = $row['price_to'] ?? null; 
+                $property->full_bath = $row['full_bath'] ?? null; 
+                $property->half_bath = $row['half_bath'] ?? null; 
+                $property->average_price_per_square = $row['average_price_per_square'] ?? null; 
+                $property->listing_status = $row['listing_status'] ?? null; 
+                $property->construction_status = $row['construction_status'] ?? null; 
+                $property->size_from = $row['size_from'] ?? null; 
+                $property->size_to = $row['size_to'] ?? null; 
 
 // Remove any dollar signs and commas, then cast to integer
                 $cleanedPrice = (int) str_replace([',', '$'], '', $price);
