@@ -908,11 +908,12 @@
                             :key="home.id"
                             class="col-md-3 mb-3"
                         >
+                        
                             <a
                                 class="text-decoration-none"
                                 :href="'/home-details/' + home.property_id"
                             >
-                            {{ home.main_image }}
+                           
                                 <GlobalCard
                                     :badge="
                                         home.is_open_house === 1
