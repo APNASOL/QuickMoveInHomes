@@ -8,7 +8,7 @@
             :alt="title"
             /> -->
             <img
-            :src="main_image ? main_image : '/images/default_image.png'"
+            :src="main_image ? main_image : '/images/default.jpg'"
             class="card-img-top c-card-img-border"
             :alt="title"
             />
@@ -16,7 +16,7 @@
              
             <div class="card-body ">
                 <h5 class="card-title">
-                    {{ title }}  - Testing
+                    {{ title }}
                 </h5>
                 <p class="card-text">
                     {{ truncatedAddress }}
