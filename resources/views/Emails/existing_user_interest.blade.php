@@ -133,7 +133,7 @@
 <body style="background-color: white    ; margin: 0 !important; padding: 0 !important;">
     <!-- HIDDEN PREHEADER TEXT -->
     @php
-        $external_website = getExternalWebsiteData();
+    $external_website = getExternalWebsiteData(); 
     @endphp
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
         <!-- LOGO -->
@@ -154,8 +154,8 @@
                             style="padding: 40px 20px 20px 20px; border-radius: 4px 4px 0px 0px; color: #111111; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 48px; font-weight: 400; letter-spacing: 4px; line-height: 48px;">
                             <h1 style="font-size: 48px; font-weight: 400; margin: 2; color:#163259;">
 
-
-                                <img src="{{ $external_website->black_logo }}" width="160" alt="Logo" />
+                                
+                            <img src="{{ $external_website->black_logo ?? '' }}" width="160" alt="Logo" />
 
 
                         </td>
