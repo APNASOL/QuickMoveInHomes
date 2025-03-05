@@ -8,11 +8,11 @@
             :alt="title"
             /> -->
             <img
-            :src="main_image ? main_image : '/images/default.jpg'"
+            :src="main_image ? main_image : '/images/default_image.png'"
             class="card-img-top c-card-img-border"
             :alt="title"
             />
-
+{{ main_image ? main_image : '/images/default_image.png' }}
              
             <div class="card-body ">
                 <h5 class="card-title">
