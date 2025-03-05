@@ -45,7 +45,7 @@ class IndexController extends Controller
                     $property->main_image = get_storage_url($file_image);
                 }else
                 {
-                    $property->main_image = '/images/default-home-image.png';
+                    $property->main_image = '/images/default_image.png';
                 }
             }
             

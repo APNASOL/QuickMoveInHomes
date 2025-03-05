@@ -118,7 +118,7 @@ function formatPrice(price) {
                     <img src="${
                         home.home_data.main_image
                             ? home.home_data.main_image
-                            : "/images/default-home-image.png"
+                            : "/images/default_image.png"
                     }" style="width:100%; height:auto;">
                 </div>
             `);

@@ -700,7 +700,7 @@
                                 "
                                 :main_image="
                                     home.main_image ??
-                                    '/images/default-home-image.png'
+                                    '/images/default_image.png'
                                 "
                                 :title="home.title"
                                 :address="home.address"
@@ -713,7 +713,7 @@
                             <!-- <div class="card c-border-design">
                                 <img
                                     :src="
-                                        home.main_image ?? '/images/default-home-image.png'
+                                        home.main_image ?? '/images/default_image.png'
                                     "
                                     class="card-img-top c-card-img-border"
                                     :alt="home.title"
@@ -929,7 +929,7 @@ export default {
         },
 
         setAltImg(event) {
-            event.target.src = "/images/default-home-image.png";
+            event.target.src = "/images/default_image.png";
         },
         formatPrice(price) {
             return Math.floor(price); // Removes the decimal portion

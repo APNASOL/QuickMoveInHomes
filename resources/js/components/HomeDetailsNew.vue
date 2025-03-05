@@ -522,7 +522,7 @@
 
 
                                 <GlobalCard :badge="home.is_open_house === 1 ? 'Open House' : 'Quick Move In'"
-                                    :main_image="home.main_image ?? '/images/default-home-image.png'"
+                                    :main_image="home.main_image ?? '/images/default_image.png'"
                                     :title="home.title" :address="home.address" :bedrooms="home.bedrooms"
                                     :price="home.price" :bathrooms="home.bathrooms" :square_feet="home.square_feet"
                                     :garages="home.garages" />
@@ -643,7 +643,7 @@ export default {
         },
 
         setAltImg(event) {
-            event.target.src = "/images/default-home-image.png";
+            event.target.src = "/images/default_image.png";
         },
         formatDate(date) {
             const options = { year: "numeric", month: "long", day: "numeric" };

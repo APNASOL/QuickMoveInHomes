@@ -922,7 +922,7 @@
                                     "
                                     :main_image="
                                         home.main_image ??
-                                        '/images/default-home-image.png'
+                                        '/images/default_image.png'
                                     "
                                     :title="home.title"
                                     :address="home.address"
@@ -1042,7 +1042,7 @@ export default {
         },
 
         setAltImg(event) {
-            event.target.src = "/images/default-home-image.png";
+            event.target.src = "/images/default_image.png";
         },
         formatDate(date) {
             const options = { year: "numeric", month: "long", day: "numeric" };

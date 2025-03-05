@@ -31,7 +31,7 @@
                         >
                             <!--  <div class="card c-border-design">
                                <img
-                                    :src="property.main_image ?? '/images/default-home-image.png'"
+                                    :src="property.main_image ?? '/images/default_image.png'"
                                     class="card-img-top c-card-img-border"
                                     :alt="property.title"
                                     @error="setAltImg"
@@ -197,7 +197,7 @@ export default defineComponent({
             return Math.round(discountedPrice);
         },
         setAltImg(event) {
-            event.target.src = "/images/default-home-image.png";
+            event.target.src = "/images/default_image.png";
         },
     },
 });

@@ -1261,7 +1261,7 @@
                                     v-if="form.home_main_image"
                                     :src="
                                         form.home_main_image ??
-                                        '/images/default-home-image.png'
+                                        '/images/default_image.png'
                                     "
                                     :custom_class="'img-fluid img-thumbnail rounded'"
                                     :width="125"
@@ -1270,7 +1270,7 @@
                                     v-else
                                     :src="
                                         existing_home_main_image ??
-                                        '/images/default-home-image.png'
+                                        '/images/default_image.png'
                                     "
                                     :custom_class="'img-fluid img-thumbnail rounded'"
                                     :width="125"
@@ -1299,7 +1299,7 @@
                                     v-if="form.banner"
                                     :src="
                                         form.banner ??
-                                        '/images/default-home-image.png'
+                                        '/images/default_image.png'
                                     "
                                     :custom_class="'img-fluid img-thumbnail rounded'"
                                     :width="125"
@@ -1308,7 +1308,7 @@
                                     v-else
                                     :src="
                                         existing_banner ??
-                                        '/images/default-home-image.png'
+                                        '/images/default_image.png'
                                     "
                                     :custom_class="'img-fluid img-thumbnail rounded'"
                                     :width="125"

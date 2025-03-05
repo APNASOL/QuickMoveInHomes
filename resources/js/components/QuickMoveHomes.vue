@@ -30,6 +30,7 @@
                 <!-- :autoplay="2000" -->
                 <Slide v-for="property in properties" :key="property.id">
                     <div class="carousel__item">
+                     
                         <a
                             class="text-decoration-none"
                             :href="'/home-details/' + property.property_id"
@@ -199,7 +200,7 @@
 
                             <!-- <div class="card c-border-design">
                                 <img
-                                    :src="property.main_image ?? '/images/default-home-image.png'"
+                                    :src="property.main_image ?? '/images/default_image.png'"
                                     class="card-img-top c-card-img-border"
                                     :alt="property.title"
                                    
@@ -429,7 +430,7 @@ export default defineComponent({
             return Math.round(discountedPrice);
         },
         setAltImg(event) {
-            event.target.src = "/images/default-home-image.png";
+            event.target.src = "/images/default_image.png";
         },
         formatPrice(price) {
             return Math.floor(price); // Removes the decimal portion

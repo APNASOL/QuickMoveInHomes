@@ -39,7 +39,7 @@
                             aria-expanded="false"
                         >
                             <img
-                                :src="user_image ?? '/images/default-home-image.png'"
+                                :src="user_image ?? '/images/default_image.png'"
                                 alt="Profile"
                                 class="rounded-circle"
                                 height="40px"
@@ -410,7 +410,7 @@ export default {
         window.removeEventListener("resize", this.updateSidebarResponsive);
     },
     setAltImg(event) {
-        event.target.src = "/images/default-home-image.png";
+        event.target.src = "/images/default_image.png";
     },
 };
 </script>

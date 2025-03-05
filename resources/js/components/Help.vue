@@ -100,7 +100,7 @@ export default {
     },
     methods: {
         setAltImg(event) {
-            event.target.src = "/images/default-home-image.png";
+            event.target.src = "/images/default_image.png";
         },
     },
 };

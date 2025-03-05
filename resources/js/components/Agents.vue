@@ -33,7 +33,7 @@
                                     class="c-agent-image"
                                     :src="
                                         agent.image ??
-                                        '/images/default-home-image.png'
+                                        '/images/default_image.png'
                                     "
                                     height="150px"
                                     width="150px"

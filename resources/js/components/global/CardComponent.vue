@@ -2,11 +2,18 @@
     <div class="">
         <div class="property-card position-relative rounded-5">
             <span class="badge sale">{{ badge }}</span>
+            <!-- <img
+            :src="main_image ?? '/images/default_image.png'"
+            class="card-img-top c-card-img-border "
+            :alt="title"
+            /> -->
             <img
-                :src="main_image ?? '/images/default-home-image.png'"
-                class="card-img-top c-card-img-border "
-                :alt="title"
+            :src="main_image ? main_image : '/images/default_image.png'"
+            class="card-img-top c-card-img-border"
+            :alt="title"
             />
+
+             
             <div class="card-body ">
                 <h5 class="card-title">
                     {{ title }}
@@ -170,7 +177,7 @@ export default defineComponent({
             return Math.round(discountedPrice);
         },
         setAltImg(event) {
-            event.target.src = "/images/default-home-image.png";
+            event.target.src = "/images/default_image.png";
         },
         formatPrice(price) {
             return Math.floor(price); // Removes the decimal portion
