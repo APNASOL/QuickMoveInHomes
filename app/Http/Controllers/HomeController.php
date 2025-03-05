@@ -1025,13 +1025,13 @@ class HomeController extends Controller
         $emailData['email']    = $request->email;
         $emailData['password'] = $password;
 
-        Mail::send('emails.new_user_interest', $emailData, function ($message) use ($request) {
+        Mail::send('Emails.new_user_interest', $emailData, function ($message) use ($request) {
             $message->to($request->email)
                     ->subject('Welcome! Your Account & Property Interest Details');
         });
     } else {
         // If existing user, send only property and agent details
-        Mail::send('emails.existing_user_interest', $emailData, function ($message) use ($request) {
+        Mail::send('Emails.existing_user_interest', $emailData, function ($message) use ($request) {
             $message->to($request->email)
                     ->subject('Property Interest Confirmation');
         });
