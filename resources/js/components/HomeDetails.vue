@@ -91,7 +91,8 @@
                                 class="mt-2 card card-body rounded-5 hover-effect"
                             >
                                 <div class="row ms-5 icon-sec">
-                                    <div v-if="Home.listing_type"
+                                    <div
+                                        v-if="Home.listing_type"
                                         class="col-md-4 col-sm-12 icon-hover-effect"
                                     >
                                         <svg
@@ -204,7 +205,7 @@
                                         </p>
                                     </div>
                                 </div> -->
-                                 
+
                                     <div
                                         v-if="Home.listing_type"
                                         class="col-md-4 icon-hover-effect"
@@ -734,11 +735,22 @@
                             </div>
                         </div>
 
-                        <div
+                        <!-- <div
                             class="col-12 col-md-4 mt-5 rounded-5 c-bg-color text-black hover-effect"
                             style="
                                 position: sticky;
                                 top: 0;
+                                height: 550px;
+                                overflow: auto;
+                                color: black !important;
+                            "
+                        > -->
+
+                        <div
+                            class="col-12 col-md-4 mt-5 rounded-5 c-bg-color text-black hover-effect"
+                            style="
+                                position: sticky;
+                                top: 100px; /* Adjust this value based on your navbar height */
                                 height: 550px;
                                 overflow: auto;
                                 color: black !important;
@@ -748,9 +760,8 @@
                                 class="btn c-btn-theme-primary c-theme-rounded-btn mt-5 w-100 p-4 beat"
                                 :href="'/homes-agents/' + home_id"
                             >
-                           <b class="fs-3">Connect to Agent</b>     <i
-                                    class="bi bi-arrow-right ms-2"
-                                ></i>
+                                <b class="fs-3">Connect to Agent</b>
+                                <i class="bi bi-arrow-right ms-2"></i>
                             </a>
                             <div class="highlights mt-3">
                                 <h4 class="feature-title">HIGHLIGHTS</h4>
