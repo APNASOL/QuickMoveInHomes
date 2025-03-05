@@ -8,11 +8,11 @@
     "src": "node_modules/bootstrap-icons/font/fonts/bootstrap-icons.woff2"
   },
   "resources/js/app.js": {
-    "file": "assets/app-DX-2EvLe.js",
+    "file": "assets/app-CZK2xLp9.js",
     "src": "resources/js/app.js",
     "isEntry": true,
     "css": [
-      "assets/app-B862jkFa.css"
+      "assets/app-CHnJlNff.css"
     ]
   },
   "resources/sass/app.scss": {
