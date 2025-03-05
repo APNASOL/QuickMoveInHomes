@@ -18,7 +18,6 @@
         <div class="container-fluid interactive-banner mt-3 mb-3">
             <h1>AVAILABLE AGENTS MOVE IN HOMES</h1>
         </div>
-        
 
         <div class="c-section-main-details container">
             <div>
@@ -31,8 +30,11 @@
                         <div class="card">
                             <div class="card-body">
                                 <img
-                                class="c-agent-image"
-                                    :src="agent.image ?? '/images/default-home-image.png'"
+                                    class="c-agent-image"
+                                    :src="
+                                        agent.image ??
+                                        '/images/default-home-image.png'
+                                    "
                                     height="150px"
                                     width="150px"
                                 />
@@ -62,7 +64,9 @@
                                             class="btn c-btn-theme-primary"
                                             @click="openModal(agent.id)"
                                         >
-                                            {{ translate("Connect") }}
+                                            {{
+                                                translate("Request to connect")
+                                            }}
                                         </button>
                                     </div>
                                 </div>
@@ -89,54 +93,127 @@
             tabindex="-1"
             aria-hidden="true"
         >
-        <div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-            <b class="modal-title">
-                {{ translate("Customer Information") }}
-            </b>
-            <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-                ref="closeContactModel"
-            ></button>
-        </div>
-        <div class="modal-body">
-            <form @submit.prevent="submitForm">
-                <div class="mb-3">
-                    <label for="name" class="form-label">{{ translate("Name") }}</label>
-                    <input type="text" class="form-control" id="name" v-model="form.name" :class="{ 'invalid-bg': formErrors.name }">
-                    <div class="invalid-feedback animated fadeIn" v-if="formErrors.name">
-                                {{ formErrors.name[0] }}
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <b class="modal-title">
+                            {{ translate("Customer Information") }}
+                        </b>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                            ref="closeContactModel"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <form @submit.prevent="submitForm">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">{{
+                                    translate("Name")
+                                }}</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="name"
+                                    v-model="form.name"
+                                    :class="{ 'invalid-bg': formErrors.name }"
+                                />
+                                <div
+                                    class="invalid-feedback animated fadeIn"
+                                    v-if="formErrors.name"
+                                >
+                                    {{ formErrors.name[0] }}
+                                </div>
                             </div>
-                </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label">{{ translate("Email") }}</label>
-                    <input type="email" class="form-control" id="email" v-model="form.email" :class="{ 'invalid-bg': formErrors.email }">
-                    <div class="invalid-feedback animated fadeIn" v-if="formErrors.email">
-                                {{ formErrors.email[0] }}
+                            <div class="mb-3">
+                                <label for="email" class="form-label">{{
+                                    translate("Email")
+                                }}</label>
+                                <input
+                                    type="email"
+                                    class="form-control"
+                                    id="email"
+                                    v-model="form.email"
+                                    :class="{ 'invalid-bg': formErrors.email }"
+                                />
+                                <div
+                                    class="invalid-feedback animated fadeIn"
+                                    v-if="formErrors.email"
+                                >
+                                    {{ formErrors.email[0] }}
+                                </div>
                             </div>
-                </div>
-                <div class="mb-3">
-                    <label for="phone" class="form-label">{{ translate("Phone Number") }}</label>
-                    <input type="tel" class="form-control" id="phone" v-model="form.phone" :class="{ 'invalid-bg': formErrors.phone }">
-                    <div class="invalid-feedback animated fadeIn" v-if="formErrors.phone">
-                                {{ formErrors.phone[0] }}
+                            <div class="mb-3">
+                                <label for="phone" class="form-label">{{
+                                    translate("Phone Number")
+                                }}</label>
+                                <input
+                                    type="tel"
+                                    class="form-control"
+                                    id="phone"
+                                    v-model="form.phone"
+                                    :class="{ 'invalid-bg': formErrors.phone }"
+                                />
+                                <div
+                                    class="invalid-feedback animated fadeIn"
+                                    v-if="formErrors.phone"
+                                >
+                                    {{ formErrors.phone[0] }}
+                                </div>
                             </div>
+                            <small
+                                style="
+                                    font-size: 10px;
+                                    line-height: 1;
+                                    text-align: justify;
+                                "
+                                >By checking this box, I agree by electronic
+                                signature to (1) the Electronic Disclosure
+                                Consent; (2) receive recurring marketing
+                                communication from or on behalf of REAL Broker,
+                                LLC, including auto-dialed calls, texts, and
+                                prerecorded messages (consent not required to
+                                make a purchase; data rates may apply; reply
+                                "STOP" to opt-out of texts or "HELP" for help);
+                                and (3) the Terms of Service and Privacy Policy
+                                of this website. I understand that I can call
+                                7022001272 to obtain direct assistance.By
+                                checking this box, I agree by electronic
+                                signature to (1) the Electronic Disclosure
+                                Consent; (2) receive recurring marketing
+                                communication from or on behalf of REAL Broker,
+                                LLC, including auto-dialed calls, texts, and
+                                prerecorded messages (consent not required to
+                                make a purchase; data rates may apply; reply
+                                "STOP" to opt-out of texts or "HELP" for help);
+                                and (3) the Terms of Service and Privacy Policy
+                                of this website. I understand that I can call
+                                7022001272 to obtain direct assistance.</small
+                            >
+                            <div class="mt-3">
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary"
+                                    @click="connectCustomer"
+                                    :disabled="loading"
+                                >
+                                    <span
+                                        v-if="loading"
+                                        class="spinner-border spinner-border-sm"
+                                        role="status"
+                                        aria-hidden="true"
+                                    ></span>
+                                    <span v-if="!loading">{{
+                                        translate("Connect")
+                                    }}</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <div class="text-end">
-                    
-                    <button type="submit" class="btn btn-primary">
-                        {{ translate("Connect") }}
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
+            </div>
         </div>
     </Master>
 </template>
@@ -158,52 +235,52 @@ export default {
         return {
             formErrors: [],
             all_agents: [],
-            formStatus: true,
+
             termsAgreed: false,
             agreementType: "single",
             form: {
-            name: '',
-            email: '',
-            phone: ''
-        }
-         
+                name: "",
+                email: "",
+                phone: "",
+            },
+            loading: false,
         };
     },
 
     methods: {
         submitForm() {
+            this.loading = true; // Start loading
+
             let formData = new FormData();
             formData.append("name", this.form.name);
             formData.append("email", this.form.email);
             formData.append("phone", this.form.phone);
             formData.append("property_id", this.property_id);
             formData.append("agent_id", this.selectedAgentId);
-           
-            
 
             axios
                 .post("/api/connect/customer/agents", formData)
                 .then((response) => {
                     toastr.success(
                         this.translate(
-                            "Request placed successfully agent will contact you soon."
+                            "Your request has been successfully placed. An agent will contact you soon. If you're a new user, check your email for login details."
                         )
                     );
-                    
+                    this.loading = false;
+
                     this.$refs.closeContactModel.click();
                     this.formErrors = [];
                     window.location.href = "/home-details/" + this.property_id;
                     this.termsAgreed = false; // Reset checkbox after submission
                 })
                 .catch((error) => {
-                    this.formStatus = true;
+                    this.loading = false;
                     toastr.error(error.response.data.message);
                     if (error.response.data.errors) {
                         this.formErrors = error.response.data.errors;
                     }
                 });
-             
-    },
+        },
         async getAgents() {
             await axios
                 .get("/api/fetch-all-agents")
@@ -259,7 +336,6 @@ export default {
 .c-card-img-overlay-flash-sale {
     left: unset;
 }
- 
 
 .beat {
     animation: beating 1s infinite;

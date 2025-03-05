@@ -92,7 +92,9 @@ class AdminController extends Controller
     public function dashboard_customer_history()
     {
         $user_id = auth()->user()->id;
+  
         $records = CustomerAgentConnection::where('customer_id', $user_id)->get();
+      
         foreach ($records as $record) {
             $agent = Agent::where('id', $record->agent_id)->first();
 
@@ -108,6 +110,7 @@ class AdminController extends Controller
             $property = Property::where('property_id', $record->property_id)->first();
             $record->property = $property;
         }
+    
         return $records;
     }
     public function deal_status_change(Request $request)

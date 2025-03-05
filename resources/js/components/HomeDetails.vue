@@ -91,7 +91,7 @@
                                 class="mt-2 card card-body rounded-5 hover-effect"
                             >
                                 <div class="row ms-5 icon-sec">
-                                    <div
+                                    <div v-if="Home.listing_type"
                                         class="col-md-4 col-sm-12 icon-hover-effect"
                                     >
                                         <svg
@@ -111,7 +111,7 @@
                                                 d="m23.525 23.246 3.75 3.75M23.202 14.39a6.035 6.035 0 1 1-8.534 8.534 6.035 6.035 0 0 1 8.534-8.534Z"
                                             ></path>
                                         </svg>
-                                        <div class="">
+                                        <div v-if="Home.listing_type">
                                             <h6>
                                                 <strong>{{
                                                     Home.listing_type
@@ -122,6 +122,7 @@
                                     </div>
 
                                     <div
+                                        v-if="Home.construction_status"
                                         class="col-md-4 col-sm-12 icon-hover-effect"
                                     >
                                         <svg
@@ -145,6 +146,7 @@
                                     </div>
 
                                     <div
+                                        v-if="Home.price_from || Home.price_to"
                                         class="col-md-4 col-sm-12 icon-hover-effect"
                                     >
                                         <svg
@@ -178,7 +180,7 @@
                                         width="48"
                                         height="48"
                                         fill="none"
-                                    >
+                                      >
                                         <path
                                             stroke="#1E1D21"
                                             stroke-linecap="round"
@@ -202,11 +204,10 @@
                                         </p>
                                     </div>
                                 </div> -->
-                                </div>
-                                <div class="row ms-5">
+                                 
                                     <div
-                                        class="col-md-4 icon-hover-effect"
                                         v-if="Home.listing_type"
+                                        class="col-md-4 icon-hover-effect"
                                     >
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -233,8 +234,8 @@
                                     </div>
 
                                     <div
-                                        class="col-md-4 icon-hover-effect"
                                         v-if="Home.bedrooms"
+                                        class="col-md-4 icon-hover-effect"
                                     >
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -277,8 +278,8 @@
                                         </div>
                                     </div>
                                     <div
-                                        class="col-md-4 icon-hover-effect"
                                         v-if="Home.square_feet"
+                                        class="col-md-4 icon-hover-effect"
                                     >
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -378,7 +379,15 @@
                                 </h1>
                                 <div class="row">
                                     <!-- Closet Section -->
-                                    <div class="col-md-4 mb-4">
+                                    <div
+                                        class="col-md-4 mb-4"
+                                        v-if="
+                                            Home.feature.reach_in ||
+                                            Home.feature.walk_in ||
+                                            Home.feature.laundry_closet ||
+                                            Home.feature.closet_location
+                                        "
+                                    >
                                         <h5 class="fw-bold feature-title">
                                             Closets
                                         </h5>
@@ -401,7 +410,11 @@
                                                         : "No"
                                                 }}
                                             </li>
-                                            <li v-if="Home.feature.laundry_closet">
+                                            <li
+                                                v-if="
+                                                    Home.feature.laundry_closet
+                                                "
+                                            >
                                                 <strong>Laundry Closet:</strong>
                                                 {{
                                                     Home.feature.laundry_closet
@@ -409,7 +422,11 @@
                                                         : "No"
                                                 }}
                                             </li>
-                                            <li v-if="Home.feature.closet_location">
+                                            <li
+                                                v-if="
+                                                    Home.feature.closet_location
+                                                "
+                                            >
                                                 <strong>Location:</strong>
                                                 {{
                                                     Home.feature
@@ -421,19 +438,35 @@
                                     </div>
 
                                     <!-- Bathroom Section -->
-                                    <div class="col-md-4 mb-4">
+                                    <div
+                                        class="col-md-4 mb-4"
+                                        v-if="
+                                            Home.feature.bathroom_type ||
+                                            Home.feature.bathroom_status ||
+                                            Home.feature.private_bath ||
+                                            Home.feature.outdoor_shower
+                                        "
+                                    >
                                         <h5 class="fw-bold feature-title">
                                             Bathroom
                                         </h5>
                                         <ul class="list-unstyled">
-                                            <li v-if="Home.feature.bathroom_type">
+                                            <li
+                                                v-if="
+                                                    Home.feature.bathroom_type
+                                                "
+                                            >
                                                 <strong>Type:</strong>
                                                 {{
                                                     Home.feature
                                                         .bathroom_type || "N/A"
                                                 }}
                                             </li>
-                                            <li v-if="Home.feature.bathroom_status">
+                                            <li
+                                                v-if="
+                                                    Home.feature.bathroom_status
+                                                "
+                                            >
                                                 <strong>Status:</strong>
                                                 {{
                                                     Home.feature
@@ -441,7 +474,9 @@
                                                     "N/A"
                                                 }}
                                             </li>
-                                            <li v-if="Home.feature.private_bath">
+                                            <li
+                                                v-if="Home.feature.private_bath"
+                                            >
                                                 <strong>Private Bath:</strong>
                                                 {{
                                                     Home.feature.private_bath
@@ -449,7 +484,11 @@
                                                         : "No"
                                                 }}
                                             </li>
-                                            <li>
+                                            <li
+                                                v-if="
+                                                    Home.feature.outdoor_shower
+                                                "
+                                            >
                                                 <strong>Outdoor Shower:</strong>
                                                 {{
                                                     Home.feature.outdoor_shower
@@ -461,33 +500,45 @@
                                     </div>
 
                                     <!-- Pool Section -->
-                                    <div class="col-md-4 mb-4">
+                                    <div
+                                        class="col-md-4 mb-4"
+                                        v-if="
+                                            Home.feature.pool_shape ||
+                                            Home.feature.water_features ||
+                                            Home.feature.pool_status ||
+                                            Home.feature.spa
+                                        "
+                                    >
                                         <h5 class="fw-bold feature-title">
                                             Pool
                                         </h5>
                                         <ul class="list-unstyled">
-                                            <li>
+                                            <li v-if="Home.feature.pool_shape">
                                                 <strong>Shape:</strong>
                                                 {{
                                                     Home.feature.pool_shape ||
                                                     "N/A"
                                                 }}
                                             </li>
-                                            <li>
+                                            <li
+                                                v-if="
+                                                    Home.feature.water_features
+                                                "
+                                            >
                                                 <strong>Water Features:</strong>
                                                 {{
                                                     Home.feature
                                                         .water_features || "N/A"
                                                 }}
                                             </li>
-                                            <li>
+                                            <li v-if="Home.feature.pool_status">
                                                 <strong>Status:</strong>
                                                 {{
                                                     Home.feature.pool_status ||
                                                     "N/A"
                                                 }}
                                             </li>
-                                            <li>
+                                            <li v-if="Home.feature.spa">
                                                 <strong>Spa:</strong>
                                                 {{
                                                     Home.feature.spa
@@ -499,12 +550,23 @@
                                     </div>
 
                                     <!-- Fencing Section -->
-                                    <div class="col-md-4 mb-4">
+                                    <div
+                                        class="col-md-4 mb-4"
+                                        v-if="
+                                            Home.feature.fencing_material ||
+                                            Home.feature.fencing_status
+                                        "
+                                    >
                                         <h5 class="fw-bold feature-title">
                                             Fencing
                                         </h5>
                                         <ul class="list-unstyled">
-                                            <li>
+                                            <li
+                                                v-if="
+                                                    Home.feature
+                                                        .fencing_material
+                                                "
+                                            >
                                                 <strong>Material:</strong>
                                                 {{
                                                     Home.feature
@@ -512,7 +574,11 @@
                                                     "N/A"
                                                 }}
                                             </li>
-                                            <li>
+                                            <li
+                                                v-if="
+                                                    Home.feature.fencing_status
+                                                "
+                                            >
                                                 <strong>Status:</strong>
                                                 {{
                                                     Home.feature
@@ -523,12 +589,20 @@
                                     </div>
 
                                     <!-- Bedroom Section -->
-                                    <div class="col-md-4 mb-4">
+                                    <div
+                                        class="col-md-4 mb-4"
+                                        v-if="Home.feature.bedroom_location"
+                                    >
                                         <h5 class="fw-bold feature-title">
                                             Bedroom
                                         </h5>
                                         <ul class="list-unstyled">
-                                            <li>
+                                            <li
+                                                v-if="
+                                                    Home.feature
+                                                        .bedroom_location
+                                                "
+                                            >
                                                 <strong>Location:</strong>
                                                 {{
                                                     Home.feature
@@ -540,12 +614,19 @@
                                     </div>
 
                                     <!-- Fireplace Section -->
-                                    <div class="col-md-4 mb-4">
+                                    <div
+                                        class="col-md-4 mb-4"
+                                        v-if="Home.feature.fireplace_type"
+                                    >
                                         <h5 class="fw-bold feature-title">
                                             Fireplace
                                         </h5>
                                         <ul class="list-unstyled">
-                                            <li>
+                                            <li
+                                                v-if="
+                                                    Home.feature.fireplace_type
+                                                "
+                                            >
                                                 <strong>Type:</strong>
                                                 {{
                                                     Home.feature
@@ -556,12 +637,20 @@
                                     </div>
 
                                     <!-- Kitchen Section -->
-                                    <div class="col-md-4 mb-4">
+                                    <div
+                                        class="col-md-4 mb-4"
+                                        v-if="Home.feature.kitchen_pantry_type"
+                                    >
                                         <h5 class="fw-bold feature-title">
                                             Kitchen
                                         </h5>
                                         <ul class="list-unstyled">
-                                            <li>
+                                            <li
+                                                v-if="
+                                                    Home.feature
+                                                        .kitchen_pantry_type
+                                                "
+                                            >
                                                 <strong>Pantry Type:</strong>
                                                 {{
                                                     Home.feature
@@ -573,12 +662,20 @@
                                     </div>
 
                                     <!-- Parking Section -->
-                                    <div class="col-md-4 mb-4">
+                                    <div
+                                        class="col-md-4 mb-4"
+                                        v-if="Home.feature.parking_enclosure"
+                                    >
                                         <h5 class="fw-bold feature-title">
                                             Parking
                                         </h5>
                                         <ul class="list-unstyled">
-                                            <li>
+                                            <li
+                                                v-if="
+                                                    Home.feature
+                                                        .parking_enclosure
+                                                "
+                                            >
                                                 <strong>Enclosed:</strong>
                                                 {{
                                                     Home.feature
@@ -591,7 +688,12 @@
                                     </div>
 
                                     <!-- Landscape Section -->
-                                    <div class="col-md-4 mb-4">
+                                    <div
+                                        class="col-md-4 mb-4"
+                                        v-if="
+                                            Home.feature.landscape_maintenance
+                                        "
+                                    >
                                         <h5 class="fw-bold feature-title">
                                             Landscape Maintenance
                                         </h5>
@@ -608,7 +710,12 @@
                                     </div>
 
                                     <!-- Foundation Section -->
-                                    <div class="col-md-4 mb-4">
+                                    <div
+                                        class="col-md-4 mb-4"
+                                        v-if="
+                                            Home.feature.foundation_conditions
+                                        "
+                                    >
                                         <h5 class="fw-bold feature-title">
                                             Foundation
                                         </h5>
@@ -637,9 +744,14 @@
                                 color: black !important;
                             "
                         >
-                        <a class="btn c-btn-theme-primary c-theme-rounded-btn mt-5 w-100  p-4" :href="'/homes-agents/' + home_id">
-            Connect to Agent<i class="bi bi-arrow-right ms-2"></i>
-        </a>
+                            <a
+                                class="btn c-btn-theme-primary c-theme-rounded-btn mt-5 w-100 p-4 beat"
+                                :href="'/homes-agents/' + home_id"
+                            >
+                           <b class="fs-3">Connect to Agent</b>     <i
+                                    class="bi bi-arrow-right ms-2"
+                                ></i>
+                            </a>
                             <div class="highlights mt-3">
                                 <h4 class="feature-title">HIGHLIGHTS</h4>
 
@@ -694,7 +806,7 @@
                                         class="highlights mt-2"
                                         v-if="Home.address"
                                     >
-                                        <div>
+                                        <!-- <div>
                                             <div class="open-house-tag mb-2">
                                                 LOCATION
                                             </div>
@@ -713,7 +825,7 @@
                                             <span v-if="Home.zip_code"
                                                 >,{{ Home.zip_code }}</span
                                             >
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <div
                                         class="highlights mt-2"
@@ -1149,5 +1261,8 @@ export default {
 
 .icon-hover-effect:hover {
     transform: scale(1.05); /* Slightly enlarges the image on hover */
+}
+.beat {
+    animation: beating 1s infinite;
 }
 </style>

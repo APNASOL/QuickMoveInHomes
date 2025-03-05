@@ -175,7 +175,7 @@
                                                     <div>
                                                         <image-zooming-component
                                                             v-if="
-                                                                entry.user.image
+                                                                entry && entry.user.image
                                                             "
                                                             :file="
                                                                 entry.user.image
@@ -264,11 +264,14 @@
             v-if="logged_in_user.role == 'customer'"
         >
       
+        
             <div class="row">
                 <!-- Left side columns -->
                 <div class="col-lg-12">
                     <div class="row g-3">
                         <div class="col-ms-12">
+                          
+                            
                             <div class="card card-body" v-if="customer_history && customer_history.length">
                                 <h3>Property Dealing History</h3>
                                 <div class="accordion" id="historyAccordion">
@@ -311,50 +314,32 @@
                                         >
                                             <div class="accordion-body">
                                                 <div class="card card-body">
-                                                    <image-zooming-component
-                                                        v-if="entry.user.image"
+                                                    <image-zooming-component v-if="entry?.user?.image"
+                                                        
                                                         :file="entry.user.image"
                                                         :custom_class="'img-fluid img-thumbnail rounded'"
                                                         :width="100"
                                                     />
 
-                                                    <p>
+                                                    <p v-if="entry?.user?.name">
                                                         <strong>Agent:</strong>
                                                         {{ entry.user.name }}
                                                     </p>
-                                                    <p>
+                                                    <p v-if="entry?.user?.email">
                                                         <strong
                                                             >Agent
                                                             Email:</strong
                                                         >
                                                         {{ entry.user.email }}
                                                     </p>
-                                                    <p>
+                                                    <p v-if="entry?.date">
                                                         <strong>Date:</strong>
                                                         {{ entry.date }}
                                                     </p>
-                                                    <p>
-                                                        <strong
-                                                            >Property
-                                                            Address:</strong
-                                                        >
-                                                        {{
-                                                            entry.property
-                                                                .address
-                                                        }},
-                                                        {{
-                                                            entry.property.city
-                                                        }},
-                                                        {{
-                                                            entry.property.state
-                                                        }}
-                                                        {{
-                                                            entry.property
-                                                                .zip_code
-                                                        }}
-                                                    </p>
+                                                     
+                                                  
 
-                                                    <p>
+                                                    <p v-if="entry?.property?.description">
                                                         <strong
                                                             >Property
                                                             Description:</strong
@@ -421,7 +406,7 @@ export default {
             user_role: "test",
             logged_in_user: logged_in_user,
             agent_history: "",
-            customer_history: "",
+            customer_history: [],
             statusOptions: ["Dealing", "Pending", "Completed", "Canceled"],
         };
     },
@@ -472,6 +457,9 @@ export default {
                 .get("/api/dashboard-customer-history")
                 .then((response) => {
                     this.customer_history = response.data;
+                   
+
+                    console.log(this.customer_history);
                 })
                 .catch((error) => {
                     toastr.error(error.response.data.message);
