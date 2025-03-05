@@ -16,7 +16,7 @@
              
             <div class="card-body ">
                 <h5 class="card-title">
-                    {{ title }}
+                    {{ title }}  - Testing
                 </h5>
                 <p class="card-text">
                     {{ truncatedAddress }}
