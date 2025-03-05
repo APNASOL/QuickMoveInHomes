@@ -23,10 +23,10 @@ class IndexController extends Controller
     {
         if ($type == 'all') {
             // Get all properties
-            $properties = Property::limit(10)->get();
+            $properties = Property::latest()->limit(10)->get();
         } else if ($type == 'open_houses') {
             // Get properties where is_open_house is true
-            $properties = Property::where('is_open_house', true)->orWhere('is_open_house', 1)->limit(10)->get();
+            $properties = Property::where('is_open_house', true)->orWhere('is_open_house', 1)->latest()->limit(10)->get();
         }
 
         foreach ($properties as $property) {
