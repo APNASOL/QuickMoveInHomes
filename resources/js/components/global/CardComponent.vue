@@ -12,7 +12,7 @@
             class="card-img-top c-card-img-border"
             :alt="title"
             />
-{{ main_image ? main_image : '/images/default_image.png' }}
+ 
              
             <div class="card-body ">
                 <h5 class="card-title">
