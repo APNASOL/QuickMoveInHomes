@@ -2,22 +2,22 @@
     <Master v-if="page != 'community'">
         <a
             :href="'/homes-agents/' + home_id"
-            class="btn c-btn-theme-primary c-theme-rounded-btn mt-5 w-100 beat"
+            class="btn c-btn-theme-primary c-theme-rounded-btn mt-5 w-100 p-4"
             v-if="user_status === 'logedin'"
         >
-            {{ user_name }} Click to proceed
+            {{ user_name }} Connect to Agent
             <i class="bi bi-arrow-right ms-2"></i>
         </a>
 
         <a
-            class="btn c-btn-theme-primary c-theme-rounded-btn mt-5 w-100 beat"
+            class="btn c-btn-theme-primary c-theme-rounded-btn mt-5 w-100  p-4"
             ref="openCustomerLoginModal"
             data-bs-toggle="modal"
             data-bs-target="#CustomerLoginModal"
             @click="clearFields"
             v-else
         >
-            Click to proceed<i class="bi bi-arrow-right ms-2"></i>
+            Connect to Agent<i class="bi bi-arrow-right ms-2"></i>
         </a>
 
         <div class="modal fade" id="CustomerLoginModal" tabindex="-1">
@@ -364,10 +364,10 @@ html,
 body {
     height: 100%;
 }
-.beat {
-    animation: beating 1s infinite;
+. {
+    animation: ing 1s infinite;
 }
-@keyframes beating {
+@keyframes ing {
     0%,
     100% {
         transform: scale(1);

@@ -62,7 +62,7 @@
                                             class="btn c-btn-theme-primary"
                                             @click="openModal(agent.id)"
                                         >
-                                            {{ translate("Contract") }}
+                                            {{ translate("Connect") }}
                                         </button>
                                     </div>
                                 </div>
@@ -89,206 +89,54 @@
             tabindex="-1"
             aria-hidden="true"
         >
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <b class="modal-title">
-                            {{ translate("Select Contract Type") }}
-                        </b>
-                        <button
-                            type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"
-                            ref="closeContactModel"
-                        ></button>
-                    </div>
-                    <div class="modal-body">
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <a
-                                    class="nav-link active c-theme-color"
-                                    id="single-tab"
-                                    data-bs-toggle="tab"
-                                    href="#single"
-                                    role="tab"
-                                    aria-controls="single"
-                                    aria-selected="true"
-                                    @click="agreementTypeSelect('single')"
-                                >
-                                    {{ translate("Single") }}
-                                </a>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <a
-                                    class="nav-link c-theme-color"
-                                    id="multiple-tab"
-                                    data-bs-toggle="tab"
-                                    href="#multiple"
-                                    role="tab"
-                                    aria-controls="multiple"
-                                    aria-selected="false"
-                                    @click="agreementTypeSelect('multiple')"
-                                >
-                                    {{ translate("Multiple") }}
-                                </a>
-                            </li>
-                        </ul>
-                        <div class="tab-content" id="myTabContent">
-                            <div
-                                class="tab-pane fade show active"
-                                id="single"
-                                role="tabpanel"
-                                aria-labelledby="single-tab"
-                            >
-                                <h5 class="mt-3">
-                                    {{ translate("Single Contract") }}
-                                </h5>
-                                <p>
-                                    {{
-                                        translate(
-                                            "Download the single contract PDF here:"
-                                        )
-                                    }}
-                                </p>
-                                <a
-                                    target="_blank"
-                                    href="/agreement_pdf/quick_move_in_homes_agreement_single.pdf"
-                                    class="btn btn-link c-theme-color"
-                                    download
-                                    >Download PDF</a
-                                >
-                                <p>Terms and Conditions for Single:</p>
-                                <ul type="none">
-                                    <li>1. The property is sold as-is.</li>
-                                    <li>
-                                        2. The buyer is responsible for
-                                        inspections.
-                                    </li>
-                                    <li>3. All deposits are non-refundable.</li>
-                                    <li>
-                                        4. Closing costs are the buyer's
-                                        responsibility.
-                                    </li>
-                                    <li>
-                                        5. The offer is subject to seller
-                                        approval.
-                                    </li>
-                                    <li>
-                                        6. Buyer must provide proof of
-                                        financing.
-                                    </li>
-                                    <li>
-                                        7. Contract must be signed within 48
-                                        hours.
-                                    </li>
-                                    <li>
-                                        8. No changes to terms without seller
-                                        consent.
-                                    </li>
-                                    <li>
-                                        9. All agreements are legally binding.
-                                    </li>
-                                    <li>
-                                        10. Please consult a lawyer for any
-                                        legal advice.
-                                    </li>
-                                </ul>
+        <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <b class="modal-title">
+                {{ translate("Customer Information") }}
+            </b>
+            <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+                ref="closeContactModel"
+            ></button>
+        </div>
+        <div class="modal-body">
+            <form @submit.prevent="submitForm">
+                <div class="mb-3">
+                    <label for="name" class="form-label">{{ translate("Name") }}</label>
+                    <input type="text" class="form-control" id="name" v-model="form.name" :class="{ 'invalid-bg': formErrors.name }">
+                    <div class="invalid-feedback animated fadeIn" v-if="formErrors.name">
+                                {{ formErrors.name[0] }}
                             </div>
-                            <div
-                                class="tab-pane fade"
-                                id="multiple"
-                                role="tabpanel"
-                                aria-labelledby="multiple-tab"
-                            >
-                                <h5 class="mt-3">
-                                    {{ translate("Multiple Contracts") }}
-                                </h5>
-                                <p>
-                                    {{
-                                        translate(
-                                            "Download the multiple contract PDF here:"
-                                        )
-                                    }}
-                                </p>
-                                <a
-                                    target="_blank"
-                                    href="/agreement_pdf/quick_move_in_homes_agreement_multiple.pdf"
-                                    class="btn btn-link c-theme-color"
-                                    download
-                                    >Download PDF</a
-                                >
-                                <p>Terms and Conditions for Multiple:</p>
-                                <ul type="none">
-                                    <li>
-                                        1. Each property is sold individually.
-                                    </li>
-                                    <li>
-                                        2. All terms are subject to negotiation.
-                                    </li>
-                                    <li>3. Deposits may vary per property.</li>
-                                    <li>
-                                        4. Closing dates will be defined for
-                                        each property.
-                                    </li>
-                                    <li>
-                                        5. The buyer must review all property
-                                        disclosures.
-                                    </li>
-                                    <li>
-                                        6. Compliance with local laws is
-                                        required.
-                                    </li>
-                                    <li>
-                                        7. Contracts are binding upon
-                                        acceptance.
-                                    </li>
-                                    <li>
-                                        8. Each property has unique
-                                        requirements.
-                                    </li>
-                                    <li>
-                                        9. Seller reserves the right to refuse
-                                        any offer.
-                                    </li>
-                                    <li>
-                                        10. Consult a financial advisor for
-                                        investment advice.
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="form-check mt-3">
-                            <input
-                                type="checkbox"
-                                class="form-check-input"
-                                id="termsCheckbox"
-                                v-model="termsAgreed"
-                            />
-                            <label
-                                class="form-check-label c-theme-color"
-                                for="termsCheckbox"
-                            >
-                                {{
-                                    translate(
-                                        "I agree to the terms and conditions"
-                                    )
-                                }}
-                            </label>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button
-                            type="button"
-                            class="btn c-btn-theme-primary"
-                            :disabled="!termsAgreed"
-                            @click="submitContract"
-                        >
-                            {{ translate("Agreed") }}
-                        </button>
-                    </div>
                 </div>
-            </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">{{ translate("Email") }}</label>
+                    <input type="email" class="form-control" id="email" v-model="form.email" :class="{ 'invalid-bg': formErrors.email }">
+                    <div class="invalid-feedback animated fadeIn" v-if="formErrors.email">
+                                {{ formErrors.email[0] }}
+                            </div>
+                </div>
+                <div class="mb-3">
+                    <label for="phone" class="form-label">{{ translate("Phone Number") }}</label>
+                    <input type="tel" class="form-control" id="phone" v-model="form.phone" :class="{ 'invalid-bg': formErrors.phone }">
+                    <div class="invalid-feedback animated fadeIn" v-if="formErrors.phone">
+                                {{ formErrors.phone[0] }}
+                            </div>
+                </div>
+                <div class="text-end">
+                    
+                    <button type="submit" class="btn btn-primary">
+                        {{ translate("Connect") }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
         </div>
     </Master>
 </template>
@@ -308,15 +156,54 @@ export default {
 
     data() {
         return {
+            formErrors: [],
             all_agents: [],
             formStatus: true,
             termsAgreed: false,
             agreementType: "single",
+            form: {
+            name: '',
+            email: '',
+            phone: ''
+        }
          
         };
     },
 
     methods: {
+        submitForm() {
+            let formData = new FormData();
+            formData.append("name", this.form.name);
+            formData.append("email", this.form.email);
+            formData.append("phone", this.form.phone);
+            formData.append("property_id", this.property_id);
+            formData.append("agent_id", this.selectedAgentId);
+           
+            
+
+            axios
+                .post("/api/connect/customer/agents", formData)
+                .then((response) => {
+                    toastr.success(
+                        this.translate(
+                            "Request placed successfully agent will contact you soon."
+                        )
+                    );
+                    
+                    this.$refs.closeContactModel.click();
+                    this.formErrors = [];
+                    window.location.href = "/home-details/" + this.property_id;
+                    this.termsAgreed = false; // Reset checkbox after submission
+                })
+                .catch((error) => {
+                    this.formStatus = true;
+                    toastr.error(error.response.data.message);
+                    if (error.response.data.errors) {
+                        this.formErrors = error.response.data.errors;
+                    }
+                });
+             
+    },
         async getAgents() {
             await axios
                 .get("/api/fetch-all-agents")

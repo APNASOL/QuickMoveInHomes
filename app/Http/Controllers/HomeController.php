@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Agent;
@@ -26,6 +25,7 @@ use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
 {
@@ -51,18 +51,18 @@ class HomeController extends Controller
     public function contact_store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required',
-            'phone' => 'required',
+            'name'    => 'required|string|max:255',
+            'email'   => 'required',
+            'phone'   => 'required',
             'message' => 'required',
         ]);
 
-        $contact = new Contact;
-        $contact->id = Str::orderedUuid();
-        $contact->name = $request->name;
-        $contact->email = $request->email;
-        $contact->phone = $request->phone;
-        $contact->message = $request->message;
+        $contact                 = new Contact;
+        $contact->id             = Str::orderedUuid();
+        $contact->name           = $request->name;
+        $contact->email          = $request->email;
+        $contact->phone          = $request->phone;
+        $contact->message        = $request->message;
         $contact->contacted_from = $request->contacted_from;
         $contact->save();
         return 'success';
@@ -90,26 +90,26 @@ class HomeController extends Controller
 
         // Initialize variables
         $property_main_image = null;
-        $openHouseData = [];
+        $openHouseData       = [];
 
-        $new_price_after_incentive = null;
+        $new_price_after_incentive   = null;
         $total_incentives_percentage = 0;
-        $current_date = now();
+        $current_date                = now();
 
         $images = json_decode($property->images);
         if (is_array($images) && count($images) > 0) {
-            $uploads = Upload::whereIn('id', $images)->get();
+            $uploads     = Upload::whereIn('id', $images)->get();
             $firstUpload = $uploads->first();
-            $lastUpload = $uploads->last();
+            $lastUpload  = $uploads->last();
 
             // Check if the first upload exists, then assign its file_name to the property
             if ($firstUpload) {
-                $file_image = $firstUpload->file_name;
+                $file_image          = $firstUpload->file_name;
                 $property_main_image = get_storage_url($file_image);
 
             }
             if ($lastUpload) {
-                $file_image = $lastUpload->file_name;
+                $file_image      = $lastUpload->file_name;
                 $property_banner = get_storage_url($file_image);
             }
         }
@@ -138,18 +138,18 @@ class HomeController extends Controller
 
                 // Combine date and time to create full datetime strings for comparison
                 $openHouseStartDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $openHouse->date . ' ' . $openHouse->start_time);
-                $openHouseEndDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $openHouse->date . ' ' . $openHouse->end_time);
+                $openHouseEndDateTime   = Carbon::createFromFormat('Y-m-d H:i:s', $openHouse->date . ' ' . $openHouse->end_time);
 
                 // Check if the open house end time has expired
                 if ($currentDateTime->greaterThan($openHouseEndDateTime)) {
                     $property->update(['is_open_house' => false]); // Set is_open_house to false
-                    $openHouse->delete(); // Delete the expired open house record
+                    $openHouse->delete();                          // Delete the expired open house record
                 } else {
                     // Prepare the valid open house data
                     $openHouseData = [
-                        'open_house_date' => $openHouse->date,
-                        'open_house_start_time' => $openHouse->start_time,
-                        'open_house_end_time' => $openHouse->end_time,
+                        'open_house_date'        => $openHouse->date,
+                        'open_house_start_time'  => $openHouse->start_time,
+                        'open_house_end_time'    => $openHouse->end_time,
                         'open_house_description' => $openHouse->description,
                     ];
                 }
@@ -182,72 +182,72 @@ class HomeController extends Controller
         }
         // Prepare property data
         $propertyData = [
-            'id' => $property->id,
-            'title' => $property->title,
-            'is_open_house' => $property->is_open_house,
-            'description' => $property->description,
-            'address' => $property->address,
-            'city' => $property->city,
-            'state' => $property->state,
-            'zip_code' => $property->zip_code,
-            'price' => $property->price,
-            'price_from' => $property->price_from,
-            'price_to' => $property->price_to,
-            'full_bath' => $property->full_bath,
-            'half_bath' => $property->half_bath,
+            'id'                  => $property->id,
+            'title'               => $property->title,
+            'is_open_house'       => $property->is_open_house,
+            'description'         => $property->description,
+            'address'             => $property->address,
+            'city'                => $property->city,
+            'state'               => $property->state,
+            'zip_code'            => $property->zip_code,
+            'price'               => $property->price,
+            'price_from'          => $property->price_from,
+            'price_to'            => $property->price_to,
+            'full_bath'           => $property->full_bath,
+            'half_bath'           => $property->half_bath,
             'construction_status' => $property->construction_status,
 
-            'bedrooms' => $property->bedrooms,
-            'square_feet' => $property->square_feet,
-            'lot_size' => $property->lot_size,
-            'property_type' => $property->property_type,
-            'listing_type' => $property->listing_type,
-            'year_built' => $property->year_built,
-            'community_id' => $property->community_id,
-            'community_name' => $community->name ?? "",
-            'longitude' => $property->longitude ?? "",
-            'latitude' => $property->latitude ?? "",
+            'bedrooms'            => $property->bedrooms,
+            'square_feet'         => $property->square_feet,
+            'lot_size'            => $property->lot_size,
+            'property_type'       => $property->property_type,
+            'listing_type'        => $property->listing_type,
+            'year_built'          => $property->year_built,
+            'community_id'        => $property->community_id,
+            'community_name'      => $community->name ?? "",
+            'longitude'           => $property->longitude ?? "",
+            'latitude'            => $property->latitude ?? "",
             'property_main_image' => $property_main_image ?? "",
-            'property_banner' => $property_banner ?? "",
-            'hoa_name' => optional($property->hoa)->name,
-            'association_fee' => $property->association_fee,
-            'school_name' => optional($property->school)->name,
-            'feature' => [
-                'fireplace_type' => optional($property->feature)->fireplace_type,
-                'kitchen_pantry_type' => optional($property->feature)->kitchen_pantry_type,
-                'reach_in' => optional($property->feature)->reach_in,
-                'walk_in' => optional($property->feature)->walk_in,
-                'laundry_closet' => optional($property->feature)->laundry_closet,
-                'closet_location' => optional($property->feature)->closet_location,
-                'bedroom_location' => optional($property->feature)->bedroom_location,
-                'bathroom_type' => optional($property->feature)->bathroom_type,
-                'bathroom_status' => optional($property->feature)->bathroom_status,
-                'pool_shape' => optional($property->feature)->pool_shape,
-                'water_features' => optional($property->feature)->water_features,
-                'pool_status' => optional($property->feature)->pool_status,
-                'spa' => optional($property->feature)->spa,
-                'fencing_material' => optional($property->feature)->fencing_material,
-                'fencing_status' => optional($property->feature)->fencing_status,
-                'parking_enclosure' => optional($property->feature)->parking_enclosure,
-                'private_bath' => optional($property->feature)->private_bath,
-                'outdoor_shower' => optional($property->feature)->outdoor_shower,
+            'property_banner'     => $property_banner ?? "",
+            'hoa_name'            => optional($property->hoa)->name,
+            'association_fee'     => $property->association_fee,
+            'school_name'         => optional($property->school)->name,
+            'feature'             => [
+                'fireplace_type'        => optional($property->feature)->fireplace_type,
+                'kitchen_pantry_type'   => optional($property->feature)->kitchen_pantry_type,
+                'reach_in'              => optional($property->feature)->reach_in,
+                'walk_in'               => optional($property->feature)->walk_in,
+                'laundry_closet'        => optional($property->feature)->laundry_closet,
+                'closet_location'       => optional($property->feature)->closet_location,
+                'bedroom_location'      => optional($property->feature)->bedroom_location,
+                'bathroom_type'         => optional($property->feature)->bathroom_type,
+                'bathroom_status'       => optional($property->feature)->bathroom_status,
+                'pool_shape'            => optional($property->feature)->pool_shape,
+                'water_features'        => optional($property->feature)->water_features,
+                'pool_status'           => optional($property->feature)->pool_status,
+                'spa'                   => optional($property->feature)->spa,
+                'fencing_material'      => optional($property->feature)->fencing_material,
+                'fencing_status'        => optional($property->feature)->fencing_status,
+                'parking_enclosure'     => optional($property->feature)->parking_enclosure,
+                'private_bath'          => optional($property->feature)->private_bath,
+                'outdoor_shower'        => optional($property->feature)->outdoor_shower,
                 'landscape_maintenance' => optional($property->feature)->landscape_maintenance,
                 'foundation_conditions' => optional($property->feature)->foundation_conditions,
             ],
-            'incentive' => $incentive ?? '',
+            'incentive'           => $incentive ?? '',
         ];
 
         // Merge the open house data into property data if available
-        if (!empty($openHouseData)) {
+        if (! empty($openHouseData)) {
             $propertyData = array_merge($propertyData, $openHouseData);
         }
 
-        // Process additional files
+                                     // Process additional files
         $propertyData['files'] = []; // Initialize files array
         if ($property->images) {
             $uploads = Upload::whereIn('id', json_decode($property->images))->orderBy('extension')->get(['file_original_name', 'file_name', 'extension', 'type']);
             foreach ($uploads as $upload) {
-                $upload->file_name = get_storage_url($upload->file_name);
+                $upload->file_name       = get_storage_url($upload->file_name);
                 $propertyData['files'][] = $upload;
             }
         }
@@ -259,12 +259,12 @@ class HomeController extends Controller
             if ($agreement) {
 
                 $existing_customer_history_record = CustomerVisitingHomesHistory::where('customer_id', auth()->user()->id)->where('home_id', $id)->first();
-                if (!$existing_customer_history_record) {
-                    $customer_history = new CustomerVisitingHomesHistory;
-                    $customer_history->id = Str::orderedUuid();
+                if (! $existing_customer_history_record) {
+                    $customer_history              = new CustomerVisitingHomesHistory;
+                    $customer_history->id          = Str::orderedUuid();
                     $customer_history->customer_id = auth()->user()->id;
-                    $customer_history->home_id = $id;
-                    $customer_history->ip_address = request()->ip(); // Capture the user's IP address
+                    $customer_history->home_id     = $id;
+                    $customer_history->ip_address  = request()->ip(); // Capture the user's IP address
                     $customer_history->save();
                 }
             }
@@ -272,16 +272,16 @@ class HomeController extends Controller
 
         // Return property, community, and incentives data
         return [
-            'property_info' => $propertyData,
+            'property_info'  => $propertyData,
             'community_info' => $community,
-            'incentive' => $incentive ?? '',
+            'incentive'      => $incentive ?? '',
         ];
     }
 
     public function community_all_homes($community_id)
     {
         $properties = Property::where('community_id', $community_id)
-            ->inRandomOrder() // Orders the results randomly
+            ->inRandomOrder()  // Orders the results randomly
             ->limit(8)->get(); // Limit the results to 8 records
 
         foreach ($properties as $property) {
@@ -312,23 +312,23 @@ class HomeController extends Controller
                 $property->open_house_data = 0;
             }
 
-            $property->banner =NULL;
-            $property->main_image =NULL;
-            
+            $property->banner     = null;
+            $property->main_image = null;
+
             $images = json_decode($property->images);
             if (is_array($images) && count($images) > 0) {
-                $uploads = Upload::whereIn('id', $images)->get();
+                $uploads     = Upload::whereIn('id', $images)->get();
                 $firstUpload = $uploads->first();
-                $lastUpload = $uploads->last();
+                $lastUpload  = $uploads->last();
 
                 // Check if the first upload exists, then assign its file_name to the property
                 if ($firstUpload) {
-                    $file_image = $firstUpload->file_name;
+                    $file_image           = $firstUpload->file_name;
                     $property->main_image = get_storage_url($file_image);
 
                 }
                 if ($lastUpload) {
-                    $file_image = $lastUpload->file_name;
+                    $file_image       = $lastUpload->file_name;
                     $property->banner = get_storage_url($file_image);
                 }
             }
@@ -370,7 +370,7 @@ class HomeController extends Controller
             $community->builders = $builders_data;
         }
 
-        if (!$community) {
+        if (! $community) {
             return response()->json(['message' => 'Community not found'], 404);
         }
         // Get amenities
@@ -421,21 +421,21 @@ class HomeController extends Controller
 
         if ($community->files) {
 
-            $uploads = Upload::whereIn('id', json_decode($community->files))->orderBy('extension')->get(['file_original_name', 'file_name', 'extension', 'type']);
-            $more_info_files = [];
+            $uploads          = Upload::whereIn('id', json_decode($community->files))->orderBy('extension')->get(['file_original_name', 'file_name', 'extension', 'type']);
+            $more_info_files  = [];
             $more_info_images = [];
             $more_info_videos = [];
             foreach ($uploads as $key => $upload) {
                 if (preg_match("/image/", $upload->type)) {
                     $upload['file_name'] = $upload['file_name'] ? get_storage_url($upload['file_name']) : '';
-                    $more_info_images[] = $upload;
+                    $more_info_images[]  = $upload;
                 } else if (preg_match("/video/", $upload->type)) {
 
                     $upload['file_name'] = $upload['file_name'] ? get_storage_url($upload['file_name']) : '';
-                    $more_info_videos[] = $upload;
+                    $more_info_videos[]  = $upload;
                 } else {
                     $upload['file_name'] = $upload['file_name'] ? get_storage_url($upload['file_name']) : '';
-                    $more_info_files[] = $upload;
+                    $more_info_files[]   = $upload;
                 }
 
             }
@@ -451,7 +451,7 @@ class HomeController extends Controller
     public function sortProperties(Request $request)
     {
         $total_homes = 0;
-        $properties = DB::table('properties'); // Start from properties table
+        $properties  = DB::table('properties'); // Start from properties table
 
         // Get the sort_by value from the request
         $sort_by = $request->input('sort_by');
@@ -484,32 +484,32 @@ class HomeController extends Controller
         }
 
         // Fetch the sorted properties
-        $properties = $properties->get();
+        $properties  = $properties->get();
         $total_homes = $properties->count();
 
         foreach ($properties as $property) {
-            $property->banner =NULL;
-            $property->main_image =NULL;
+            $property->banner     = null;
+            $property->main_image = null;
             // Fetch related property record
             if ($property->is_open_house) {
-                $open_house = OpenHouse::where('property_id', $property->property_id)->first();
+                $open_house                = OpenHouse::where('property_id', $property->property_id)->first();
                 $property->open_house_data = $open_house;
             }
             // Process main image
             $images = json_decode($property->images);
             if (is_array($images) && count($images) > 0) {
-                $uploads = Upload::whereIn('id', $images)->get();
+                $uploads     = Upload::whereIn('id', $images)->get();
                 $firstUpload = $uploads->first();
-                $lastUpload = $uploads->last();
+                $lastUpload  = $uploads->last();
 
                 // Check if the first upload exists, then assign its file_name to the property
                 if ($firstUpload) {
-                    $file_image = $firstUpload->file_name;
+                    $file_image           = $firstUpload->file_name;
                     $property->main_image = get_storage_url($file_image);
 
                 }
                 if ($lastUpload) {
-                    $file_image = $lastUpload->file_name;
+                    $file_image       = $lastUpload->file_name;
                     $property->banner = get_storage_url($file_image);
                 }
             }
@@ -539,12 +539,12 @@ class HomeController extends Controller
         // Validate request
         $request->validate([
             'main_search_field' => 'nullable|string',
-            'bathroom' => 'nullable|integer',
-            'bedrooms' => 'nullable|integer',
+            'bathroom'          => 'nullable|integer',
+            'bedrooms'          => 'nullable|integer',
 
             // Only validate max_price if min_price is provided
-            'min_price' => 'nullable|integer|min:0',
-            'max_price' => [
+            'min_price'         => 'nullable|integer|min:0',
+            'max_price'         => [
                 'nullable',
                 'integer',
                 function ($attribute, $value, $fail) use ($request) {
@@ -554,8 +554,8 @@ class HomeController extends Controller
                 },
             ],
 
-            'min_square_feet' => 'nullable|integer|min:0',
-            'max_square_feet' => [
+            'min_square_feet'   => 'nullable|integer|min:0',
+            'max_square_feet'   => [
                 'nullable',
                 'integer',
                 function ($attribute, $value, $fail) use ($request) {
@@ -565,8 +565,8 @@ class HomeController extends Controller
                 },
             ],
 
-            'min_lot_size' => 'nullable|integer|min:0',
-            'max_lot_size' => [
+            'min_lot_size'      => 'nullable|integer|min:0',
+            'max_lot_size'      => [
                 'nullable',
                 'integer',
                 function ($attribute, $value, $fail) use ($request) {
@@ -636,29 +636,29 @@ class HomeController extends Controller
         }
 
         // Fetch properties
-        $properties = $properties->get();
+        $properties  = $properties->get();
         $total_homes = $properties->count();
 
         foreach ($properties as $property) {
             // Fetch related property record
 
-            $property->banner =NULL;
-            $property->main_image =NULL;
+            $property->banner     = null;
+            $property->main_image = null;
 
             $images = json_decode($property->images);
             if (is_array($images) && count($images) > 0) {
-                $uploads = Upload::whereIn('id', $images)->get();
+                $uploads     = Upload::whereIn('id', $images)->get();
                 $firstUpload = $uploads->first();
-                $lastUpload = $uploads->last();
+                $lastUpload  = $uploads->last();
 
                 // Check if the first upload exists, then assign its file_name to the property
                 if ($firstUpload) {
-                    $file_image = $firstUpload->file_name;
+                    $file_image           = $firstUpload->file_name;
                     $property->main_image = get_storage_url($file_image);
 
                 }
                 if ($lastUpload) {
-                    $file_image = $lastUpload->file_name;
+                    $file_image       = $lastUpload->file_name;
                     $property->banner = get_storage_url($file_image);
                 }
             }
@@ -714,7 +714,7 @@ class HomeController extends Controller
     public function searchProperties(Request $request)
     {
         $total_homes = 0;
-        $properties = DB::table('properties')
+        $properties  = DB::table('properties')
             ->leftJoin('property_features', 'properties.property_id', '=', 'property_features.property_id'); // Join property_features
 
         // Search in the properties table using null checks
@@ -836,35 +836,35 @@ class HomeController extends Controller
         }
 
 // Finally, get the results
-        $properties = $properties->get();
+        $properties  = $properties->get();
         $total_homes = $properties->count();
 
         foreach ($properties as $property) {
-            $property->banner =NULL;
-            $property->main_image =NULL;
+            $property->banner     = null;
+            $property->main_image = null;
 
             // Fetch related property record
             $home = QuickMoveHome::where('property_id', $property->property_id)->first();
             if ($property->is_open_house) {
 
-                $open_house = OpenHouse::where('property_id', $property->property_id)->first();
+                $open_house                = OpenHouse::where('property_id', $property->property_id)->first();
                 $property->open_house_data = $open_house;
             }
             // Process main image
             $images = json_decode($property->images);
             if (is_array($images) && count($images) > 0) {
-                $uploads = Upload::whereIn('id', $images)->get();
+                $uploads     = Upload::whereIn('id', $images)->get();
                 $firstUpload = $uploads->first();
-                $lastUpload = $uploads->last();
+                $lastUpload  = $uploads->last();
 
                 // Check if the first upload exists, then assign its file_name to the property
                 if ($firstUpload) {
-                    $file_image = $firstUpload->file_name;
+                    $file_image           = $firstUpload->file_name;
                     $property->main_image = get_storage_url($file_image);
 
                 }
                 if ($lastUpload) {
-                    $file_image = $lastUpload->file_name;
+                    $file_image       = $lastUpload->file_name;
                     $property->banner = get_storage_url($file_image);
                 }
             }
@@ -904,6 +904,7 @@ class HomeController extends Controller
     {
         return view('app', compact('property_id'));
     }
+
     public function fetchAllAgents()
     {
 
@@ -911,9 +912,9 @@ class HomeController extends Controller
         foreach ($agents as $key => $agent) {
 
             $agreements_count = CustomerAgentConnection::where('agent_id', $agent->id)->where('current_status', '!=', 'Completed')->count();
-            if ($agreements_count > 2) {
-                $agents = $agents->forget($key);
-            }
+            // if ($agreements_count > 2) {
+            //     $agents = $agents->forget($key);
+            // }
             $user = User::where('id', $agent->user_id)->first();
             if ($user) {
                 $uploaded_image = Upload::where('id', $user->image)->first();
@@ -925,43 +926,119 @@ class HomeController extends Controller
 
         return $agents;
     }
+    // public function connect_customer_agents(Request $request)
+    // {
+    //     $existing_record = CustomerAgentConnection::where('agent_id', $request->agent_id)->where('customer_id', auth()->user()->id)->where('property_id', $request->property_id)->first();
+    //     if ($existing_record) {
+    //         return response()->json([
+
+    //             'message' => ("Already connected to this Agent, He will contact you soon."),
+    //         ], 422);
+    //     } else {
+
+    //         $Agent = new CustomerAgentConnection;
+    //         $Agent->id = Str::orderedUuid();
+
+    //         $Agent->agent_id = $request->agent_id;
+    //         $Agent->property_id = $request->property_id;
+    //         $Agent->customer_id = auth()->user()->id;
+    //         $Agent->date = Carbon::now();
+    //         $Agent->current_status = 'Pending';
+    //         $Agent->terms_agreed = $request->terms_agreed;
+    //         $Agent->agreement_type = $request->agreement_type;
+    //         $Agent->save();
+    //         return 'success';
+    //     }
+
+    //     $Agent = new CustomerAgentConnection;
+    //     $Agent->id = Str::orderedUuid();
+
+    //     $Agent->agent_id = $request->agent_id;
+    //     $Agent->property_id = $request->property_id;
+    //     $Agent->customer_id = auth()->user()->id;
+    //     $Agent->date = Carbon::now();
+    //     $Agent->current_status = 'Pending';
+    //     $Agent->terms_agreed = $request->terms_agreed;
+    //     $Agent->agreement_type = $request->agreement_type;
+    //     $Agent->save();
+    //     return 'success';
+    // }
     public function connect_customer_agents(Request $request)
-    {
-        // $existing_record = CustomerAgentConnection::where('agent_id', $request->agent_id)->where('customer_id', auth()->user()->id)->where('property_id', $request->property_id)->first();
-        // if ($existing_record) {
-        //     return response()->json([
+{
+    // Validate the request
+    $request->validate([
+        'name'        => 'required|string|max:255',
+        'email'       => 'required|email',
+        'phone'       => 'required|string|max:20',
+        'property_id' => 'required',
+        'agent_id'    => 'required',
+    ]);
 
-        //         'message' => ("Already connected to this Agent, He will contact you soon."),
-        //     ], 422);
-        // } else {
+    // Check if user exists
+    $user = User::where('email', $request->email)->first();
 
-        //     $Agent = new CustomerAgentConnection;
-        //     $Agent->id = Str::orderedUuid();
+    $isNewUser = false;
+    $password = Str::random(10); // Generate a random password
 
-        //     $Agent->agent_id = $request->agent_id;
-        //     $Agent->property_id = $request->property_id;
-        //     $Agent->customer_id = auth()->user()->id;
-        //     $Agent->date = Carbon::now();
-        //     $Agent->current_status = 'Pending';
-        //     $Agent->terms_agreed = $request->terms_agreed;
-        //     $Agent->agreement_type = $request->agreement_type;
-        //     $Agent->save();
-        //     return 'success';
-        // }
-
-        $Agent = new CustomerAgentConnection;
-        $Agent->id = Str::orderedUuid();
-
-        $Agent->agent_id = $request->agent_id;
-        $Agent->property_id = $request->property_id;
-        $Agent->customer_id = auth()->user()->id;
-        $Agent->date = Carbon::now();
-        $Agent->current_status = 'Pending';
-        $Agent->terms_agreed = $request->terms_agreed;
-        $Agent->agreement_type = $request->agreement_type;
-        $Agent->save();
-        return 'success';
+    if (!$user) {
+        // Create new user if not found
+        $user = new User();
+        $user->name     = $request->name;
+        $user->email    = $request->email;
+        $user->phone    = $request->phone;
+        $user->role    = 'customer';
+        $user->email_verified_at    =  Carbon::now();
+        $user->password = bcrypt($password); // Encrypt password
+        $user->save();
+        
+        $isNewUser = true;
     }
+
+    // Store in CustomerAgentConnection
+    $agentConnection = new CustomerAgentConnection();
+    $agentConnection->id = Str::orderedUuid();
+    $agentConnection->agent_id = $request->agent_id;
+    $agentConnection->property_id = $request->property_id;
+    $agentConnection->customer_id = $user->id;
+    $agentConnection->date = Carbon::now();
+    $agentConnection->current_status = 'Pending';
+    $agentConnection->save();
+
+    // Fetch Property and Agent Information
+    $property = Property::where('property_id', $request->property_id)
+                        ->select('title')
+                        ->first();
+                        $agent = Agent::where('id', $request->agent_id)
+                        ->select('name','license_number')
+                        ->first();
+                    
+
+    // Prepare email data
+    $emailData = [
+        'name'     => $request->name,
+        'property' => $property,
+        'agent'    => $agent,
+    ];
+
+    if ($isNewUser) {
+        // If new user, include login credentials
+        $emailData['email']    = $request->email;
+        $emailData['password'] = $password;
+
+        Mail::send('emails.new_user_interest', $emailData, function ($message) use ($request) {
+            $message->to($request->email)
+                    ->subject('Welcome! Your Account & Property Interest Details');
+        });
+    } else {
+        // If existing user, send only property and agent details
+        Mail::send('emails.existing_user_interest', $emailData, function ($message) use ($request) {
+            $message->to($request->email)
+                    ->subject('Property Interest Confirmation');
+        });
+    }
+
+    return response()->json(['message' => 'Success', 'customer_id' => $user->id], 201);
+}
 
     public function homes_search_by_location($location = null)
     {

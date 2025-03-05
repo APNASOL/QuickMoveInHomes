@@ -1370,7 +1370,7 @@
                                     <td bgcolor="#ffffff" align="center" style="padding: 20px 30px 60px 30px;">
                                         <table border="0" cellspacing="0" cellpadding="0">
                                             <tr>
-                                                <td align="center" style="border-radius: 3px;" bgcolor="#FFA73B">
+                                                <td align="center" style="border-radius: 3px;" bgcolor="#163259">
                                                     @if(@$verify_email)
                                                         <a href="{{ $verify_email }}" target="_blank"
                                                             style="font-size: 20px; font-family: 'helvetica', sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 10px;; border-radius: 2px; border: 1px solid #006860; display: inline-block;background-color:#006860;">
@@ -1422,7 +1422,7 @@
                     <tr>
                         <td bgcolor="#FFECD1" align="center" style="padding: 30px 30px 30px 30px; border-radius: 4px 4px 4px 4px; color: #666666; font-family: 'helvetica', sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
                             <h2 style="font-size: 20px; font-weight: 400; color: #111111; margin: 0;">Visit our website</h2>
-                            <p style="margin: 0;"><a href="#" target="_blank" style="color: #FFA73B;">We&rsquo;re here to help you out</a></p>
+                            <p style="margin: 0;"><a href="#" target="_blank" style="color: #163259;">We&rsquo;re here to help you out</a></p>
                         </td>
                     </tr>
                 </table>
