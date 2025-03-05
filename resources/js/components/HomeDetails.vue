@@ -912,6 +912,7 @@
                                 class="text-decoration-none"
                                 :href="'/home-details/' + home.property_id"
                             >
+                            {{ home.main_image }}
                                 <GlobalCard
                                     :badge="
                                         home.is_open_house === 1
