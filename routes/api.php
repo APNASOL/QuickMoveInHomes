@@ -304,6 +304,7 @@ Route::get('/fetch-website-info', [SettingController::class, 'website_info_fetch
  Route::get('/fetch-community-all-homes/{community_id}', [HomeController::class, 'community_all_homes'])->name('fetch-community-all-homes');
  Route::get('/get-community-details/{community_id}', [HomeController::class, 'get_community_details'])->name('get-community-details');
  Route::post('/main/filter', [HomeController::class, 'searchProperties'])->name('main.filter');
+ 
  Route::post('/homes/sort', [HomeController::class, 'sortProperties'])->name('homes.sort');
  Route::post('/quick/search', [HomeController::class, 'quickSearch'])->name('quick.search');
  Route::get('/fetch-all-agents', [HomeController::class, 'fetchAllAgents'])->name('fetch-all-agents');

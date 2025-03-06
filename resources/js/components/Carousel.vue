@@ -77,9 +77,15 @@
                                         )
                                     }}</label>
                                     <input
+                            type="text"
+                            name="fakeuser"
+                            style="display: none"
+                        />
+                                    <input
                                         type="text"
                                         class="form-control"
                                         id="searching_location  "
+                                         autocomplete="off"
                                         :class="{
                                             'invalid-bg':
                                                 formErrors.searching_location,

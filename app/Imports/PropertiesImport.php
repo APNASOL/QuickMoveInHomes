@@ -114,7 +114,7 @@ class PropertiesImport implements ToCollection, WithHeadingRow
                 $propertyFeature->reach_in = $row['reach_in'] ?? null;
                 $propertyFeature->walk_in = $row['walk_in'] ?? null;
                 $propertyFeature->laundry_closet = $row['laundry_closet'] ?? null;
-                $propertyFeature->closet_location = $row['closet_location'] ?? null;
+                $propertyFeature->closet_location = $row['closet_location'] ?? null;    
                 $propertyFeature->bedroom_location = $row['bedroom_location'] ?? null;
                 $propertyFeature->bathroom_type = $row['bathroom_type'] ?? null;
                 $propertyFeature->bathroom_status = $row['bathroom_status'] ?? null;

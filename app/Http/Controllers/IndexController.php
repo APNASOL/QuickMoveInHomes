@@ -33,7 +33,7 @@ class IndexController extends Controller
             
          
             $property->main_image = NULL; 
-            $property->bathrooms = $property->half_bathr +  $property->full_bath;
+            $property->bathrooms = $property->half_bath +  $property->full_bath;
             
             $images = json_decode($property->images);
             if ($images) {

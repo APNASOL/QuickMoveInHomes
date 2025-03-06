@@ -312,6 +312,11 @@
                             <b>Sort Brand New Homes Vegas</b>
                             <br />
                             <div class="dropdown">
+                                <input
+                            type="text"
+                            name="fakeuser"
+                            style="display: none"
+                        />
                                 <Multiselect
                                     v-model="sort_by"
                                     :options="sortingOptions"

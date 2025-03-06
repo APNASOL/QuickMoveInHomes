@@ -26,6 +26,7 @@ use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
+use App\Models\PropertyFeature;
 
 class HomeController extends Controller
 {
@@ -490,6 +491,10 @@ class HomeController extends Controller
         foreach ($properties as $property) {
             $property->banner     = null;
             $property->main_image = null;
+    
+            $property->bathrooms = $property->half_bath +  $property->full_bath;
+            $propertyFeature = PropertyFeature::where('property_id', $property->property_id)->select('parking_enclosure')->first();
+            $property->parking_enclosure = $propertyFeature->parking_enclosure ?? 0;
             // Fetch related property record
             if ($property->is_open_house) {
                 $open_house                = OpenHouse::where('property_id', $property->property_id)->first();
@@ -644,6 +649,9 @@ class HomeController extends Controller
 
             $property->banner     = null;
             $property->main_image = null;
+            $property->bathrooms = $property->half_bath +  $property->full_bath;
+            $propertyFeature = PropertyFeature::where('property_id', $property->property_id)->select('parking_enclosure')->first();
+            $property->parking_enclosure = $propertyFeature->parking_enclosure ?? 0;
 
             $images = json_decode($property->images);
             if (is_array($images) && count($images) > 0) {
@@ -842,6 +850,10 @@ class HomeController extends Controller
         foreach ($properties as $property) {
             $property->banner     = null;
             $property->main_image = null;
+
+            $property->bathrooms = $property->half_bath +  $property->full_bath;
+            $propertyFeature = PropertyFeature::where('property_id', $property->property_id)->select('parking_enclosure')->first();
+            $property->parking_enclosure = $propertyFeature->parking_enclosure ?? 0;
 
             // Fetch related property record
             $home = QuickMoveHome::where('property_id', $property->property_id)->first();
