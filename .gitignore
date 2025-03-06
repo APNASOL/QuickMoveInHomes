@@ -25,3 +25,4 @@ yarn-error.log
 /public/real_public/CommunityBannerImages
 /public/real_public/CommunityMainImages
 /public/real_public/website_logos 
+/storage/logs/*.log
