@@ -793,120 +793,93 @@
     <button ref="closeModal" hidden="hidden" data-bs-dismiss="modal"></button>
     <!-- footer -->
 
-    <footer class="px-5 pt-1 bg-theme text-white">
-        <div class="footer-section">
-            <div class="row">
-                <div class="col-md-4 ps-0">
-                    <a href="/">
-                        <img :src="logo" :alt="name" width="200" class="mt-4" />
+    
+    <footer class="footer bg-light text-dark pt-5">
+    <div class="container">
+        <div class="row">
+            <!-- Logo Section -->
+            <div class="col-md-3 mb-4">
+                <a href="/">
+                    <img :src="logo" :alt="name" width="200" class="mb-3" />
+                </a>
+                <p class="text-muted">Your trusted business partner for digital solutions.</p>
+            </div>
+
+            <!-- Business Info -->
+            <div class="col-md-3 mb-4">
+                <h5 class="fw-bold c-theme-color">Business</h5>
+                <hr class=" opacity-100 " />
+                <ul class="list-unstyled">
+                    <li>
+                        <a href="/about" class="text-dark text-decoration-none d-block py-1">About Us</a>
+                    </li>
+                    <li>
+                        <a href="/services" class="text-dark text-decoration-none d-block py-1">Our Services</a>
+                    </li>
+                    <li>
+                        <a href="/blogs" class="text-dark text-decoration-none d-block py-1">Blogs</a>
+                    </li>
+                    <li>
+                        <a href="/contact" class="text-dark text-decoration-none d-block py-1">Contact</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Customer Support Section -->
+            <div class="col-md-3 mb-4">
+                <h5 class="fw-bold c-theme-color">Customer Support</h5>
+                <hr class="  opacity-100" />
+                <ul class="list-unstyled">
+                    <li v-if="external_website.website_email">
+                        <a class="text-dark text-decoration-none d-block py-1"
+                            :href="'mailto:' + external_website.website_email">
+                            📧 {{ external_website.website_email }}
+                        </a>
+                    </li>
+                    <li v-if="external_website.website_phone">
+                        <a class="text-dark text-decoration-none d-block py-1"
+                            :href="'tel:' + external_website.website_phone">
+                            📞 {{ external_website.website_phone }}
+                        </a>
+                    </li>
+                    <!-- <li>
+                        <a href="/about" class="text-dark text-decoration-none d-block py-1">❓ FAQs</a>
+                    </li>
+                    <li>
+                        <a href="/support" class="text-dark text-decoration-none d-block py-1">🛠 Support Center</a>
+                    </li> -->
+                </ul>
+            </div>
+
+            <!-- Social Media -->
+            <div class="col-md-3 mb-4">
+                <h5 class="fw-bold c-theme-color">Follow Us</h5>
+                <hr class="  opacity-100" />
+                <div class="d-flex gap-3">
+                    <a :href="facebook_link" target="_blank" class="text-dark">
+                        <i class="bi bi-facebook fs-3"></i>
+                    </a>
+                    <a :href="instagram_link" target="_blank">
+                        <i class="bi bi-instagram fs-3 text-danger"></i>
+                    </a>
+                    <a :href="twitter_link" target="_blank">
+                        <i class="bi bi-twitter fs-3 text-primary"></i>
+                    </a>
+                    <a :href="youtube_link" target="_blank">
+                        <i class="bi bi-youtube fs-3 text-danger"></i>
                     </a>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <b>Business</b>
-                    <hr />
-                    <ul type="circle">
-                        <li>
-                            <a
-                                class="contact"
-                                style="color: white"
-                                href="/about-us"
-                                >About us</a
-                            >
-                        </li>
-                        <li>
-                            <a
-                                class="contact"
-                                style="color: white"
-                                href="/contact"
-                                >Contact</a
-                            >
-                        </li>
-                        <li>
-                            <a
-                                class="contact"
-                                style="color: white"
-                                href="/blogs"
-                                >Blogs</a
-                            >
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <b>For customer support</b>
-                    <hr />
-                    <ul type="circle">
-                        <li v-if="external_website.website_email">
-                            <a
-                                :href="
-                                    'mailto:' + external_website.website_email
-                                "
-                                class="text-white c-dec-none"
-                                >{{ external_website.website_email }}</a
-                            >
-                        </li>
-                        <li v-if="external_website.website_phone">
-                            <a
-                                class="text-white ms-1 c-dec-none"
-                                :href="'tel:' + external_website.website_phone"
-                            >
-                                {{ external_website.website_phone }}
-                            </a>
-                        </li>
-                        <li
-                            data-bs-toggle="modal"
-                            data-bs-target="#registerusermodal"
-                            class="c-anchor-decoration"
-                        >
-                            Join us
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <b>Follow us</b>
-                    <hr />
-                    <ul class="list-inline c-follow-us">
-                        <li class="list-inline-item">
-                            <a :href="facebook_link" target="_blank">
-                                <i class="bi bi-facebook text-white"></i>
-                            </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a :href="instagram_link" target="_blank">
-                                <i class="bi bi-instagram text-white"></i>
-                            </a>
-                        </li>
-
-                        <li class="list-inline-item">
-                            <a :href="youtube_link" target="_blank">
-                                <i class="bi bi-youtube text-white"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- <div class="row">
-                <div class="col-md-4">
-                    <hr />
-                </div>
-                <h1 class="col-md-4 c-website-footer-name">
-                    <a class="c-link-style" href="/">{{ name }}</a>
-                </h1>
-                <div class="col-md-4">
-                    <hr />
-                </div>
-            </div> -->
         </div>
-    </footer>
-    <!-- <div id="preloader" ref="preloader" v-if="preLoader"></div>
-    <a
-        ref="back_top_top"
-        href="#"
-        class="back-to-top d-flex align-items-center justify-content-center"
-        ><i class="bi bi-arrow-up-short theme-text-color"></i
-    ></a> -->
+
+        <hr class="c-theme-color opacity-100" />
+
+        <div class="text-center py-3">
+            <p class="mb-0">© {{ new Date().getFullYear() }} <strong>{{ name }}</strong>. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
 
     <button
         type="button"
@@ -1275,7 +1248,7 @@ export default {
 </script>
 <style>
 body {
-    font-family: "Oakes Grotesk", sans-serif !important;
+    font-family: Inter, sans-serif !important;  
     background-color: #f7fafc;
 }
 p {

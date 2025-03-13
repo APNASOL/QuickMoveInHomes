@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="py-5">
-            <p class="h1 text-center c-theme-color">Why Choose QMI?</p>
+            <p class="h1 text-center c-main-title c-theme-color">Why Choose QMI?</p>
             <div class="row g-4 mt-2 justify-content-center">
                 <div
                     v-for="(promise, index) in Promises"
