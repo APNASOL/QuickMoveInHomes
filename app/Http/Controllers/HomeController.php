@@ -187,6 +187,7 @@ class HomeController extends Controller
             'title'               => $property->title,
             'is_open_house'       => $property->is_open_house,
             'description'         => $property->description,
+            'average_price_per_square'         => $property->average_price_per_square,
             'address'             => $property->address,
             'city'                => $property->city,
             'state'               => $property->state,
