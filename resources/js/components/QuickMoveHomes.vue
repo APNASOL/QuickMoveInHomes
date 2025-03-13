@@ -1,5 +1,5 @@
 <template>
-    <div v-if="properties && properties.length"  >
+    <div v-if="properties && properties.length">
         <div class="container">
             <div class="d-flex justify-content-between c-theme-color">
                 <div class="text-center">
@@ -21,20 +21,18 @@
                     <!-- :autoplay="2000" -->
                     <Slide v-for="property in properties" :key="property.id">
                         <div class="carousel__item">
-                           
-                                <GlobalCard
-                                    :badge="'Quick Move In'"
-                                    :main_image="property.main_image"
-                                    :title="property.title"
-                                    :property_id="property.property_id"
-                                    :address="property.address"
-                                    :bedrooms="property.bedrooms"
-                                    :price="property.price"
-                                    :bathrooms="property.bathrooms"
-                                    :square_feet="property.square_feet"
-                                    :garages="property.parking_enclosure"
-                                />
-                            
+                            <GlobalCard
+                                :badge="'Quick Move In'"
+                                :main_image="property.main_image"
+                                :title="property.title"
+                                :property_id="property.property_id"
+                                :address="property.address"
+                                :bedrooms="property.bedrooms"
+                                :price="property.price"
+                                :bathrooms="property.bathrooms"
+                                :square_feet="property.square_feet"
+                                :garages="property.parking_enclosure"
+                            />
                         </div>
                     </Slide>
 
