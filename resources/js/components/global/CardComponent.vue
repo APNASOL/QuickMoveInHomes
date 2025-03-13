@@ -1,20 +1,15 @@
 <template>
     <div class="">
-        <div class="property-card position-relative rounded-5">
+        <div class="property-card position-relative">
             <span class="badge sale">{{ badge }}</span>
-            <!-- <img
-            :src="main_image ?? '/images/default_image.png'"
-            class="card-img-top c-card-img-border "
-            :alt="title"
-            /> -->
+
             <img
-            :src="main_image ? main_image : '/images/default_image.png'"
-            class="card-img-top c-card-img-border"
-            :alt="title"
+                :src="main_image ? main_image : '/images/default_image.png'"
+                class="card-img-top c-card-img-border"
+                :alt="title"
             />
- 
-             
-            <div class="card-body ">
+
+            <div class="card-body">
                 <h5 class="card-title">
                     {{ title }}
                 </h5>
@@ -98,7 +93,7 @@
                             ></path>
                         </svg>
 
-                        <b class="fs-6 mt-1">{{ square_feet }}  </b>
+                        <b class="fs-6 mt-1">{{ square_feet }} </b>
                     </span>
                     <span
                         ><i class="bi bi-garage"></i
@@ -139,6 +134,14 @@
                         <!-- <b class="fs-6 mt-1">{{ garags }}</b> -->
                     </span>
                 </div>
+                <div class="mt-3">
+                    <a
+                        class="btn btn-light c-custom-btn px-4 py-2 fw-semibold w-100"
+                        :href="'/home-details/' + property_id"
+                    >
+                        View Details
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -161,16 +164,18 @@ export default defineComponent({
         "square_feet",
         "garages",
         "price",
+        "property_id",
     ],
     mounted() {},
     computed: {
         truncatedAddress() {
             // Truncate address to 30 characters and add "..." if longer
-            return this.address.length > 30 ? this.address.substring(0, 30) + '...' : this.address;
-        }
+            return this.address.length > 30
+                ? this.address.substring(0, 30) + "..."
+                : this.address;
+        },
     },
     methods: {
-        
         calculateDiscountPercentage(originalPrice, discountPercentage) {
             const discountAmount = (discountPercentage / 100) * originalPrice;
             const discountedPrice = originalPrice - discountAmount;

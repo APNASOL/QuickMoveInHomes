@@ -62,33 +62,31 @@ class IndexController extends Controller
     {
         // Start the query on the communities table
         $communities = DB::table('communities');
-
+    
         // Apply filter based on the request if a name is provided
         if ($request->name !== null && $request->name !== "null") {
-            $communities->where(function ($query) use ($request) {
-                $query->where('name', 'LIKE', '%' . $request->name . '%');
-            });
+            $communities->where('name', 'LIKE', '%' . $request->name . '%');
         }
-
-        // Retrieve all communities
-        $communities = $communities->get(); // Use ->get() instead of ->all()
-
+    
+        // Retrieve the last 3 communities randomly
+        $communities = $communities->latest('id')->take(3)->get()->shuffle();
+    
         // Loop through each community
         foreach ($communities as $community) {
-
             $community->homes_count = Property::where('community_id', $community->id)->count();
-
+    
             // Handle the main image
-            if ($community && $community->main_image) {
-                $uploaded_image = Upload::where('id', $community->main_image)->first();
-                if ($uploaded_image && $uploaded_image->file_name) {
+            if ($community->main_image) {
+                $uploaded_image = Upload::find($community->main_image);
+                if ($uploaded_image) {
                     $community->main_image = get_storage_url($uploaded_image->file_name);
                 }
             }
         }
-
+    
         return $communities;
     }
+    
 
     public function all_events()
     {

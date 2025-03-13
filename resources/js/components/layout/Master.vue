@@ -41,8 +41,9 @@
     </div>
 
     <nav
-        class="navbar sticky-top navbar-expand-lg navbar-dark bg-theme text-white"
+        class="navbar navbar-expand-lg  bg-theme c-navbar-color sticky-top "
     >
+    <!-- <nav class="navbar navbar-expand-lg  bg-theme c-navbar-color"> -->
         <div class="container">
             <!-- Navbar brand -->
 
@@ -550,7 +551,6 @@
                                         <button
                                             class="btn c-btn-theme-primary w-100"
                                             type="button"
-                                       
                                             v-else
                                         >
                                             {{ translate("Reseting") }}
@@ -605,7 +605,7 @@
 
                                         <button
                                             class="btn c-btn-theme-primary w-100"
-                                            type="submit" 
+                                            type="submit"
                                             v-else
                                         >
                                             {{ translate("Submit") }}
@@ -749,7 +749,7 @@
 
                                     <button
                                         class="btn c-btn-theme-primary w-100"
-                                        type="submit" 
+                                        type="submit"
                                         v-else
                                     >
                                         {{ translate("Register") }}
@@ -1276,7 +1276,7 @@ export default {
 <style>
 body {
     font-family: "Oakes Grotesk", sans-serif !important;
-    background-color: rgba(238, 238, 238, 1);
+    background-color: #f7fafc;
 }
 p {
     margin: 0;
@@ -1295,7 +1295,7 @@ p {
     color: #163259 !important;
 }
 .c-bg-color {
-    background-color: rgba(218, 224, 231, 1) !important;
+    background-color: #e7ebef !important;
     color: white !important;
 }
 .c-image-brightness {
@@ -1372,8 +1372,7 @@ p {
 .c-font-size {
     font-size: 0.9rem;
 }
- 
- 
+
 .c-border-design {
     margin-bottom: 1rem !important;
 
@@ -1415,7 +1414,7 @@ p {
         text-overflow: ellipsis; /* Truncate text with ellipsis */
         white-space: normal;
     }
-   
+
     /* Hide c-top-bar-section on smaller screens */
     .c-top-bar-section {
         display: none !important;
@@ -1453,7 +1452,7 @@ p {
         text-overflow: ellipsis; /* Truncate text with ellipsis */
         white-space: normal;
     }
-   
+
     /* Hide c-top-bar-section within this range */
     .c-top-bar-section {
         display: none !important;
@@ -1493,7 +1492,6 @@ p {
         text-overflow: ellipsis; /* Truncate text with ellipsis */
         white-space: normal;
     }
-     
 
     /* Show c-top-bar-section on larger screens */
     .c-top-bar-section {
@@ -1728,7 +1726,7 @@ label {
 .card-title {
     color: black !important;
 }
- 
+
 .info-card-overlay {
     background: #bcd6f5b2;
     padding: 10px;
@@ -1738,7 +1736,10 @@ label {
 }
 
 .bg-theme {
-    background-color: #163259 !important;
+    background-color: #ffffff !important;
+}
+.c-navbar-color {
+    color: #172636 !important;
 }
 
 .interactive-banner {
@@ -1783,5 +1784,32 @@ label {
 }
 .c-dec-none {
     text-decoration: none;
+}
+
+.c-main-title {
+    font-family: "Playfair Display", serif !important;
+
+    font-weight: 700 !important;
+    line-height: 60px !important;
+
+    z-index: 3 !important;
+    width: 100% !important;
+}
+.c-sub-title {
+    font-family: Inter, sans-serif !important;
+    font-size: 24px !important;
+    font-weight: 400 !important;
+    line-height: 32px !important;
+    color: #596773;
+}
+
+.c-custom-btn {
+    border: 2px solid #0a3564; /* Primary color border */
+    color: #0a3564; /* Primary text color */
+}
+
+.c-custom-btn:hover {
+    background-color: #0a3564; /* Primary color on hover */
+    color: white; /* White text on hover */
 }
 </style>

@@ -1,69 +1,49 @@
 <template>
-    <div v-if="Communities && Communities.length > 0">
-        <div class="mx-4 m-5">
-            <div class="d-flex justify-content-between">
-                <div>
-                    <h2 class="c-theme-color">
-                        Find Your Place in Our Communities!
-                    </h2>
-                </div>
+    <section class="py-5 c-bg-color"  v-if="Communities && Communities.length > 0">
+        <div class="container">
+            <div class="text-center mb-4">
+                <h1 class="fw-bold c-main-title text-black">Find Your Place in Our Communities!</h1>
+                <p class="text-muted c-sub-title">Explore our vibrant communities and discover your next home.</p>
             </div>
-
-            <div
-                class="row g-4 pt-2 row-cols-2 row-cols-lg-5 justify-content-center"
-            >
-                <div
-                    class="col"
-                    v-for="(community, index) in Communities"
-                    :key="community.id"
-                >
-                    <a
-                        class="text-decoration-none"
-                        :href="'/detailed/community/' + community.id"
-                    >
-                        <div
-                            class="card border-0 c-overflow-hidden c-card-wrapper rounded-5"
-                        >
-                            <img
-                                :src="community.main_image ?? 'empty.png'"
-                                class="c-destination-cards"
-                                :class="{ hovered: hoverIndex === index }"
-                                @error="setAltImg"
-                            />
-                            <div
-                                class="card-img-overlay d-flex align-items-center justify-content-center c-card-content"
-                                @mouseover="hoverIndex = index"
-                                @mouseleave="hoverIndex = null"
-                            >
-                                <div class="text-center">
-                                    <h3 class="text-light">
-                                        {{ community.name }}
-                                    </h3>
-                                    <span
-                                        class="badge rounded-pill bg-white text-dark"
-                                        >{{ community.homes_count }} Homes</span
-                                    >
+            
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div v-for="(community, index) in Communities" :key="community.id" class="col">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="overflow-hidden position-relative">
+                            <img :src="community.main_image ?? 'empty.png'" class="card-img-top" :alt="community.name" @error="setAltImg">
+                            <div class="card-img-overlay d-flex align-items-end p-2 bg-dark bg-opacity-50">
+                                <div>
+                                    <h2 class="c-main-title  text-white">{{ community.name }}</h2>
+                                    <p class="c-sub-title text-white">{{ community.homes_count }} Homes</p>
                                 </div>
                             </div>
                         </div>
-                    </a>
+                        <div class="card-body">
+                            <p class="card-text">Discover the charm of {{ community.name }} with beautiful homes and thriving communities.</p>
+                            <a :href="'/detailed/community/' + community.id" class="btn btn-light c-custom-btn px-4 py-2 fw-semibold w-100">Explore</a>
+                        </div>
+                    </div>
                 </div>
             </div>
+ 
+            <!-- Bottom Button -->
+            <div class="text-center mt-4">
+                <button class="btn btn-light c-custom-btn px-4 py-2 fw-semibold">Explore More Communities</button>
+            </div>
         </div>
-    </div>
+    </section>
 </template>
 
 <script>
 import { defineComponent } from "vue";
-export default {
-    created() {
-        this.fetchDestinations();
-    },
+export default defineComponent({
     data() {
         return {
-            Communities: "",
-            hoverIndex: null,
+            Communities: [],
         };
+    },
+    created() {
+        this.fetchDestinations();
     },
     methods: {
         fetchDestinations() {
@@ -80,34 +60,25 @@ export default {
             event.target.src = "/images/default_image.png";
         },
     },
-};
+});
 </script>
+
 <style scoped>
-.c-overflow-hidden {
-    overflow: hidden !important;
-}
-.c-destination-cards {
-     
-    filter: brightness(60%);
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
     transition: transform 0.5s ease;
 }
-
-.c-destination-cards.hovered {
-    transform: scale(1.3);
+.card-img-top:hover {
+    transform: scale(1.1);
 }
-.c-card-wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
+.card {
+ 
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
 }
-
-.c-card-content {
-    flex-grow: 1;
+.card:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-.c-destination-cards {
-    height: 200px; /* or your desired height */
-    object-fit: cover; /* This ensures images fill the container without distortion */
-}
 </style>

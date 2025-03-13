@@ -1,72 +1,40 @@
 <template>
-    <div v-if="videos && videos.length > 0">
-        <div class="mx-4 pb-2 pt-2 mt-3">
-            <div>
-                <h2 class="c-theme-color">Testimonials</h2>
-                <p class="c-theme-color">
+    <div class="c-bg-color" v-if="videos.length">
+        <div class="container pb-2 pt-2 mt-3">
+            <div class="text-center c-theme-color">
+                <h1 class="mt-4 c-main-title">What Our Users Say</h1>
+                <p class="c-sub-title">
                     Welcome to your premier digital gateway with Yvonne Khoo,
                     offering comprehensive real estate solutions in the Las
                     Vegas community. Stay informed with live updates on property
                     listings and gain insights into the market with up-to-date
-                    statistics, ensuring you have all the essential information
-                    at your fingertips for making informed buying or selling
-                    decisions.
+                    statistics.
                 </p>
             </div>
 
-            <Carousel
-                :autoplay="2000"
-                :settings="settings"
-                :wrapAround="true"
-                :breakpoints="breakpoints"
-                :pauseAutoplayOnHover="true"
-            >
+            <Carousel :autoplay="2000" :settings="settings" :wrapAround="true" :breakpoints="breakpoints" :pauseAutoplayOnHover="true">
                 <Slide v-for="(video, index) in videos" :key="index">
                     <div class="carousel__item">
-                        <div
-                            class="text-decoration-none"
-                            @click="openModal(video.id)"
-                        >
-                            <div class="card c-border-design">
-                                <div class="thumbnail-wrapper">
-                                    <img
-                                        :src="'https://img.youtube.com/vi/' + video.id + '/hqdefault.jpg'"
-                                        class="card-img-top c-card-img-border"
-                                        alt="Video Thumbnail"
-                                    />
-                                    <div class="play-button-overlay">
-                                        ▶
-                                    </div>
-                                </div>
-                                <div class="card-body text-start">
-                                    <h5 class="card-title">
-                                        {{ video.title || 'Loading title...' }}
-                                    </h5>
-                                </div>
+                        <div class="card c-border-design" @click="openModal(video.id)">
+                            <div class="thumbnail-wrapper">
+                                <img :src="'https://img.youtube.com/vi/' + video.id + '/hqdefault.jpg'" class="card-img-top c-card-img-border" alt="Video Thumbnail" />
+                                <div class="play-button-overlay">▶</div>
+                            </div>
+                            <div class="card-body text-start">
+                                <h5 class="card-title">{{ video.title }}</h5>
                             </div>
                         </div>
                     </div>
                 </Slide>
-
                 <template #addons>
                     <Navigation />
                 </template>
             </Carousel>
         </div>
 
-        <!-- Video Modal -->
-        <div
-            v-if="showModal"
-            class="video-modal"
-            @click.self="closeModal"
-        >
+        <div v-if="showModal" class="video-modal" @click.self="closeModal">
             <div class="video-modal-content">
-                <iframe
-                    :src="'https://www.youtube.com/embed/' + currentVideoId + '?autoplay=1'"
-                    frameborder="0"
-                    allow="autoplay; encrypted-media"
-                    allowfullscreen
-                ></iframe>
+                <iframe :src="'https://www.youtube.com/embed/' + currentVideoId + '?autoplay=1'" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                 <button class="modal-close" @click="closeModal">✖</button>
             </div>
         </div>
@@ -79,14 +47,7 @@ import { Carousel, Slide, Navigation } from "vue3-carousel";
 import "vue3-carousel/dist/carousel.css";
 
 export default defineComponent({
-    created() {
-        this.fetchDestinations();
-    },
-    components: {
-        Carousel,
-        Slide,
-        Navigation,
-    },
+    components: { Carousel, Slide, Navigation },
     data() {
         return {
             videos: [
@@ -102,39 +63,15 @@ export default defineComponent({
             ],
             showModal: false,
             currentVideoId: null,
-            settings: {
-                itemsToShow: 1.5,
-                transition: "500",
-                snapAlign: "center",
-            },
+            settings: { itemsToShow: 1.5, transition: 500, snapAlign: "center" },
             breakpoints: {
-                1: {
-                    itemsToShow: 1.5,
-                    snapAlign: "center",
-                    transition: "500",
-                },
-                576: {
-                    itemsToShow: 2.5,
-                    snapAlign: "center",
-                    transition: "500",
-                },
-                992: {
-                    itemsToShow: 4,
-                    snapAlign: "center",
-                    transition: "500",
-                },
-                1200: {
-                    itemsToShow: 4.5,
-                    snapAlign: "center",
-                    transition: "500",
-                },
+                576: { itemsToShow: 2.5, snapAlign: "center", transition: 500 },
+                992: { itemsToShow: 4, snapAlign: "center", transition: 500 },
+                1200: { itemsToShow: 4.5, snapAlign: "center", transition: 500 },
             },
         };
     },
     methods: {
-        fetchDestinations() {
-            // Placeholder for fetching additional data if needed
-        },
         openModal(videoId) {
             this.currentVideoId = videoId;
             this.showModal = true;
@@ -150,13 +87,16 @@ export default defineComponent({
 <style scoped>
 .thumbnail-wrapper {
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .play-button-overlay {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 3rem;
+    font-size: 2rem;
     color: white;
     opacity: 0.8;
 }
@@ -170,15 +110,13 @@ export default defineComponent({
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9999; /* Ensure modal is on top */
+    z-index: 9999;
 }
 .video-modal-content {
     position: relative;
     width: 80%;
     max-width: 800px;
     background: white;
-    padding: 0;
-    z-index: 10000; /* Higher z-index to keep content on top */
 }
 .video-modal-content iframe {
     width: 100%;
@@ -193,37 +131,20 @@ export default defineComponent({
     font-size: 1.5rem;
     color: white;
     cursor: pointer;
-    z-index: 10001; /* Keep close button above iframe */
 }
 .carousel__slide {
-    padding: 5px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
 }
-.carousel__viewport {
-    perspective: 2000px;
+.card {
+    width: 100%;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
 }
-.carousel__track {
-    transform-style: preserve-3d;
-}
-.carousel__slide--sliding {
-    transition: 0.5s;
-}
-.carousel__slide {
-    opacity: 0.9;
-    transform: rotateY(-20deg) scale(0.9);
-}
-.carousel__slide--active ~ .carousel__slide {
-    transform: rotateY(20deg) scale(0.9);
-}
-.carousel__slide--prev {
-    opacity: 1;
-    transform: rotateY(-10deg) scale(0.9) !important;
-}
-.carousel__slide--next {
-    opacity: 1;
-    transform: rotateY(10deg) scale(0.9) !important;
-}
-.carousel__slide--active {
-    opacity: 1;
-    transform: rotateY(0) scale(1);
+.card-img-top {
+    width: 100%;
+    height: auto;
 }
 </style>

@@ -26,12 +26,12 @@
                             v-if="formStatus"
                             :href="'/homes-list/' + searching_location"
                             type="submit"
-                            class="btn c-btn-theme-primary"
+                            class="btn c-custom-btn"
                             @click="activeSpinner"
                         >
                             <i class="bi bi-search"></i>
                         </a>
-                        <a class="btn c-btn-theme-primary" type="button" disabled v-else>
+                        <a class="btn c-custom-btn" type="button" disabled v-else>
                             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         </a>
                     </div>
@@ -67,7 +67,7 @@ export default {
 </script>
 
 <style scoped>
-.c-btn-theme-primary {
+.c-custom-btn {
     border-radius: 0rem 0.25rem 0.25rem 0rem !important;
     display: flex;
     align-items: center;
@@ -75,6 +75,8 @@ export default {
     padding: 0;
     height: 50px;
     width: 80px;
+    background-color: #0A3564 !important;
+    color: white;
 }
 
 .hero-section {

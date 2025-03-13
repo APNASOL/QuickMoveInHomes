@@ -1,5 +1,5 @@
 <template>
-    <div class="c-bg-color container-fluid">
+    <div class="container">
         <div class="py-5">
             <p class="h1 text-center c-theme-color">Why Choose QMI?</p>
             <div class="row g-4 mt-2 justify-content-center">
@@ -8,7 +8,7 @@
                     :key="promise"
                     class="col-12 col-sm-6 col-md-4 col-lg-3"
                 >
-                    <div class="card card-body c-border-promis-design h-100  rounded-5 ">
+                    <div class="card card-body c-border-promis-design h-100">
                         <div
                             class="d-flex justify-content-between c-h-fix text-dark"
                         >
@@ -64,7 +64,7 @@ export default {
     overflow: hidden !important;
 }
 .c-destination-cards {
-    border-radius: 0.25rem;
+    
     filter: brightness(60%);
     transition: transform 0.5s ease;
 }
