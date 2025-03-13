@@ -56,10 +56,10 @@ class PropertiesImport implements ToCollection, WithHeadingRow
                 $property->size_from = $row['size_from'] ?? null; 
                 $property->size_to = $row['size_to'] ?? null; 
 
-// Remove any dollar signs and commas, then cast to integer
+                // Remove any dollar signs and commas, then cast to integer
                 $cleanedPrice = (int) str_replace([',', '$'], '', $price);
 
-// Now you can store the cleaned price in the database
+                // Now you can store the cleaned price in the database
                 $property->price = $cleanedPrice;
 
                 // $property->price = $row['price'] ?? null;

@@ -1,21 +1,20 @@
 <template>
     <div>
         <!-- Hero Section -->
-        <div class="hero-section position-relative text-white">
+        <div class="hero-section position-relative text-white d-flex align-items-center justify-content-center text-center">
             <!-- Background Image -->
             <img
-                src="https://images.unsplash.com/photo-1519227355453-8f982e425321?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
                 alt="Background"
                 class="hero-image"
             />
 
             <!-- Overlay Text and Search Box -->
             <div class="overlay"></div>
-            <div
-                class="content position-absolute top-50 start-0 translate-middle-y ms-4"
-            >
-                <h1 class="display-3 fw-bold mb-4">Brand New Homes Vegas</h1>
-                <div class="search-bar-container d-flex">
+            <div class="content position-absolute text-center">
+                <h1 class="display-3 fw-bold mb-3">Brand New Homes in Las Vegas</h1>
+                <h3 class="mb-4 sub-contents">Discover move-in ready new construction homes across Las Vegas Valley</h3>
+                <div class="search-bar-container d-flex justify-content-center">
                     <div class="search-bar input-group">
                         <input
                             type="text"
@@ -32,26 +31,12 @@
                         >
                             <i class="bi bi-search"></i>
                         </a>
-                        <a
-                            class="btn c-btn-theme-primary"
-                            type="button"
-                            disabled
-                            v-else
-                        >
-                            <span
-                                class="spinner-border spinner-border-sm"
-                                role="status"
-                                aria-hidden="true"
-                            ></span>
+                        <a class="btn c-btn-theme-primary" type="button" disabled v-else>
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         </a>
                     </div>
                     <div class="bg-white ms-2" style="border-radius: 0.25rem">
-                        <a
-                            class="searchHome"
-                            href="/search/homes"
-                            id="navbarDropdownDeals"
-                            role="button"
-                        >
+                        <a class="searchHome" href="/search/homes" id="navbarDropdownDeals" role="button">
                             <img src="/images/map-icon.png" height="50" />
                         </a>
                     </div>
@@ -72,9 +57,9 @@ export default {
     },
     methods: {
         activeSpinner() {
-            this.formStatus = false; // Set to false initially
+            this.formStatus = false;
             setTimeout(() => {
-                this.formStatus = true; // Change to true after 2 seconds
+                this.formStatus = true;
             }, 2000);
         },
     },
@@ -87,16 +72,18 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0; /* Remove extra padding */
-    height: 50px; /* Match height of the input field */
-    width: 80px; /* Set a fixed width for the button */
+    padding: 0;
+    height: 50px;
+    width: 80px;
 }
 
-/* Hero Section Styling */
 .hero-section {
     height: 50vh;
     position: relative;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .hero-image {
@@ -117,52 +104,67 @@ export default {
     height: 100%;
     background: rgba(0, 0, 0, 0.4);
     z-index: 2;
+    
 }
 
 .content {
-    font-family: "Object Sans", "Adjusted Arial", Tahoma, Geneva, sans-serif;
+    font-family: "Playfair Display", serif;
+font-size: 60px;
+font-weight: 700;
+line-height: 60px;
+color: rgb(255, 255, 255);
+    
     z-index: 3;
     width: 100%;
-    max-width: 500px;
+   
+    
+}
+.sub-contents
+{
+    font-family: Inter, sans-serif;
+font-size: 24px;
+font-weight: 400;
+line-height: 32px;
+color: rgb(255, 255, 255);
 }
 
 .search-bar-container {
     margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .search-bar {
     width: 100%;
-
+    max-width: 400px;
     border-radius: 0.25rem;
 }
 
 .search-bar input {
     border: none;
-
     font-size: 1rem;
-    height: 50px; /* Set height for desktop screens */
+    height: 50px;
     border-top-left-radius: 0.25rem;
     border-bottom-left-radius: 0.25rem;
 }
 
 .search-bar button {
     border: none;
-    border-top-right-radius: 0.25rem; /* Ensure rounded corners */
-    border-bottom-right-radius: 0.25rem; /* Ensure rounded corners */
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
     background-color: #fff;
-    height: 50px; /* Match height of the input field */
-    display: flex; /* Use flexbox to center content */
-    align-items: center; /* Center content vertically */
-    justify-content: center; /* Center content horizontally */
-    transition: background-color 0.3s; /* Add a smooth transition for hover effect */
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
 }
 
-/* Add hover effect */
 .search-bar button:hover {
-    background-color: #f0f0f0; /* Change background on hover */
+    background-color: #f0f0f0;
 }
 
-/* Responsive Styling */
 @media (max-width: 768px) {
     .hero-section {
         height: 50vh;
@@ -173,13 +175,12 @@ export default {
     }
 
     .search-bar input {
-        height: 50px; /* Adjust height for tablets */
-
+        height: 50px;
         font-size: 0.9rem;
     }
 
     .search-bar button {
-        width: 60px; /* Adjust width for tablets */
+        width: 60px;
     }
 }
 
@@ -193,27 +194,24 @@ export default {
     }
 
     .search-bar input {
-        height: 50px; /* Adjust height for mobile screens */
-
+        height: 50px;
         font-size: 0.85rem;
     }
 
     .search-bar button {
-        width: 50px; /* Adjust width for mobile screens */
+        width: 50px;
     }
 }
 
 .searchHome {
-    overflow: hidden; /* Ensure content doesn’t overflow during zoom */
+    overflow: hidden;
 }
 
-/* Image within .searchHome */
 .searchHome img {
-    transition: transform 0.3s ease; /* Smooth transition */
+    transition: transform 0.3s ease;
 }
 
-/* Hover state */
 .searchHome:hover img {
-    transform: scale(1.2); /* Zoom in the image */
+    transform: scale(1.2);
 }
 </style>
