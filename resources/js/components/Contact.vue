@@ -1,15 +1,13 @@
 <template>
     <Master>
-        <section class="contact-section">
+        <section class="container contact-section text-center py-5">
             <div class="container">
-                <div class="row">
-                    <div class="col-md-6 offset-md-6">
-                        <h2 class="contact-heading">Contact Us</h2>
-                        <p class="branches">
-                            8 Branches worldwide to serve you better
-                        </p>
-                    </div>
-                </div>
+                <h2 class="contact-title">Contact Yvonne Khoo</h2>
+                <p class="contact-subtitle">
+                    Ready to start your real estate journey? Whether you're
+                    buying, selling, or just have questions, I'm here to help
+                    you every step of the way.
+                </p>
             </div>
         </section>
 
@@ -44,10 +42,12 @@
                                     </p>
                                 </div>
                                 <div>
-                                    <b class="c-title">QBrand New Homes Vegas</b>
+                                    <b class="c-title"
+                                        >QBrand New Homes Vegas</b
+                                    >
                                     <p>
-                                        10845 Griffith Peak Drive, Suite 2
-                                        Las Vegas, NV, 89135
+                                        10845 Griffith Peak Drive, Suite 2 Las
+                                        Vegas, NV, 89135
                                     </p>
                                 </div>
                                 <div>
@@ -286,7 +286,7 @@
                                     aria-expanded="false"
                                     aria-controls="collapseContactInfo" -->
                                     <button
-                                        class="btn btn-danger ms-3" 
+                                        class="btn btn-danger ms-3"
                                         type="button"
                                         data-bs-toggle="collapse"
                                         data-bs-target=".multi-collapse"
@@ -368,12 +368,17 @@ export default {
         showForm(user) {
             this.contactFormBtnStatus = 1;
             this.contacting_user = user;
-            (this.form.name = ""),
-                (this.form.phone = ""),
-                (this.form.email = ""),
-                (this.form.message = ""),
-                (this.formErrors = []);
-                this.form.contacted_from = user;
+            this.form = Object.assign(
+                {},
+                {
+                    name: "",
+                    phone: "",
+                    email: "",
+                    message: "",
+                    contacted_from: user,
+                }
+            );
+            this.formErrors = [];
         },
         hideForm() {
             this.contactFormBtnStatus = 0;
@@ -393,7 +398,6 @@ export default {
                 });
         },
         save() {
-            
             this.formStatus = 0;
             axios
                 .post("/api/contact-save", this.form)
@@ -427,7 +431,7 @@ export default {
 </script>
 <style scoped>
 .accordion-button {
-    color: rgb(33, 63, 154) !important;
+    color: rgb(61, 102, 143) !important;
     font-weight: bold;
 }
 html,
@@ -438,34 +442,32 @@ body {
 .c-title {
     font-family: Poppins, sans-serif;
     font-size: 20px;
-    color: rgb(33, 63, 154);
+    color: rgb(61, 102, 143);
 }
 
 .contact-section {
-    position: relative;
-    background-image: url("/images/contact-us-main.jpg"); /* Dummy image URL */
-    background-size: cover;
-    background-position: center;
-    color: white !important;
-    text-align: center;
-    padding: 100px 20px; /* Adjust padding as needed */
-}
-.contact-heading {
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    font-family: Poppins, sans-serif;
-    font-size: 60px;
-    font-weight: 600;
-    line-height: 57px;
-    color: white !important;
-}
-.branches {
-    font-family: Poppins, sans-serif;
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 24px;
-    color: rgb(255, 255, 255);
-    font-size: 14px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    font-family: "Playfair Display", serif;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 40px;
+    color: rgb(61, 102, 143);
 }
 
+.contact-section {
+    background-color: #f8fafc; /* Light background */
+}
+
+.contact-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #1e3a5f; /* Dark blue */
+}
+
+.contact-subtitle {
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: rgb(61, 102, 143);
+}
 </style>
