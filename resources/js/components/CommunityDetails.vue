@@ -16,666 +16,164 @@
                                 </h1>
                                 <span class="icon">📍</span
                                 >{{ community_details.location }}
-                                <!-- <a
-                                    :href="`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                                        community_details.map_location
-                                    )}`"
-                                    class="map-link"
-                                    target="_blank"
-                                >
-                                    Map & Directions
-                                </a> -->
                             </div>
-                            <div class="location">
+                            <!-- <div class="location">
                                 <h3 class="master_plan">
                                     Master Plan <br />
                                     {{ community_details.masterplan }}
                                 </h3>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
-                <div class="container">
-                    <!-- Property Details Section at the top -->
-                    <div class="row">
-                        <div class="col-md-8 mt-4">
-                            <p class=" ">
-                                {{ community_details.description }}
-                            </p>
-                        </div>
-                        <div
-                            class="col-md-4 p-2"
-                            v-if="logged_in_user && !logged_in_user.agreement"
+                <div class="p-3">
+                    <div class="mt-2">
+                        <!-- Main Carousel -->
+                        <Carousel
+                            :wrapAround="true"
+                            :transition="500"
+                            id="gallery"
+                            :items-to-show="1"
+                            :wrap-around="false"
+                            v-model="currentSlide"
                         >
-                            <h5 class="mt-3 c-theme-color">
-                                Access to full community information is
-                                available once a contract is signed while
-                                selecting your home.
-                            </h5>
-                        </div>
-                        <!-- <div class="col-md-4 p-2">
-                            <div
-                                v-if="
-                                    logged_in_user &&
-                                    logged_in_user.role === 'customer'
-                                "
+                            <!-- Main Image Slides -->
+                            <Slide
+                                v-for="(file, index) in community_details.files"
+                                :key="index"
                             >
-                                <ProceedComponent
-                                    :home_id="home_id"
-                                    :user_status="'logedin'"
-                                    :user_name="logged_in_user.name"
-                                    :page="'community'"
+                                <img
+                                    :src="file.file_name"
+                                    :alt="file.file_original_name"
+                                    class="img-fluid c-img-filter c-images-border-design"
+                                    style="
+                                        max-width: 100%;
+                                        height: 400px;
+                                        object-fit: cover;
+                                    "
+                                    @error="setAltImg"
                                 />
-                            </div>
-                            <div v-else>
-                                <ProceedComponent />
-                            </div>
-                        </div> -->
-                    </div>
+                            </Slide>
+                            <template #addons>
+                                <Navigation />
+                                <Pagination />
+                            </template>
+                        </Carousel>
 
-                    <!-- Middle Section: Image Carousel and Highlights in Two Columns -->
-                    <div class="middle-section row mt-4">
-                        <!-- Image Carousel in col-8 -->
-                        <div class="col-12 col-md-8">
-                            <div class="mt-2">
-                                <!-- Main Carousel -->
-                                <Carousel
-                                    :wrapAround="true"
-                                    :transition="500"
-                                    id="gallery"
-                                    :items-to-show="1"
-                                    :wrap-around="false"
-                                    v-model="currentSlide"
-                                >
-                                    <!-- Main Image Slides -->
-                                    <Slide
-                                        v-for="(
-                                            file, index
-                                        ) in community_details.files"
-                                        :key="index"
-                                    >
-                                        <img
-                                            :src="file.file_name"
-                                            :alt="file.file_original_name"
-                                            class="img-fluid c-img-filter c-images-border-design"
-                                            style="
-                                                max-width: 100%;
-                                                height: 400px;
-                                                object-fit: cover;
-                                            "
-                                            @error="setAltImg"
-                                        />
-                                    </Slide>
-                                    <template #addons>
-                                        <Navigation />
-                                        <Pagination />
-                                    </template>
-                                </Carousel>
-
-                                <!-- Thumbnails Carousel -->
-                                <Carousel
-                                    id="thumbnails"
-                                    :items-to-show="4"
-                                    :wrap-around="true"
-                                    v-model="currentSlide"
-                                    ref="carousel"
-                                >
-                                    <!-- Thumbnail Images -->
-                                    <Slide
-                                        v-for="(
-                                            file, index
-                                        ) in community_details.files"
-                                        :key="index"
-                                    >
-                                        <div
-                                            class="carousel__item"
-                                            @click="slideTo(index)"
-                                            style="cursor: pointer"
-                                        >
-                                            <img
-                                                :src="file.file_name"
-                                                :alt="file.file_original_name"
-                                                class="img-fluid"
-                                                style="
-                                                    max-height: 100px;
-                                                    object-fit: cover;
-                                                "
-                                            />
-                                        </div>
-                                    </Slide>
-                                </Carousel>
-                            </div>
-                        </div>
-
-                        <!-- Community Highlights and Sales Office in col-4 -->
-                        <div class="col-12 col-md-4">
-                            <!-- Community Highlights Section -->
-                            <div class="highlights">
-                                <h4 class="feature-title">HIGHLIGHTS</h4>
-
-                                <!-- Show actual data if user is logged in and not a customer -->
-                                <div>
-                                    <div
-                                        v-if="
-                                            community_details.amenities &&
-                                            community_details.amenities.length >
-                                                0
-                                        "
-                                    >
-                                        <div class="open-house-tag mb-2">
-                                            <i
-                                                class="bi bi-wifi text-warning fs-5"
-                                            ></i
-                                            ><span class="ms-2">
-                                                Amenities
-                                            </span>
-                                        </div>
-                                        <ul type="none">
-                                            <li
-                                                v-for="(
-                                                    amenity, index
-                                                ) in community_details.amenities"
-                                                :key="index"
-                                            >
-                                                {{ amenity }}
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div
-                                        v-if="
-                                            community_details.neighborhoods &&
-                                            community_details.neighborhoods
-                                                .length > 0
-                                        "
-                                    >
-                                        <div class="open-house-tag mb-2">
-                                            <i
-                                                class="bi bi-house-check-fill text-warning fs-5"
-                                            ></i
-                                            ><span class="ms-2">
-                                                Neighborhoods
-                                            </span>
-                                        </div>
-                                        <ul type="none">
-                                            <li
-                                                v-for="(
-                                                    neighborhood, index
-                                                ) in community_details.neighborhoods"
-                                                :key="index"
-                                            >
-                                                {{ neighborhood }}
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div
-                                        v-if="
-                                            community_details.regions &&
-                                            community_details.regions.length > 0
-                                        "
-                                    >
-                                        <div class="open-house-tag mb-2">
-                                            <i
-                                                class="bi bi-map text-warning fs-5"
-                                            ></i
-                                            ><span class="ms-2"> Regions </span>
-                                        </div>
-                                        <ul type="none">
-                                            <li
-                                                v-for="(
-                                                    region, index
-                                                ) in community_details.regions"
-                                                :key="index"
-                                            >
-                                                {{ region }}
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <div class="open-house-tag mb-2">
-                                            <i
-                                                class="bi bi-building text-warning fs-5"
-                                            ></i
-                                            ><span class="ms-2"> HOA </span>
-                                        </div>
-                                        <ul type="none">
-                                            <li>{{ community_details.hoa }}</li>
-                                        </ul>
-                                    </div>
-                                    <!-- <div>
-                                        <div class="open-house-tag mb-2">
-                                            <i
-                                                class="bi bi-building text-warning fs-5"
-                                            ></i
-                                            ><span class="ms-2">
-                                                Builder
-                                            </span>
-                                        </div>
-                                        <ul style="list-style-type: none">
-                                            
-                                            <li
-                                                v-for="builder in community_details.builders"
-                                                :key="builder.id"
-                                            >
-                                                {{ builder }}
-                                                 
-                                            </li>
-                                        </ul>
-                                    </div> -->
-                                </div>
-
-                                <!-- Blurred placeholder when user is a customer or not logged in -->
-                                <!-- <div v-else class="blurred-content">
-                                    <div class="placeholder-title">
-                                        HIGHLIGHTS
-                                    </div>
-                                    <div class="blurred-box">
-                                        Amenities details are available upon
-                                        request.
-                                    </div>
-                                    <div class="blurred-box">
-                                        Neighborhoods details are available upon
-                                        request.
-                                    </div>
-                                    <div class="blurred-box">
-                                        Regions details are available upon
-                                        request.
-                                    </div>
-                                    <div class="blurred-box">
-                                        HOA information is available upon
-                                        request.
-                                    </div>
-                                </div> -->
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card mt-4 rounded-5">
-                        <div class="card-body">
-                            <h2 class="feature-title">Community Details</h2>
-                            <div class="row">
-                                <!-- Basic Community Details Section -->
-                                <div class="col-6">
-                                    <h5 class="c-feature-title">
-                                        Location & Info
-                                    </h5>
-                                    <p>
-                                        <strong>Map Location:</strong>
-                                        {{
-                                            community_details.map_location ||
-                                            "N/A"
-                                        }}
-                                    </p>
-                                    <p>
-                                        <strong>Legal Subdivision:</strong>
-                                        {{
-                                            community_details.legal_subdivision ||
-                                            "N/A"
-                                        }}
-                                    </p>
-                                    <p>
-                                        <strong>Nearby Properties:</strong>
-                                        {{
-                                            community_details.nearby_properties ||
-                                            "N/A"
-                                        }}
-                                    </p>
-                                    <p>
-                                        <strong>Masterplan:</strong>
-                                        {{
-                                            community_details.masterplan ||
-                                            "N/A"
-                                        }}
-                                    </p>
-                                    <p>
-                                        <strong>Sub Association:</strong>
-                                        {{
-                                            community_details.sub_association
-                                                ? "Yes"
-                                                : "No"
-                                        }}
-                                    </p>
-                                </div>
-
-                                <!-- HOA & Fees Section -->
-                                <div class="col-6">
-                                    <h5 class="c-feature-title">HOA & Fees</h5>
-                                    <p>
-                                        <strong>HOA:</strong>
-                                        {{ community_details.hoa || "N/A" }}
-                                    </p>
-                                    <p>
-                                        <strong>SID/LID Fee:</strong>
-                                        ${{
-                                            community_details.sid_lid_fee ||
-                                            "N/A"
-                                        }}
-                                    </p>
-                                    <p>
-                                        <strong>Payment Frequency:</strong>
-                                        {{
-                                            community_details.sid_lid_payment_frequency ||
-                                            "N/A"
-                                        }}
-                                    </p>
-                                    <p>
-                                        <strong>CIC:</strong>
-                                        {{
-                                            community_details.cic ? "Yes" : "No"
-                                        }}
-                                    </p>
-                                    <p>
-                                        <strong>LID:</strong>
-                                        {{
-                                            community_details.lid ? "Yes" : "No"
-                                        }}
-                                    </p>
-                                </div>
-
-                                <!-- Proximity Section -->
-                                <div class="col-6">
-                                    <h5 class="c-feature-title">Proximity</h5>
-                                    <p>
-                                        <strong>Proximity to Strip:</strong>
-                                        {{
-                                            community_details.proximity_to_strip ||
-                                            "N/A"
-                                        }}
-                                        miles
-                                    </p>
-                                    <p>
-                                        <strong>Proximity to Airport:</strong>
-                                        {{
-                                            community_details.proximity_to_airport ||
-                                            "N/A"
-                                        }}
-                                        miles
-                                    </p>
-                                    <p>
-                                        <strong>Nearby Attractions:</strong>
-                                        {{
-                                            community_details.nearby_attractions ||
-                                            "N/A"
-                                        }}
-                                    </p>
-                                </div>
-
-                                <!-- Amenities Section -->
-                                <div class="col-6">
-                                    <h5 class="c-feature-title">Amenities</h5>
-                                    <p>
-                                        <strong>Amenities:</strong>
-                                        {{
-                                            community_details.amenities
-                                                ? community_details.amenities.join(
-                                                      ", "
-                                                  )
-                                                : "N/A"
-                                        }}
-                                    </p>
-                                </div>
-
-                                <!-- Regions Section -->
-                                <div class="col-6">
-                                    <h5 class="c-feature-title">Regions</h5>
-                                    <p>
-                                        {{
-                                            community_details.regions
-                                                ? community_details.regions.join(
-                                                      ", "
-                                                  )
-                                                : "N/A"
-                                        }}
-                                    </p>
-                                </div>
-
-                                <!-- Neighborhoods Section -->
-                                <div class="col-6">
-                                    <h5 class="c-feature-title">
-                                        Neighborhoods
-                                    </h5>
-                                    <p>
-                                        {{
-                                            community_details.neighborhoods
-                                                ? community_details.neighborhoods.join(
-                                                      ", "
-                                                  )
-                                                : "N/A"
-                                        }}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- <div class="middle-section row mt-2">
-                        <div
-                            class="accordion"
-                            id="accordionExample"
-                            v-if="logged_in_user && logged_in_user.agreement"
+                        <!-- Thumbnails Carousel -->
+                        <Carousel
+                            id="thumbnails"
+                            :items-to-show="4"
+                            :wrap-around="true"
+                            v-model="currentSlide"
+                            ref="carousel"
                         >
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button
-                                        class="accordion-button collapsed"
-                                        type="button"
-                                        data-bs-toggle="collapse"
-                                        data-bs-target="#collapseCommunity"
-                                        aria-expanded="true"
-                                        aria-controls="collapseCommunity"
-                                    >
-                                        <h2 class="feature-title">
-                                            Community Details
-                                        </h2>
-                                    </button>
-                                </h2>
+                            <!-- Thumbnail Images -->
+                            <Slide
+                                v-for="(file, index) in community_details.files"
+                                :key="index"
+                            >
                                 <div
-                                    id="collapseCommunity"
-                                    class="accordion-collapse collapse hide"
-                                    data-bs-parent="#accordionExample"
+                                    class="carousel__item"
+                                    @click="slideTo(index)"
+                                    style="cursor: pointer"
                                 >
-                                    <div class="accordion-body">
-                                        <div class="row">
-                                             <div class="col-6">
-                                                <h5 class="c-feature-title">
-                                                    Location & Info
-                                                </h5>
-                                                <p>
-                                                    <strong
-                                                        >Map Location:</strong
-                                                    >
-                                                    {{
-                                                        community_details.map_location ||
-                                                        "N/A"
-                                                    }}
-                                                </p>
-                                                <p>
-                                                    <strong
-                                                        >Legal
-                                                        Subdivision:</strong
-                                                    >
-                                                    {{
-                                                        community_details.legal_subdivision ||
-                                                        "N/A"
-                                                    }}
-                                                </p>
-                                                <p>
-                                                    <strong
-                                                        >Nearby
-                                                        Properties:</strong
-                                                    >
-                                                    {{
-                                                        community_details.nearby_properties ||
-                                                        "N/A"
-                                                    }}
-                                                </p>
-                                                <p>
-                                                    <strong>Masterplan:</strong>
-                                                    {{
-                                                        community_details.masterplan ||
-                                                        "N/A"
-                                                    }}
-                                                </p>
-                                                <p>
-                                                    <strong
-                                                        >Sub
-                                                        Association:</strong
-                                                    >
-                                                    {{
-                                                        community_details.sub_association
-                                                            ? "Yes"
-                                                            : "No"
-                                                    }}
-                                                </p>
-                                            </div>
-
-                                             <div class="col-6">
-                                                <h5 class="c-feature-title">
-                                                    HOA & Fees
-                                                </h5>
-                                                <p>
-                                                    <strong>HOA:</strong>
-                                                    {{
-                                                        community_details.hoa ||
-                                                        "N/A"
-                                                    }}
-                                                </p>
-                                                <p>
-                                                    <strong
-                                                        >SID/LID Fee:</strong
-                                                    >
-                                                    ${{
-                                                        community_details.sid_lid_fee ||
-                                                        "N/A"
-                                                    }}
-                                                </p>
-                                                <p>
-                                                    <strong
-                                                        >Payment
-                                                        Frequency:</strong
-                                                    >
-                                                    {{
-                                                        community_details.sid_lid_payment_frequency ||
-                                                        "N/A"
-                                                    }}
-                                                </p>
-                                                <p>
-                                                    <strong>CIC:</strong>
-                                                    {{
-                                                        community_details.cic
-                                                            ? "Yes"
-                                                            : "No"
-                                                    }}
-                                                </p>
-                                                <p>
-                                                    <strong>LID:</strong>
-                                                    {{
-                                                        community_details.lid
-                                                            ? "Yes"
-                                                            : "No"
-                                                    }}
-                                                </p>
-                                            </div>
-
-                                             <div class="col-6">
-                                                <h5 class="c-feature-title">
-                                                    Proximity
-                                                </h5>
-                                                <p>
-                                                    <strong
-                                                        >Proximity to
-                                                        Strip:</strong
-                                                    >
-                                                    {{
-                                                        community_details.proximity_to_strip ||
-                                                        "N/A"
-                                                    }}
-                                                    miles
-                                                </p>
-                                                <p>
-                                                    <strong
-                                                        >Proximity to
-                                                        Airport:</strong
-                                                    >
-                                                    {{
-                                                        community_details.proximity_to_airport ||
-                                                        "N/A"
-                                                    }}
-                                                    miles
-                                                </p>
-                                                <p>
-                                                    <strong
-                                                        >Nearby
-                                                        Attractions:</strong
-                                                    >
-                                                    {{
-                                                        community_details.nearby_attractions ||
-                                                        "N/A"
-                                                    }}
-                                                </p>
-                                            </div>
-
-                                             <div class="col-6">
-                                                <h5 class="c-feature-title">
-                                                    Amenities
-                                                </h5>
-                                                <p>
-                                                    <strong>Amenities:</strong>
-                                                    {{
-                                                        community_details.amenities
-                                                            ? community_details.amenities.join(
-                                                                  ", "
-                                                              )
-                                                            : "N/A"
-                                                    }}
-                                                </p>
-                                            </div>
-
-                                            <div class="col-6">
-                                                <h5 class="c-feature-title">
-                                                    Regions
-                                                </h5>
-                                                <p>
-                                                    {{
-                                                        community_details.regions
-                                                            ? community_details.regions.join(
-                                                                  ", "
-                                                              )
-                                                            : "N/A"
-                                                    }}
-                                                </p>
-                                            </div>
-
-                                             <div class="col-6">
-                                                <h5 class="c-feature-title">
-                                                    Neighborhoods
-                                                </h5>
-                                                <p>
-                                                    {{
-                                                        community_details.neighborhoods
-                                                            ? community_details.neighborhoods.join(
-                                                                  ", "
-                                                              )
-                                                            : "N/A"
-                                                    }}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <img
+                                        :src="file.file_name"
+                                        :alt="file.file_original_name"
+                                        class="img-fluid"
+                                        style="
+                                            max-height: 100px;
+                                            object-fit: cover;
+                                        "
+                                    />
                                 </div>
-                            </div>
-                        </div>
-                        <div v-else>
-                            <div class="open-house-tag mt-2">
-                                Information is available upon request. Please
-                                login first.
-                            </div>
-                            <div class="blurred-content">
-                                <div class="blurred-box">
-                                    Information is available upon request.
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
+                            </Slide>
+                        </Carousel>
+                    </div>
                 </div>
+                <div class="bg-white">
+    <div class="container mt-3">
+        <div class="row g-3">
+            <!-- Left Column (Main Details) -->
+            <div class="col-md-8 mt-4">
+                <h5 class="c-tab-title text-dark">
+                    About {{ community_details.name }}
+                </h5>
+                <p class="c-description">
+                    {{ community_details.description }}
+                </p>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <!-- Location & Info Section -->
+                            <div class="col-md-6">
+                                <div class="sub-section-title text-dark">Location & Info</div>
+                                <ul class="list-group">
+                                    <li class="list-group-item"><strong class="text-dark">Map:</strong> {{ community_details.map_location || "N/A" }}</li>
+                                    <li class="list-group-item"><strong class="text-dark">Legal Subdivision:</strong> {{ community_details.legal_subdivision || "N/A" }}</li>
+                                    <li class="list-group-item"><strong class="text-dark">Nearby Properties:</strong> {{ community_details.nearby_properties || "N/A" }}</li>
+                                    <li class="list-group-item"><strong class="text-dark">Masterplan:</strong> {{ community_details.masterplan || "N/A" }}</li>
+                                    <li class="list-group-item"><strong class="text-dark">Sub Association:</strong> {{ community_details.sub_association ? "Yes" : "No" }}</li>
+                                </ul>
+                            </div>
+                            <!-- HOA & Fees Section -->
+                            <div class="col-md-6">
+                                <div class="sub-section-title text-dark">HOA & Fees</div>
+                                <ul class="list-group">
+                                    <li class="list-group-item"><strong class="text-dark">HOA:</strong> {{ community_details.hoa || "N/A" }}</li>
+                                    <li class="list-group-item"><strong class="text-dark">SID/LID Fee:</strong> ${{ community_details.sid_lid_fee || "N/A" }}</li>
+                                    <li class="list-group-item"><strong class="text-dark">Payment Frequency:</strong> {{ community_details.sid_lid_payment_frequency || "N/A" }}</li>
+                                    <li class="list-group-item"><strong class="text-dark">CIC:</strong> {{ community_details.cic ? "Yes" : "No" }}</li>
+                                    <li class="list-group-item"><strong class="text-dark">LID:</strong> {{ community_details.lid ? "Yes" : "No" }}</li>
+                                </ul>
+                            </div>
+                            <!-- Proximity Section -->
+                            <div class="col-md-6">
+                                <div class="sub-section-title text-dark">Proximity</div>
+                                <ul class="list-group">
+                                    <li class="list-group-item"><strong class="text-dark">Proximity to Strip:</strong> {{ community_details.proximity_to_strip || "N/A" }} miles</li>
+                                    <li class="list-group-item"><strong class="text-dark">Proximity to Airport:</strong> {{ community_details.proximity_to_airport || "N/A" }} miles</li>
+                                    <li class="list-group-item"><strong class="text-dark">Nearby Attractions:</strong> {{ community_details.nearby_attractions || "N/A" }}</li>
+                                </ul>
+                            </div>
+                             
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Right Column (Summary) -->
+            <div class="col-md-4 mt-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div v-if="community_details.amenities && community_details.amenities.length > 0">
+                            <div class="open-house-tag mb-2"><i class="bi bi-wifi text-white fs-5"></i><span class="ms-2">Amenities</span></div>
+                            <ul class="list-unstyled">
+                                <li v-for="(amenity, index) in community_details.amenities" :key="index">
+                                    <i class="bi bi-check2-circle"></i> {{ amenity }}
+                                </li>
+                            </ul>
+                        </div>
+                        <div v-if="community_details.neighborhoods && community_details.neighborhoods.length > 0">
+                            <div class="open-house-tag mb-2"><i class="bi bi-house-check-fill text-white fs-5"></i><span class="ms-2">Neighborhoods</span></div>
+                            <ul class="list-unstyled">
+                                <li v-for="(neighborhood, index) in community_details.neighborhoods" :key="index">
+                                    <i class="bi bi-check2-circle"></i> {{ neighborhood }}
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="open-house-tag mb-2"><i class="bi bi-building text-white fs-5"></i><span class="ms-2"> HOA </span></div>
+                            <ul class="list-unstyled">
+                                <li><i class="bi bi-check2-circle"></i> {{ community_details.hoa }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
             </div>
             <div class="container-fluid interactive-banner mt-3">
                 <h1>HOMES IN COMMUNITY</h1>
@@ -704,70 +202,17 @@
                                 "
                                 :title="home.title"
                                 :address="home.address"
+                                :property_id="home.property_id"
                                 :bedrooms="home.bedrooms"
                                 :price="home.price"
                                 :bathrooms="home.bathrooms"
                                 :square_feet="home.square_feet"
                                 :garages="home.garages"
                             />
-                            <!-- <div class="card c-border-design">
-                                <img
-                                    :src="
-                                        home.main_image ?? '/images/default_image.png'
-                                    "
-                                    class="card-img-top c-card-img-border"
-                                    :alt="home.title"
-                                    @error="setAltImg"
-                                />
-
-                                <div
-                                    v-if="home.is_open_house == 1"
-                                    class="card-img-overlay c-card-img-overlay-flash-sale"
-                                >
-                                    <span
-                                        class="badge rounded-pill bg-white text-dark"
-                                        >Open House</span
-                                    >
-                                </div>
-
-                                <div class="card-body text-start">
-                                    <p>
-                                        <span v-if="home.title"> 
-                                            
-                                            <b>{{ home.title }} </b><br />
-                                        </span>
-                                        
-                                        <span v-if="home.square_feet"> 
-                                            AREA (SQFT)
-                                            <b>{{ home.square_feet }} </b><br />
-                                        </span>
-                                        <span v-if="home.bedrooms">
-                                            Bedrooms
-                                            <b>
-                                                {{ home.bedrooms }}
-                                            </b>
-                                            <br />
-                                        </span>
-                                        <span v-if="home.property_type">
-                                            Property type
-                                            <b>{{ home.property_type }}</b>
-                                            <br />
-                                        </span>
-
-                                        From
-                                        <b>${{ formatPrice(home.price) }}</b>
-                                    </p>
-                                </div>
-                            </div> -->
                         </a>
                     </div>
                 </div>
             </div>
-            <!-- <div
-                class="container c-card-border-design mb-2"
-                ref="map"
-                style="height: 500px; width: 100%"
-            ></div> -->
         </div>
     </Master>
 </template>
@@ -1026,7 +471,7 @@ export default {
 }
 
 .interactive-banner {
-    background-color: rgba(22, 50, 89, 255);
+    background-color: rgb(61, 102, 143);
     color: white;
     text-align: center;
     padding: 20px 0;
@@ -1052,7 +497,7 @@ export default {
     border-radius: 0px !important;
 }
 .open-house-tag {
-    background-color: rgba(22, 50, 89, 255);
+    background-color: rgb(61, 102, 143);
     color: white;
     padding: 5px 10px;
     font-size: 14px;
@@ -1084,5 +529,56 @@ export default {
 .card-img-top {
     height: 240px;
     object-fit: cover;
+}
+.c-description {
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: rgb(61, 102, 143);
+}
+.card {
+    border: none;
+}
+.card-body {
+    padding: 0;
+}
+
+.section-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #2d6a9f;
+    border-bottom: 3px solid #2d6a9f;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.sub-section-title {
+    font-family: "Playfair Display", serif;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 28px;
+    color: rgb(23, 38, 54);
+}
+
+.list-group-item {
+    border: none;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: rgb(61, 102, 143);
+    margin: 0 !important;
+}
+
+.c-tab-title {
+    font-family: "Playfair Display", serif;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 28px;
+    color: rgb(23, 38, 54);
+}
+.bi-check2-circle {
+    color: rgb(61, 102, 143);
 }
 </style>

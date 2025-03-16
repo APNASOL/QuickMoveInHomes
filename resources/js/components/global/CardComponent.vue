@@ -222,7 +222,7 @@ export default defineComponent({
     border-radius: 5px;
 }
 .property-card .badge.sale {
-    background-color: #16a34a;
+    background-color: #2d6a9f;
     color: white;
 }
 .property-card .badge.rent {

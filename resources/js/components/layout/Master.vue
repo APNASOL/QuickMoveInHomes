@@ -298,7 +298,7 @@
                             ref="openLoginModal"
                             data-bs-toggle="modal"
                             data-bs-target="#loginModal"
-                            class="nav-link text-decoration-none text-white c-pointer"
+                            class="nav-link text-decoration-none c-pointer"
                             @click="clearFields"
                         >
                             {{ translate("Login") }}
@@ -1276,7 +1276,7 @@ p {
 }
 
 .c-top-card {
-    background-color: rgba(0, 27, 159, 1);
+    background-color: rgb(61, 102, 143);
     padding: 4px 24px;
     font-size: 0.875rem;
     text-align: center;
@@ -1504,57 +1504,57 @@ p {
 /* Global Css ////////////////////////////////////////////////////////////////////// */
 /* Global Css ////////////////////////////////////////////////////////////////////// */
 .c-btn-theme-primary {
-    background-color: rgba(0, 27, 159, 1);
+    background-color: rgb(61, 102, 143);
     color: white !important;
 }
 .c-btn-theme-primary:hover,
 .c-btn-theme-primary:active,
 .c-btn-theme-primary:visited {
-    background-color: rgba(0, 27, 159, 0.8) !important;
+    background-color: rgb(61, 102, 143) !important;
 }
 
 .c-btn-theme-primary:focus {
-    box-shadow: 0 0 0 0.2rem rgba(0, 27, 159, 0.5) !important;
+    box-shadow: 0 0 0 0.2rem rgb(61, 102, 143) !important;
 }
 .c-btn-theme-primary:active {
-    box-shadow: 0 0 0 0.2rem rgba(0, 27, 159, 0.5) !important;
+    box-shadow: 0 0 0 0.2rem rgb(61, 102, 143) !important;
 }
 
 .c-btn-theme-primary-outline {
-    color: rgba(0, 27, 159, 1) !important;
-    border: 1px solid rgba(0, 27, 159, 1) !important;
+    color: rgb(61, 102, 143) !important;
+    border: 1px solid rgb(61, 102, 143) !important;
 }
 
 .c-btn-theme-primary-outline:hover {
-    background-color: rgba(0, 27, 159, 1) !important;
+    background-color: rgb(61, 102, 143) !important;
     color: white !important;
 }
 
 .c-btn-theme-primary-outline:focus,
 .c-btn-theme-primary-outline.focus {
-    background: rgba(0, 27, 159, 1) !important;
-    border-color: rgba(0, 27, 159, 1) !important;
+    background: rgb(61, 102, 143) !important;
+    border-color: rgb(61, 102, 143) !important;
     color: white !important;
-    box-shadow: 0 0 0 0.25rem rgba(0, 27, 159, 0.5) !important;
+    box-shadow: 0 0 0 0.25rem rgb(61, 102, 143) !important;
 }
 
 .c-btn-theme-primary-outline:active,
 .c-btn-theme-primary-outline.active,
 .show > .c-btn-theme-primary-outline.dropdown-toggle {
-    background: rgba(0, 27, 159, 1) !important;
-    border-color: rgba(0, 27, 159, 1) !important;
+    background: rgb(61, 102, 143) !important;
+    border-color: rgb(61, 102, 143) !important;
 }
 
 .c-btn-theme-primary-outline:active:focus,
 .c-btn-theme-primary-outline.active:focus,
 .show > .c-btn-theme-primary-outline.dropdown-toggle:focus {
-    box-shadow: 0 0 0 0.25rem rgba(0, 27, 159, 0.5) !important;
+    box-shadow: 0 0 0 0.25rem rgb(61, 102, 143) !important;
 }
 
 .c-btn-theme-primary-outline :active:focus,
 .c-btn-theme-primary-outline .active:focus,
 .show > .c-btn-theme-primary-outline .dropdown-toggle:focus {
-    box-shadow: 0 0 0 0.25rem rgba(0, 27, 159, 0.5) !important;
+    box-shadow: 0 0 0 0.25rem rgb(61, 102, 143) !important;
 }
 
 /* //////////////////////////////////////////////////////////////////////////////////// */
@@ -1564,24 +1564,24 @@ p {
     white-space: normal;
     overflow: visible;
     text-overflow: clip;
-    background-color: rgba(0, 27, 159, 1);
+    background-color: rgb(61, 102, 143);
     color: black !important;
 }
 
 .calendar-container .fc-h-event .fc-event-main:hover {
-    background-color: rgba(0, 27, 159, 1) !important;
-    border: rgba(0, 27, 159, 1) !important;
+    background-color: rgb(61, 102, 143) !important;
+    border: rgb(61, 102, 143) !important;
     cursor: pointer;
 }
 
 .fc-h-event {
-    border: 0px solid rgba(0, 27, 159, 1);
+    border: 0px solid rgb(61, 102, 143);
     background-color: white;
 }
 
 .calendar-container .fc-h-event .fc-event-main {
     color: black !important;
-    background-color: rgba(0, 27, 159, 1) !important;
+    background-color: rgb(61, 102, 143) !important;
     font-weight: bold;
 
     text-align: center;
@@ -1608,38 +1608,38 @@ label {
 }
 
 .fc .fc-button-primary:disabled {
-    background-color: rgba(0, 27, 159, 1) !important;
+    background-color: rgb(61, 102, 143) !important;
 }
 .fc .fc-button-primary {
-    background-color: rgba(0, 27, 159, 1) !important;
+    background-color: rgb(61, 102, 143) !important;
     color: black !important;
 }
 .fc .fc-button-primary:hover {
-    background-color: rgba(0, 27, 159, 1) !important;
+    background-color: rgb(61, 102, 143) !important;
 }
 
 .fc .fc-button-primary {
-    border: 0px solid rgba(0, 27, 159, 1);
+    border: 0px solid rgb(61, 102, 143);
 }
 
 .c-step-dropdown {
     width: 100% !important;
-    background-color: rgba(0, 27, 159, 1) !important;
+    background-color: rgb(61, 102, 143) !important;
     color: black !important;
 }
 
 .c-step-dropdown:hover,
 .c-step-dropdown:active,
 .c-step-dropdown:visited {
-    background-color: rgba(0, 27, 159, 1) !important;
+    background-color: rgb(61, 102, 143) !important;
     color: black !important;
 }
 
 .c-step-dropdown:focus {
-    box-shadow: 0 0 0 0.2rem rgba(0, 27, 159, 1) !important;
+    box-shadow: 0 0 0 0.2rem rgb(61, 102, 143) !important;
 }
 .c-step-dropdown:active {
-    box-shadow: 0 0 0 0.2rem rgba(0, 27, 159, 1) !important;
+    box-shadow: 0 0 0 0.2rem rgb(61, 102, 143) !important;
 }
 .dropdown-menu {
     width: 100% !important;
@@ -1716,7 +1716,7 @@ label {
 }
 
 .interactive-banner {
-    background-color: rgba(22, 50, 89, 255);
+    background-color: rgb(61, 102, 143);
     color: white;
     text-align: center;
     padding: 20px 0;
@@ -1777,12 +1777,12 @@ label {
 }
 
 .c-custom-btn {
-    border: 2px solid #0a3564; /* Primary color border */
-    color: #0a3564; /* Primary text color */
+    border: 2px solid rgb(61, 102, 143); /* Primary color border */
+    color: rgb(61, 102, 143); /* Primary text color */
 }
 
 .c-custom-btn:hover {
-    background-color: #0a3564; /* Primary color on hover */
+    background-color: rgb(61, 102, 143); /* Primary color on hover */
     color: white; /* White text on hover */
 }
 </style>

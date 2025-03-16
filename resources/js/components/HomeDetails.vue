@@ -1086,14 +1086,14 @@
                             "
                         >
                             <a
-                                class="btn c-btn-theme-primary c-theme-rounded-btn mt-5 w-100 p-4 beat"
+                                class="btn btn-success  mt-5 w-100 p-4 beat"
                                 :href="'/homes-agents/' + home_id"
                             >
                                 <b class="fs-3">Connect to Agent</b>
                                 <i class="bi bi-arrow-right ms-2"></i>
                             </a>
                             <div class="highlights mt-3">
-                                <h4 class="feature-title">HIGHLIGHTS</h4>
+                                
 
                                 <!-- Show actual data if user is logged in and not a customer -->
                                 <!-- <div
@@ -1111,7 +1111,7 @@
                                             </div>
                                             <div>
                                                 <i
-                                                    class="bi bi-check-lg text-warning fs-5"
+                                                    class="bi bi-check-lg c-text-theme fs-5"
                                                 ></i>
                                                 <a
                                                     class="text-decoration-none c-anchor-style"
@@ -1130,15 +1130,15 @@
                                             COMMUNITY
                                         </div>
                                         <i
-                                            class="bi bi-check-lg text-warning fs-5"
+                                            class="bi bi-check-lg c-text-theme fs-5"
                                         ></i>
                                         {{ Community.name }}<br />
                                         <i
-                                            class="bi bi-list text-warning fs-5"
+                                            class="bi bi-list c-text-theme fs-5"
                                         ></i>
                                         {{ Community.description }}<br />
                                         <i
-                                            class="bi bi-geo-alt-fill text-warning fs-5"
+                                            class="bi bi-geo-alt-fill c-text-theme fs-5"
                                         ></i>
                                         {{ Community.location }}
                                     </div>
@@ -1151,7 +1151,7 @@
                                                 LOCATION
                                             </div>
                                             <i
-                                                class="bi bi-geo-alt-fill text-warning fs-5"
+                                                class="bi bi-geo-alt-fill c-text-theme fs-5"
                                             ></i>
                                             <span v-if="Home.address">{{
                                                 Home.address
@@ -1176,7 +1176,7 @@
                                                 SCHOOL
                                             </div>
                                             <i
-                                                class="bi bi-buildings-fill text-warning fs-5"
+                                                class="bi bi-buildings-fill c-text-theme fs-5"
                                             ></i>
                                             {{ Home.school_name }}
                                         </div>
@@ -1190,7 +1190,7 @@
                                                 HOA
                                             </div>
                                             <i
-                                                class="bi bi-house text-warning fs-5"
+                                                class="bi bi-house c-text-theme fs-5"
                                             ></i>
                                             {{ Home.hoa_name }}
                                         </div>
@@ -1252,6 +1252,7 @@
                                         '/images/default_image.png'
                                     "
                                     :title="home.title"
+                                    :property_id="home.property_id"
                                     :address="home.address"
                                     :bedrooms="home.bedrooms"
                                     :price="home.price"
@@ -1505,7 +1506,7 @@ color: rgb(45, 106, 159);
 }
 
 .interactive-banner {
-    background-color: rgba(22, 50, 89, 255);
+    background-color: rgb(61, 102, 143);
     color: white;
     text-align: center;
     padding: 20px 0;
@@ -1551,7 +1552,7 @@ color: rgb(45, 106, 159);
     margin-right: 10px;
 }
 .open-house-tag {
-    background-color: #002855;
+    background-color: rgb(61, 102, 143);
     color: white;
     padding: 5px 10px;
     font-size: 14px;
@@ -1661,5 +1662,9 @@ color: rgb(45, 106, 159);
     font-weight: bold !important;
     line-height: 24px !important;
     color: rgb(23, 38, 54) !important;
+}
+.c-text-theme
+{
+    color: rgb(61, 102, 143) !important;
 }
 </style>
