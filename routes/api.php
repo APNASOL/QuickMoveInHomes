@@ -313,6 +313,7 @@ Route::get('/fetch-website-info', [SettingController::class, 'website_info_fetch
 
 // external website communities pages
 Route::get('/get-communities', [IndexController::class, 'communities'])->name('get-communities');
+Route::get('/get-all-communities', [IndexController::class, 'all_communities'])->name('get-all-communities');
  
  
 // for external website

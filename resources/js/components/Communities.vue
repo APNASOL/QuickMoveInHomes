@@ -28,7 +28,7 @@
  
             <!-- Bottom Button -->
             <div class="text-center mt-4">
-                <button class="btn btn-light c-custom-btn px-4 py-2 fw-semibold">Explore More Communities</button>
+                <a :href="'/all/communities/'" class="btn btn-light c-custom-btn px-4 py-2 fw-semibold">Explore More Communities</a>
             </div>
         </div>
     </section>

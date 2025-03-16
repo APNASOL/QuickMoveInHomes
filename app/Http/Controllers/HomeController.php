@@ -358,6 +358,11 @@ class HomeController extends Controller
     {
         return view('app', compact('community_id'));
     }
+    public function all_communities()
+    {
+        $name = 'all-communities';
+        return view('app', compact('name'));
+    }
     public function get_community_details($id)
     {
         // Get the community

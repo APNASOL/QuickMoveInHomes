@@ -106,6 +106,9 @@ app.component("front-all-events-component", allEvents);
 import detatiledCommunity from "@components/CommunityDetails.vue";
 app.component("front-community-details-component", detatiledCommunity);
 
+import CommunitiesAll from "@components/CommunitiesAll.vue";
+app.component("front-all-communites-component", CommunitiesAll);
+
  
 // Languages components
 import languages from "@components/backend/Language/Index.vue";
