@@ -351,7 +351,7 @@ section {
 }
 
 .search .multiselect-option .is-selected {
-    background-color: #e58b15 !important;
+    background-color: rgb(61, 102, 143) !important;
     color: white !important;
 }
 </style>

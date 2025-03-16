@@ -107,7 +107,7 @@ h1 {
 
 h2, h3, h4, h5 {
     font-family: 'Raleway', sans-serif;
-    color: #E58B15;
+    color: rgb(61, 102, 143);
     line-height: 1.55rem; 
     font-weight: bold;
     
