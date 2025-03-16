@@ -1,8 +1,8 @@
 <template>
     <Master>
-        <section class="container mt-5">
+        <section class="container p-3 bg-white">
             <!-- Hero Section -->
-            <div class="row align-items-center">
+            <div class="row align-items-center p-3">
                 <!-- Profile Image -->
                 <div class="col-md-4 text-center">
                     <div class="profile-image">
@@ -46,25 +46,27 @@
         </section>
 
         <!-- Our Story -->
-        <section class="container mt-5">
-            <div class="row align-items-center">
-                <div class="col-md-12">
-                    <h1 class="profile-name">Professional Background</h1>
-                    Yvonne's extensive experience includes working with both new
-                    and resale homes, guiding clients through the complexities
-                    of the real estate market. She has a background in building
-                    houses and collaborating with architectural engineers,
-                    providing her with in-depth knowledge of construction costs
-                    and services. Her expertise covers various property types,
-                    such as single-family homes, condos, and investment
-                    properties, across Las Vegas, North Las Vegas, and
-                    Henderson.
+        <section class="p-3">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <h1 class="profile-name">Professional Background</h1>
+                        Yvonne's extensive experience includes working with both
+                        new and resale homes, guiding clients through the
+                        complexities of the real estate market. She has a
+                        background in building houses and collaborating with
+                        architectural engineers, providing her with in-depth
+                        knowledge of construction costs and services. Her
+                        expertise covers various property types, such as
+                        single-family homes, condos, and investment properties,
+                        across Las Vegas, North Las Vegas, and Henderson.
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Meet Our Team -->
-        <section class="mt-5 p-3 bg-white">
+        <section class="p-3 bg-white">
             <div class="container">
                 <h1 class="profile-name">Meet Our Team</h1>
                 <div class="row text-center mt-3">
@@ -166,7 +168,7 @@ export default {
     width: 200px;
     height: 200px;
     overflow: hidden;
-    border-radius: 50% 50% 0 0;
+    border-radius: 50% 0 0 50%;
     display: flex;
     justify-content: center;
     align-items: flex-end;
@@ -177,6 +179,7 @@ export default {
     height: auto;
 }
 .profile-name {
+    font-family: "Playfair Display", serif !important;
     font-size: 32px;
     font-weight: bold;
     color: #2c3e50;

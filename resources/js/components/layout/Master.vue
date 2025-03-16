@@ -1265,7 +1265,7 @@ p {
     display: none !important;
 }
 .c-theme-color {
-    color: #163259 !important;
+    color: rgb(61, 102, 143);
 }
 .c-bg-color {
     background-color: #e7ebef !important;
@@ -1729,7 +1729,7 @@ label {
     background: linear-gradient(#c2a01e 9%, #debf46, #c2a01e 84%);
 }
 .btn-primary {
-    background: #0c0f24;
+    background: rgb(61, 102, 143);
 }
 .btn-primary:hover {
     background: #023f86;
@@ -1752,7 +1752,7 @@ label {
     overflow-x: auto; /* Allows horizontal scrolling */
 }
 .dropdown-item:hover {
-    background-color: #0c0f24;
+    background-color: rgb(61, 102, 143);
     color: white; /* Adjust text color for better readability, if needed */
 }
 .c-dec-none {
@@ -1784,5 +1784,13 @@ label {
 .c-custom-btn:hover {
     background-color: rgb(61, 102, 143); /* Primary color on hover */
     color: white; /* White text on hover */
+}
+.multiselect-option.is-selected {
+    background: rgb(61, 102, 143) !important;
+    color: var(--ms-option-color-selected, #fff);
+}
+.multiselect-option.is-selected.is-pointed {
+    background: rgb(61, 102, 143) !important;
+    color: var(--ms-option-color-selected, #fff);
 }
 </style>

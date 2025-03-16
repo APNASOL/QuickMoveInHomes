@@ -14,51 +14,38 @@
         <section class="container mt-5">
             <div class="row">
                 <div class="col-md-6">
-                    <p>
-                        <!-- <button
-                            class="btn btn-primary"
-                            type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#collapseContactInfo"
-                            aria-expanded="false"
-                            aria-controls="collapseContactInfo"
-                        >
-                            Cancel
-                        </button> -->
-                    </p>
+                    <div class="card w-100">
+                        <div class="card-body">
+                            <h4 class="contact-title">
+                                Better yet, see us in person!
+                            </h4>
+                            <p>
+                                We love our customers, so feel free to visit
+                                during normal business hours.
+                            </p>
+                            <h5 class="c-title">QBrand New Homes Vegas</h5>
+                            <p>
+                                10845 Griffith Peak Drive, Suite 2, Las Vegas,
+                                NV 89135
+                            </p>
+                            <h5 class="c-title">
+                                Phone | 24-Hour Emergency Assistance
+                            </h5>
+                            <p>
+                                USA & Canada: (702) 819-0035 <br />
+                                Overseas: +1 (702) 819-0035
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    
                     <div>
                         <div
                             class="collapse multi-collapse show"
                             id="collapseContactInfo"
                         >
                             <div>
-                                <div>
-                                    <b class="c-title"
-                                        >Better yet, see in person!</b
-                                    >
-                                    <p>
-                                        We love our customers, so feel free to
-                                        visit during normal business hours.
-                                    </p>
-                                </div>
-                                <div>
-                                    <b class="c-title"
-                                        >QBrand New Homes Vegas</b
-                                    >
-                                    <p>
-                                        10845 Griffith Peak Drive, Suite 2 Las
-                                        Vegas, NV, 89135
-                                    </p>
-                                </div>
-                                <div>
-                                    <b class="c-title"
-                                        >Phone | 24 Hour Emergency assistance</b
-                                    >
-                                    <p>
-                                        From USA & Canada: (702) 819-0035 From
-                                        Overseas: +1 (702) 819-0035
-                                    </p>
-                                </div>
                                 <div class="mt-3">
                                     <!-- <b class="c-title"
                                         >Reservation Department Hours</b
@@ -73,7 +60,7 @@
                                                 id="headingOne"
                                             >
                                                 <button
-                                                    class="accordion-button collapsed c-title"
+                                                    class="accordion-button collapsed contact-title"
                                                     type="button"
                                                     data-bs-toggle="collapse"
                                                     data-bs-target="#collapseOne"
@@ -83,39 +70,33 @@
                                                     OFFICE HOURS
                                                 </button>
                                             </h2>
+
                                             <div
                                                 id="collapseOne"
-                                                class="accordion-collapse collapse hide"
+                                                class="accordion-collapse collapse show"
                                                 aria-labelledby="headingOne"
                                                 data-bs-parent="#contactAccorddion"
                                             >
                                                 <div class="accordion-body">
-                                                    <ul type="none">
+                                                    <ul class="list-unstyled">
                                                         <li>
-                                                            Mon 10:00 am - 06:00
-                                                            pm
+                                                            <strong
+                                                                >Mon-Fri:</strong
+                                                            >
+                                                            10:00 AM - 06:00 PM
                                                         </li>
                                                         <li>
-                                                            Tue 10:00 am - 06:00
-                                                            pm
+                                                            <strong
+                                                                >Sat:</strong
+                                                            >
+                                                            11:00 AM - 03:00 PM
                                                         </li>
                                                         <li>
-                                                            Wed 10:00 am - 06:00
-                                                            pm
+                                                            <strong
+                                                                >Sun:</strong
+                                                            >
+                                                            Closed
                                                         </li>
-                                                        <li>
-                                                            Thu 10:00 am - 06:00
-                                                            pm
-                                                        </li>
-                                                        <li>
-                                                            Fri 10:00 am - 06:00
-                                                            pm
-                                                        </li>
-                                                        <li>
-                                                            Sat 11:00 am - 03:00
-                                                            pm
-                                                        </li>
-                                                        <li>Sun - Closed</li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -173,162 +154,146 @@
                             class="collapse multi-collapse"
                             id="collapseContactForm"
                         >
-                            <!-- <div class="card card-body" style="width: 300px;">
-                        This is some placeholder content for a horizontal collapse. It's hidden by default and shown when triggered.
-                        </div> -->
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row g-3 c-bg-form p-2">
+                                        <b class="c-title"
+                                            >Dear
+                                            <i class="c-theme-color"
+                                                >{{ contacting_user }}
+                                            </i>
+                                            Drop us a line</b
+                                        >
+                                        <div class="col-md-12">
+                                            <label class="form-label">{{
+                                                translate("Your Full Name")
+                                            }}</label>
+                                            <input
+                                                type="text"
+                                                class="form-control"
+                                                :class="{
+                                                    'invalid-bg':
+                                                        formErrors.name,
+                                                }"
+                                                v-model="form.name"
+                                            />
+                                            <div
+                                                class="invalid-feedback animated fadeIn"
+                                                v-if="formErrors.name"
+                                            >
+                                                {{ formErrors.name[0] }}
+                                            </div>
+                                        </div>
 
-                            <div class="row g-3 c-bg-form p-2">
-                                <b class="c-title"
-                                    >Dear
-                                    <i class="c-theme-color"
-                                        >{{ contacting_user }}
-                                    </i>
-                                    Drop us a line</b
-                                >
-                                <div class="col-md-12">
-                                    <label class="form-label">{{
-                                        translate("Your Full Name")
-                                    }}</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        :class="{
-                                            'invalid-bg': formErrors.name,
-                                        }"
-                                        v-model="form.name"
-                                    />
-                                    <div
-                                        class="invalid-feedback animated fadeIn"
-                                        v-if="formErrors.name"
-                                    >
-                                        {{ formErrors.name[0] }}
-                                    </div>
-                                </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label"
+                                                >Email</label
+                                            >
+                                            <input
+                                                type="text"
+                                                class="form-control"
+                                                :class="{
+                                                    'invalid-bg':
+                                                        formErrors.email,
+                                                }"
+                                                v-model="form.email"
+                                            />
+                                            <div
+                                                class="invalid-feedback animated fadeIn"
+                                                v-if="formErrors.email"
+                                            >
+                                                {{ formErrors.email[0] }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label"
+                                                >Phone</label
+                                            >
+                                            <input
+                                                type="number"
+                                                class="form-control"
+                                                :class="{
+                                                    'invalid-bg':
+                                                        formErrors.phone,
+                                                }"
+                                                v-model="form.phone"
+                                            />
+                                            <div
+                                                class="invalid-feedback animated fadeIn"
+                                                v-if="formErrors.phone"
+                                            >
+                                                {{ formErrors.phone[0] }}
+                                            </div>
+                                        </div>
 
-                                <div class="col-md-6">
-                                    <label class="form-label">Email</label>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        :class="{
-                                            'invalid-bg': formErrors.email,
-                                        }"
-                                        v-model="form.email"
-                                    />
-                                    <div
-                                        class="invalid-feedback animated fadeIn"
-                                        v-if="formErrors.email"
-                                    >
-                                        {{ formErrors.email[0] }}
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Phone</label>
-                                    <input
-                                        type="number"
-                                        class="form-control"
-                                        :class="{
-                                            'invalid-bg': formErrors.phone,
-                                        }"
-                                        v-model="form.phone"
-                                    />
-                                    <div
-                                        class="invalid-feedback animated fadeIn"
-                                        v-if="formErrors.phone"
-                                    >
-                                        {{ formErrors.phone[0] }}
-                                    </div>
-                                </div>
+                                        <div class="form-group">
+                                            <label for="message">Message</label>
+                                            <textarea
+                                                class="form-control"
+                                                id="message"
+                                                :class="{
+                                                    'invalid-bg':
+                                                        formErrors.message,
+                                                }"
+                                                v-model="form.message"
+                                                rows="3"
+                                            ></textarea>
+                                            <div
+                                                class="invalid-feedback animated fadeIn"
+                                                v-if="formErrors.message"
+                                            >
+                                                {{ formErrors.message[0] }}
+                                            </div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <button
+                                                type="submit"
+                                                class="btn c-btn-theme-primary"
+                                                v-if="formStatus"
+                                                @click="save"
+                                            >
+                                                {{ translate("Send") }}
+                                            </button>
+                                            <button
+                                                class="btn c-btn-theme-primary"
+                                                type="button"
+                                                disabled
+                                                v-else
+                                            >
+                                                {{ translate("Sending") }}
+                                                <span
+                                                    class="spinner-border spinner-border-sm"
+                                                    role="status"
+                                                    aria-hidden="true"
+                                                ></span>
+                                            </button>
 
-                                <div class="form-group">
-                                    <label for="message">Message</label>
-                                    <textarea
-                                        class="form-control"
-                                        id="message"
-                                        :class="{
-                                            'invalid-bg': formErrors.message,
-                                        }"
-                                        v-model="form.message"
-                                        rows="3"
-                                    ></textarea>
-                                    <div
-                                        class="invalid-feedback animated fadeIn"
-                                        v-if="formErrors.message"
-                                    >
-                                        {{ formErrors.message[0] }}
-                                    </div>
-                                </div>
-                                <div class="mt-3">
-                                    <button
-                                        type="submit"
-                                        class="btn c-btn-theme-primary"
-                                        v-if="formStatus"
-                                        @click="save"
-                                    >
-                                        {{ translate("Send") }}
-                                    </button>
-                                    <button
-                                        class="btn c-btn-theme-primary"
-                                        type="button"
-                                        disabled
-                                        v-else
-                                    >
-                                        {{ translate("Sending") }}
-                                        <span
-                                            class="spinner-border spinner-border-sm"
-                                            role="status"
-                                            aria-hidden="true"
-                                        ></span>
-                                    </button>
-
-                                    <!-- data-bs-toggle="collapse"
+                                            <!-- data-bs-toggle="collapse"
                                     data-bs-target="#collapseContactInfo"
                                     aria-expanded="false"
                                     aria-controls="collapseContactInfo" -->
-                                    <button
-                                        class="btn btn-danger ms-3"
-                                        type="button"
-                                        data-bs-toggle="collapse"
-                                        data-bs-target=".multi-collapse"
-                                        aria-expanded="false"
-                                        aria-controls="collapseContactForm collapseContactInfo"
-                                        @click="showForm(null)"
-                                    >
-                                        Cancel
-                                    </button>
-
-                                    <!-- <button
-                                        v-if="contactFormBtnStatus == 1"
-                                        class="btn btn-secondary ms-3"
-                                        @click="hideForm"
-                                    >
-                                        Cancel
-                                    </button> -->
+                                            <button
+                                                class="btn btn-danger ms-3"
+                                                type="button"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target=".multi-collapse"
+                                                aria-expanded="false"
+                                                aria-controls="collapseContactForm collapseContactInfo"
+                                                @click="showForm(null)"
+                                            >
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <p>
-                        <!-- <button
-                            class="btn btn-secondary"
-                            @click="showForm"
-                            type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#collapseContactForm"
-                            aria-expanded="false"
-                            aria-controls="collapseContactForm"
-                        >
-                            {{ translate("DROP US A LINE") }}
-                        </button> -->
-                    </p>
+                    <p></p>
 
                     <!-- form ends here -->
                 </div>
-                <div class="col-md-6">
-                    <image-zooming-component
-                        :file="'/images/contact-main.jpg'"
-                    />
-                </div>
+                
             </div>
         </section>
     </Master>
@@ -430,10 +395,7 @@ export default {
 };
 </script>
 <style scoped>
-.accordion-button {
-    color: rgb(61, 102, 143) !important;
-    font-weight: bold;
-}
+ 
 html,
 body {
     height: 100%;
@@ -458,9 +420,10 @@ body {
 }
 
 .contact-title {
+    font-family: "Playfair Display", serif !important;
     font-size: 28px;
     font-weight: bold;
-    color: #1e3a5f; /* Dark blue */
+    color: rgb(61, 102, 143);
 }
 
 .contact-subtitle {

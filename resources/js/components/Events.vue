@@ -26,7 +26,7 @@
                         <div
                             v-for="event in events"
                             :key="event.id"
-                            class="col-md-3 mb-3 d-flex" 
+                            class="col-md-4 mb-3 d-flex" 
                         >
                     
                             <div class="card c-border-design image-cover">
