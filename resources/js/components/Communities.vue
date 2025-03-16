@@ -2,7 +2,7 @@
     <section class="py-5 c-bg-color"  v-if="Communities && Communities.length > 0">
         <div class="container">
             <div class="text-center mb-4">
-                <h1 class="fw-bold c-main-title text-black">Find Your Place in Our Communities!</h1>
+                <h1 class="fw-bold c-main-title">Find Your Place in Our Communities!</h1>
                 <p class="text-muted c-sub-title">Explore our vibrant communities and discover your next home.</p>
             </div>
             
