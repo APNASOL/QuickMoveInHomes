@@ -45,9 +45,20 @@ class PropertiesImport implements ToCollection, WithHeadingRow
                 $property->longitude = $row['longitude'] ?? null;
                 $property->latitude = $row['latitude'] ?? null;
                 $price = $row['price']; 
+                $price_from = $row['price_from']; 
+                $price_to = $row['price_to']; 
+                // Remove any dollar signs and commas, then cast to integer
+                $cleanedPrice = (int) str_replace([',', '$'], '', $price);
+                $cleanedPriceFrom = (int) str_replace([',', '$'], '', $price_from);
+                $cleanedPriceTo = (int) str_replace([',', '$'], '', $price_to);
 
-                $property->price_from = $row['price_from'] ?? null; 
-                $property->price_to = $row['price_to'] ?? null; 
+                // Now you can store the cleaned price in the database
+                $property->price = $cleanedPrice;
+                $property->price_from = $cleanedPriceFrom; 
+                $property->price_to = $cleanedPriceTo; 
+
+
+
                 $property->full_bath = $row['full_bath'] ?? null; 
                 $property->half_bath = $row['half_bath'] ?? null; 
                 $property->average_price_per_square = $row['average_price_per_square'] ?? null; 
@@ -56,15 +67,14 @@ class PropertiesImport implements ToCollection, WithHeadingRow
                 $property->size_from = $row['size_from'] ?? null; 
                 $property->size_to = $row['size_to'] ?? null; 
 
-                // Remove any dollar signs and commas, then cast to integer
-                $cleanedPrice = (int) str_replace([',', '$'], '', $price);
-
-                // Now you can store the cleaned price in the database
-                $property->price = $cleanedPrice;
-
-                // $property->price = $row['price'] ?? null;
+                
+ 
                 $property->bedrooms = $row['bedrooms'] ?? null;
-                $property->square_feet = $row['square_feet'] ?? null;
+                $property->square_feet = isset($row['square_feet']) 
+    ? (float) preg_replace('/[^\d.]/', '', $row['square_feet']) 
+    : null;
+
+
                 $property->lot_size = $row['lot_size'] ?? null;
                 $property->property_type = $row['property_type'] ?? null;
                 $property->listing_type = $row['listing_type'] ?? null;
@@ -81,9 +91,11 @@ class PropertiesImport implements ToCollection, WithHeadingRow
 
                 foreach ($imageNames as $imageName) {
                     $imageName = trim($imageName);
-                    $imagePath = $this->extractPath . '/' . $imageName;
+                    // $imagePath = $this->extractPath . '/' . $imageName;
+                    $imagePath = rtrim($this->extractPath, '/') . '/' . ltrim($imageName, '/');
 
-                    if (file_exists($imagePath)) {
+
+                    if (file_exists($imagePath) && is_readable($imagePath)) {
                         $newImageName = 'real_public/PropertiesFiles/' . Str::random(40) . '.' . pathinfo($imageName, PATHINFO_EXTENSION);
                         Storage::disk('real_public')->put($newImageName, file_get_contents($imagePath));
 
