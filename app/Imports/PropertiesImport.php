@@ -91,11 +91,9 @@ class PropertiesImport implements ToCollection, WithHeadingRow
 
                 foreach ($imageNames as $imageName) {
                     $imageName = trim($imageName);
-                    // $imagePath = $this->extractPath . '/' . $imageName;
-                    $imagePath = rtrim($this->extractPath, '/') . '/' . ltrim($imageName, '/');
+                    $imagePath = $this->extractPath . '/' . $imageName;
 
-
-                    if (file_exists($imagePath) && is_readable($imagePath)) {
+                    if (file_exists($imagePath)) {
                         $newImageName = 'real_public/PropertiesFiles/' . Str::random(40) . '.' . pathinfo($imageName, PATHINFO_EXTENSION);
                         Storage::disk('real_public')->put($newImageName, file_get_contents($imagePath));
 
