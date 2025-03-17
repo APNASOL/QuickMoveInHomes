@@ -1076,7 +1076,7 @@
                         > -->
 
                         <div
-                            class="col-12 col-md-4 mt-5 rounded-5 c-bg-color text-black hover-effect"
+                            class="col-12 col-md-4 mt-5 bg-white rounded-2 text-black hover-effect"
                             style="
                                 position: sticky;
                                 top: 100px; /* Adjust this value based on your navbar height */
@@ -1086,15 +1086,13 @@
                             "
                         >
                             <a
-                                class="btn btn-success  mt-5 w-100 p-4 beat"
+                                class="btn btn-success mt-5 w-100 p-4 beat"
                                 :href="'/homes-agents/' + home_id"
                             >
                                 <b class="fs-3">Connect to Agent</b>
                                 <i class="bi bi-arrow-right ms-2"></i>
                             </a>
                             <div class="highlights mt-3">
-                                
-
                                 <!-- Show actual data if user is logged in and not a customer -->
                                 <!-- <div
                                     v-if="
@@ -1453,14 +1451,12 @@ export default {
     font-size: 20px;
     margin: 5px 0;
 }
-.c-tabs-price-color
-{
-     
+.c-tabs-price-color {
     font-family: "Playfair Display", serif;
-font-size: 30px;
-font-weight: 700;
-line-height: 36px;
-color: rgb(45, 106, 159);
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 36px;
+    color: rgb(45, 106, 159);
 }
 
 .property-detail-section {
@@ -1663,8 +1659,7 @@ color: rgb(45, 106, 159);
     line-height: 24px !important;
     color: rgb(23, 38, 54) !important;
 }
-.c-text-theme
-{
+.c-text-theme {
     color: rgb(61, 102, 143) !important;
 }
 </style>
