@@ -4,21 +4,19 @@
             <div class="property-detail-section" v-if="Home">
                 <div
                     class="top-section"
-                    :style="{
-                        backgroundImage: `url(${Home.property_banner})`,
-                    }"
+                    
                 >
                     <div class="info-overlay">
                         <div class="d-flex justify-content-between container">
                             <div>
-                                <h2 class="title uppercase c-main-title">
+                                <h1 class="uppercase c-main-title">
                                     {{ Home.title }}
-                                </h2>
-                                <span class="uppercase c-sub-title text-white">
+                                </h1>
+                                <span class="uppercase c-sub-title">
                                     {{ Home.property_type }}
                                 </span>
                             </div>
-                            <div class="uppercase">
+                            <!-- <div class="uppercase">
                                 <b>Starting at</b>
 
                                 <span
@@ -41,12 +39,12 @@
                                 >
                                     ${{ Home.new_price_after_incentive }}
                                 </span>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
                 <div>
-                    <div class="card card-body hover-effect">
+                    <div class="hover-effect">
                         <!-- Image Carousel in col-8 -->
 
                         <!-- Main Carousel -->
@@ -66,30 +64,24 @@
                                 <img
                                     :src="file.file_name"
                                     :alt="file.file_original_name"
-                                    class="img-fluid c-img-filter c-images-border-design"
-                                    style="
-                                        max-width: 100%;
-                                        height: 400px;
-                                        object-fit: cover;
-                                    "
-                                    @error="setAltImg"
-                                />
+                                     
+                                    class="img-fluid c-img-filter c-images-border-design w-100"
+                                    style="height: 500px; object-fit: cover;">
                             </Slide>
                             <template #addons>
                                 <Navigation />
-                                <Pagination />
+                                <!-- <Pagination /> -->
                             </template>
                         </Carousel>
 
                         <!-- Thumbnails Carousel -->
-                        <Carousel
+                        <!-- <Carousel
                             id="thumbnails"
                             :items-to-show="4"
                             :wrap-around="true"
                             v-model="currentSlide"
                             ref="carousel"
-                        >
-                            <!-- Thumbnail Images -->
+                        > 
                             <Slide
                                 v-for="(file, index) in Home.files"
                                 :key="index"
@@ -110,7 +102,7 @@
                                     />
                                 </div>
                             </Slide>
-                        </Carousel>
+                        </Carousel> -->
                     </div>
                 </div>
 
@@ -1086,7 +1078,7 @@
                             "
                         >
                             <a
-                                class="btn btn-success mt-5 w-100 p-4 beat"
+                                class="btn btn-success mt-3 w-100 p-4 beat"
                                 :href="'/homes-agents/' + home_id"
                             >
                                 <b class="fs-3">Connect to Agent</b>
@@ -1405,22 +1397,34 @@ export default {
 .uppercase {
     text-transform: uppercase;
 }
-.top-section {
+/* .top-section {
     position: relative;
-    height: 300px; /* Adjust height as needed */
+    height: 300px; 
     background-size: cover;
     background-position: center;
     color: white;
     display: flex;
     width: 100%;
     align-items: flex-end;
+} */
+.c-main-title {
+    font-size: 30px;
+    font-family: "Playfair Display", serif !important;
+    font-weight: 700 !important;
+    line-height: 60px !important;
+    z-index: 3 !important;
+    width: 100% !important;
 }
-
 .info-overlay {
-    background: #01060d9d;
+    background: #F7FAFC;
     padding: 10px;
     width: 100%;
     border-radius: 0px !important;
+    font-family: "Playfair Display", serif;
+font-size: 30px;
+font-weight: 700;
+line-height: 36px;
+color: rgb(23, 38, 54);
 }
 .info-card-overlay {
     background: #01060d9d;
