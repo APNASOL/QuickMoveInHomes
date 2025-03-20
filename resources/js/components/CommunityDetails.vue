@@ -1,27 +1,26 @@
 <template>
     <Master>
         <div class="property-detail-section">
-            <div class=" ">
-                <div>
-                    <div class="info-overlay">
-                        <div class="d-flex justify-content-between container">
-                            <div>
-                                <h1 class="uppercase c-main-title">
-                                    {{ community_details.name }}
-                                    <h4>
-                                        {{ community_details.location }}
-                                    </h4>
-                                </h1>
-                            </div>
-                            <!-- <div class="location">
+            <div>
+                <div class="info-overlay">
+                    <div class="d-flex justify-content-between container">
+                        <div>
+                            <h1 class="uppercase c-main-title">
+                                {{ community_details.name }}
+                                <h4>
+                                    {{ community_details.location }}
+                                </h4>
+                            </h1>
+                        </div>
+                        <!-- <div class="location">
                                 <h3 class="master_plan">
                                     Master Plan <br />
                                     {{ community_details.masterplan }}
                                 </h3>
                             </div> -->
-                        </div>
                     </div>
                 </div>
+
                 <div class="container">
                     <!-- Main Carousel -->
                     <Carousel
@@ -707,7 +706,7 @@ export default {
     text-align: justify;
 }
 
-.carousel { 
+.carousel {
     overflow: hidden;
 }
 .c-slide-div {
@@ -867,5 +866,4 @@ export default {
 .card-body {
     flex-grow: 1;
 }
-
 </style>

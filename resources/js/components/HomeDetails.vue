@@ -594,7 +594,7 @@
                                             class="tab-pane fade"
                                             id="features"
                                         >
-                                            <div class="mt-3">
+                                            <div>
                                                 <h5
                                                     class="card-title c-card-main"
                                                 >
@@ -917,11 +917,11 @@
                                             class="tab-pane fade"
                                             id="financial"
                                         >
-                                            <div class="mt-3">
+                                            <div>
                                                 <h5
                                                     class="card-title c-card-main"
                                                 >
-                                                    Price & Fees
+                                                    Price and Fees
                                                 </h5>
                                                 <hr />
                                                 <div class="row g-3">
