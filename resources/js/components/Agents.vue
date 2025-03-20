@@ -135,6 +135,8 @@ export default {
         },
         openModal(agent_id) {
             this.selectedAgentId = agent_id;
+            this.form = { name: "", email: "", phone: "" }; // Reset form fields
+            this.formErrors = {}; // Clear validation errors
             this.$refs.openContractModal.click();
         },
         async submitForm() {
