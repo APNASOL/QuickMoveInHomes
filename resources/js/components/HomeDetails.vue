@@ -2,19 +2,16 @@
     <Master>
         <div class="property-detail-section">
             <div class="property-detail-section" v-if="Home">
-                <div
-                    class="top-section"
-                    
-                >
+                <div class="top-section">
                     <div class="info-overlay">
                         <div class="d-flex justify-content-between container">
                             <div>
                                 <h1 class="uppercase c-main-title">
                                     {{ Home.title }}
+                                    <h4>
+                                        {{ Home.property_type }}
+                                    </h4>
                                 </h1>
-                                <span class="uppercase c-sub-title">
-                                    {{ Home.property_type }}
-                                </span>
                             </div>
                             <!-- <div class="uppercase">
                                 <b>Starting at</b>
@@ -43,39 +40,36 @@
                         </div>
                     </div>
                 </div>
-                <div>
-                    <div class="hover-effect">
-                        <!-- Image Carousel in col-8 -->
 
-                        <!-- Main Carousel -->
-                        <Carousel
-                            :wrapAround="true"
-                            :transition="500"
-                            id="gallery"
-                            :items-to-show="1"
-                            :wrap-around="false"
-                            v-model="currentSlide"
-                        >
-                            <!-- Main Image Slides -->
-                            <Slide
-                                v-for="(file, index) in Home.files"
-                                :key="index"
-                            >
-                                <img
-                                    :src="file.file_name"
-                                    :alt="file.file_original_name"
-                                     
-                                    class="img-fluid c-img-filter c-images-border-design w-100"
-                                    style="height: 500px; object-fit: cover;">
-                            </Slide>
-                            <template #addons>
-                                <Navigation />
-                                <!-- <Pagination /> -->
-                            </template>
-                        </Carousel>
+                <div class="container">
+                    <!-- Image Carousel in col-8 -->
 
-                        <!-- Thumbnails Carousel -->
-                        <!-- <Carousel
+                    <!-- Main Carousel -->
+                    <Carousel
+                        :wrapAround="true"
+                        :transition="500"
+                        id="gallery"
+                        :items-to-show="1"
+                        :wrap-around="false"
+                        v-model="currentSlide"
+                    >
+                        <!-- Main Image Slides -->
+                        <Slide v-for="(file, index) in Home.files" :key="index">
+                            <img
+                                :src="file.file_name"
+                                :alt="file.file_original_name"
+                                class="img-fluid c-img-filter c-images-border-design w-100"
+                                style="height: 500px; object-fit: cover"
+                            />
+                        </Slide>
+                        <template #addons>
+                            <Navigation />
+                            <!-- <Pagination /> -->
+                        </template>
+                    </Carousel>
+
+                    <!-- Thumbnails Carousel -->
+                    <!-- <Carousel
                             id="thumbnails"
                             :items-to-show="4"
                             :wrap-around="true"
@@ -103,7 +97,6 @@
                                 </div>
                             </Slide>
                         </Carousel> -->
-                    </div>
                 </div>
 
                 <div
@@ -132,7 +125,7 @@
                 </div>
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-8 mt-5">
+                        <div class="col-md-8">
                             <div class="">
                                 <div class="card p-4 border-0 shadow-sm">
                                     <div
@@ -268,7 +261,7 @@
                                                 Overview
                                             </button>
                                         </li>
-                                        <li
+                                        <!-- <li
                                             class="nav-item"
                                             role="presentation"
                                         >
@@ -281,7 +274,7 @@
                                             >
                                                 Specifications
                                             </button>
-                                        </li>
+                                        </li> -->
                                         <li
                                             class="nav-item"
                                             role="presentation"
@@ -310,20 +303,6 @@
                                                 Financial
                                             </button>
                                         </li>
-                                        <li
-                                            class="nav-item"
-                                            role="presentation"
-                                        >
-                                            <button
-                                                class="nav-link"
-                                                id="community-tab"
-                                                data-bs-toggle="tab"
-                                                data-bs-target="#community"
-                                                type="button"
-                                            >
-                                                Community
-                                            </button>
-                                        </li>
                                     </ul>
 
                                     <!-- Tab Content -->
@@ -332,9 +311,12 @@
                                             class="tab-pane fade show active"
                                             id="overview"
                                         >
-                                            <h3 class="c-tab-title">
+                                            <h5 class="card-title c-card-main">
+                                                About {{ Home.title }}
+                                            </h5>
+                                            <!-- <h3 class="c-tab-title">
                                                 Property Overview
-                                            </h3>
+                                            </h3> -->
                                             <p class="c-tab-sub">
                                                 {{ Home.description }}
                                             </p>
@@ -599,23 +581,26 @@
                                             </div>
                                         </div>
 
-                                        <div
+                                        <!-- <div
                                             class="tab-pane fade"
                                             id="specifications"
                                         >
-                                            <h3 class="c-tab-title">
+                                        <h5 class="card-title c-card-main">
                                                 Specifications
-                                            </h3>
+                                            </h5>
                                             <p>No data added yet.</p>
-                                        </div>
+                                        </div> -->
                                         <div
                                             class="tab-pane fade"
                                             id="features"
                                         >
                                             <div class="mt-3">
-                                                <h3 class="c-tab-title">
+                                                <h5
+                                                    class="card-title c-card-main"
+                                                >
                                                     Home Features
-                                                </h3>
+                                                </h5>
+                                                <hr />
                                                 <div class="row g-3">
                                                     <!-- Closets -->
                                                     <div class="col-md-3">
@@ -933,9 +918,12 @@
                                             id="financial"
                                         >
                                             <div class="mt-3">
-                                                <h3 class="c-tab-title">
+                                                <h5
+                                                    class="card-title c-card-main"
+                                                >
                                                     Price & Fees
-                                                </h3>
+                                                </h5>
+                                                <hr />
                                                 <div class="row g-3">
                                                     <div class="col-md-3">
                                                         <h4 class="c-tab-sub">
@@ -1042,15 +1030,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div
-                                            class="tab-pane fade"
-                                            id="community"
-                                        >
-                                            <h3 class="c-tab-title">
-                                                Community Information
-                                            </h3>
-                                            <p>No data added yet.</p>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1068,7 +1047,7 @@
                         > -->
 
                         <div
-                            class="col-12 col-md-4 mt-5 bg-white rounded-2 text-black hover-effect"
+                            class="col-12 col-md-4 bg-white rounded-2 text-black hover-effect"
                             style="
                                 position: sticky;
                                 top: 100px; /* Adjust this value based on your navbar height */
@@ -1416,15 +1395,15 @@ export default {
     width: 100% !important;
 }
 .info-overlay {
-    background: #F7FAFC;
+    background: #f7fafc;
     padding: 10px;
     width: 100%;
     border-radius: 0px !important;
     font-family: "Playfair Display", serif;
-font-size: 30px;
-font-weight: 700;
-line-height: 36px;
-color: rgb(23, 38, 54);
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 36px;
+    color: rgb(23, 38, 54);
 }
 .info-card-overlay {
     background: #01060d9d;
@@ -1665,5 +1644,19 @@ color: rgb(23, 38, 54);
 }
 .c-text-theme {
     color: rgb(61, 102, 143) !important;
+}
+.nav-tabs .nav-link {
+    color: rgb(61, 102, 143) !important;
+    font-weight: bold !important;
+}
+.nav-tabs {
+    background-color: #ffffff !important;
+}
+.c-card-main {
+    font-family: "Playfair Display", serif;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 36px;
+    color: rgb(45, 106, 159) !important ;
 }
 </style>

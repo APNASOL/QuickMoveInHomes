@@ -11,27 +11,28 @@
             </div>
         </section>
 
+        <div class="bg-white p-4">
         <section class="container mt-5">
-            <div class="row">
+            <div class="row ">
                 <div class="col-md-6">
-                    <div class="card w-100">
+                    <div class="p-4 border-0 shadow w-100">
                         <div class="card-body">
                             <h4 class="contact-title">
                                 Better yet, see us in person!
                             </h4>
-                            <p>
+                            <p class="c-para-contents">
                                 We love our customers, so feel free to visit
                                 during normal business hours.
                             </p>
                             <h5 class="c-title">QBrand New Homes Vegas</h5>
-                            <p>
+                            <p class="c-para-contents">
                                 10845 Griffith Peak Drive, Suite 2, Las Vegas,
                                 NV 89135
                             </p>
                             <h5 class="c-title">
                                 Phone | 24-Hour Emergency Assistance
                             </h5>
-                            <p>
+                            <p class="c-para-contents">
                                 USA & Canada: (702) 819-0035 <br />
                                 Overseas: +1 (702) 819-0035
                             </p>
@@ -39,109 +40,90 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    
                     <div>
                         <div
                             class="collapse multi-collapse show"
                             id="collapseContactInfo"
                         >
                             <div>
-                                <div class="mt-3">
-                                    <!-- <b class="c-title"
-                                        >Reservation Department Hours</b
-                                    > -->
-                                    <div
-                                        class="accordion mt-3"
-                                        id="contactAccorddion"
-                                    >
-                                        <div class="accordion-item">
-                                            <h2
-                                                class="accordion-header"
-                                                id="headingOne"
+                                <div class="accordion" id="contactAccorddion">
+                                    <div class="accordion-item">
+                                        <h2
+                                            class="accordion-header contact-title"
+                                            id="headingOne"
+                                        >
+                                            <button
+                                                class="accordion-button collapsed contact-title"
+                                                type="button"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#collapseOne"
+                                                aria-expanded="true"
+                                                aria-controls="collapseOne"
                                             >
-                                                <button
-                                                    class="accordion-button collapsed contact-title"
-                                                    type="button"
-                                                    data-bs-toggle="collapse"
-                                                    data-bs-target="#collapseOne"
-                                                    aria-expanded="true"
-                                                    aria-controls="collapseOne"
-                                                >
-                                                    OFFICE HOURS
-                                                </button>
-                                            </h2>
+                                                OFFICE HOURS
+                                            </button>
+                                        </h2>
 
-                                            <div
-                                                id="collapseOne"
-                                                class="accordion-collapse collapse show"
-                                                aria-labelledby="headingOne"
-                                                data-bs-parent="#contactAccorddion"
-                                            >
-                                                <div class="accordion-body">
-                                                    <ul class="list-unstyled">
-                                                        <li>
-                                                            <strong
-                                                                >Mon-Fri:</strong
-                                                            >
-                                                            10:00 AM - 06:00 PM
-                                                        </li>
-                                                        <li>
-                                                            <strong
-                                                                >Sat:</strong
-                                                            >
-                                                            11:00 AM - 03:00 PM
-                                                        </li>
-                                                        <li>
-                                                            <strong
-                                                                >Sun:</strong
-                                                            >
-                                                            Closed
-                                                        </li>
-                                                    </ul>
-                                                </div>
+                                        <div
+                                            id="collapseOne"
+                                            class="accordion-collapse collapse show p-4 border-0 shadow"
+                                            aria-labelledby="headingOne"
+                                            data-bs-parent="#contactAccorddion"
+                                        >
+                                            <div class="accordion-body">
+                                                <ul class="list-unstyled">
+                                                    <li>
+                                                        <strong
+                                                            >Mon-Fri:</strong
+                                                        >
+                                                        10:00 AM - 06:00 PM
+                                                    </li>
+                                                    <li>
+                                                        <strong>Sat:</strong>
+                                                        11:00 AM - 03:00 PM
+                                                    </li>
+                                                    <li>
+                                                        <strong>Sun:</strong>
+                                                        Closed
+                                                    </li>
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="mb-4">
-                                    <!-- <button
-                                        v-if="contactFormBtnStatus == 0"
-                                        class="btn btn-secondary"
-                                        @click="showForm"
-                                    >
-                                        DROP US A LINE
-                                    </button> -->
 
-                                    <button
-                                        class="btn c-btn-theme-primary me-2 mt-2"
-                                        @click="showForm('Agent')"
-                                        type="button"
-                                        data-bs-toggle="collapse"
-                                        data-bs-target=".multi-collapse"
-                                        aria-expanded="false"
-                                        aria-controls="collapseContactForm collapseContactInfo"
+                                <div class="mb-4">
+                                     
+
+                                    <div
+                                        class="d-flex justify-content-between mt-3"
                                     >
-                                        {{
-                                            translate(
-                                                "DROP US A LINE AS AN AGENT"
-                                            )
-                                        }}
-                                    </button>
-                                    <button
-                                        class="btn c-btn-theme-primary w-30 mt-2"
-                                        @click="showForm('Customer')"
-                                        type="button"
-                                        data-bs-toggle="collapse"
-                                        data-bs-target=".multi-collapse"
-                                        aria-expanded="false"
-                                        aria-controls="collapseContactForm collapseContactInfo"
-                                    >
-                                        {{
-                                            translate(
-                                                "DROP US A LINE A CUSTOMER"
-                                            )
-                                        }}
-                                    </button>
+                                    
+                                        <button
+                                            class="btn c-btn-theme-primary w-50 me-2"
+                                            @click="showForm('Agent')"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target=".multi-collapse"
+                                        >
+                                            {{
+                                                translate(
+                                                    "DROP US A LINE AS AN AGENT"
+                                                )
+                                            }}
+                                        </button>
+                                        <button
+                                            class="btn c-btn-theme-primary w-50"
+                                            @click="showForm('Customer')"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target=".multi-collapse"
+                                        >
+                                            {{
+                                                translate(
+                                                    "DROP US A LINE AS A CUSTOMER"
+                                                )
+                                            }}
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -157,7 +139,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row g-3 c-bg-form p-2">
-                                        <b class="c-title"
+                                        <b class="c-title contact-title"
                                             >Dear
                                             <i class="c-theme-color"
                                                 >{{ contacting_user }}
@@ -293,9 +275,9 @@
 
                     <!-- form ends here -->
                 </div>
-                
             </div>
         </section>
+        </div>
     </Master>
 </template>
 
@@ -395,7 +377,6 @@ export default {
 };
 </script>
 <style scoped>
- 
 html,
 body {
     height: 100%;
@@ -403,8 +384,12 @@ body {
 
 .c-title {
     font-family: Poppins, sans-serif;
-    font-size: 20px;
+    font-size: 16px;
     color: rgb(61, 102, 143);
+}
+.c-para-contents {
+    font-family: Poppins, sans-serif;
+    font-size: 14px;
 }
 
 .contact-section {

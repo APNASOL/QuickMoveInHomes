@@ -1,7 +1,13 @@
 <template>
     <div class="">
         <div class="property-card position-relative">
-            <span class="badge sale">{{ badge }}</span>
+            <!-- Badges -->
+        <div class="d-flex justify-content-between position-absolute w-100 p-2">
+            <span v-if="badge" class="badge sale">{{ badge }}</span>
+          
+            <span v-if="is_open_house == 1" class="badge rent">Open House</span>
+        </div>
+
 
             <img
                 :src="main_image ? main_image : '/images/default_image.png'"
@@ -18,7 +24,7 @@
                 </p> -->
                 <p class="price">${{ formatPrice(price) }}</p>
                 <div class="property-icons">
-                    <span>
+                    <span v-if="bedrooms > 0">
                         <svg
                             fill="#000000"
                             width="15px"
@@ -34,7 +40,7 @@
                         <!-- <b class="fs-6 mt-1">{{ property.bedrooms }}</b> -->
                         <b class="fs-6 mt-1">{{ bedrooms }}</b>
                     </span>
-                    <span
+                    <span v-if="bathrooms > 0"
                         ><i class="bi bi-bathtub"></i
                         ><svg
                             fill="#000000"
@@ -78,7 +84,7 @@
                         <b class="fs-6 mt-1">{{ bathrooms }}</b>
                         <!-- <b class="fs-6 mt-1">{{ bedrooms }}</b> -->
                     </span>
-                    <span
+                    <span v-if="square_feet > 0"
                         ><svg
                             fill="#000000"
                             width="15px"
@@ -156,6 +162,7 @@ export default defineComponent({
     created() {},
     props: [
         "badge",
+        "is_open_house",
         "main_image",
         "title",
         "address",
@@ -213,14 +220,14 @@ export default defineComponent({
     height: 180px;
     object-fit: cover;
 }
-.property-card .badge {
+/* .property-card .badge {
     position: absolute;
     top: 15px;
     left: 15px;
     font-size: 14px;
     padding: 5px 10px;
     border-radius: 5px;
-}
+} */
 .property-card .badge.sale {
     background-color: #2d6a9f;
     color: white;
@@ -229,6 +236,14 @@ export default defineComponent({
     background-color: #6f42c1;
     color: white;
 }
+.property-card .badge {
+    font-size: 14px;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+ 
+ 
+
 .property-card .card-body {
     padding: 15px;
     background-color: white;
