@@ -707,8 +707,7 @@ export default {
     text-align: justify;
 }
 
-.carousel {
-    border-radius: 25px;
+.carousel { 
     overflow: hidden;
 }
 .c-slide-div {
