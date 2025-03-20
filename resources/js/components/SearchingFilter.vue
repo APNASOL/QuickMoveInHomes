@@ -313,10 +313,10 @@
                             <br />
                             <div class="dropdown">
                                 <input
-                            type="text"
-                            name="fakeuser"
-                            style="display: none"
-                        />
+                                    type="text"
+                                    name="fakeuser"
+                                    style="display: none"
+                                />
                                 <Multiselect
                                     v-model="sort_by"
                                     :options="sortingOptions"
@@ -351,18 +351,20 @@
                                         "
                                     >
                                         <GlobalCard
-                                            :badge="
+                                            :badge="'Quick Move In'"
+                                            :badge2="
                                                 home.is_open_house
                                                     ? 'Open House'
                                                     : home.incentive
                                                     ? 'Incentive Home'
-                                                    : 'Quick Move In'
+                                                    : ''
                                             "
                                             :main_image="
                                                 home.main_image ??
                                                 '/images/default_image.png'
                                             "
                                             :title="home.title"
+                                            :property_id="home.property_id"
                                             :address="home.address"
                                             :bedrooms="home.bedrooms"
                                             :price="home.price"

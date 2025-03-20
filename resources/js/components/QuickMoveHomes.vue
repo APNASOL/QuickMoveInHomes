@@ -20,12 +20,16 @@
                 >
                     <!-- :autoplay="2000" -->
                     <Slide v-for="property in properties" :key="property.id">
-                 
                         <div class="carousel__item">
-                           
                             <GlobalCard
+                                :badge2="
+                                    property.is_open_house
+                                        ? 'Open House'
+                                        : property.incentive
+                                        ? 'Incentive Home'
+                                        : ''
+                                "
                                 :badge="'Quick Move In'"
-                                :is_open_house="property.is_open_house"
                                 :main_image="property.main_image"
                                 :title="property.title"
                                 :property_id="property.property_id"

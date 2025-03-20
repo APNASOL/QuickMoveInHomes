@@ -4,8 +4,9 @@
             <!-- Badges -->
         <div class="d-flex justify-content-between position-absolute w-100 p-2">
             <span v-if="badge" class="badge sale">{{ badge }}</span>
+            <span v-if="badge2" class="badge rent">{{ badge2 }}</span>
           
-            <span v-if="is_open_house == 1" class="badge rent">Open House</span>
+             
         </div>
 
 
@@ -162,7 +163,7 @@ export default defineComponent({
     created() {},
     props: [
         "badge",
-        "is_open_house",
+        "badge2",
         "main_image",
         "title",
         "address",
