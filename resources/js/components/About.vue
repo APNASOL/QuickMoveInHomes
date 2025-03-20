@@ -16,7 +16,7 @@
 
                 <!-- Profile Details -->
                 <div class="col-md-8">
-                    <h1 class="profile-name">Yvonne Khoo</h1>
+                    <h1 class="uppercase c-main-title">Yvonne Khoo</h1>
                     <h4 class="c-tags">
                         Real Estate Professional | eXp Realty Las Vegas
                     </h4>

@@ -1793,4 +1793,8 @@ label {
     background: rgb(61, 102, 143) !important;
     color: var(--ms-option-color-selected, #fff);
 }
+
+.uppercase {
+    text-transform: uppercase;
+}
 </style>
