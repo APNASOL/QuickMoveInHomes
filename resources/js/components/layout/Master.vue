@@ -1761,7 +1761,7 @@ label {
 
 .c-main-title {
     font-family: "Playfair Display", serif !important;
-
+    color: rgb(61, 102, 143);
     font-weight: 700 !important;
     line-height: 60px !important;
 
