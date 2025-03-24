@@ -1,26 +1,38 @@
 <template>
     <Master>
-        <div class="top-section" :style="{ backgroundImage: `url(${incentive_banner})` }">
-            <div class="info-overlay">
-                <div class="container text-center">
-                    <h2 class="title uppercase">{{ incentive.title }}</h2>
+        <section class="p-3 bg-white"> <!-- Removed container for full width -->
+            <!-- Hero Section -->
+            <div class="row align-items-center p-3">
+                <div class="col-md-12 text-center">
+                    <h1 class="uppercase c-main-title">Exclusive Incentives for You!</h1>
+                    <h4 class="c-tags">
+                        Discover amazing deals and financial benefits tailored just for you.
+                    </h4>
                 </div>
             </div>
-        </div>  
+        </section>
 
-        <div class="content-section container">
-            <div class="incentive-card">
-               
-                <h3 class="sub-title">{{ incentive.title }}</h3>
-                <p class="incentive-description" v-html="incentive.description"></p>
-
-                <div >
-                    From Date <strong>{{ formatDate(incentive.start_date) }}</strong>
-                    To Date <span><strong>{{ formatDate(incentive.end_date) }}</strong> </span>
+        <!-- Incentive Details Section with Image and Text -->
+        <div class="container mt-4">
+            <div class="row align-items-center">
+                <div class="col-md-6 d-flex flex-column justify-content-center">
+                    <h3 class="c-main-title">{{ incentive.title }} werwe</h3>
+                    <p class="incentive-description" v-html="incentive.description"></p>
+                    <div>
+                        From Date: <strong>{{ formatDate(incentive.start_date) }}</strong>
+                        To Date: <strong>{{ formatDate(incentive.end_date) }}</strong>
+                    </div>
+                    <div v-if="incentive.interest_rate_first_year">
+                        <p><strong>First Year Interest Rate:</strong> {{ incentive.interest_rate_first_year }}%</p>
+                    </div>
                 </div>
-
-                <div v-if="incentive.interest_rate_first_year">
-                    <p><strong>First Year Interest Rate:</strong> {{ incentive.interest_rate_first_year }}%</p>
+                <div class="col-md-6 text-center">
+                    <img
+                        :src="incentive_banner || '/images/default_image.png'"
+                        class="img-fluid incentive-img"
+                        :alt="incentive.title"
+                        @error="setAltImg"
+                    />
                 </div>
             </div>
         </div>
@@ -30,9 +42,9 @@
         <div class="c-section-main-details container">
             <div v-if="incentives && incentives.length">
                 <div class="mx-4 pt-3">
-                    <div class="row g-3 mb-3">
+                    <div class="row g-2">
                         <div
-                        class="col-md-3"
+                        class="col-md-4"
                             v-for="incentive in incentives"
                             :key="incentive.id"
                         >
@@ -43,7 +55,7 @@
                                     >
                                 <img
                                     :src="incentive.incentive_banner ?? 'error.png'"
-                                    class="card-img-top c-card-img-border"
+                                    class="card-img-top c-card-img-border rounded-circle mt-2"
                                     height="150"
                                     :alt="incentive.title"
                                     @error="setAltImg"
@@ -55,7 +67,7 @@
                                         class="text-decoration-none"
                                         :href="'/detailed-incentive/' + incentive.id"
                                     >
-                                        <h4>{{ incentive.title }}</h4> 
+                                        <h4 class="c-main-title text-center">{{ incentive.title }}</h4> 
                                     </a>
                                         <div class="content ql-editor" >
                                             <span v-html="getTruncatedDescription(incentive)"></span>
@@ -159,114 +171,20 @@ export default {
 </script>
 
 <style scoped>
-.top-section {
-    position: relative;
-    height: 300px;
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: flex-end;
-    width: 100%;
-    overflow: hidden;
+.card img {
+    display: block;
+    margin: 0 auto;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
 }
-
-.info-overlay {
-    background: rgba(0, 0, 0, 0.6);
-    padding: 20px;
-    width: 100%;
-    text-align: center;
-    color: white;
-}
-
-.title {
-    font-size: 28px;
+.card-body h4 {
     margin: 0;
-    font-family: 'Raleway', sans-serif;
 }
-
-.uppercase {
-    text-transform: uppercase;
-}
-
-.content-section {
-    padding: 40px 0;
-    display: flex;
-    justify-content: center;
-}
-
-.incentive-card {
-    max-width: 1100px;
-    padding: 30px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-.sub-title {
-    font-size: 24px;
-    color: rgb(61, 102, 143);
-    margin-bottom: 20px;
-    font-family: 'Raleway', sans-serif;
-}
-
-.incentive-description {
-    font-size: 16px;
-    line-height: 1.8;
-    color: #555;
-    margin-bottom: 20px;
-}
-
- 
-@media (max-width: 768px) {
-    .top-section {
-        height: 200px;
-    }
-
-    .title {
-        font-size: 24px;
-    }
-
-    .incentive-card {
-        padding: 20px;
-    }
-
-    .sub-title {
-        font-size: 20px;
-    }
-}
-
-.read-more {
-    color: #002855;
-    cursor: pointer;
-    margin-left: 5px;
-}
-h2, h3, h4, h5 {
-    font-family: 'Raleway', sans-serif;
-    color: rgb(61, 102, 143);
-    line-height: 1.55rem; 
-    font-weight: bold;
-    
-}
-
 .card {
     display: flex;
-    flex-direction: column; /* Stack items vertically */
-    height: 100%; /* Make card take full height */
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%; /* Ensures equal height */
 }
-.card-body {
-    display: flex;
-    flex-direction: column; /* Stack content vertically */
-    justify-content: space-between; /* Space out content */
-    flex: 1; /* Make card body take the remaining space */
-}
-
-.image-cover img {
-    width: 100%;
-    height: 150px; /* Fixed height for the image */
-    object-fit: cover;
-    object-position: center;
-    transition: height 0.3s; /* Ensure image transition is smooth */
-}
-
 </style>
