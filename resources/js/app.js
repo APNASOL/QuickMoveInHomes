@@ -218,6 +218,8 @@ import communities_create from "@components/backend/Community/Create.vue";
 app.component("communities-create-component", communities_create);
 import community_details from "@components/backend/Community/Details.vue";
 app.component("community-details-component", community_details);
+import com_uploads from "@components/backend/Community/Upload.vue";
+app.component("upload-communities-component", com_uploads);
 // Homes
 import homes_index from "@components/backend/Homes/Index.vue";
 app.component("homes-index-component", homes_index);
@@ -227,6 +229,8 @@ import homes_details from "@components/backend/Homes/Details.vue";
 app.component("home-details-component", homes_details);
 import uploads from "@components/backend/Property/Upload.vue";
 app.component("upload-properties-component", uploads);
+
+
 // Homes
 import property_index from "@components/backend/Property/Index.vue";
 app.component("property-index-component", property_index);

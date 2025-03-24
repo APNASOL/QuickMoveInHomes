@@ -142,7 +142,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
    Route::post('/community/photo/gallery/delete/{id}/{community_id}', [CommunitiesController::class, 'community_photo_delete'])->name('community.photo.gallery.delete');
 
 
-   Route::post('/properties/upload', [PropertyController::class, 'uploadProperties'])->name('properties,upload');
+//    Route::post('/properties/upload', [PropertyController::class, 'uploadProperties'])->name('properties,upload');
 
    // homes
    Route::post('/fetch/homes', [PropertyController::class, 'fetchHomes'])->name('fetch.homes');
@@ -194,6 +194,7 @@ Route::post('/agent/delete/{id}', [AgentController::class, 'delete'])->name('age
     
     
     Route::post('/scrap/data/upload', [PropertyController::class, 'uploadProperties'])->name('scrap.data.upload');
+    Route::post('/communities/scrap/data/upload', [CommunitiesController::class, 'uploadCommunities'])->name('communities.scrap.data.upload');
 
  
    

@@ -120,6 +120,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
    Route::get('/community/create', [CommunitiesController::class, 'create'])->name('community.create');
    Route::get('/community/edit/{id}', [CommunitiesController::class, 'edit'])->name('community.edit');
    Route::get('/community/details/{id}', [CommunitiesController::class, 'details'])->name('community.details');
+   Route::get('/upload/communities', [CommunitiesController::class, 'upload'])->name('upload.communities');
     //  homes
     Route::get('/homes', [HomesController::class, 'index'])->name('homes');
     Route::get('/home/create', [HomesController::class, 'create'])->name('home.create');

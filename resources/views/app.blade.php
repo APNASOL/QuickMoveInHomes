@@ -219,6 +219,8 @@
         <communities-create-component :community_id="'{{ $id }}'" />
         @elseif(Route::currentRouteName() === 'community.details')
         <community-details-component :community_id="'{{ $id }}'" />
+        @elseif(Route::currentRouteName() === 'upload.communities')
+        <upload-communities-component  />
         <!-- Homes -->
         @elseif(Route::currentRouteName() === 'upload')
         <upload-properties-component  />

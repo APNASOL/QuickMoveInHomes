@@ -197,6 +197,16 @@
                 <li class="nav-item" v-if="user_role == 'admin'">
                     <a
                         class="nav-link collapsed"
+                        :class="{ active: isActive('/upload/communities') }"
+                        href="/upload/communities"
+                    >
+                        <i class="bi bi-person-check me-2"></i>
+                        <span>{{ translate("Upload Communities") }}</span>
+                    </a>
+                </li>
+                <li class="nav-item" v-if="user_role == 'admin'">
+                    <a
+                        class="nav-link collapsed"
                         :class="{ active: isActive('/events') }"
                         href="/events"
                     >
