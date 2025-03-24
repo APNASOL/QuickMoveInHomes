@@ -73,8 +73,8 @@
     >
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div
-                class="modal-content c-content-radius"
-                style="background-color: #d29f6d; color: white"
+                class="modal-content p-2"
+                style="background-color: rgb(61, 102, 143); color: white"
             >
                 <div class="modal-header">
                     <button
@@ -87,22 +87,18 @@
                 </div>
                 <div class="modal-body text-center">
                     <h1
-                        class="modal-title text-center"
+                        class="modal-title text-center text-white c-main-title"
                         id="openIncentivesModal"
                     >
                         MOVE-IN-READY INCENTIVES
                     </h1>
-                    <p class="small-text">
+                    <p class="text-white c-sub-title">
                         Available at ALL New Home Communities!
                     </p>
                     <a
                         href="/all-incentives"
-                        class="btn btn-incentives"
-                        style="
-                            background-color: #f0ad4e;
-                            color: white;
-                            font-weight: bold;
-                        "
+                        class="btn btn-light c-custom-btn px-4 py-2 fw-semibold w-100 mt-2"
+                         
                         >View Current Incentives →</a
                     >
                 </div>
