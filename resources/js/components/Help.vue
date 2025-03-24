@@ -1,22 +1,21 @@
 <template>
     <Master>
-        <div
-            class="top-section"
-            :style="{ backgroundImage: `url('/images/events-main.jpg')` }"
-        >
-            <div class="info-overlay">
-                <div class="d-flex justify-content-center container">
-                    <div>
-                        <h2 class="title uppercase">Help</h2>
-                    </div>
+        <section class="p-3 bg-white"> <!-- Removed container for full width -->
+            <!-- Hero Section -->
+            <div class="row align-items-center p-3">
+                <div class="col-md-12 text-center">
+                    <h1 class="uppercase c-main-title">Help</h1>
+                    <!-- <h4 class="c-tags">
+                        Discover amazing deals and financial benefits tailored just for you.
+                    </h4> -->
                 </div>
             </div>
-        </div>
-
+        </section>
         <section class="container mt-5">
             <!-- Hero Section -->
             <div class="row p-3">
                 <div class="col-md-12">
+                    
                     <p class="help-info">
                         Welcome to Brand New Homes Vegas! Here’s an important
                         reminder: when you sign an agreement with an agent,
@@ -24,8 +23,8 @@
                             you’ll have limited permissions to visit a select
                             number of homes</b
                         >. Once your viewing permission expires, you’ll need to
-                        <b
-                            >contact the
+                        <b>
+                            contact the
                             <a href="/contact"> administration</a></b
                         >
                         to renew your access or for further inquiries. Our
@@ -89,7 +88,6 @@ export default {
     components: {
         Master,
     },
-    created() {},
     data() {
         return {
             logo: external_website.logo,
@@ -105,48 +103,25 @@ export default {
     },
 };
 </script>
+
 <style scoped>
 html,
 body {
     height: 100%;
 }
-.top-section {
-    position: relative;
-    height: 300px;
-    background-size: cover;
-    background-position: center;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    width: 100%;
-    overflow: hidden;
-}
-
 .uppercase {
     text-transform: uppercase;
 }
-
-.info-overlay {
-    background: rgba(1, 6, 13, 0.8);
-    padding: 20px;
-    width: 100%;
-    border-radius: 0px !important;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-h2,
-h3,
-h4,
-h5 {
+.title {
     font-family: "Raleway", sans-serif;
     color: rgb(61, 102, 143);
-    line-height: 1.55rem;
+    font-size: 28px;
     font-weight: bold;
 }
 .help-info {
     padding: 10px;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
 }
 </style>

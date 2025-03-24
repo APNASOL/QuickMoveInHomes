@@ -1,45 +1,39 @@
 <template>
     <Master>
-        <div
-            class="top-section"
-            :style="{ backgroundImage: `url('/images/incentive-main.jpg')` }"
-        >
-            <div class="info-overlay">
-                <div class="d-flex justify-content-center container">
-                    <div>
-                        <h2 class="title uppercase">Blogs</h2>
-                        <span class="uppercase">
-                            Explore our insightful blogs featuring the latest
-                            trends, tips, and exclusive deals in real estate.
-                        </span>
-                    </div>
+        <section class="p-3 bg-white"> <!-- Removed container for full width -->
+            <!-- Hero Section -->
+            <div class="row align-items-center p-3">
+                <div class="col-md-12 text-center">
+                    <h1 class="uppercase c-main-title">Blogs</h1>
+                    <h4 class="c-tags">
+                        Explore our insightful blogs featuring the latest trends, tips, and exclusive deals in real estate.
+                    </h4>
                 </div>
             </div>
-        </div>
+        </section> 
 
         <div class="c-section-main-details container">
             <div v-if="blog_posts && blog_posts.length">
                 <div class="mx-4 pt-3">
-                    <div class="row">
+                    <div class="row g-2">
                         <div
                             v-for="post in blog_posts"
                             :key="post.id"
-                            class="col-md-3 mb-2"
+                            class="col-md-3"
                         >
                             <a
                                 class="text-decoration-none"
                                 :href="'/blog-details/' + post.id"
                             >
-                                <div class="card c-border-design">
+                                <div class="card c-border-design text-center">
                                     <img
                                         :src="post.image"
-                                        class="card-img-top c-card-img-border"
+                                        class="card-img-top c-card-img-border rounded-circle mt-2"
                                         :alt="post.title"
                                         @error="setAltImg"
                                     />
-
                                     <div class="card-body text-start">
-                                        <h5 class="card-title">
+                                        <h5 class="c-sub-title text-center">
                                             {{ post.title }}
                                         </h5>
                                     </div>
@@ -50,8 +44,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Seraching Filter -->
     </Master>
 </template>
 
@@ -73,7 +65,6 @@ export default {
     data() {
         return {
             blog_posts: [],
-            backgroundImage: "",
         };
     },
 
@@ -83,9 +74,6 @@ export default {
                 .get("/api/overall-blogs")
                 .then((response) => {
                     this.blog_posts = response.data;
-                    setTimeout(() => {
-                        this.openModal();
-                    }, 1000);
                 })
                 .catch((error) => {
                     toastr.error(error.response.data.message);
@@ -97,69 +85,43 @@ export default {
     },
 };
 </script>
-<style scoped>
-.top-section {
-    position: relative;
-    height: 300px; /* Adjust height as needed */
-    background-size: cover;
-    background-position: center;
-    color: white;
-    display: flex;
-    justify-content: center; /* Center the overlay content */
-    align-items: flex-end;
-    width: 100%;
-    overflow: hidden; /* Ensures no overflow from children */
-}
 
+<style scoped>
 .uppercase {
     text-transform: uppercase;
 }
 
-.info-overlay {
-    background: rgba(1, 6, 13, 0.8); /* Using RGBA for transparency */
-    padding: 20px; /* Increased padding for a better look */
-    width: 100%;
-    border-radius: 0px !important;
-    display: flex; /* Flexbox for alignment */
-    flex-direction: column; /* Stack items vertically */
-    align-items: center; /* Center align items */
-    text-align: center; /* Center align text */
-}
-
-.title {
-    font-size: 24px;
-    margin: 0;
-}
-
-h2,
-h3,
-h4,
-h5 {
-    font-family: "Raleway", sans-serif;
-    color: rgb(61, 102, 143);
-    line-height: 1.55rem;
+.c-main-title {
+    font-size: 28px;
     font-weight: bold;
+    color: rgb(61, 102, 143);
+}
+
+.c-tags {
+    font-size: 18px;
+    color: #333;
 }
 
 .card {
-    height: 280px; /* Fixed height for the card */
     display: flex;
-    flex-direction: column; /* Stack card content vertically */
-    justify-content: space-between; /* Space out content evenly */
-
+    flex-direction: column;
+    height: 100%;
+    background-color: white;
+    align-items: center;
 }
 
 .card-body {
-    flex: 1; /* Allow the card body to take remaining space */
+    flex-grow: 1;
     display: flex;
-    flex-direction: column; /* Stack content vertically */
-    justify-content: flex-start; /* Align items to the start */
-    
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .card-img-top {
-    height: 150px; /* Fixed height for the image */
-    object-fit: cover; /* Ensure image covers the area */
-    object-position: center; /* Center the image */
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
 }
 </style>
