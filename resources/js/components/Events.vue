@@ -1,23 +1,20 @@
 <template>
     <Master>
-        <div
-            class="top-section"
-            :style="{ backgroundImage: `url('/images/events-main.jpg')` }"
-        >
-            <div class="info-overlay">
-                <div class="d-flex justify-content-center container">
-                    <div>
-                        <h2 class="title uppercase">
-                            Upcoming & Ongoing Events
-                        </h2>
-                        <span class="uppercase">
-                            Special Closeout Offers on Quick Delivery Homes
-                            Events
-                        </span>
-                    </div>
+        <section class="p-3 bg-white">
+            <!-- Removed container for full width -->
+            <!-- Hero Section -->
+            <div class="row align-items-center p-3">
+                <div class="col-md-12 text-center">
+                    <h1 class="uppercase c-main-title">
+                        Upcoming Events & Exclusive Incentives!
+                    </h1>
+                    <h4 class="c-sub-title text-black">
+                        Explore special events and financial benefits curated
+                        just for you.
+                    </h4>
                 </div>
             </div>
-        </div>
+        </section>
 
         <div class="c-section-main-details container">
             <div v-if="events && events.length">
@@ -26,44 +23,53 @@
                         <div
                             v-for="event in events"
                             :key="event.id"
-                            class="col-md-4 mb-3 d-flex" 
+                            class="col-md-4 mb-3 d-flex"
                         >
-                    
-                            <div class="card c-border-design image-cover">
-                                <a :href="'http://'+event.registeration_link" target="_blank">
-                                <img
-                                    :src="event.image"
-                                    class="card-img-top c-card-img-border"
-                                    :alt="event.title"
-                                    @error="setAltImg"
-                                />
-                            </a>
+                            <div
+                                class="card c-border-design image-cover text-center"
+                            >
+                                <a
+                                    :href="'http://' + event.registeration_link"
+                                    target="_blank"
+                                >
+                                    <img
+                                        :src="event.image"
+                                        class="card-img-top c-card-img-border rounded-circle mt-2"
+                                        :alt="event.title"
+                                        @error="setAltImg"
+                                    />
+                                </a>
                                 <div class="card-body text-start">
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <b>{{ event.title }}</b>
-                                        </div>
-                                        <div>
-                                            {{ event.date }}
-                                        </div>
-                                    </div>
-                                    
-                                        
-                                      
+                                    <h4 class="c-main-title">
+                                        {{ event.title }}
+                                    </h4>
+
+                                    <b>
+                                        {{ event.date }}
+                                    </b>
+
                                     <div class="content ql-editor">
-                                        <span v-html="getTruncatedDescription(event)"></span>
                                         <span
-                                            v-if="event.description.length > 200"
+                                            v-html="
+                                                getTruncatedDescription(event)
+                                            "
+                                        ></span>
+                                        <span
+                                            v-if="
+                                                event.description.length > 200
+                                            "
                                             class="read-more"
                                             @click="toggleDescription(event.id)"
                                         >
-                                            {{ showFullDescription[event.id] ? "Show Less" : "Read More" }}
+                                            {{
+                                                showFullDescription[event.id]
+                                                    ? "Show Less"
+                                                    : "Read More"
+                                            }}
                                         </span>
                                     </div>
-                                     
                                 </div>
                             </div>
-                        
                         </div>
                     </div>
                 </div>
@@ -91,7 +97,7 @@ export default {
     data() {
         return {
             events: [],
-            showFullDescription: {},  
+            showFullDescription: {},
         };
     },
 
@@ -134,15 +140,15 @@ export default {
 <style scoped>
 .top-section {
     position: relative;
-    height: 300px; 
+    height: 300px;
     background-size: cover;
     background-position: center;
     color: white;
     display: flex;
-    justify-content: center;  
+    justify-content: center;
     align-items: flex-end;
     width: 100%;
-    overflow: hidden; 
+    overflow: hidden;
 }
 
 .uppercase {
@@ -150,13 +156,13 @@ export default {
 }
 
 .info-overlay {
-    background: rgba(1, 6, 13, 0.8); 
-    padding: 20px;  
+    background: rgba(1, 6, 13, 0.8);
+    padding: 20px;
     width: 100%;
     border-radius: 0px !important;
-    display: flex;  
-    flex-direction: column;  
-    align-items: center;  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .title {
@@ -169,39 +175,46 @@ export default {
     cursor: pointer;
     margin-left: 5px;
 }
-h2, h3, h4, h5 {
-    font-family: 'Raleway', sans-serif;
+
+h2,
+h3,
+h4,
+h5 {
+    font-family: "Raleway", sans-serif;
     color: rgb(61, 102, 143);
-    line-height: 1.55rem; 
+    line-height: 1.55rem;
     font-weight: bold;
-    
 }
 
 .card {
-    display: flex; 
-    flex-direction: column;  
-    height: 100%;  
-    background-color: white;  
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: white;
 }
 
 .card-body {
-    flex-grow: 1;  
+    flex-grow: 1;
     display: flex;
-    flex-direction: column;  
-    justify-content: space-between;  
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .image-cover {
-    position: relative; 
-    overflow: hidden;  
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
 }
 
 .image-cover img {
-    width: 100%; 
-    height: 200px; 
-    object-fit: cover;  
-    object-position: center;  
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
 }
+
 .ql-editor {
     padding: 0px !important;
 }
