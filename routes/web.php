@@ -120,7 +120,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
    Route::get('/community/create', [CommunitiesController::class, 'create'])->name('community.create');
    Route::get('/community/edit/{id}', [CommunitiesController::class, 'edit'])->name('community.edit');
    Route::get('/community/details/{id}', [CommunitiesController::class, 'details'])->name('community.details');
-   Route::get('/upload/communities', [CommunitiesController::class, 'upload'])->name('upload.communities');
+   Route::get('/scraped-communities-upload', [CommunitiesController::class, 'upload'])->name('upload.communities');
     //  homes
     Route::get('/homes', [HomesController::class, 'index'])->name('homes');
     Route::get('/home/create', [HomesController::class, 'create'])->name('home.create');
@@ -136,7 +136,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/reset-password-email', [SettingController::class, 'reset_password_email'])->name('reset-password-email');
     
     //  homes
-    Route::get('/upload', [PropertyController::class, 'upload'])->name('upload');
+    Route::get('/scraped-properties-upload', [PropertyController::class, 'upload'])->name('upload');
     Route::get('/properties', [PropertyController::class, 'index'])->name('properties');
     Route::get('/property/create', [PropertyController::class, 'create'])->name('property.create');
     Route::get('/property/edit/{id}', [PropertyController::class, 'edit'])->name('property.edit');
