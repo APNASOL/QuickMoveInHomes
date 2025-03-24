@@ -62,35 +62,72 @@ class CommunitiesImport implements ToCollection, WithHeadingRow
                 $community->proximity_to_strip = $row['proximity_to_strip'] ?? null;
                 $community->proximity_to_airport = $row['proximity_to_airport'] ?? null;
                 $community->nearby_attractions = $row['nearby_attractions'] ?? null;
-                $community->las_vegas_region_id = $row['las_vegas_region_id'] ?? null;
-                $community->neighborhood_id = $row['neighborhood_id'] ?? null;
-                $community->amenity_id = $row['amenity_id'] ?? null;
+                $community->hoa_id = $row['hoa_id'] ?? null;
+                // $community->las_vegas_region_id = $row['las_vegas_region_id'] ?? null;
+                // $community->neighborhood_id = $row['neighborhood_id'] ?? null;
+                // $community->amenity_id = $row['amenity_id'] ?? null;
                 $community->save();
                 Log::info("Community saved: " . $community->id);
 
-                if (!empty($row['las_vegas_region_id'])) {
-                    CommunityLasVegasRegion::create([
-                        'id' => Str::orderedUuid(), // Ensure 'id' is set
-                        'community_id' => $community->id,
-                        'las_vegas_regions_id' => $row['las_vegas_region_id'],
-                    ]);
+                // if (!empty($row['las_vegas_region_id'])) {
+                //     CommunityLasVegasRegion::create([
+                //         'id' => Str::orderedUuid(), // Ensure 'id' is set
+                //         'community_id' => $community->id,
+                //         'las_vegas_regions_id' => $row['las_vegas_region_id'],
+                //     ]);
+                // }
+                
+                
+                // if (!empty($row['neighborhood_id'])) {
+                //     CommunityNeighborhood::create([
+                //         'id' => Str::orderedUuid(), // Generate a new UUID for the id
+                //         'community_id' => $community->id,
+                //         'neighborhood_id' => $row['neighborhood_id'],
+                //     ]);
+                // }
+                
+                // if (!empty($row['amenity_id'])) {
+                //     CommunityAmenity::create([
+                //         'id' => Str::orderedUuid(), // Generate a new UUID for the id
+                //         'community_id' => $community->id,
+                //         'amenity_id' => $row['amenity_id'],
+                //     ]);
+                // }
+
+                 // Handle las_vegas_region_id (multiple values possible)
+                 if (!empty($row['las_vegas_region_id'])) {
+                    $regions = array_map('trim', explode(',', $row['las_vegas_region_id']));
+                    foreach ($regions as $region) {
+                        CommunityLasVegasRegion::create([
+                            'id' => Str::orderedUuid(), // Generate a new UUID for the id
+                            'community_id' => $community->id,
+                            'las_vegas_regions_id' => $region,
+                        ]);
+                    }
                 }
-                
-                
+
+                // Handle neighborhood_id (multiple values possible)
                 if (!empty($row['neighborhood_id'])) {
-                    CommunityNeighborhood::create([
-                        'id' => Str::orderedUuid(), // Generate a new UUID for the id
-                        'community_id' => $community->id,
-                        'neighborhood_id' => $row['neighborhood_id'],
-                    ]);
+                    $neighborhoods = array_map('trim', explode(',', $row['neighborhood_id']));
+                    foreach ($neighborhoods as $neighborhood) {
+                        CommunityNeighborhood::create([
+                            'id' => Str::orderedUuid(), // Generate a new UUID for the id
+                            'community_id' => $community->id,
+                            'neighborhood_id' => $neighborhood,
+                        ]);
+                    }
                 }
-                
+
+                // Handle amenity_id (multiple values possible)
                 if (!empty($row['amenity_id'])) {
-                    CommunityAmenity::create([
-                        'id' => Str::orderedUuid(), // Generate a new UUID for the id
-                        'community_id' => $community->id,
-                        'amenity_id' => $row['amenity_id'],
-                    ]);
+                    $amenities = array_map('trim', explode(',', $row['amenity_id']));
+                    foreach ($amenities as $amenity) {
+                        CommunityAmenity::create([
+                            'id' => Str::orderedUuid(), // Generate a new UUID for the id
+                            'community_id' => $community->id,
+                            'amenity_id' => $amenity,
+                        ]);
+                    }
                 }
                 
 
