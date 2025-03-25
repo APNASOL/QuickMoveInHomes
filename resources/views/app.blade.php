@@ -30,7 +30,7 @@
     $logged_in_user = logedInUser();
     $logo = $external_website->white_logo ?? "";
     $user_home_visiting_history_count = user_home_visiting_history_count();
-echo $logo;
+
     @endphp
     <link rel="icon" type="image/png" href="{{ $logo }}">
 
