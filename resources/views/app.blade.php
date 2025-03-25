@@ -10,7 +10,7 @@
     <link href="https://cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">
 
     <!-- Standard favicon for most browsers -->
-    <link rel="icon" href="/images/favicon.png" type="image/png">
+    <!-- <link rel="icon" href="/images/favicon.png" type="image/png"> -->
 
     <!-- Apple Touch Icon for iOS devices -->
     <link rel="apple-touch-icon" href="/images/favicon.png">
