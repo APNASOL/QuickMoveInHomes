@@ -2,13 +2,12 @@
     <div class="">
         <div class="property-card position-relative">
             <!-- Badges -->
-        <div class="d-flex justify-content-between position-absolute w-100 p-2">
-            <span v-if="badge" class="badge sale">{{ badge }}</span>
-            <span v-if="badge2" class="badge rent">{{ badge2 }}</span>
-          
-             
-        </div>
-
+            <div
+                class="d-flex justify-content-between position-absolute w-100 p-2"
+            >
+                <span v-if="badge" class="badge sale">{{ badge }}</span>
+                <span v-if="badge2" class="badge rent">{{ badge2 }}</span>
+            </div>
 
             <img
                 :src="main_image ? main_image : '/images/default_image.png'"
@@ -100,7 +99,13 @@
                             ></path>
                         </svg>
 
-                        <b class="fs-6 mt-1">{{ square_feet }} </b>
+                        <b class="fs-6 mt-1">
+                            {{
+                                parseFloat(square_feet) % 1 === 0
+                                    ? parseInt(square_feet)
+                                    : square_feet
+                            }}
+                        </b>
                     </span>
                     <!-- <span
                             ><i class="bi bi-garage"></i
@@ -193,7 +198,7 @@ export default defineComponent({
             event.target.src = "/images/default_image.png";
         },
         formatPrice(price) {
-            return Math.floor(price); // Removes the decimal portion
+            return Math.floor(price).toLocaleString(); // Removes the decimal portion
         },
     },
 });
@@ -242,8 +247,6 @@ export default defineComponent({
     padding: 5px 10px;
     border-radius: 5px;
 }
- 
- 
 
 .property-card .card-body {
     padding: 15px;

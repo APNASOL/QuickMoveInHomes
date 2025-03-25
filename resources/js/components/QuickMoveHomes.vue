@@ -29,7 +29,6 @@
                                         ? 'Incentive Home'
                                         : ''
                                 "
-                                :badge="'Quick Move In'"
                                 :main_image="property.main_image"
                                 :title="property.title"
                                 :property_id="property.property_id"
@@ -98,7 +97,6 @@
                     <a
                         href="/all-incentives"
                         class="btn btn-light c-custom-btn px-4 py-2 fw-semibold w-100 mt-2"
-                         
                         >View Current Incentives →</a
                     >
                 </div>
@@ -225,7 +223,7 @@ export default defineComponent({
             event.target.src = "/images/default_image.png";
         },
         formatPrice(price) {
-            return Math.floor(price); // Removes the decimal portion
+            return Math.floor(price).toLocaleString(); // Removes the decimal portion
         },
     },
 });

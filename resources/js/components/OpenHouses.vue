@@ -38,8 +38,14 @@
                                 /> -->
 
                                 <GlobalCard 
-                            :badge="'Open House'"
+                                :badge="
+                                    property.is_open_house === 1
+                                        ? 'Open House'
+                                        : 'Quick Move In'
+                                "
+                            :property_id="property.property_id"
                             :main_image="property.main_image"
+                            
                             :title="property.title"
                             :address="property.address"
                             :bedrooms="property.bedrooms"

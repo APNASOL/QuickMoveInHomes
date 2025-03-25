@@ -4,58 +4,85 @@
             <!-- Hero Section -->
             <div class="row align-items-center p-3">
                 <div class="col-md-12 text-center">
-                    <h1 class="uppercase c-main-title">Upcoming Events & Exclusive Incentives!</h1>
+                    <h1 class="uppercase c-main-title">Current Incentives</h1>
                     <h4 class="c-tags">
-                        Explore special events and financial benefits curated just for you.
+                        Inventory Closeout Specials On Quick Delivery Homes
                     </h4>
                 </div>
             </div>
-        </section> 
+        </section>
 
-        <div class="c-section-main-details container">
-            <div v-if="events && events.length">
-                <div class="mx-4 pt-3">
-                    <div class="row">
-                        <div
-                            v-for="event in events"
-                            :key="event.id"
-                            class="col-md-4 mb-3 d-flex" 
-                        >
-                            <div class="card c-border-design image-cover text-center">
-                                <a :href="'http://'+event.registeration_link" target="_blank">
-                                    <img
-                                        :src="event.image"
-                                        class="card-img-top c-card-img-border rounded-circle"
-                                        :alt="event.title"
-                                        @error="setAltImg"
-                                    />
+        <section class="container p-3">
+            <div class="row mx-4 d-flex justify-content-end p-3">
+                <div class="col-md-4">
+                    <b>Incentive Sort By</b>
+                    <div class="dropdown">
+                        <Multiselect
+                            v-model="sort_by"
+                            :options="sortingOptions"
+                            :placeholder="translate('Sort by')"
+                            :searchable="true"
+                            @select="incentivesFetch(sort_by)"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div v-if="incentives && incentives.length">
+                <div class="row text-center g-2">
+                    <div
+                        class="col-md-4 d-flex align-items-stretch"
+                        v-for="incentive in incentives"
+                        :key="incentive.id"
+                    >
+                        <div class="card c-border-design image-cover flex-fill p-2"> <!-- Ensures equal height -->
+                            <a
+                                class="text-decoration-none"
+                                :href="'/detailed-incentive/' + incentive.id"
+                            >
+                                <img
+                                    :src="incentive.incentive_banner ?? 'error.png'"
+                                    class="rounded-circle"
+                                    width="150"
+                                    height="150"
+                                    :alt="incentive.title"
+                                    @error="setAltImg"
+                                />
+                            </a>
+                            <div class="card-body text-start">
+                                <a
+                                    class="text-decoration-none"
+                                    :href="'/detailed-incentive/' + incentive.id"
+                                >
+                                    <h4 class="c-main-title text-center">{{ incentive.title }}</h4>
                                 </a>
-                                <div class="card-body text-start">
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <b>{{ event.title }}</b>
-                                        </div>
-                                        <div>
-                                            {{ event.date }}
-                                        </div>
-                                    </div>
-                                    <div class="content ql-editor">
-                                        <span v-html="getTruncatedDescription(event)"></span>
-                                        <span
-                                            v-if="event.description.length > 200"
-                                            class="read-more"
-                                            @click="toggleDescription(event.id)"
-                                        >
-                                            {{ showFullDescription[event.id] ? "Show Less" : "Read More" }}
-                                        </span>
-                                    </div>
+                                <div class="content ql-editor">
+                                    <span
+                                        v-html="getTruncatedDescription(incentive)"
+                                    ></span>
+                                    <span
+                                        v-if="incentive.description.length > 200"
+                                        class="read-more"
+                                        @click="toggleDescription(incentive.id)"
+                                    >
+                                        {{
+                                            showFullDescription[incentive.id]
+                                                ? "Show Less"
+                                                : "Read More"
+                                        }}
+                                    </span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <div v-else>
+                <div class="text-center p-4">
+                    <h4>No incentives found</h4>
+                </div>
+            </div>
+        </section>
     </Master>
 </template>
 
@@ -69,28 +96,37 @@ export default {
         Master,
         Multiselect,
     },
-    props: ["incentive_id"],
 
     created() {
-        this.fetchEvents();
+        this.incentivesFetch("Name");
     },
 
     data() {
         return {
-            events: [],
-            showFullDescription: {},  
+            incentives: [],
+            showFullDescription: {},
+            sortingOptions: [
+                "Name",
+                "Interest rate",
+                "Low to High",
+                "High to Low",
+            ],
+            sort_by: "",
         };
     },
 
     methods: {
-        async fetchEvents() {
-            await axios
-                .get("/api/all-events")
+        incentivesFetch(sorting_option) {
+            axios
+                .get("/api/fetch-sorted-incentives/" + sorting_option)
                 .then((response) => {
-                    this.events = response.data;
-                    // Initialize showFullDescription for each event
-                    this.events.forEach((event) => {
-                        this.showFullDescription[event.id] = false;
+                    this.incentives = response.data;
+                    this.incentives.forEach((incentive) => {
+                        this.$set(
+                            this.showFullDescription,
+                            incentive.id,
+                            false
+                        );
                     });
                 })
                 .catch((error) => {
@@ -103,96 +139,53 @@ export default {
         },
 
         toggleDescription(eventId) {
-            // Toggle full description visibility
             this.showFullDescription[eventId] =
                 !this.showFullDescription[eventId];
         },
 
-        getTruncatedDescription(event) {
-            // Display full description if toggled, otherwise truncate
-            return this.showFullDescription[event.id]
-                ? event.description
-                : event.description.slice(0, 200) + "...";
+        getTruncatedDescription(incentive) {
+            return this.showFullDescription[incentive.id]
+                ? incentive.description
+                : incentive.description.slice(0, 200) + "...";
         },
     },
 };
 </script>
 
 <style scoped>
-.top-section {
-    position: relative;
-    height: 300px; 
-    background-size: cover;
-    background-position: center;
-    color: white;
-    display: flex;
-    justify-content: center;  
-    align-items: flex-end;
-    width: 100%;
-    overflow: hidden; 
-}
-
 .uppercase {
     text-transform: uppercase;
 }
-
-.info-overlay {
-    background: rgba(1, 6, 13, 0.8); 
-    padding: 20px;  
-    width: 100%;
-    border-radius: 0px !important;
-    display: flex;  
-    flex-direction: column;  
-    align-items: center;  
+.c-tags {
+    font-family: Inter, sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 28px;
+    color: rgb(61, 102, 143);
 }
-
-.title {
-    font-size: 24px;
-    margin: 0;
+.c-info {
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: rgb(23, 38, 54);
 }
-
+.team-member img {
+    border-radius: 50%;
+    object-fit: cover;
+}
 .read-more {
     color: #002855;
     cursor: pointer;
     margin-left: 5px;
 }
-
-h2, h3, h4, h5 {
-    font-family: 'Raleway', sans-serif;
-    color: rgb(61, 102, 143);
-    line-height: 1.55rem; 
-    font-weight: bold;
+.card-body h4 {
+    margin: 0;
 }
-
 .card {
-    display: flex; 
-    flex-direction: column;  
-    height: 100%;  
-    background-color: white;  
-}
-
-.card-body {
-    flex-grow: 1;  
     display: flex;
-    flex-direction: column;  
-    justify-content: space-between;  
-}
-
-.image-cover {
-    position: relative; 
-    overflow: hidden;  
-    display: flex;
-    justify-content: center;
-}
-
-.image-cover img {
-    
-    object-fit: cover;  
-    object-position: center;  
-    border-radius: 50%; 
-}
-
-.ql-editor {
-    padding: 0px !important;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%; /* Ensures equal height */
 }
 </style>

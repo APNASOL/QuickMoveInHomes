@@ -661,7 +661,7 @@ export default {
             return `${formattedHours}:${minutes}:${seconds} ${period}`;
         },
         formatPrice(price) {
-            return Math.floor(price); // Removes the decimal portion
+            return Math.floor(price).toLocaleString(); // Removes the decimal portion
         },
         stopMarquee() {
             const marquee = this.$refs.imageMarquee;

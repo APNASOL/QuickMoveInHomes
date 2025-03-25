@@ -634,7 +634,7 @@ export default {
             event.target.src = "/images/default_image.png";
         },
         formatPrice(price) {
-            return Math.floor(price); // Removes the decimal portion
+            return Math.floor(price).toLocaleString(); // Removes the decimal portion
         },
     },
 };

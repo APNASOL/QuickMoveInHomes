@@ -1708,7 +1708,7 @@ export default {
                 });
         },
         formatPrice(price) {
-            return Math.floor(price); // Removes the decimal portion
+            return Math.floor(price).toLocaleString(); // Removes the decimal portion
         },
     },
 };
