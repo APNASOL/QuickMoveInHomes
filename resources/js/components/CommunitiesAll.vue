@@ -1,15 +1,27 @@
 <template>
     <Master>
+        <section class="p-3 bg-white"> <!-- Removed container for full width -->
+            <!-- Hero Section -->
+            <div class="row align-items-center p-3">
+                <div class="col-md-12 text-center">
+                    <h1 class="uppercase c-main-title">New Home Communities!</h1>
+                    <h4 class="c-tags">
+                        Explore master-planned communities in the Las Vegas area
+                    </h4>
+                </div>
+            </div>
+        </section>
+
         <section class="c-bg-color p-5" v-if="Communities && Communities.length > 0">
             <div class="container">
-                <div class="text-center mb-4">
+                <!-- <div class="text-center mb-4">
                     <h1 class="fw-bold c-main-title text-black">
                         New Home Communities
                     </h1>
                     <p class="text-muted c-sub-title">
                         Explore master-planned communities in the Las Vegas area
                     </p>
-                </div>
+                </div> -->
 
                 <div class="row row-cols-1 row-cols-md-3 g-4">
                     <div
