@@ -51,6 +51,14 @@ class IndexController extends Controller
             
             $propertyFeature = PropertyFeature::where('property_id', $property->property_id)->select('parking_enclosure')->first();
             $property->parking_enclosure = $propertyFeature->parking_enclosure ?? 0;
+
+            $PropertyIncentive = PropertyIncentive::where('property_id', $property->property_id)->first();
+            if($PropertyIncentive)
+            {
+                // $incentive = Incentive::where('id', $PropertyIncentive->incentive_id)->first();
+                // $property->incentive = $incentive;
+                $property->incentive = 1;
+            }
             
         }
 

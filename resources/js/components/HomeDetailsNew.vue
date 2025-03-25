@@ -30,7 +30,7 @@
             </Carousel>
 
             <div
-                class="container-fluid c-bg-color d-flex justify-content-center search" 
+                class="container-fluid c-bg-color d-flex justify-content-center search"
             >
                 <div
                     class="card p-4 c-card-w-responsive c-search-mt c-border-design"
@@ -44,7 +44,6 @@
                             <ul
                                 class="nav justify-content-center justify-content-md-start"
                             >
-                                
                                 <li class="nav-item">
                                     <a
                                         href="#overview"
@@ -79,29 +78,40 @@
                             <ul
                                 class="nav justify-content-center justify-content-md-end"
                             >
-                            <li>
-                                <div class="col-12 col-md-4 p-2">
-                            <div v-if="
-                                    logged_in_user &&
-                                    logged_in_user.role === 'customer' &&
-                                    user_home_visiting_history_count < 50
-                                ">
-                                <h5 class="mt-3 c-theme-color" v-if="
-                                        logged_in_user &&
-                                        !logged_in_user.agreement
-                                    ">
-                                    To access all information, please sign a
-                                    contract first while selecting your home.
-                                </h5>
-                                <ProceedComponent :home_id="home_id" :user_status="'logedin'"
-                                    :user_name="logged_in_user.name" />
-                            </div>
-                            <div v-else>
-                                <ProceedComponent />
-                            </div>
-                        </div>
-                            </li>
-                            <li class="nav-item">
+                                <li>
+                                    <div class="col-12 col-md-4 p-2">
+                                        <div
+                                            v-if="
+                                                logged_in_user &&
+                                                logged_in_user.role ===
+                                                    'customer' &&
+                                                user_home_visiting_history_count <
+                                                    50
+                                            "
+                                        >
+                                            <h5
+                                                class="mt-3 c-theme-color"
+                                                v-if="
+                                                    logged_in_user &&
+                                                    !logged_in_user.agreement
+                                                "
+                                            >
+                                                To access all information,
+                                                please sign a contract first
+                                                while selecting your home.
+                                            </h5>
+                                            <ProceedComponent
+                                                :home_id="home_id"
+                                                :user_status="'logedin'"
+                                                :user_name="logged_in_user.name"
+                                            />
+                                        </div>
+                                        <div v-else>
+                                            <ProceedComponent />
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="nav-item">
                                     <button
                                         class="btn btn-warning rounded-3 ms-3"
                                     >
@@ -122,7 +132,6 @@
                                         >Save</a
                                     >
                                 </li>
-                                
                             </ul>
                         </div>
                     </div>
@@ -138,7 +147,7 @@
                 class="c-marquee"
             > -->
             <!-- <div class="c-marquee-inner" ref="imageMarquee"> -->
-            <div id="overview" >
+            <div id="overview">
                 <div class="mt-5">
                     <div class="row text-center">
                         <div class="col">
@@ -409,7 +418,7 @@
         </div>
 
         <!-- Section 3: Overview Section -->
-        <div >
+        <div>
             <div
                 class="container bg-light p-5 shadow-lg rounded-2 mt-4 text-justify"
                 style="
@@ -434,7 +443,8 @@
                     </p>
                 </div>
                 <div class="col-md-6 col-sm-12 p-5">
-                    <p><strong>Bed rooms:</strong>{{ Home.bedrooms }}</p>npm
+                    <p><strong>Bed rooms:</strong>{{ Home.bedrooms }}</p>
+                    npm
                     <hr />
                     <p><strong>Baths:</strong>2-3</p>
                     <hr />
@@ -456,9 +466,7 @@
             data-bs-spy="scroll"
             data-bs-target="#navbar-example2"
             data-bs-offset="0"
-            
             tabindex="0"
-
         >
             <!-- <div class="row p-3">
                 <h2>Pricing and fees</h2>
@@ -493,7 +501,7 @@
         <!-- section 6 -->
 
         <div
-            class=" text-white text-center p-5 mt-4"
+            class="text-white text-center p-5 mt-4"
             style="
                 background-image: url('https://i.pinimg.com/736x/14/be/cd/14becdfe227736f82eb102c427a4d914.jpg');
                 background-size: cover;
@@ -513,30 +521,41 @@
         <!-- section 7 -->
 
         <div class="container-fluid interactive-banner mt-3">
-                    <h1>RELATED COMMUNITY MOVE IN HOMES</h1>
+            <h1>RELATED COMMUNITY MOVE IN HOMES</h1>
+        </div>
+        <div class="container pt-3">
+            <div class="row">
+                <div
+                    v-for="home in community_homes"
+                    :key="home.id"
+                    class="col-md-3 mb-3"
+                >
+                    <a
+                        class="text-decoration-none"
+                        :href="'/home-details/' + home.property_id"
+                    >
+                        <GlobalCard
+                            :badge="
+                                home.is_open_house == 1
+                                    ? 'Open House'
+                                    : 'Quick Move In'
+                            "
+                            :badge2="home.incentive ? 'Incentive Home' : ''"
+                            :main_image="
+                                home.main_image ?? '/images/default_image.png'
+                            "
+                            :title="home.title"
+                            :address="home.address"
+                            :bedrooms="home.bedrooms"
+                            :price="home.price"
+                            :bathrooms="home.bathrooms"
+                            :square_feet="home.square_feet"
+                            :garages="home.garages"
+                        />
+                    </a>
                 </div>
-                <div class="container pt-3">
-                    <div class="row">
-                        <div v-for="home in community_homes" :key="home.id" class="col-md-3 mb-3">
-                            <a class="text-decoration-none" :href="'/home-details/' + home.property_id">
-
-
-                                <GlobalCard :badge="home.is_open_house === 1 ? 'Open House' : 'Quick Move In'"
-                                    :main_image="home.main_image ?? '/images/default_image.png'"
-                                    :title="home.title" :address="home.address" :bedrooms="home.bedrooms"
-                                    :price="home.price" :bathrooms="home.bathrooms" :square_feet="home.square_feet"
-                                    :garages="home.garages" />
-
-
-                               
-                            </a>
-                        </div>
-                    </div>
-                </div>
-        
- 
-
-        
+            </div>
+        </div>
     </Master>
 </template>
 

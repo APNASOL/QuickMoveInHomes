@@ -351,11 +351,13 @@
                                         "
                                     >
                                         <GlobalCard
-                                            :badge="'Quick Move In'"
-                                            :badge2="
-                                                home.is_open_house
+                                            :badge="
+                                                home.is_open_house == 1
                                                     ? 'Open House'
-                                                    : home.incentive
+                                                    : 'Quick Move In'
+                                            "
+                                            :badge2="
+                                                home.incentive
                                                     ? 'Incentive Home'
                                                     : ''
                                             "

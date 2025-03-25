@@ -449,10 +449,11 @@
                         >
                             <GlobalCard
                                 :badge="
-                                    home.is_open_house === 1
+                                    home.is_open_house == 1
                                         ? 'Open House'
                                         : 'Quick Move In'
                                 "
+                                :badge2="home.incentive ? 'Incentive Home' : ''"
                                 :main_image="
                                     home.main_image ??
                                     '/images/default_image.png'

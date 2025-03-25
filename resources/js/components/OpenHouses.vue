@@ -1,35 +1,27 @@
 <template>
     <div class="bg-theme" v-if="properties && properties.length">
-        <div class="mx-4">
-            <div class="d-flex justify-content-between text-white">
-                <div class="mt-4">
-                    <h2>Visit Our Open Houses ...</h2>
+        <div class="container">
+            <div class="mx-4">
+                <div class="d-flex justify-content-between text-white">
+                    <div class="mt-4">
+                        <h2>Visit Our Open Houses ...</h2>
+                    </div>
+ 
                 </div>
-
-                <!-- <div>
-                    <button class="btn btn-outline-light">Take me there</button>
-                    <button id="fa-icon" class="btn btn-outline-light">
-                        <i class="bi bi-arrow-right"></i>
-                    </button>
-                </div> -->
-            </div>
-            <Carousel
-                :autoplay="2000"
-                :settings="settings"
-                :wrapAround="true"
-                :breakpoints="breakpoints"
-                :pauseAutoplayOnHover="true"
-            >
-                <Slide v-for="property in properties" :key="property.id">
-                    <div class="carousel__item">
-                        <a
-                            class="text-decoration-none"
-                            :href="
-                                '/home-details/' +
-                                property.property_id
-                            "
-                        >
-                            <!--  <div class="card c-border-design">
+                <Carousel
+                    :autoplay="2000"
+                    :settings="settings"
+                    :wrapAround="true"
+                    :breakpoints="breakpoints"
+                    :pauseAutoplayOnHover="true"
+                >
+                    <Slide v-for="property in properties" :key="property.id">
+                        <div class="carousel__item">
+                            <!-- <a
+                                class="text-decoration-none"
+                                :href="'/home-details/' + property.property_id"
+                            > -->
+                                <!--  <div class="card c-border-design">
                                <img
                                     :src="property.main_image ?? '/images/default_image.png'"
                                     class="card-img-top c-card-img-border"
@@ -37,23 +29,27 @@
                                     @error="setAltImg"
                                 /> -->
 
-                                <GlobalCard 
-                                :badge="
-                                    property.is_open_house === 1
-                                        ? 'Open House'
-                                        : 'Quick Move In'
-                                "
-                            :property_id="property.property_id"
-                            :main_image="property.main_image"
-                            
-                            :title="property.title"
-                            :address="property.address"
-                            :bedrooms="property.bedrooms"
-                            :price="property.price"
-                            :bathrooms="property.bathrooms"
-                            :square_feet="property.square_feet"
-                            :garages="property.parking_enclosure"
-                            />
+                                <GlobalCard
+                                    :badge="
+                                        property.is_open_house == 1
+                                            ? 'Open House'
+                                            : 'Quick Move In'
+                                    "
+                                    :badge2="
+                                        property.incentive
+                                            ? 'Incentive Home'
+                                            : ''
+                                    "
+                                    :property_id="property.property_id"
+                                    :main_image="property.main_image"
+                                    :title="property.title"
+                                    :address="property.address"
+                                    :bedrooms="property.bedrooms"
+                                    :price="property.price"
+                                    :bathrooms="property.bathrooms"
+                                    :square_feet="property.square_feet"
+                                    :garages="property.parking_enclosure"
+                                />
 
                                 <!-- <div
                                     class="card-img-overlay c-card-img-overlay-flash-sale"
@@ -64,7 +60,6 @@
                                     >
                                 </div> -->
 
-                                
                                 <!-- <div class="card-body text-start">
                                     <p>
                                         <span v-if="property.title"> 
@@ -123,14 +118,15 @@
                                         </p>
                                 </div>
                             </div> -->
-                        </a>
-                    </div>
-                </Slide>
+                            <!-- </a> -->
+                        </div>
+                    </Slide>
 
-                <template #addons>
-                    <Navigation />
-                </template>
-            </Carousel>
+                    <template #addons>
+                        <Navigation />
+                    </template>
+                </Carousel>
+            </div>
         </div>
     </div>
 </template>
@@ -153,32 +149,52 @@ export default defineComponent({
             properties: [],
 
             settings: {
-                itemsToShow: 1.5,
-                transition: "500",
+                itemsToShow: 1,
+                transition: 500,
                 snapAlign: "center",
             },
             breakpoints: {
-                1: {
-                    itemsToShow: 1.5,
+                320: {
+                    // Smallest screens (mobile)
+                    itemsToShow: 1.2,
                     snapAlign: "center",
-                    transition: "500",
+                    transition: 500,
                 },
-                // 700px and up
                 576: {
+                    // Small phones & portrait tablets
+                    itemsToShow: 2,
+                    snapAlign: "center",
+                    transition: 500,
+                },
+                768: {
+                    // Tablets & small laptops
                     itemsToShow: 2.5,
                     snapAlign: "center",
-                    transition: "500",
+                    transition: 500,
                 },
                 992: {
-                    itemsToShow: 3.5,
+                    // Medium desktops
+                    itemsToShow: 3,
                     snapAlign: "center",
-                    transition: "500",
+                    transition: 500,
                 },
-                // 1024 and up
                 1200: {
+                    // Large desktops
+                    itemsToShow: 4,
+                    snapAlign: "center",
+                    transition: 500,
+                },
+                1400: {
+                    // Extra large screens
                     itemsToShow: 4.5,
                     snapAlign: "center",
-                    transition: "500",
+                    transition: 500,
+                },
+                1600: {
+                    // Ultra-wide screens
+                    itemsToShow: 5,
+                    snapAlign: "center",
+                    transition: 500,
                 },
             },
         };
@@ -271,7 +287,7 @@ export default defineComponent({
 }
 .card-img-top {
     object-fit: cover;
-    width: 100%;  
+    width: 100%;
     height: 240px; /* Fixed height for uniformity */
 }
 </style>

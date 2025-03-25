@@ -14,6 +14,7 @@ use App\Models\CustomerAgentConnection;
 use App\Models\CustomerVisitingHomesHistory;
 use App\Models\HOA;
 use App\Models\Incentive;
+use App\Models\PropertyIncentive;
 use App\Models\LasVegasRegion;
 use App\Models\Neighborhood;
 use App\Models\OpenHouse;
@@ -88,6 +89,16 @@ class HomeController extends Controller
         // Fetch the property along with its relationships
 
         $property = Property::with(['feature', 'hoa', 'school'])->findOrFail($id);
+
+
+        $PropertyIncentive = PropertyIncentive::where('property_id', $property->property_id)->first();
+        if($PropertyIncentive)
+        { 
+            // $incentive = Incentive::where('id', $PropertyIncentive->incentive_id)->first();
+            // $property->incentive = $incentive;
+            $property_incentive = 1;
+        }
+
 
         // Initialize variables
         $property_main_image = null;
@@ -198,7 +209,7 @@ class HomeController extends Controller
             'full_bath'           => $property->full_bath,
             'half_bath'           => $property->half_bath,
             'construction_status' => $property->construction_status,
-
+            'incentive' => $property_incentive ?? "",
             'bedrooms'            => $property->bedrooms,
             'square_feet'         => $property->square_feet,
             'lot_size'            => $property->lot_size,
@@ -312,6 +323,13 @@ class HomeController extends Controller
                 }
             } else {
                 $property->open_house_data = 0;
+            }
+            $PropertyIncentive = PropertyIncentive::where('property_id', $property->property_id)->first();
+            if($PropertyIncentive)
+            {
+                // $incentive = Incentive::where('id', $PropertyIncentive->incentive_id)->first();
+                // $property->incentive = $incentive;
+                $property->incentive = 1;
             }
 
             $property->banner     = null;
@@ -506,6 +524,14 @@ class HomeController extends Controller
                 $open_house                = OpenHouse::where('property_id', $property->property_id)->first();
                 $property->open_house_data = $open_house;
             }
+
+            $PropertyIncentive = PropertyIncentive::where('property_id', $property->property_id)->first();
+            if($PropertyIncentive)
+            {
+                // $incentive = Incentive::where('id', $PropertyIncentive->incentive_id)->first();
+                // $property->incentive = $incentive;
+                $property->incentive = 1;
+            }
             // Process main image
             $images = json_decode($property->images);
             if (is_array($images) && count($images) > 0) {
@@ -697,6 +723,13 @@ class HomeController extends Controller
                 $property->open_house_data = $open_house;
             }
 
+            $PropertyIncentive = PropertyIncentive::where('property_id', $property->property_id)->first();
+            if($PropertyIncentive)
+            {
+                // $incentive = Incentive::where('id', $PropertyIncentive->incentive_id)->first();
+                // $property->incentive = $incentive;
+                $property->incentive = 1;
+            }
             // Fetch community details
             $community = Community::find($property->community_id);
             if ($community && $community->banner) {
@@ -867,6 +900,13 @@ class HomeController extends Controller
 
                 $open_house                = OpenHouse::where('property_id', $property->property_id)->first();
                 $property->open_house_data = $open_house;
+            }
+            $PropertyIncentive = PropertyIncentive::where('property_id', $property->property_id)->first();
+            if($PropertyIncentive)
+            {
+                // $incentive = Incentive::where('id', $PropertyIncentive->incentive_id)->first();
+                // $property->incentive = $incentive;
+                $property->incentive = 1;
             }
             // Process main image
             $images = json_decode($property->images);
