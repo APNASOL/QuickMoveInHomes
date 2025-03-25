@@ -388,56 +388,56 @@ class PropertyController extends Controller
 
 
         // Validate the incoming request
-        // $request->validate([
-        //     // Property Fields
-        //     'user_id'                       => 'nullable',
-        //     'title'                         => 'required|string|max:255',
-        //     'description'                   => 'required|string',
-        //     'address'                       => 'required|string|max:255',
-        //     'city'                          => 'required|string|max:255',
-        //     'state'                         => 'required|string|max:255',
-        //     'zip_code'                      => 'required|string|max:255',
-        //     'latitude'                      => 'required|string|max:255',
-        //     'longitude'                     => 'required|string|max:255',
-        //     'price'                         => 'required|numeric',
-        //     'bedrooms'                      => 'required|integer|min:0',
-        //     'square_feet'                   => 'required|numeric',
-        //     'lot_size'                      => 'required|numeric',
-        //     'property_type'                 => 'required|string|max:255',
-        //     'listing_type'                  => 'required|string|max:255',
-        //     'year_built'                    => 'required|integer|digits:4',
-        //     'hoa_id'                        => 'required',
-        //     'association_fee'               => 'required|numeric',
-        //     'cic'                           => 'required',
-        //     'school_id'                     => 'required',
-        //     'community_id'                  => 'required',
-        //     'home_main_image'               => 'nullable',
-        //     'banner'                        => 'nullable',
+        $request->validate([
+            // Property Fields
+            'user_id'                       => 'nullable',
+            'title'                         => 'required|string|max:255',
+            'description'                   => 'required|string',
+            'address'                       => 'required|string|max:255',
+            'city'                          => 'required|string|max:255',
+            'state'                         => 'required|string|max:255',
+            'zip_code'                      => 'required|string|max:255',
+            'latitude'                      => 'required|string|max:255',
+            'longitude'                     => 'required|string|max:255',
+            'price'                         => 'required|numeric',
+            'bedrooms'                      => 'required|integer|min:0',
+            'square_feet'                   => 'required|numeric',
+            'lot_size'                      => 'required|numeric',
+            'property_type'                 => 'required|string|max:255',
+            'listing_type'                  => 'required|string|max:255',
+            'year_built'                    => 'required|integer|digits:4',
+            'hoa_id'                        => 'required',
+            'association_fee'               => 'required|numeric',
+            'cic'                           => 'required',
+            'school_id'                     => 'required',
+            'community_id'                  => 'required',
+            'home_main_image'               => 'nullable',
+            'banner'                        => 'nullable',
 
-        //     // Property Features Fields
-        //     'feature.name'                  => 'nullable|string|max:255',
-        //     'feature.description'           => 'nullable|string',
-        //     'feature.fireplace_type'        => 'nullable|string|max:255',
-        //     'feature.kitchen_pantry_type'   => 'nullable|string|max:255',
-        //     'feature.reach_in'              => 'nullable',
-        //     'feature.walk_in'               => 'nullable',
-        //     'feature.laundry_closet'        => 'nullable|string|max:255',
-        //     'feature.closet_location'       => 'nullable|string|max:255',
-        //     'feature.bedroom_location'      => 'nullable|string|max:255',
-        //     'feature.bathroom_type'         => 'nullable|string|max:255',
-        //     'feature.bathroom_status'       => 'nullable|string|max:255',
-        //     'feature.pool_shape'            => 'nullable|string|max:255',
-        //     'feature.water_features'        => 'nullable|string|max:255',
-        //     'feature.pool_status'           => 'nullable|string|max:255',
-        //     'feature.spa'                   => 'nullable|boolean',
-        //     'feature.fencing_material'      => 'nullable|string|max:255',
-        //     'feature.fencing_status'        => 'nullable|string|max:255',
-        //     'feature.parking_enclosure'     => 'nullable|string|max:255',
-        //     'feature.private_bath'          => 'nullable',
-        //     'feature.outdoor_shower'        => 'nullable',
-        //     'feature.landscape_maintenance' => 'nullable|string|max:255',
-        //     'feature.foundation_conditions' => 'nullable|string|max:255',
-        // ]);
+            // Property Features Fields
+            'feature.name'                  => 'nullable|string|max:255',
+            'feature.description'           => 'nullable|string',
+            'feature.fireplace_type'        => 'nullable|string|max:255',
+            'feature.kitchen_pantry_type'   => 'nullable|string|max:255',
+            'feature.reach_in'              => 'nullable',
+            'feature.walk_in'               => 'nullable',
+            'feature.laundry_closet'        => 'nullable|string|max:255',
+            'feature.closet_location'       => 'nullable|string|max:255',
+            'feature.bedroom_location'      => 'nullable|string|max:255',
+            'feature.bathroom_type'         => 'nullable|string|max:255',
+            'feature.bathroom_status'       => 'nullable|string|max:255',
+            'feature.pool_shape'            => 'nullable|string|max:255',
+            'feature.water_features'        => 'nullable|string|max:255',
+            'feature.pool_status'           => 'nullable|string|max:255',
+            'feature.spa'                   => 'nullable|boolean',
+            'feature.fencing_material'      => 'nullable|string|max:255',
+            'feature.fencing_status'        => 'nullable|string|max:255',
+            'feature.parking_enclosure'     => 'nullable|string|max:255',
+            'feature.private_bath'          => 'nullable',
+            'feature.outdoor_shower'        => 'nullable',
+            'feature.landscape_maintenance' => 'nullable|string|max:255',
+            'feature.foundation_conditions' => 'nullable|string|max:255',
+        ]);
 
         // Create or update the property
         if ($request->property_id && $request->property_id != null && $request->property_id != "null") {
@@ -636,26 +636,26 @@ class PropertyController extends Controller
 
 
          // Assuming the JSON array is in the 'floor_plans' field of the request
-    $floorPlans = json_decode($request->price_includes, true); // Decode the JSON array
+    // $floorPlans = json_decode($request->price_includes, true); // Decode the JSON array
  
-    if (!empty($floorPlans) && is_array($floorPlans)) {
-        foreach ($floorPlans as $plan) {
-            // Create a new FloorPlan entry for each item in the array
-            $floorPlan = new FloorPlan();
-            $floorPlan->property_id = $property->property_id; // Ensure the property_id is provided in the request
-            $floorPlan->name = $plan['name'] ?? null;
-            $floorPlan->size = $plan['size'] ?? null;
-            $floorPlan->beds = $plan['beds'] ?? null;
-            $floorPlan->full_baths = $plan['full_baths'] ?? null;
-            $floorPlan->half_baths = $plan['half_baths'] ?? null;
-            $floorPlan->price = $plan['price'] ?? null;
-            $floorPlan->special_features = $plan['special_features'] ?? null;
-            $floorPlan->image =  null; // Assuming the image field contains a string path
+    // if (!empty($floorPlans) && is_array($floorPlans)) {
+    //     foreach ($floorPlans as $plan) {
+    //         // Create a new FloorPlan entry for each item in the array
+    //         $floorPlan = new FloorPlan();
+    //         $floorPlan->property_id = $property->property_id; // Ensure the property_id is provided in the request
+    //         $floorPlan->name = $plan['name'] ?? null;
+    //         $floorPlan->size = $plan['size'] ?? null;
+    //         $floorPlan->beds = $plan['beds'] ?? null;
+    //         $floorPlan->full_baths = $plan['full_baths'] ?? null;
+    //         $floorPlan->half_baths = $plan['half_baths'] ?? null;
+    //         $floorPlan->price = $plan['price'] ?? null;
+    //         $floorPlan->special_features = $plan['special_features'] ?? null;
+    //         $floorPlan->image =  null; // Assuming the image field contains a string path
 
-            // Save the FloorPlan record
-            $floorPlan->save();
-        }
-    }
+    //         // Save the FloorPlan record
+    //         $floorPlan->save();
+    //     }
+    // }
 
  
         return 'success';
