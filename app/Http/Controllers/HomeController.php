@@ -91,12 +91,18 @@ class HomeController extends Controller
         $property = Property::with(['feature', 'hoa', 'school'])->findOrFail($id);
 
 
-        $PropertyIncentive = PropertyIncentive::where('property_id', $property->property_id)->first();
+        $PropertyIncentive = PropertyIncentive::where('property_id', $property->property_id)->get();
         if($PropertyIncentive)
         { 
-            // $incentive = Incentive::where('id', $PropertyIncentive->incentive_id)->first();
-            // $property->incentive = $incentive;
-            $property_incentive = 1;
+            $property_incentive_status = 1;
+            foreach($PropertyIncentive as $incentive)
+            {
+                $incentive_record = Incentive::where('id', $incentive->incentive_id)->select('id','title')->first();
+              
+                $incentive->incentive = $incentive_record;
+            }
+            
+            
         }
 
 
@@ -209,7 +215,8 @@ class HomeController extends Controller
             'full_bath'           => $property->full_bath,
             'half_bath'           => $property->half_bath,
             'construction_status' => $property->construction_status,
-            'incentive' => $property_incentive ?? "",
+            'incentive' => $property_incentive_status ?? "",
+            'property_incentives' =>$PropertyIncentive ?? "",
             'bedrooms'            => $property->bedrooms,
             'square_feet'         => $property->square_feet,
             'lot_size'            => $property->lot_size,

@@ -924,7 +924,7 @@
                                 "
                             >
                                 <a
-                                    class="btn btn-success mt-3 w-100 p-4 beat"
+                                    class="btn btn-success mt-3 w-100 p-3 beat"
                                     :href="'/homes-agents/' + home_id"
                                 >
                                     <b class="fs-3">Connect to Agent</b>
@@ -939,13 +939,14 @@
                                         user_home_visiting_history_count < 50
                                     "
                                 > -->
+                                 
                                     <div>
                                         <div v-if="Home.incentive">
                                             <div class="banner-content">
                                                 <div
                                                     class="open-house-tag mb-2"
                                                 >
-                                                    AVAILABLE INCENTIVE
+                                                    COMMUNITY INCENTIVE
                                                 </div>
                                                 <div>
                                                     <i
@@ -959,6 +960,30 @@
                                                         "
                                                     >
                                                         {{ incentive.title }}</a
+                                                    >
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div v-if="Home.property_incentives">
+                                            <div class="banner-content">
+                                                <div
+                                                    class="open-house-tag mb-2"
+                                                >
+                                                    PROPERTY INCENTIVES
+                                                </div>
+                                                <!-- {{Home.property_incentives}} -->
+                                                <div v-for="(prop_incentive,index) in Home.property_incentives" :key="prop_incentive.id">
+                                                    <i
+                                                        class="bi bi-check-lg c-text-theme fs-5"
+                                                    ></i>
+                                                    <a
+                                                        class="text-decoration-none c-anchor-style"
+                                                        :href="
+                                                            '/detailed-incentive/' +
+                                                            prop_incentive.id
+                                                        "
+                                                    >
+                                                        {{ prop_incentive.title }}</a
                                                     >
                                                 </div>
                                             </div>
