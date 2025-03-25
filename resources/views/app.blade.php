@@ -32,7 +32,7 @@
     $user_home_visiting_history_count = user_home_visiting_history_count();
 
     @endphp
-    <link rel="icon" type="image/png" href="{{ asset($logo) }}">
+    <link rel="icon" type="image/png" href="{{ $logo }}">
 
     <script>
         let translations = @json($translations);
