@@ -15,6 +15,8 @@
     <!-- Apple Touch Icon for iOS devices -->
     <link rel="apple-touch-icon" href="/images/favicon.png">
 
+    
+
     <title>Vegas Properties: Find Your Dream Home | Luxury & Affordable Real Estate in Las Vegas</title>
     <meta name="description" content="Discover the best real estate deals in Las Vegas with Vegas Properties. Explore luxury homes, affordable properties, and exclusive listings tailored to your needs. Your trusted partner for buying, selling, and renting properties in America's entertainment capital. Start your journey today!">
     <meta name="keywords" content="Las Vegas Real Estate, Luxury Homes in Vegas, Affordable Properties in Las Vegas, Vegas Realtors, Exclusive Property Listings, Buy Property in Las Vegas, Sell Your Home in Vegas, Rent Las Vegas Properties, Real Estate Deals in Nevada, Dream Homes in Las Vegas">
@@ -30,6 +32,8 @@
     $user_home_visiting_history_count = user_home_visiting_history_count();
 
     @endphp
+    <link rel="icon" type="image/png" href="{{ asset($logo) }}">
+
     <script>
         let translations = @json($translations);
         window.translations = JSON.stringify(translations);
