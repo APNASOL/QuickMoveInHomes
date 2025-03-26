@@ -193,9 +193,9 @@ class HomeController extends Controller
             $community_builder = BuildersCommunity::where('community_id', $community->id)->first();
             if ($community_builder) {
                 $builder = Builder::where('id', $community_builder->builder_id)->first();
-                if ($builder) {
-                    $incentive = Incentive::where('builder_id', $builder->id)->where('end_date', '>=', $currentDate)->first();
-                }
+                // if ($builder) {
+                //     $incentive = Incentive::where('builder_id', $builder->id)->where('end_date', '>=', $currentDate)->first();
+                // }
             }
         }
         // Prepare property data
@@ -254,7 +254,7 @@ class HomeController extends Controller
                 'landscape_maintenance' => optional($property->feature)->landscape_maintenance,
                 'foundation_conditions' => optional($property->feature)->foundation_conditions,
             ],
-            'incentive'           => $incentive ?? '',
+            // 'incentive'           => $incentive ?? '',
         ];
 
         // Merge the open house data into property data if available

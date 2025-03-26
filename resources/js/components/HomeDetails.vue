@@ -100,21 +100,21 @@
                 </div>
 
                 <div
-                    class="interactive-open-house-banner mt-4 mb-4 rounded-lg shadow-lg bg-white p-4 border border-gray-300"
+                    class="interactive-open-house-banner mb-2 rounded-lg shadow-lg bg-white p-4 border border-gray-300"
                     v-if="Home.is_open_house && Home.is_open_house != 0"
                 >
-                    <div class="banner-content text-center">
+                    <div class="banner-content text-center container">
                         <div class="c-main-title">OPEN HOUSE</div>
                         <p
-                            class="open_house_desc mt-3 text-gray-700 text-lg font-medium"
+                            class="open_house_desc mt- text-gray-700 text-lg font-medium"
                         >
                             {{ Home.open_house_description }}
                         </p>
                         <div
-                            class="details mt-4 flex flex-col gap-2 items-center text-gray-600"
+                            class="details mt-4 flex flex-col gap-2 items-center text-gray-600 c-tabs-values"
                         >
                             <p
-                                class="time flex items-center gap-2 c-main-title"
+                                class="text-gray-700 text-lg font-medium"
                             >
                                 <span
                                     class="icon bg-gray-200 text-gray-700 p-2 rounded-full"
@@ -125,7 +125,7 @@
                                 {{ formatTime(Home.open_house_end_time) }}
                             </p>
                             <p
-                                class="date flex items-center gap-2 c-main-title"
+                                class="text-gray-700 text-lg font-medium "
                             >
                                 <span
                                     class="icon bg-gray-200 text-gray-700 p-2 rounded-full"
@@ -939,9 +939,9 @@
                                         user_home_visiting_history_count < 50
                                     "
                                 > -->
-                                 
+
                                     <div>
-                                        <div v-if="Home.incentive">
+                                        <!-- <div v-if="Home.incentive">
                                             <div class="banner-content">
                                                 <div
                                                     class="open-house-tag mb-2"
@@ -963,31 +963,39 @@
                                                     >
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div v-if="Home.property_incentives">
                                             <div class="banner-content">
                                                 <div
                                                     class="open-house-tag mb-2"
                                                 >
-                                                    PROPERTY INCENTIVES
+                                                    INCENTIVES
                                                 </div>
-                                                <!-- {{Home.property_incentives}} -->
-                                                <div v-for="(prop_incentive,index) in Home.property_incentives" :key="prop_incentive.id">
+                                                <div
+                                                    v-for="(
+                                                        prop_incentive, index
+                                                    ) in Home.property_incentives"
+                                                    :key="prop_incentive.id"
+                                                >
                                                     <i
                                                         class="bi bi-check-lg c-text-theme fs-5"
                                                     ></i>
                                                     <a
-                                                        class="text-decoration-none c-anchor-style"
+                                                        class="text-decoration-none c-anchor-style ms-1"
                                                         :href="
                                                             '/detailed-incentive/' +
                                                             prop_incentive.id
                                                         "
                                                     >
-                                                        {{ prop_incentive.title }}</a
-                                                    >
+                                                        {{
+                                                            prop_incentive
+                                                                .incentive.title
+                                                        }}
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="mt-2" v-if="Community">
                                             <div class="open-house-tag mb-2">
                                                 COMMUNITY
