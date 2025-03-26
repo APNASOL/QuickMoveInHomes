@@ -917,7 +917,7 @@
                                 class="card p-4 border-0 shadow-sm"
                                 style="
                                     position: sticky;
-                                    top: 100px; /* Adjust this value based on your navbar height */
+                                    top: 85px; /* Adjust this value based on your navbar height */
                                     height: 550px;
                                     overflow: auto;
                                     color: black !important;
@@ -982,6 +982,7 @@
                                                     ></i>
                                                     <a
                                                         class="text-decoration-none c-anchor-style ms-1"
+                                                        target="_blank"
                                                         :href="
                                                             '/detailed-incentive/' +
                                                             prop_incentive.id
