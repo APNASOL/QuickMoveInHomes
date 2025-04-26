@@ -14,7 +14,7 @@
             </div>
         </section>
 
-        <div class="c-section-main-details container">
+        <div class="c-section-main-details container mt-3">
             <div v-if="events && events.length">
                 <div class="row text-center g-2">
                     <div

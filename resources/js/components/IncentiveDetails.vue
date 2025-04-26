@@ -1,94 +1,126 @@
 <template>
     <Master>
-        <section class="p-3 bg-white"> <!-- Removed container for full width -->
+        <section class="p-3 bg-white">
+            <!-- Removed container for full width -->
             <!-- Hero Section -->
             <div class="row align-items-center p-3">
                 <div class="col-md-12 text-center">
-                    <h1 class="uppercase c-main-title">Exclusive Incentives for You!</h1>
+                    <h1 class="uppercase c-main-title">
+                        Exclusive Incentives for You!
+                    </h1>
                     <h4 class="c-tags">
-                        Discover amazing deals and financial benefits tailored just for you.
+                        Discover amazing deals and financial benefits tailored
+                        just for you.
                     </h4>
                 </div>
             </div>
         </section>
 
         <!-- Incentive Details Section with Image and Text -->
-        <div class="container mt-4">
-            <div class="row align-items-center">
-                <div class="col-md-6 d-flex flex-column justify-content-center">
-                    <h3 class="c-main-title">{{ incentive.title }} werwe</h3>
-                    <p class="incentive-description" v-html="incentive.description"></p>
-                    <div>
-                        From Date: <strong>{{ formatDate(incentive.start_date) }}</strong>
-                        To Date: <strong>{{ formatDate(incentive.end_date) }}</strong>
-                    </div>
-                    <div v-if="incentive.interest_rate_first_year">
-                        <p><strong>First Year Interest Rate:</strong> {{ incentive.interest_rate_first_year }}%</p>
-                    </div>
-                </div>
-                <div class="col-md-6 text-center">
-                    <img
-                        :src="incentive_banner || '/images/default_image.png'"
-                        class="img-fluid incentive-img"
-                        :alt="incentive.title"
-                        @error="setAltImg"
-                    />
+        <div class="container my-5">
+    <div class="row align-items-center bg-white shadow-sm rounded-4 p-4">
+        <!-- Left Content -->
+        <div class="col-lg-6 d-flex flex-column justify-content-center p-4">
+            <h2 class="c-main-title mb-3">{{ incentive.title }}</h2>
+            <p class="incentive-description text-muted" v-html="incentive.description"></p>
+
+            <div class="mt-3">
+                <p class="mb-1">
+                    <strong>From:</strong> {{ formatDate(incentive.start_date) }}
+                </p>
+                <p class="mb-3">
+                    <strong>To:</strong> {{ formatDate(incentive.end_date) }}
+                </p>
+                <div v-if="incentive.interest_rate_first_year">
+                    <p class="badge bg-success fs-6 p-2">
+                        1st Year Interest Rate: {{ incentive.interest_rate_first_year }}%
+                    </p>
                 </div>
             </div>
         </div>
+
+        <!-- Right Image -->
+        <div class="col-lg-6 text-center p-4">
+            <img
+                :src="incentive_banner || '/images/default_image.png'"
+                class="img-fluid rounded-4 incentive-img shadow-sm"
+                :alt="incentive.title"
+                style="max-height: 400px; object-fit: cover;"
+                @error="setAltImg"
+            />
+        </div>
+    </div>
+</div>
+
         <div class="container-fluid interactive-banner mt-3">
-                <h1>MORE INCENTIVES</h1>
-            </div>
+            <h1>MORE INCENTIVES</h1>
+        </div>
         <div class="c-section-main-details container">
-            <div v-if="incentives && incentives.length">
-                <div class="mx-4 pt-3">
-                    <div class="row g-2">
-                        <div
-                        class="col-md-4"
-                            v-for="incentive in incentives"
-                            :key="incentive.id"
-                        >
-                        <div class="card c-border-design image-cover">
-                                <a
-                                        class="text-decoration-none"
-                                        :href="'/detailed-incentive/' + incentive.id"
-                                    >
+            <div v-if="incentives && incentives.length" class="mt-4 container">
+                <div class="row g-4 mb-3">
+                    <div
+                        class="col-md-4 d-flex align-items-stretch"
+                         v-for="single_incentive in incentives.filter(i => i.id !== incentive.id)"
+                        :key="single_incentive.id"
+                    >
+                        <div class="card shadow-sm p-3 rounded-4 flex-fill" >
+                            <a
+                                class="text-decoration-none"
+                                :href="'/detailed-incentive/' + single_incentive.id"
+                            >
                                 <img
-                                    :src="incentive.incentive_banner ?? 'error.png'"
-                                    class="card-img-top c-card-img-border rounded-circle mt-2"
-                                    height="150"
-                                    :alt="incentive.title"
+                                    :src="
+                                        single_incentive.incentive_banner ??
+                                        '/images/default_image.png'
+                                    "
+                                    class="card-img-top img-fluid rounded-3"
+                                    :alt="single_incentive.title"
+                                    height="220"
                                     @error="setAltImg"
                                 />
                             </a>
 
-                                <div class="card-body text-start">
-                                    <a
-                                        class="text-decoration-none"
-                                        :href="'/detailed-incentive/' + incentive.id"
+                            <div
+                                class="card-body d-flex flex-column justify-content-between"
+                            >
+                                <a
+                                    class="text-decoration-none"
+                                    :href="
+                                        '/detailed-incentive/' + single_incentive.id
+                                    "
+                                >
+                                    <h5
+                                        class="card-title text-center text-dark fw-bold"
                                     >
-                                        <h4 class="c-main-title text-center">{{ incentive.title }}</h4> 
-                                    </a>
-                                        <div class="content ql-editor" >
-                                            <span v-html="getTruncatedDescription(incentive)"></span>
-                                            <span
-                                                v-if="incentive.description.length > 200"
-                                                class="read-more"
-                                                @click="toggleDescription(incentive.id)"
-                                            >
-                                                {{ showFullDescription[incentive.id] ? "Show Less" : "Read More" }}
-                                            </span>
-                                        </div>
-                                     
+                                        {{ single_incentive.title }}
+                                    </h5>
+                                </a>
+                                <div class="content ql-editor my-2">
+                                    <span
+                                        v-html="
+                                            getTruncatedDescription(single_incentive)
+                                        "
+                                    ></span>
+                                    <span
+                                        v-if="
+                                            single_incentive.description.length > 200
+                                        "
+                                        class="read-more"
+                                        @click="toggleDescription(single_incentive.id)"
+                                    >
+                                        {{
+                                            showFullDescription[single_incentive.id]
+                                                ? "Show Less"
+                                                : "Read More"
+                                        }}
+                                    </span>
                                 </div>
                             </div>
-                        
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </Master>
 </template>
 
@@ -108,9 +140,9 @@ export default {
     data() {
         return {
             incentive: {},
-            incentive_banner: '',
+            incentive_banner: "",
             incentives: [],
-            showFullDescription: {},    
+            showFullDescription: {},
         };
     },
     methods: {
@@ -150,13 +182,13 @@ export default {
         },
 
         formatDate(date) {
-            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const options = { year: "numeric", month: "long", day: "numeric" };
             return new Date(date).toLocaleDateString(undefined, options);
-        }
-,
+        },
         toggleDescription(eventId) {
             // Toggle full description visibility
-            this.showFullDescription[eventId] = !this.showFullDescription[eventId];
+            this.showFullDescription[eventId] =
+                !this.showFullDescription[eventId];
         },
 
         getTruncatedDescription(incentive) {
@@ -165,26 +197,49 @@ export default {
                 ? incentive.description
                 : incentive.description.slice(0, 200) + "...";
         },
-
     },
 };
 </script>
 
 <style scoped>
-.card img {
-    display: block;
-    margin: 0 auto;
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-}
-.card-body h4 {
-    margin: 0;
-}
 .card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 1rem; /* Rounded corners */
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100%; /* Ensures equal height */
+    transition: box-shadow 0.3s ease-in-out;
+    height: 100%;
+}
+
+.card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+    object-fit: cover;
+    height: 220px;
+    width: 100%;
+}
+
+.card-title {
+    font-family: "Inter", sans-serif;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.content {
+    font-size: 0.95rem;
+    color: #4a4a4a;
+}
+
+.read-more {
+    color: #0056b3;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 5px;
+    display: inline-block;
 }
 </style>

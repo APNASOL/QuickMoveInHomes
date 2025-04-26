@@ -234,4 +234,5 @@ export default {
     cursor: pointer; 
     font-weight: bold;
 }
+
 </style>

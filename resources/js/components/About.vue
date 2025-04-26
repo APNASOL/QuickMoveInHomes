@@ -68,7 +68,7 @@
         <!-- Meet Our Team -->
         <section class="p-3 bg-white">
             <div class="container">
-                <h1 class="profile-name">Meet Our Team</h1>
+                <h1 class="profile-name py-3">Meet Our Team</h1>
                 <div class="row text-center mt-3">
                     <div
                         class="col-md-4 team-member"
