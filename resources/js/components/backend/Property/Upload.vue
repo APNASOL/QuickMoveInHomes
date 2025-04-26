@@ -147,8 +147,7 @@
             </div>
         </section>
     </Master>
-</template>
-
+</template> 
 <script>
 import Master from "@components/backend/layout/Master.vue";
 import axios from "axios";
