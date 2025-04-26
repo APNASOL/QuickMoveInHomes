@@ -29,9 +29,9 @@
         </div>
 
         <section class="section">
-    <div class="card shadow-lg border-0 rounded-4">
-        <div class="card-body pt-4 bg-light">
-            <div class="row g-3 p-3">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body pt-4 bg-light">
+                    <div class="row g-3 p-3">
                         <div class="input-group">
                             <div class="form-outline col-md-5">
                                 <input
@@ -72,87 +72,99 @@
                         </div>
                     </div>
 
-            <div class="accordion" id="accordionExample">
-                <div
-                    class="accordion-item mb-3 rounded-4 overflow-hidden shadow-sm"
-                    v-for="(incentive, index) in incentives"
-                    :key="incentive.id"
-                >
-                    <h2 class="accordion-header">
-                        <button
-                            class="accordion-button bg-gradient bg-primary text-white fw-semibold"
-                            type="button"
-                            :data-bs-toggle="'collapse'"
-                            :data-bs-target="'#collapse' + index"
-                            :aria-expanded="index === 0 ? 'true' : 'false'"
-                            :aria-controls="'collapse' + index"
+                    <div class="accordion" id="accordionExample">
+                        <div
+                            class="accordion-item mb-3 rounded-4 overflow-hidden shadow-sm"
+                            v-for="(incentive, index) in incentives"
+                            :key="incentive.id"
                         >
-                            <b> {{ incentive.title }} -
-                                {{ incentive.interest_rate_first_year }}% -
-                                {{ incentive.builder_name }}</b>
-                        </button>
-                    </h2>
-                    <div
-                        :id="'collapse' + index"
-                        class="accordion-collapse collapse"
-                        data-bs-parent="#accordionExample"
-                    >
-                        <div class="accordion-body bg-white">
-                            <strong>Status:</strong>
-                            {{ incentive.status }}<br />
-                            <strong>Start Date:</strong>
-                            {{ incentive.start_date }}<br />
-                            <strong>End Date:</strong>
-                            {{ incentive.end_date }}<br />
-
-                            <strong>Descriptions:</strong>
-                            <div
-                                class="content ql-editor"
-                                v-html="incentive.description"
-                            ></div>
-                            <div>
-                                <strong>Banner</strong>
-                                <br />
-                                <image-zooming-component
-                                    :file="incentive.incentive_banner ?? 'empty.png'"
-                                    :width="350"
-                                />
-                            </div>
-
-                            <div class="btn-group mt-2">
-                                <a
+                            <h2 class="accordion-header">
+                                <button
+                                    class="accordion-button bg-gradient bg-primary text-white fw-semibold"
                                     type="button"
-                                    class="btn btn-sm fs-6"
-                                    title="Edit"
-                                    :href="'/incentive/edit/' + incentive.id"
+                                    :data-bs-toggle="'collapse'"
+                                    :data-bs-target="'#collapse' + index"
+                                    :aria-expanded="
+                                        index === 0 ? 'true' : 'false'
+                                    "
+                                    :aria-controls="'collapse' + index"
                                 >
-                                    <i class="bi bi-pencil c-theme-text-color"></i>
-                                </a>
-                                <DeleteModal
-                                    :deleteId="incentive.id"
-                                    @deleteThis="deleteThis"
-                                />
+                                    <b>
+                                        {{ incentive.title }} -
+                                        {{
+                                            incentive.interest_rate_first_year
+                                        }}% - {{ incentive.builder_name }}</b
+                                    >
+                                </button>
+                            </h2>
+                            <div
+                                :id="'collapse' + index"
+                                class="accordion-collapse collapse"
+                                data-bs-parent="#accordionExample"
+                            >
+                                <div class="accordion-body bg-white">
+                                    <strong>Status:</strong>
+                                    {{ incentive.status }}<br />
+                                    <strong>Start Date:</strong>
+                                    {{ incentive.start_date }}<br />
+                                    <strong>End Date:</strong>
+                                    {{ incentive.end_date }}<br />
+
+                                    <strong>Descriptions:</strong>
+                                    <div
+                                        class="content ql-editor"
+                                        v-html="incentive.description"
+                                    ></div>
+                                    <div>
+                                        <strong>Banner</strong>
+                                        <br />
+                                        <image-zooming-component
+                                            :file="
+                                                incentive.incentive_banner ??
+                                                'empty.png'
+                                            "
+                                            :width="350"
+                                        />
+                                    </div>
+
+                                    <div class="btn-group mt-2">
+                                        <a
+                                            type="button"
+                                            class="btn btn-sm fs-6"
+                                            title="Edit"
+                                            :href="
+                                                '/incentive/edit/' +
+                                                incentive.id
+                                            "
+                                        >
+                                            <i
+                                                class="bi bi-pencil c-theme-text-color"
+                                            ></i>
+                                        </a>
+                                        <DeleteModal
+                                            :deleteId="incentive.id"
+                                            @deleteThis="deleteThis"
+                                        />
+                                    </div>
+                                    <br />
+                                    Created at on : {{ incentive.created_at }}
+                                </div>
                             </div>
-                            <br />
-                            Created at on : {{ incentive.created_at }}
                         </div>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button
+                            v-if="pagination.next_page_url"
+                            @click="search(pagination.next_page_url)"
+                            class="btn btn-success"
+                        >
+                            {{ translate("Load More") }}
+                        </button>
                     </div>
                 </div>
             </div>
-
-            <div class="text-center mt-4">
-                <button
-                    v-if="pagination.next_page_url"
-                    @click="search(pagination.next_page_url)"
-                    class="btn btn-success"
-                >
-                    {{ translate("Load More") }}
-                </button>
-            </div>
-        </div>
-    </div>
-</section>
-
+        </section>
     </Master>
 </template>
 

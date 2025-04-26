@@ -16,129 +16,83 @@
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-body pt-4">
-                <section class="section">
-                    <!-- <h5 class="card-title">Table with stripped rows</h5> -->
-
-                    <!-- Table with stripped rows -->
-                    <div class="table-responsive">
-                        <div class="d-flex justify-content-between">
-                            <!-- Floating Labels Form -->
-
-                            <div class="row g-3">
-                                <div class="input-group">
-                                    <div class="form-outline">
-                                        <input
-                                            type="text"
-                                            v-model="form.name"
-                                            class="form-control"
-                                            id="name"
-                                            :placeholder="
-                                                translate('Search by name')
-                                            "
-                                            :class="{
-                                                'invalid-bg': formErrors.name,
-                                            }"
-                                        />
-
-                                        <div
-                                            class="invalid-feedback animated fadeIn"
-                                            v-if="formErrors.name"
-                                        >
-                                            {{ formErrors.name[0] }}
-                                        </div>
-                                        <!-- <label class="form-label" for="form1">Search</label> -->
-                                    </div>
-                                    <button
-                                        @click="search(null)"
-                                        class="btn btn-success"
-                                    >
-                                        <i class="bi bi-search"></i>
-                                    </button>
-
-                                    <button
-                                        class="btn"
-                                        type="button"
-                                        v-if="formStatus != 1"
-                                    >
-                                        <span
-                                            class="spinner-border spinner-border-sm"
-                                            role="status"
-                                            aria-hidden="true"
-                                        ></span>
-                                    </button>
-                                </div>
+        <div class="card shadow-lg border-0 rounded-4">
+    <div class="card-body pt-4 bg-light">
+        <section class="section">
+            <!-- Table with Search Form -->
+            <div class="d-flex justify-content-between mb-4">
+                <!-- Floating Labels Form -->
+                <div class="row g-3">
+                    <div class="input-group">
+                        <div class="form-outline">
+                            <input
+                                type="text"
+                                v-model="form.name"
+                                class="form-control rounded-pill shadow-sm"
+                                id="name"
+                                :placeholder="translate('Search by name')"
+                                :class="{'is-invalid': formErrors.name}"
+                            />
+                            <div class="invalid-feedback animated fadeIn" v-if="formErrors.name">
+                                {{ formErrors.name[0] }}
                             </div>
                         </div>
+                        <button @click="search(null)" class="btn btn-primary rounded-pill shadow-sm">
+                            <i class="bi bi-search"></i>
+                        </button>
 
-                        <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" class="text-center">
-                                            #
-                                        </th>
-                                        <th scope="col">
-                                            {{ translate("Name") }}
-                                        </th>
-                                        <th scope="col">
-                                            {{ translate("Email") }}
-                                        </th>
-                                        <th scope="col">
-                                            {{ translate("Phone") }}
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr
-                                        v-for="(contact, index) in contacts"
-                                        :key="contact.id"
-                                    >
-                                        <th class="text-center">
-                                            {{ index + 1 }}
-                                        </th>
-                                        <td>
-                                            <a
-                                                type="button"
-                                                class="c-linked c-mouse-over"
-                                                title="Edit"
-                                                :href="
-                                                    '/contact-details/' +
-                                                    contact.id
-                                                "
-                                            >
-                                                {{ contact.name }}
-                                                <i v-if="contact.contacted_from == 'Agent'"
-                                                    >({{
-                                                        contact.contacted_from
-                                                    }})</i
-                                                >
-                                            </a>
-                                        </td>
-
-                                        <td>{{ contact.email }}</td>
-
-                                        <td>{{ contact.phone }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="text-center">
-                            <button
-                                v-if="pagination.next_page_url"
-                                @click="search(pagination.next_page_url)"
-                                class="btn btn-success"
-                            >
-                                {{ translate("Load More") }}
-                            </button>
-                        </div>
+                        <button class="btn" type="button" v-if="formStatus != 1">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        </button>
                     </div>
-                    <!-- End Table with stripped rows -->
-                </section>
+                </div>
             </div>
-        </div>
+
+            <!-- Table -->
+            <div class="table-responsive rounded-3 shadow-sm">
+                <table class="table table-hover align-middle bg-white">
+                    <thead class="table-primary text-dark">
+                        <tr>
+                            <th scope="col" class="text-center">#</th>
+                            <th scope="col">{{ translate("Name") }}</th>
+                            <th scope="col">{{ translate("Email") }}</th>
+                            <th scope="col">{{ translate("Phone") }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(contact, index) in contacts" :key="contact.id">
+                            <th class="text-center">{{ index + 1 }}</th>
+                            <td>
+                                <a
+                                    class="c-linked c-mouse-over"
+                                    title="Edit"
+                                    :href="'/contact-details/' + contact.id"
+                                >
+                                    {{ contact.name }}
+                                    <i v-if="contact.contacted_from == 'Agent'">({{ contact.contacted_from }})</i>
+                                </a>
+                            </td>
+                            <td>{{ contact.email }}</td>
+                            <td>{{ contact.phone }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Load More Button -->
+            <div class="text-center mt-4">
+                <button
+                    v-if="pagination.next_page_url"
+                    @click="search(pagination.next_page_url)"
+                    class="btn btn-success rounded-pill shadow-sm"
+                >
+                    {{ translate("Load More") }}
+                </button>
+            </div>
+        </section>
+    </div>
+</div>
+
     </Master>
 </template>
 

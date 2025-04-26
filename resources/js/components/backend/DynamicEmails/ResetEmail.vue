@@ -16,62 +16,70 @@
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-body pt-4"> 
+        <div class="card shadow-lg rounded-4 bg-light">
+            <div class="card-body pt-4">
                 <div>
-                    <div>
-                        <div class="col-12 col-md-12">
-                            <label for="subject">{{
-                                translate("Subject")
-                            }}</label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                v-model="subject"
-                                :class="{ 'invalid-bg': formErrors.subject }"
-                            />
-
-                            <div
-                                class="invalid-feedback d-block"
-                                v-if="formErrors.subject"
-                            >
-                                {{ formErrors.subject[0] }}
-                            </div>
+                    <!-- Subject Input Field -->
+                    <div class="col-12 col-md-12 mb-3">
+                        <label for="subject" class="fw-semibold text-primary">{{
+                            translate("Subject")
+                        }}</label>
+                        <input
+                            type="text"
+                            id="subject"
+                            class="form-control rounded-pill shadow-sm"
+                            v-model="subject"
+                            :class="{ 'is-invalid': formErrors.subject }"
+                            placeholder="Enter subject"
+                        />
+                        <div
+                            class="invalid-feedback d-block"
+                            v-if="formErrors.subject"
+                        >
+                            {{ formErrors.subject[0] }}
                         </div>
-                        <div class="col-12 col-md-12">
-                             
-                            <label for="email_description"
-                                >{{ translate("Description") }}
-                            </label>
-                            <br>
-                            [user_name]
-                            <QuillEditor
-                                v-model:content="email_description"
-                                contentType="html"
-                                toolbar="full"
-                                theme="snow"
-                            />
-                            <div
-                                class="invalid-feedback d-block"
-                                v-if="formErrors.email_description"
-                            >
-                                {{ formErrors.email_description[0] }}
-                            </div>
+                    </div>
+
+                    <!-- Description Textarea Field -->
+                    <div class="col-12 col-md-12 mb-3">
+                        <label
+                            for="email_description"
+                            class="fw-semibold text-primary"
+                            >{{ translate("Description") }}</label
+                        >
+                        <br />
+                        <p class="text-muted">[user_name]</p>
+                        <QuillEditor
+                            v-model:content="email_description"
+                            contentType="html"
+                            toolbar="full"
+                            theme="snow"
+                            class="rounded-4 shadow-sm"
+                        />
+                        <div
+                            class="invalid-feedback d-block"
+                            v-if="formErrors.email_description"
+                        >
+                            {{ formErrors.email_description[0] }}
                         </div>
                     </div>
                 </div>
 
-                <div class="mt-2">
+                <!-- Save Button Section -->
+                <div class="mt-3 d-flex justify-content-end">
+                    <!-- Save Button (Active) -->
                     <button
                         @click="submit"
                         type="submit"
-                        class="btn btn-success"
-                        v-if="formStatus == 'Yes'"
+                        class="btn btn-primary rounded-pill shadow-sm px-4 py-2"
+                        v-if="formStatus === 'Yes'"
                     >
                         {{ translate("Save") }}
                     </button>
+
+                    <!-- Save Button (Disabled) -->
                     <button
-                        class="btn btn-success"
+                        class="btn btn-secondary rounded-pill shadow-sm px-4 py-2"
                         type="button"
                         disabled
                         v-else
@@ -152,9 +160,6 @@ export default {
                     toastr.error(error.response.data.message);
                 });
         },
-
-        
-         
     },
 };
 </script>

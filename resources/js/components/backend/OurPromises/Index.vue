@@ -27,129 +27,120 @@
         </div>
         <!-- End Page Title -->
         <section class="section">
-            <div class="card">
-                <div class="card-body pt-4">
-                    <div class="row g-3 p-3">
-                        <div class="input-group">
-                            <div class="form-outline col-md-5">
-                                <input
-                                    type="text"
-                                    v-model="form.title"
-                                    class="form-control"
-                                    id="promise"
-                                    :placeholder="
-                                        translate('Search by promise')
-                                    "
-                                    :class="{
-                                        'invalid-bg': formErrors.title,
-                                    }"
-                                />
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-body pt-4 bg-light">
+            <!-- Search Input -->
+            <div class="row g-3 p-3">
+                <div class="input-group">
+                    <div class="form-outline col-md-5">
+                        <input
+                            type="text"
+                            v-model="form.title"
+                            class="form-control rounded-pill shadow-sm"
+                            id="promise"
+                            :placeholder="translate('Search by promise')"
+                            :class="{ 'is-invalid': formErrors.title }"
+                        />
 
-                                <div
-                                    class="invalid-feedback animated fadeIn"
-                                    v-if="formErrors.title"
-                                >
-                                    {{ formErrors.title[0] }}
-                                </div>
-                            </div>
-
-                            <button
-                                v-if="formStatus == 1"
-                                @click="fetchPromises(null)"
-                                class="btn btn-success"
-                            >
-                                <i class="bi bi-search"></i>
-                            </button>
-
-                            <button
-                                v-else
-                                class="btn btn-success"
-                                type="button"
-                            >
-                                <span
-                                    class="spinner-border spinner-border-sm"
-                                    role="status"
-                                    aria-hidden="true"
-                                ></span>
-                            </button>
+                        <div
+                            class="invalid-feedback animated fadeIn"
+                            v-if="formErrors.title"
+                        >
+                            {{ formErrors.title[0] }}
                         </div>
                     </div>
 
-                    <!-- Table with stripped rows -->
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col" class="text-center">#</th>
-                                <th scope="col">{{ translate("Title") }}</th>
-                                <th scope="col">
-                                    {{ translate("Description") }}
-                                </th>
-                                <th scope="col">
-                                    {{ translate("Icon") }}
-                                </th>
-                                <th scope="col" class="text-center">
-                                    {{ translate("Actions") }}
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr
-                                v-for="(show, index) in Promises"
-                                :key="show.id"
-                            >
-                                <th class="text-center">{{ index + 1 }}</th>
-                                <td>{{ show.title }}</td>
-                                <td>{{ show.description }}</td>
-                                <td>
-                                    <image-zooming-component
-                                        v-if="show.icon"
-                                        :file="show.icon ?? 'empty.png'"
-                                        :width="150"
-                                    />
-                                </td>
+                    <button
+                        v-if="formStatus == 1"
+                        @click="fetchPromises(null)"
+                        class="btn btn-success ms-2 rounded-pill shadow-sm"
+                    >
+                        <i class="bi bi-search"></i>
+                    </button>
 
-                                <td class="text-center">
-                                    <div class="btn-group">
-                                        <a
-                                            v-if="show.id"
-                                            type="button"
-                                            class="btn btn-sm fs-6"
-                                            :title="translate('Edit')"
-                                            :href="
-                                                '/edit-our-promise/' + show.id
-                                            "
-                                        >
-                                            <i class="bi bi-pencil"></i>
-                                        </a>
-
-                                        <DeleteModal
-                                            :deleteId="show.id"
-                                            @deleteThis="deleteThis"
-                                        />
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <!-- End Table with stripped rows -->
-                    <div class="text-center p-2">
-                        <button
-                            v-if="pagination.next_page_url"
-                            @click="fetchPromises(pagination.next_page_url)"
-                            class="btn btn-success"
-                        >
-                            {{ translate("Load more") }}
-                            <span
-                                v-if="loadMoreStatus == 0"
-                                class="spinner-border text-white spinner-border-sm"
-                                role="status"
-                                aria-hidden="true"
-                            ></span>
-                        </button>
-                    </div>
+                    <button
+                        v-else
+                        class="btn btn-success ms-2 rounded-pill shadow-sm"
+                        type="button"
+                    >
+                        <span
+                            class="spinner-border spinner-border-sm"
+                            role="status"
+                            aria-hidden="true"
+                        ></span>
+                    </button>
                 </div>
             </div>
-        </section>
+
+            <!-- Table with stripped rows -->
+            <div class="table-responsive mt-4 rounded-4 shadow-sm">
+                <table class="table table-striped table-hover align-middle bg-white rounded-4">
+                    <thead class="table-primary text-dark">
+                        <tr>
+                            <th class="text-center">{{ translate("#") }}</th>
+                            <th>{{ translate("Title") }}</th>
+                            <th>{{ translate("Description") }}</th>
+                            <th>{{ translate("Icon") }}</th>
+                            <th class="text-center">{{ translate("Actions") }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(show, index) in Promises" :key="show.id">
+                            <th class="text-center">{{ index + 1 }}</th>
+                            <td>{{ show.title }}</td>
+                            <td>{{ show.description }}</td>
+                            <td>
+                                <image-zooming-component
+                                    v-if="show.icon"
+                                    :file="show.icon ?? 'empty.png'"
+                                    :width="150"
+                                />
+                            </td>
+
+                            <td class="text-center">
+                                <div class="btn-group">
+                                    <a
+                                        v-if="show.id"
+                                        type="button"
+                                        class="btn btn-sm btn-outline-primary rounded-pill"
+                                        :title="translate('Edit')"
+                                        :href="'/edit-our-promise/' + show.id"
+                                    >
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+
+                                    <DeleteModal
+                                        :deleteId="show.id"
+                                        @deleteThis="deleteThis"
+                                    />
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- End Table with stripped rows -->
+
+            <!-- Load More Button -->
+            <div class="text-center mt-4">
+                <button
+                    v-if="pagination.next_page_url"
+                    @click="fetchPromises(pagination.next_page_url)"
+                    class="btn btn-success rounded-pill shadow-sm"
+                >
+                    {{ translate("Load more") }}
+                    <span
+                        v-if="loadMoreStatus == 0"
+                        class="spinner-border text-white spinner-border-sm"
+                        role="status"
+                        aria-hidden="true"
+                    ></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
 
         <!-- End #main -->
     </Master>

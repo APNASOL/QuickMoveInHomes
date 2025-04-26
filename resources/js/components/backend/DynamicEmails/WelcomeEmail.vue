@@ -16,76 +16,70 @@
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-body pt-4">
-                 
-
-                <div>
-                    <div class="col-12 col-md-12">
-                        <label for="subject">{{ translate("Subject") }}</label>
-                        <input
-                            type="text"
-                            class="form-control"
-                            v-model="subject"
-                            :class="{ 'invalid-bg': formErrors.subject }"
-                        />
-
-                        <div
-                            class="invalid-feedback d-block"
-                            v-if="formErrors.subject"
-                        >
-                            {{ formErrors.subject[0] }}
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-12">
-                         
-                        <label for="email_description"
-                            >{{ translate("Description") }}
-                        </label>
-                        <br>
-                        [email]
-                        <br>
-                        [password]
-                        <QuillEditor
-                            v-model:content="email_description"
-                            contentType="html"
-                            toolbar="full"
-                            theme="snow"
-                        />
-                        <div
-                            class="invalid-feedback d-block"
-                            v-if="formErrors.email_description"
-                        >
-                            {{ formErrors.email_description[0] }}
-                        </div>
-                    </div>
+        <div class="card shadow-lg rounded-4 bg-light">
+    <div class="card-body pt-4">
+        <div>
+            <!-- Subject Input Field -->
+            <div class="col-12 col-md-12 mb-3">
+                <label for="subject" class="fw-semibold text-primary">{{ translate("Subject") }}</label>
+                <input
+                    type="text"
+                    id="subject"
+                    class="form-control rounded-pill shadow-sm"
+                    v-model="subject"
+                    :class="{ 'is-invalid': formErrors.subject }"
+                    placeholder="Enter subject"
+                />
+                <div class="invalid-feedback d-block" v-if="formErrors.subject">
+                    {{ formErrors.subject[0] }}
                 </div>
+            </div>
 
-                <div class="mt-2">
-                    <button
-                        @click="submit"
-                        type="submit"
-                        class="btn btn-success"
-                        v-if="formStatus == 'Yes'"
-                    >
-                        {{ translate("Save") }}
-                    </button>
-                    <button
-                        class="btn btn-success"
-                        type="button"
-                        disabled
-                        v-else
-                    >
-                        {{ translate("Save") }}
-                        <span
-                            class="spinner-border spinner-border-sm"
-                            role="status"
-                            aria-hidden="true"
-                        ></span>
-                    </button>
+            <!-- Description Textarea Field -->
+            <div class="col-12 col-md-12 mb-3">
+                <label for="email_description" class="fw-semibold text-primary">{{ translate("Description") }}</label>
+                <br />
+                <p class="text-muted">[email]</p>
+                <p class="text-muted">[password]</p>
+                <QuillEditor
+                    v-model:content="email_description"
+                    contentType="html"
+                    toolbar="full"
+                    theme="snow"
+                    class="rounded-4 shadow-sm"
+                />
+                <div class="invalid-feedback d-block" v-if="formErrors.email_description">
+                    {{ formErrors.email_description[0] }}
                 </div>
             </div>
         </div>
+
+        <!-- Save Button Section -->
+        <div class="mt-3 d-flex justify-content-end">
+            <!-- Save Button (Active) -->
+            <button
+                @click="submit"
+                type="submit"
+                class="btn btn-primary rounded-pill shadow-sm px-4 py-2"
+                v-if="formStatus === 'Yes'"
+            >
+                {{ translate("Save") }}
+            </button>
+
+            <!-- Save Button (Disabled) -->
+            <button
+                class="btn btn-secondary rounded-pill shadow-sm px-4 py-2"
+                type="button"
+                disabled
+                v-else
+            >
+                {{ translate("Save") }}
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            </button>
+        </div>
+    </div>
+</div>
+
     </Master>
 </template>
 
