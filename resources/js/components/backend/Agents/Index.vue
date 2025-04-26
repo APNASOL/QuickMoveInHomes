@@ -195,7 +195,7 @@
                                                             colspan="8"
                                                             class="text-muted py-3"
                                                         >
-                                                            No agreements found.
+                                                        No connections found
                                                         </td>
                                                     </tr>
                                                 </tbody>

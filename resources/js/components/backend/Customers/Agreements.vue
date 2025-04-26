@@ -84,7 +84,7 @@
                                 </tr>
                                 <tr v-if="agreements.length === 0">
                                     <td colspan="7" class="text-muted">
-                                        No agreements found.
+                                        No connections found
                                     </td>
                                 </tr>
                             </tbody>
