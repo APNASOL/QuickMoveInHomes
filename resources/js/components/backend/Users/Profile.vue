@@ -3,7 +3,7 @@
         <div class="d-flex justify-content-between align-items-center">
             <div class="pagetitle">
                 <h1 class="mb-0">
-                    <span>{{ translate("Profile") }}</span>
+                    <span>{{ translate("Profile") }}</span> 
                 </h1>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
@@ -104,6 +104,14 @@
                                             {{ currentUserRecord.email }}
                                         </div>
                                     </div>
+                                    <div class="row" v-if="currentUserRecord.phone">
+                                        <div class="col-lg-3 col-md-4 label">
+                                            {{ translate("Phone") }}
+                                        </div>
+                                        <div class="col-lg-9 col-md-8">
+                                            {{ currentUserRecord.phone }}
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">
                                             {{ translate("Role") }}
@@ -184,6 +192,39 @@
                                                     {{
                                                         formProfileErrors
                                                             .user_name[0]
+                                                    }}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-lg-12">
+                                                <div>
+                                                    <label for="phone">
+                                                        {{
+                                                            translate(
+                                                                "Phone #"
+                                                            )
+                                                        }}
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        :class="{
+                                                            'invalid-bg':
+                                                                formProfileErrors.phone,
+                                                        }"
+                                                        v-model="
+                                                            formProfile.phone
+                                                        "
+                                                    />
+                                                </div>
+                                                <div
+                                                    class="invalid-feedback animated fadeIn"
+                                                    v-if="
+                                                        formProfileErrors.phone
+                                                    "
+                                                >
+                                                    {{
+                                                        formProfileErrors
+                                                            .phone[0]
                                                     }}
                                                 </div>
                                             </div>
@@ -409,6 +450,7 @@ export default {
             formProfile: {
                 user_name: "",
                 profile_image: "",
+                phone: "",
             },
             formProfileErrors: [],
             formErrors: [],
@@ -461,6 +503,7 @@ export default {
                 .get("/api/user-show")
                 .then((response) => {
                     this.formProfile.user_name = response.data.name;
+                    this.formProfile.phone = response.data.phone;
                     this.profile_photo_path = response.data.profile_photo_path;
 
                     this.currentUserRecord = response.data;
@@ -474,6 +517,7 @@ export default {
             this.formStatus = 0;
             let formData = new FormData();
             formData.append("user_name", this.formProfile.user_name);
+            formData.append("phone", this.formProfile.phone);
             formData.append("profile_image", this.formProfile.profile_image);
 
             axios

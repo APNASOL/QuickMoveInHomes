@@ -20,36 +20,42 @@ class UserController extends Controller
 
     public function register(Request $request)
     {
-        
         $randomPassword = "";
         if ($request->process_by == "Admin") {
             $request->validate([
                 'user_name' => 'required|string|max:255',
+                'phone' => 'required|string|max:255',
                 'email' => 'required|unique:users,email,' . $request->user_id,
                 'role' => 'required|string|max:255',
             ]);
 
             if ($request->process_status == "Update" && $request->user_id) {
                 $User = User::where('id', $request->user_id)->first();
+
             } else {
                 $User = new User;
                 $randomPassword = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 8);
+                $User->password = Hash::make($randomPassword);
+                $password_in_email = $randomPassword;
+
             }
-        } else { 
+        } else {
             $request->validate([
                 'user_name' => 'required|string|max:255',
+                'phone' => 'required|string|max:255',
                 'email' => 'required|unique:users',
                 'password' => 'required|required_with:confirm_password|same:confirm_password',
                 'confirm_password' => 'required|required_with:password|same:password',
                 'role' => 'required|string|max:255',
             ]);
             $User = new User;
+
         }
 
         $User->name = $request->user_name;
+        $User->phone = $request->phone;
         $User->email = $request->email;
         $User->role = $request->role;
-        $User->email_verified_at = Carbon::now();
 
         if ($request->image) {
             $existingInUploads = Upload::where('id', $User->image)->first();
@@ -71,48 +77,45 @@ class UserController extends Controller
             $User->role = $request->role;
         }
         if ($request->password) {
-            $password = $request->password;
-        } else {
-            $password = $randomPassword;
+
+            $User->password = Hash::make($request->password);
+            $password_in_email = $request->password;
         }
-
-        $User->password = Hash::make($password);
-
         $User->save();
 
-        if ($request->process_status == "New") {
-            $welcome_email = Setting::where('type', 'welcome_email')->first();
-            if ($welcome_email) {
-                $decoded_welcome_email = json_decode($welcome_email->value) ?? "";
-                $dynamic_subject = $decoded_welcome_email[0]->subject ?? "";
-                $dynamic_email_descriptions = $decoded_welcome_email[0]->description ?? "";
-            } else {
-                $dynamic_subject = "";
-                $dynamic_email_descriptions = "";
-            }
+        $website_name = Setting::where('type', 'website_name')->first();
 
-            // Sending, dynamic email from the admin panel, genereated.
-            $dynamic_subject_var = ['${SUBJECT}'];
-            $dynamic_subject_array = [$dynamic_subject];
-            $adjusted_subject = str_replace($dynamic_subject_var, $dynamic_subject_array, $dynamic_subject);
-            $dynamic_email_descriptions_var = ['[email]', '[password]'];
-            $dynamic_email_descriptions_array = [$User->email, $password];
-            $adjusted_email_descriptions = str_replace($dynamic_email_descriptions_var, $dynamic_email_descriptions_array, $dynamic_email_descriptions);
-
-            // $url = url('/');
-            // $token = Str::random(64);
-            // $link = $url . '/verify-email/' . $token . '?email=' . urlencode($request->email);
-            $dataforEmail = [
-                'account_create' => 'account_create',
-                'dynamic_email_descriptions' => $adjusted_email_descriptions,
-            ];
-
-            $user_email = $request->email;
-            $mail_subject = $dynamic_subject;
-            Mail::send('Emails.registerEmail', $dataforEmail, function ($message) use ($user_email, $mail_subject) {
-                $message->to($user_email)->subject($mail_subject);
-            });
+        $welcome_email = Setting::where('type', 'welcome_email')->first();
+        if ($welcome_email) {
+            $decoded_welcome_email = json_decode($welcome_email->value) ?? "";
+            $dynamic_subject = $decoded_welcome_email[0]->subject ?? "";
+            $dynamic_email_descriptions = $decoded_welcome_email[0]->description ?? "";
+        } else {
+            $dynamic_subject = "";
+            $dynamic_email_descriptions = "";
         }
+        // Sending, dynamic email from the admin panel, genereated.
+        $dynamic_subject_var = ['${SUBJECT}'];
+        $dynamic_subject_array = [$dynamic_subject];
+        $adjusted_subject = str_replace($dynamic_subject_var, $dynamic_subject_array, $dynamic_subject);
+
+        $dynamic_email_descriptions_var = ['[email]'];
+        $dynamic_email_descriptions_array = [$User->email];
+        $adjusted_email_descriptions = str_replace($dynamic_email_descriptions_var, $dynamic_email_descriptions_array, $dynamic_email_descriptions);
+
+        // $url = url('/');
+        // $token = Str::random(64);
+        // $link = $url . '/verify-email/' . $token . '?email=' . urlencode($request->email);
+        $dataforEmail = [
+            'account_create' => 'account_create',
+            'dynamic_email_descriptions' => $adjusted_email_descriptions,
+        ];
+
+        $user_email = $request->email;
+        $mail_subject = $dynamic_subject;
+        Mail::send('Emails.registerEmail', $dataforEmail, function ($message) use ($user_email, $mail_subject) {
+            $message->to($user_email)->subject($mail_subject);
+        });
 
         return 'success';
 
@@ -141,7 +144,7 @@ class UserController extends Controller
     }
 
     public function forgot_password(Request $request)
-    {
+    { 
         $request->validate([
             'email' => 'required|email',
         ]);
@@ -168,6 +171,7 @@ class UserController extends Controller
 
     private function sendResetEmail($email, $token)
     {
+        
         //Retrieve the user from the database
         $user_record = DB::table('users')->where('email', $email)->select('name', 'email')->whereNotNull('email_verified_at')->first();
         $reset_password_email = Setting::where('type', 'reset_password_email_section')->first();
@@ -234,6 +238,7 @@ class UserController extends Controller
     public function reset_password(Request $request)
     {
 
+        // dd($request->all());
         $request->validate([
             'password' => 'required|required_with:confirm_password|same:confirm_password|min:8',
             'confirm_password' => 'required|required_with:password|same:password',
@@ -498,10 +503,12 @@ class UserController extends Controller
     {
         $request->validate([
             'user_name' => 'required|string|max:255',
+            'phone' => 'required|string|max:255',
         ]);
 
         $User = User::findOrFail(auth()->user()->id);
         $User->name = $request->user_name;
+        $User->phone = $request->phone;
         if ($request->profile_image) {
 
             if ($User->profile_image) {

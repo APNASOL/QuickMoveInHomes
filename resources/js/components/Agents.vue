@@ -224,12 +224,10 @@ export default {
     },
     mounted() {
     if (this.logged_in_user) {
-        console.log(this.logged_in_user.name);
-        console.log(this.logged_in_user.email);
-        console.log(this.logged_in_user.phone);
-        
+         
         this.form.name = this.logged_in_user.name || "";
         this.form.email = this.logged_in_user.email || ""; 
+        this.form.phone = this.logged_in_user.phone || ""; 
     
     }
 },

@@ -730,7 +730,7 @@
 
                             <div class="col-12">
                                 <input
-                                    type="text"
+                                    type="email"
                                     class="form-control"
                                     :class="{
                                         'invalid-bg': registerFormErrors.email,
@@ -743,6 +743,23 @@
                                     class="invalid-feedback"
                                 >
                                     {{ registerFormErrors.email[0] }}
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    :class="{
+                                        'invalid-bg': registerFormErrors.phone,
+                                    }"
+                                    v-model="registerForm.phone"
+                                    :placeholder="translate('Phone number')"
+                                />
+                                <div
+                                    v-if="registerFormErrors.phone"
+                                    class="invalid-feedback"
+                                >
+                                    {{ registerFormErrors.phone[0] }}
                                 </div>
                             </div>
 
@@ -1011,12 +1028,28 @@
         </div>
     </footer>
 
+    <div v-if="openConfirmCodeModal == true">
+        <verification-code-component
+            :email="user_confirmation_email"
+            @parentProcesses="parentProcesses"
+        />
+    </div>
+
     <button
         type="button"
         class="btn btn-secondary"
         data-bs-dismiss="modal"
         style="display: none"
         ref="closeModal"
+    >
+        Close
+    </button>
+    <button
+        type="button"
+        class="btn btn-secondary"
+        data-bs-dismiss="modal"
+        style="display: none"
+        ref="closeResetModal"
     >
         Close
     </button>
@@ -1047,6 +1080,7 @@ export default {
             registerForm: {
                 user_name: "",
                 email: "",
+                phone: "",
                 password: "",
                 confirm_password: "",
                 role: "customer",
@@ -1155,7 +1189,7 @@ export default {
             ) {
                 toastr.success(
                     this.translate(
-                        "Thank you! Your account has been successfully verified and is now active. Welcome aboard! You may now log in."
+                        "Thank you! Your account has been successfully verified and activated. Welcome to Brand New Homes Vegas — you can now log in and start exploring exclusive properties."
                     )
                 );
                 this.$refs.openLoginModal.click();
@@ -1164,7 +1198,7 @@ export default {
                 this.reset_password_status = 1;
                 toastr.success(
                     this.translate(
-                        "Confirmation code matched successfully. Please proceed to reset your password."
+                        "Your confirmation code has been verified successfully. You may now proceed to reset your password."
                     )
                 );
             }
@@ -1243,7 +1277,6 @@ export default {
                         this.user_confirmation_email = this.form.email;
                     } else {
                         window.location.href = "/dashboard";
-                        // window.location.reload();
                     }
                 })
                 .catch((error) => {
@@ -1256,11 +1289,14 @@ export default {
         },
 
         // Registering user
-
+        selectRole(type) {
+            this.registerForm.role = type;
+        },
         register() {
             this.registerFormStatus = 0;
             this.registerForm.role = "customer";
             this.registerForm.process_status = "New";
+            this.registerFormStatus = 0;
             axios
                 .post("/api/register-submit", this.registerForm)
                 .then((response) => {
@@ -1271,8 +1307,7 @@ export default {
                     this.openConfirmCodeModal = true;
                     this.user_confirmation_email = this.registerForm.email;
 
-                    this.$refs.openLoginModal.click();
-
+                    this.$refs.closeModal.click();
                     this.registerFormErrors = [];
                 })
                 .catch((error) => {
@@ -1346,6 +1381,7 @@ export default {
             this.forgotPasswordFormErrors = [];
 
             this.registerForm.user_name = "";
+            this.registerForm.phone = "";
             this.registerForm.email = "";
             this.registerForm.password = "";
             this.registerForm.confirm_password = "";
@@ -1897,6 +1933,12 @@ label {
 
     z-index: 3 !important;
     width: 100% !important;
+}
+.c-main-title-2 {
+    font-family: "Playfair Display", serif !important;
+    font-size: 18px;
+    font-weight: bold;
+    color: rgb(61, 102, 143);
 }
 .c-sub-title {
     font-family: Inter, sans-serif !important;

@@ -8,11 +8,11 @@
                         <div class="card-body">
                             <form class="row g-3">
                                 <div class="col-12">
-                                    <label for="code" class="form-label">{{
+                                    <h5 for="code" class="form-label c-main-title-2">{{
                                         translate(
-                                            "Enter confirmation code sent to your email"
+                                            "Kindly enter the confirmation code that has been sent to your email to proceed"
                                         )
-                                    }}</label>
+                                    }}</h5>
                                     <input
                                         type="email"
                                         class="form-control"
@@ -40,17 +40,17 @@
                                             v-if="codeConfirmationStatus == 1"
                                             type="button"
                                             @click="matchVerificationCode"
-                                            class="btn c-btn-theme-primary text-white w-100"
+                                            class="btn btn-outline-warning  w-100"
                                         >
                                             {{ translate("Verify") }}
                                         </button>
                                         <button
                                             v-else
-                                            class="btn c-btn-theme-primary text-white w-100"
+                                            class="btn btn-outline-warning  w-100"
                                             type="button"
                                             disabled
                                         >
-                                            {{ translate("Verifying") }}
+                                            {{ translate("Processing") }}
                                             <span
                                                 class="spinner-border spinner-border-sm"
                                                 role="status"
@@ -64,13 +64,13 @@
                                         v-if="resenBtnStatus == 1"
                                         type="button"
                                         @click="checkStatus"
-                                        class="btn c-btn-theme-primary text-white w-100"
+                                       class="btn btn-outline-warning  w-100"
                                     >
                                         {{ translate("Resend code") }}
                                     </button>
                                     <button
                                         v-else
-                                        class="btn c-btn-theme-primary text-white w-100"
+                                        class="btn btn-outline-warning  w-100"
                                         type="button"
                                         disabled
                                     >
@@ -152,6 +152,7 @@ export default {
             this.resendButtonActivateStatus = false;
         },
         matchVerificationCode() {
+            this.resendButtonActivateStatus = false;
             this.codeConfirmationStatus = 0;
             axios
                 .post("/api/match-verification-code", this.codeConfirmation)
@@ -163,7 +164,7 @@ export default {
                         this.startTimer();
                         toastr.success(
                             this.translate(
-                                "Your account is not verified. Please check your email for a six-digit verification code and enter it in the input field to verify your account."
+                                "We ve sent a verification code to your email. Please enter the code below to verify your account and continue exploring exclusive property listings."
                             )
                         );
                     } else {

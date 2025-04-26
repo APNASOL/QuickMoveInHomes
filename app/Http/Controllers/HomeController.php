@@ -21,6 +21,7 @@ use App\Models\OpenHouse;
 use App\Models\Property;
 use App\Models\QuickMoveHome;
 use App\Models\Upload;
+use App\Models\Setting;
 use App\Models\User;
 use Carbon\Carbon;
 use DB;
@@ -1061,7 +1062,7 @@ class HomeController extends Controller
             $user->email    = $request->email;
             $user->phone    = $request->phone;
             $user->role    = 'customer';
-            $user->email_verified_at    =  Carbon::now();
+            // $user->email_verified_at    =  Carbon::now();
             $user->password = bcrypt($password); // Encrypt password
             $user->save();
             
@@ -1135,5 +1136,77 @@ class HomeController extends Controller
     public function cookie_policy()
     {
         return view('app');
+    }
+
+    public function match_verification_code(Request $request)
+    {
+        if ($request->status == 'not-verified') {
+
+            $user = User::where('email', $request->email)->first();
+
+            $updatedTime = $user->updated_at;
+            $currentTime = Carbon::now();
+            if ($currentTime->diffInSeconds($updatedTime) < 300 && $user->verification_code) {
+                $code = $user->verification_code;
+                $user->setUpdatedAt($user->updated_at);
+            } else {
+                $code = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
+            }
+
+            $user->verification_code = $code;
+            $user->save();
+
+            $website_name = Setting::where('type', 'website_name')->first();
+
+            // dynamic email
+            $verification_code_email = Setting::where('type', 'verification_code_email_section')->first();
+            if ($verification_code_email) {
+
+                $decoded_email = json_decode($verification_code_email->value) ?? "";
+                $db_subject    = $decoded_email[0]->subject;
+                $descriptions  = $decoded_email[0]->description;
+            } else {
+                $db_subject   = "Subject of the email";
+                $descriptions = "Verification code : [verification_code]";
+            }
+
+            // Dynamic email body
+            $dynamic_email_descriptions_var           = ['[user_name]', '[verification_code]'];
+            $variables_data_to_be_in_the_descriptions = [$user->name, $code];
+            $adjusted_email_descriptions              = str_replace($dynamic_email_descriptions_var, $variables_data_to_be_in_the_descriptions, $descriptions);
+
+            $dataforEmail = [
+                'verify_account_using_verification_code' => 'verify_account_using_verification_code',
+                'verification_code_descriptions'         => $adjusted_email_descriptions,
+            ];
+            $email        = $request->email;
+            $mail_subject = $db_subject;
+
+            Mail::send('Emails.verificationCodeEmail', $dataforEmail, function ($message) use ($email, $mail_subject) {
+                $message->to($email)->subject($mail_subject);
+            });
+            return 'success';
+        } else {
+            $request->validate([
+                'confirmation_code' => 'required',
+            ]);
+            $user        = User::where('email', $request->email)->first();
+            $updatedTime = $user->updated_at;
+            $currentTime = Carbon::now();
+
+            if ($request->confirmation_code == $user->verification_code) {
+                $user->email_verified_at = Carbon::now();
+                $user->verification_code = null;
+                $user->save();
+
+            } else {
+                return response()->json([
+                    'errors'  => [
+                        'confirmation_code' => [('Code not matched please try correct code to move forward.')],
+                    ],
+                    'message' => ("Code not matched please try correct code to move forward."),
+                ], 422);
+            }
+        }
     }
 }
