@@ -93,6 +93,7 @@ class AdminController extends Controller
     {
         $user_id = auth()->user()->id;
   
+        // dd($user_id);
         $records = CustomerAgentConnection::where('customer_id', $user_id)->get();
       
         foreach ($records as $record) {

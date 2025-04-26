@@ -54,7 +54,7 @@
                                     </p>
 
                                     <button
-                                        class="btn btn-primary mt-3 w-100"
+                                        class="btn c-btn-theme-primary mt-3 w-100"
                                         @click="openModal(agent.id)"
                                     >
                                         {{ translate("Request to Connect") }}
@@ -158,7 +158,7 @@
                                 </div>
                                 <button
                                     type="submit"
-                                    class="btn btn-primary w-100"
+                                    class="btn c-btn-theme-primary w-100"
                                     :disabled="loading"
                                 >
                                     <span
@@ -193,11 +193,25 @@ export default {
             form: { name: "", email: "", phone: "",property_id: "" },
             selectedAgentId: null,
             loading: false,
+            logged_in_user: logged_in_user,
         };
     },
     created() {
-        this.getAgents();
+        this.getAgents(); 
+
     },
+    mounted() {
+    if (this.logged_in_user) {
+        console.log(this.logged_in_user.name);
+        console.log(this.logged_in_user.email);
+        console.log(this.logged_in_user.phone);
+        
+        this.form.name = this.logged_in_user.name || "";
+        this.form.email = this.logged_in_user.email || ""; 
+    
+    }
+},
+
     props: ["property_id"],
     methods: {
         async getAgents() {
@@ -209,11 +223,20 @@ export default {
             }
         },
         openModal(agent_id) {
-            this.selectedAgentId = agent_id;
-            this.form = { name: "", email: "", phone: "" }; // Reset form fields
-            this.formErrors = {}; // Clear validation errors
-            this.$refs.openContractModal.click();
-        },
+    this.selectedAgentId = agent_id;
+    this.formErrors = {}; // Clear validation errors
+
+    // Pre-fill form with logged-in user info
+    this.form = {
+        name: this.logged_in_user?.name || "",
+        email: this.logged_in_user?.email || "",
+        phone: this.logged_in_user?.phone || "",
+        property_id: this.property_id || "",
+    };
+
+    this.$refs.openContractModal.click();
+},
+
         async submitForm() {
             this.loading = true;
             let formData = new FormData();
