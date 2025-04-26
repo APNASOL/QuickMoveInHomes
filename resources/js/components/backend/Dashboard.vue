@@ -34,7 +34,10 @@
                                     "
                                 >
                                     <div class="card-body">
-                                        <h5 class="card-title mb-3">
+                                        <h5
+                                            class="card-title mb-3 text-white"
+                                            style="color: white !important"
+                                        >
                                             Properties
                                         </h5>
                                         <div class="d-flex align-items-center">
@@ -51,7 +54,7 @@
                                             </div>
                                             <div class="ps-3">
                                                 <h4 class="mb-0">
-                                                    {{ properties_count }}
+                                                    {{ peroperties_count }}
                                                 </h4>
                                                 <small>Total Listings</small>
                                             </div>
@@ -76,7 +79,10 @@
                                     "
                                 >
                                     <div class="card-body">
-                                        <h5 class="card-title mb-3">
+                                        <h5
+                                            class="card-title mb-3"
+                                            style="color: white !important"
+                                        >
                                             Communities
                                         </h5>
                                         <div class="d-flex align-items-center">
@@ -118,7 +124,12 @@
                                     "
                                 >
                                     <div class="card-body">
-                                        <h5 class="card-title mb-3">Agents</h5>
+                                        <h5
+                                            class="card-title mb-3"
+                                            style="color: white !important"
+                                        >
+                                            Agents
+                                        </h5>
                                         <div class="d-flex align-items-center">
                                             <div
                                                 class="bg-white text-warning rounded-circle d-flex align-items-center justify-content-center"
