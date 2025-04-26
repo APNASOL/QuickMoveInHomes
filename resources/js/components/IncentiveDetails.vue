@@ -90,7 +90,7 @@
                                     "
                                 >
                                     <h5
-                                        class="card-title text-center text-dark fw-bold"
+                                        class="c-main-title text-center"
                                     >
                                         {{ single_incentive.title }}
                                     </h5>
