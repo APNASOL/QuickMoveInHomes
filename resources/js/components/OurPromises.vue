@@ -1,29 +1,57 @@
 <template>
-    <div class="container">
-        <div class="py-5">
-            <p class="h1 text-center c-main-title c-theme-color">Why Choose QMI?</p>
-            <div class="row g-4 mt-2 justify-content-center">
+    <div class="interactive-banner">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <!-- Left Side: Heading, Paragraph, Buttons -->
                 <div
-                    v-for="(promise, index) in Promises"
-                    :key="promise"
-                    class="col-12 col-sm-6 col-md-4 col-lg-3"
+                    class="col-12 col-lg-6 text-center text-lg-start mb-4 mb-lg-0"
                 >
-                    <div class="card card-body c-border-promis-design h-100">
+                    <h2 class="fw-bold mb-3 c-theme-color">
+                        Ready to Begin Your Real Estate Journey?
+                    </h2>
+                    <p class="mb-4">
+                        Whether you're looking to buy, sell, or rent, we're here
+                        to help you every step of the way. Join thousands of
+                        satisfied users today.
+                    </p>
+                    <div>
+                        <!-- <button class="btn btn-primary me-2">Create an Account</button> -->
+                        <a href="/contact" class="btn btn-light">Contact Us</a>
+                    </div>
+                </div>
+
+                <!-- Right Side: Promises Cards -->
+                <div class="col-12 col-lg-6 ">
+                    <div class="row g-3">
                         <div
-                            class="d-flex justify-content-between c-h-fix text-dark"
+                            v-for="(promise, index) in Promises"
+                            :key="index"
+                            class="col-6"
                         >
-                            <h5>
-                                <b>{{ promise.title }}</b>
-                            </h5>
-                            <!-- <img
-                                :src="promise.icon"
-                                @error="setAltImg"
-                                height="40"
-                            /> -->
+                            <div
+                                class="card card-body text-start h-100 c-border-pr n shadow-sm c-hover-effect"
+                            >
+                                <div class="t mb-2">
+                                    <!-- ICON/LOGO here -->
+                                    <img
+                                        :src="promise.icon"
+                                        alt="Icon"
+                                        class="me-2"
+                                        style="width: 40px"
+                                        @error="setAltImg"
+                                    />
+                                    <h6
+                                        class="fw-bold mb-0"
+                                        style="color: rgb(61, 102, 143)"
+                                    >
+                                        {{ promise.title }}
+                                    </h6>
+                                </div>
+                                <p class="small text-muted">
+                                    {{ promise.description }}
+                                </p>
+                            </div>
                         </div>
-                        <p class="text-dark" style="text-align: justify;">
-                            {{ promise.description }}
-                        </p>
                     </div>
                 </div>
             </div>
@@ -64,7 +92,6 @@ export default {
     overflow: hidden !important;
 }
 .c-destination-cards {
-    
     filter: brightness(60%);
     transition: transform 0.5s ease;
 }
@@ -87,4 +114,34 @@ export default {
 .c-h-fix {
     min-height: 50px;
 }
+.c-border-promis-design {
+    border-radius: 0.5rem;
+    background-color: #f8f9fa; /* Light gray background for card */
+}
+
+.c-theme-color {
+    color: #ffffff; /* If you want white color or change accordingly */
+}
+
+/* Button adjustments if needed */
+/* .btn-primary {
+  background-color: rgb(61, 102, 143);
+  border-color: #0d6efd;
+} */
+
+.shadow-sm {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+  /* Smooth transition */
+.c-hover-effect {
+  transition: transform 0.3s ease-in-out, background-color 0.3s, box-shadow 0.3s;
+}
+
+/* Zoom effect on hover */
+.c-hover-effect:hover {
+  transform: scale(1.05); /* Zoom 5% */
+  background-color: #eaf4fb; /* Light blue background */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
 </style>
+
