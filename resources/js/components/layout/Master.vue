@@ -74,9 +74,19 @@
                             Home
                         </a>
                     </li>
-
                     <li class="nav-item dropdown">
-                        <!-- Dropdown trigger -->
+                        <a
+                            class="nav-link"
+                            href="/all/communities/"
+                            id="navbarDropdownDeals"
+                            role="button"
+                        >
+                        Communities
+                        </a>
+                    </li>
+
+                    <!-- <li class="nav-item dropdown">
+                       
                         <a
                             class="nav-link dropdown-toggle"
                             href="#"
@@ -87,8 +97,7 @@
                         >
                             Communities
                         </a>
-
-                        <!-- Dropdown menu -->
+ 
                         <ul
                             class="dropdown-menu"
                             aria-labelledby="navbarDropdownDestinations"
@@ -111,7 +120,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </li>
+                    </li> -->
 
                     <li class="nav-item dropdown">
                         <!-- Dropdown trigger -->
