@@ -29,22 +29,20 @@
         </div>
 
         <section class="section">
-            <div class="card c-card-border">
-                <div class="card-body pt-4">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body pt-4 bg-light">
+                    <!-- Search Input -->
                     <div class="row g-3 p-3">
                         <div class="input-group">
                             <div class="form-outline col-md-5">
                                 <input
                                     type="text"
                                     v-model="form.name"
-                                    class="form-control c-searchbox-radius"
+                                    class="form-control rounded-pill shadow-sm"
                                     id="name"
                                     :placeholder="translate('Search by name')"
-                                    :class="{
-                                        'invalid-bg': formErrors.name,
-                                    }"
+                                    :class="{ 'is-invalid': formErrors.name }"
                                 />
-
                                 <div
                                     class="invalid-feedback animated fadeIn"
                                     v-if="formErrors.name"
@@ -56,14 +54,14 @@
                             <button
                                 v-if="formStatus == 1"
                                 @click="search(null)"
-                                class="btn btn-success"
+                                class="btn btn-primary ms-2 rounded-pill shadow-sm"
                             >
                                 <i class="bi bi-search"></i>
                             </button>
 
                             <button
                                 v-else
-                                class="btn btn-success"
+                                class="btn btn-primary ms-2 rounded-pill shadow-sm"
                                 type="button"
                             >
                                 <span
@@ -75,48 +73,35 @@
                         </div>
                     </div>
 
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
+                    <!-- Neighborhoods Table -->
+                    <div class="table-responsive mt-4 rounded-4 shadow-sm">
+                        <table class="table table-hover align-middle bg-white">
+                            <thead class="table-primary text-dark">
                                 <tr>
-                                    <th scope="col" class="text-center">#</th>
-                                    <th scope="col">
-                                        {{ translate("Name") }}
-                                    </th>
-                                    <th scope="col">
-                                        {{ translate("Location") }}
-                                    </th>
-                                    <th scope="col">
-                                        {{ translate("Image") }}
-                                    </th>
-                                    <th scope="col">
-                                        {{ translate("Action") }}
-                                    </th>
+                                    <th class="text-center">#</th>
+                                    <th>{{ translate("Name") }}</th>
+                                    <th>{{ translate("Location") }}</th>
+                                    <th>{{ translate("Image") }}</th>
+                                    <th>{{ translate("Action") }}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr
-                                    v-for="(neighborhood, index) in neighborhoods"
+                                    v-for="(
+                                        neighborhood, index
+                                    ) in neighborhoods"
                                     :key="neighborhood.id"
                                 >
-                                    <th class="text-center">
-                                        {{ index + 1 }}
-                                    </th>
+                                    <th class="text-center">{{ index + 1 }}</th>
                                     <td>
-                                        <!-- <a
-                                                        type="button"
-                                                        class="c-linked c-mouse-over c-theme-text-color"
-                                                        title="Edit"
-                                                        :href="'/neighborhood-details/' + neighborhood.id"
-                                                    > -->
                                         {{ neighborhood.name }}
-                                        <!-- </a> -->
                                     </td>
                                     <td>{{ neighborhood.location }}</td>
                                     <td>
                                         <image-zooming-component
                                             :file="
-                                                neighborhood.image ?? 'empty.png'
+                                                neighborhood.image ??
+                                                'empty.png'
                                             "
                                             :width="70"
                                         />
@@ -125,17 +110,15 @@
                                     <td>
                                         <div class="btn-group">
                                             <a
-                                                type="button"
-                                                class="btn btn-sm fs-6"
+                                                class="btn btn-sm btn-outline-primary rounded-pill"
                                                 title="Edit"
                                                 :href="
                                                     '/neighborhood/edit/' +
                                                     neighborhood.id
                                                 "
-                                                ><i
-                                                    class="bi bi-pencil c-theme-text-color"
-                                                ></i
-                                            ></a>
+                                            >
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
                                             <DeleteModal
                                                 :deleteId="neighborhood.id"
                                                 @deleteThis="deleteThis"
@@ -143,15 +126,27 @@
                                         </div>
                                     </td>
                                 </tr>
+
+                                <tr v-if="neighborhoods.length === 0">
+                                    <td
+                                        colspan="5"
+                                        class="text-center text-muted py-4"
+                                    >
+                                        {{
+                                            translate("No neighborhoods found.")
+                                        }}
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
 
-                    <div class="text-center">
+                    <!-- Load More Button -->
+                    <div class="text-center mt-4">
                         <button
                             v-if="pagination.next_page_url"
                             @click="search(pagination.next_page_url)"
-                            class="btn btn-success"
+                            class="btn btn-primary rounded-pill shadow-sm"
                         >
                             {{ translate("Load More") }}
                         </button>

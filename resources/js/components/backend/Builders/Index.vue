@@ -29,22 +29,20 @@
         </div>
 
         <section class="section">
-            <div class="card c-card-border">
-                <div class="card-body pt-4">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body pt-4 bg-light">
+                    <!-- Search Input -->
                     <div class="row g-3 p-3">
                         <div class="input-group">
                             <div class="form-outline col-md-5">
                                 <input
                                     type="text"
                                     v-model="form.name"
-                                    class="form-control c-searchbox-radius"
+                                    class="form-control rounded-pill shadow-sm"
                                     id="name"
                                     :placeholder="translate('Search by name')"
-                                    :class="{
-                                        'invalid-bg': formErrors.name,
-                                    }"
+                                    :class="{ 'is-invalid': formErrors.name }"
                                 />
-
                                 <div
                                     class="invalid-feedback animated fadeIn"
                                     v-if="formErrors.name"
@@ -56,14 +54,14 @@
                             <button
                                 v-if="formStatus == 1"
                                 @click="search(null)"
-                                class="btn btn-success"
+                                class="btn btn-primary ms-2 rounded-pill shadow-sm"
                             >
                                 <i class="bi bi-search"></i>
                             </button>
 
                             <button
                                 v-else
-                                class="btn btn-success"
+                                class="btn btn-primary ms-2 rounded-pill shadow-sm"
                                 type="button"
                             >
                                 <span
@@ -75,23 +73,16 @@
                         </div>
                     </div>
 
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
+                    <!-- Builders Table -->
+                    <div class="table-responsive mt-4 rounded-4 shadow-sm">
+                        <table class="table table-hover align-middle bg-white">
+                            <thead class="table-primary text-dark">
                                 <tr>
-                                    <th scope="col" class="text-center">#</th>
-                                    <th scope="col">
-                                        {{ translate("Name") }}
-                                    </th>
-                                    <th scope="col">
-                                        {{ translate("Description") }}
-                                    </th>
-                                    <th scope="col">
-                                        {{ translate("Communities") }}
-                                    </th>
-                                    <th scope="col">
-                                        {{ translate("Action") }}
-                                    </th>
+                                    <th class="text-center">#</th>
+                                    <th>{{ translate("Name") }}</th>
+                                    <th>{{ translate("Description") }}</th>
+                                    <th>{{ translate("Communities") }}</th>
+                                    <th>{{ translate("Action") }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -99,43 +90,31 @@
                                     v-for="(builder, index) in builders"
                                     :key="builder.id"
                                 >
-                                    <th class="text-center">
-                                        {{ index + 1 }}
-                                    </th>
-                                    <td>
-                                        <!-- <a
-                                                        type="button"
-                                                        class="c-linked c-mouse-over c-theme-text-color"
-                                                        title="Edit"
-                                                        :href="'/builder-details/' + builder.id"
-                                                    > -->
-                                        {{ builder.name }}
-                                        <!-- </a> -->
-                                    </td>
+                                    <th class="text-center">{{ index + 1 }}</th>
+                                    <td>{{ builder.name }}</td>
                                     <td>{{ builder.description }}</td>
                                     <td>
                                         <ol type="1">
-                                            <li v-for="community in builder.communities"> 
+                                            <li
+                                                v-for="community in builder.communities"
+                                            >
                                                 {{ community }}
                                             </li>
                                         </ol>
                                     </td>
-                                   
 
                                     <td>
                                         <div class="btn-group">
                                             <a
-                                                type="button"
-                                                class="btn btn-sm fs-6"
+                                                class="btn btn-sm btn-outline-primary rounded-pill"
                                                 title="Edit"
                                                 :href="
                                                     '/builder/edit/' +
                                                     builder.id
                                                 "
-                                                ><i
-                                                    class="bi bi-pencil c-theme-text-color"
-                                                ></i
-                                            ></a>
+                                            >
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
                                             <DeleteModal
                                                 :deleteId="builder.id"
                                                 @deleteThis="deleteThis"
@@ -143,15 +122,25 @@
                                         </div>
                                     </td>
                                 </tr>
+
+                                <tr v-if="builders.length === 0">
+                                    <td
+                                        colspan="5"
+                                        class="text-center text-muted py-4"
+                                    >
+                                        {{ translate("No builders found.") }}
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
 
-                    <div class="text-center">
+                    <!-- Load More Button -->
+                    <div class="text-center mt-4">
                         <button
                             v-if="pagination.next_page_url"
                             @click="search(pagination.next_page_url)"
-                            class="btn btn-success"
+                            class="btn btn-primary rounded-pill shadow-sm"
                         >
                             {{ translate("Load More") }}
                         </button>
@@ -237,7 +226,7 @@ export default {
                         this.translate("Builder deleted successfully.")
                     );
                     setTimeout(() => {
-                        window.location.href = "/builders";
+                        this.search(null);
                     }, 2000);
                 })
                 .catch((error) => {

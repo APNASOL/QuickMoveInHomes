@@ -29,130 +29,109 @@
         </div>
 
         <section class="section">
-            <div class="card c-card-border">
-                <div class="card-body pt-4">
-                    <div class="table-responsive">
-                        <div class="accordion" id="accordionAgents">
-                            <div
-                                class="accordion-item"
-                                v-for="(agent, index) in agents"
-                                :key="agent.id"
-                            >
-                                <h2 class="accordion-header">
-                                    <button
-                                        class="accordion-button"
-                                        type="button"
-                                        :data-bs-toggle="'collapse'"
-                                        :data-bs-target="
-                                            '#collapseAgent' + agent.id
-                                        "
-                                        aria-expanded="index === 0 ? 'true' : 'false'"
-                                        :aria-controls="
-                                            'collapseAgent' + agent.id
-                                        "
-                                    >
-                                        {{ index + 1 }}. {{ agent.name }}
-                                    </button>
-                                </h2>
-                                <div
-                                    :id="'collapseAgent' + agent.id"
-                                    class="accordion-collapse collapse"
-                                    :class="index === 0 ? 'show' : ''"
-                                    data-bs-parent="#accordionAgents"
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body pt-4 bg-light">
+                    <div class="accordion" id="accordionAgents">
+                        <div
+                            class="accordion-item mb-3 rounded-4 overflow-hidden shadow-sm"
+                            v-for="(agent, index) in agents"
+                            :key="agent.id"
+                        >
+                            <h2 class="accordion-header">
+                                <button
+                                    class="accordion-button bg-gradient bg-primary text-white fw-semibold"
+                                    type="button"
+                                    :data-bs-toggle="'collapse'"
+                                    :data-bs-target="
+                                        '#collapseAgent' + agent.id
+                                    "
+                                    aria-expanded="index === 0 ? 'true' : 'false'"
+                                    :aria-controls="'collapseAgent' + agent.id"
                                 >
-                                    <div class="accordion-body">
-                                        <div class="accordion-body">
-                                            <div
-                                                class="d-flex justify-content-end p-2"
-                                            >
-                                                <a
-                                                    type="button"
-                                                    class="btn btn-sm fs-6"
-                                                    title="Edit"
-                                                    :href="
-                                                        '/agent/edit/' +
-                                                        agent.id
-                                                    "
-                                                >
-                                                    <i
-                                                        class="bi bi-pencil c-theme-text-color"
-                                                    ></i>
-                                                </a>
-                                                <DeleteModal
-                                                    :deleteId="agent.id"
-                                                    @deleteThis="deleteThis"
-                                                />
-                                            </div>
-                                            <div class="row g-3">
-                                                <div class="col-6">
-                                                    <strong>Email:</strong>
-                                                    {{ agent.email || "N/A" }}
-                                                </div>
-                                                <div class="col-6">
-                                                    <strong
-                                                        >Agency Name:</strong
-                                                    >
-                                                    {{ agent.agency_name }}
-                                                </div>
-                                                <div class="col-6">
-                                                    <strong
-                                                        >License Number:</strong
-                                                    >
-                                                    {{ agent.license_number }}
-                                                </div>
-                                                <div class="col-6">
-                                                    <strong>Experience:</strong>
-                                                    {{ agent.experience }}
-                                                </div>
-                                                <div class="col-6">
-                                                    <strong
-                                                        >Specialties:</strong
-                                                    >
-                                                    {{ agent.specialties }}
-                                                </div>
+                                    {{ index + 1 }}. {{ agent.name }}
+                                </button>
+                            </h2>
+                            <div
+                                :id="'collapseAgent' + agent.id"
+                                class="accordion-collapse collapse"
+                                :class="index === 0 ? 'show' : ''"
+                                data-bs-parent="#accordionAgents"
+                            >
+                                <div class="accordion-body bg-white">
+                                    <!-- Actions -->
+                                    <div class="d-flex justify-content-end p-2">
+                                        <a
+                                            class="btn btn-sm btn-outline-primary me-2"
+                                            title="Edit"
+                                            :href="'/agent/edit/' + agent.id"
+                                        >
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <DeleteModal
+                                            :deleteId="agent.id"
+                                            @deleteThis="deleteThis"
+                                        />
+                                    </div>
 
-                                                <div class="col-6">
-                                                    <strong>Languages:</strong>
-                                                    {{ agent.languages }}
-                                                </div>
-                                                <div class="col-6">
-                                                    <strong>Contact:</strong>
-                                                    {{ agent.contact }}
-                                                </div>
-                                                <div class="col-12">
-                                                    <strong>Biography:</strong>
-                                                    {{ agent.biography }}
-                                                </div>
-                                            </div>
+                                    <!-- Agent Info -->
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <strong>Email:</strong>
+                                            {{ agent.email || "N/A" }}
                                         </div>
+                                        <div class="col-md-6">
+                                            <strong>Agency Name:</strong>
+                                            {{ agent.agency_name }}
+                                        </div>
+                                        <div class="col-md-6">
+                                            <strong>License Number:</strong>
+                                            {{ agent.license_number }}
+                                        </div>
+                                        <div class="col-md-6">
+                                            <strong>Experience:</strong>
+                                            {{ agent.experience }}
+                                        </div>
+                                        <div class="col-md-6">
+                                            <strong>Specialties:</strong>
+                                            {{ agent.specialties }}
+                                        </div>
+                                        <div class="col-md-6">
+                                            <strong>Languages:</strong>
+                                            {{ agent.languages }}
+                                        </div>
+                                        <div class="col-md-6">
+                                            <strong>Contact:</strong>
+                                            {{ agent.contact }}
+                                        </div>
+                                        <div class="col-md-12">
+                                            <strong>Biography:</strong>
+                                            {{ agent.biography }}
+                                        </div>
+                                    </div>
 
-                                        <div class="container mt-4">
-                                            <h3>Agreements</h3>
-                                            <table class="table table-striped">
-                                                <thead>
+                                    <!-- Agreements Table -->
+                                    <div class="mt-4">
+                                        <h5 class="fw-bold mb-3 text-primary">
+                                            Connected Customers
+                                        </h5>
+                                        <div
+                                            class="table-responsive rounded-3 shadow-sm"
+                                        >
+                                            <table
+                                                class="table table-hover align-middle bg-white"
+                                            >
+                                                <thead
+                                                    class="table-primary text-dark"
+                                                >
                                                     <tr>
-                                                        <th scope="col">#</th>
-                                                        <th scope="col">
-                                                            Customer
-                                                        </th>
-                                                        <th scope="col">
-                                                            Email
-                                                        </th>
-                                                        <th scope="col">
-                                                            Date
-                                                        </th>
-                                                        <th scope="col">
-                                                            Status
-                                                        </th>
-                                                        <th scope="col">
-                                                            Terms Agreed
-                                                        </th>
-                                                        <th scope="col">
-                                                            Agreement Type
-                                                        </th>
-                                                        <th scope="col">
-                                                            Home Title
-                                                        </th>
+                                                        <th>#</th>
+                                                        <th>Customer</th>
+                                                        <th>Email</th>
+                                                        <th>Date</th>
+                                                        <th>Status</th>
+                                                        <!-- <th>Terms Agreed</th>
+                        <th>Agreement Type</th> -->
+                                                        <th>Home Title</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -177,25 +156,22 @@
                                                             {{ agreement.date }}
                                                         </td>
                                                         <td>
-                                                            {{
-                                                                agreement.current_status
-                                                            }}
+                                                            <span
+                                                                class="badge bg-success"
+                                                                style="
+                                                                    width: 150px;
+                                                                "
+                                                            >
+                                                                {{
+                                                                    agreement.current_status
+                                                                }}
+                                                            </span>
                                                         </td>
-                                                        <td>
-                                                            {{
-                                                                agreement.terms_agreed
-                                                            }}
-                                                        </td>
-                                                        <td>
-                                                            {{
-                                                                agreement.agreement_type
-                                                            }}
-                                                        </td>
+                                                        <!-- <td>{{ agreement.terms_agreed }}</td>
+                        <td>{{ agreement.agreement_type }}</td> -->
                                                         <td>
                                                             <a
-                                                                type="button"
-                                                                class="c-linked c-mouse-over c-theme-text-color"
-                                                                title="Edit"
+                                                                class="text-decoration-none text-primary fw-semibold"
                                                                 target="_blank"
                                                                 :href="
                                                                     '/property/details/' +
@@ -206,6 +182,20 @@
                                                                     agreement.home_title
                                                                 }}
                                                             </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr
+                                                        v-if="
+                                                            agent
+                                                                .customer_agreements
+                                                                .length === 0
+                                                        "
+                                                    >
+                                                        <td
+                                                            colspan="8"
+                                                            class="text-muted py-3"
+                                                        >
+                                                            No agreements found.
                                                         </td>
                                                     </tr>
                                                 </tbody>

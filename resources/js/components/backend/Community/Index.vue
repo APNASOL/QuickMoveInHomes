@@ -29,166 +29,148 @@
         </div>
 
         <section class="section">
-            <div class="card c-card-border">
-                <div class="card-body pt-4">
-                    <div class="row g-3 p-3">
-                        <div class="input-group">
-                            <div class="form-outline col-md-5">
-                                <input
-                                    type="text"
-                                    v-model="form.name"
-                                    class="form-control c-searchbox-radius"
-                                    id="name"
-                                    :placeholder="translate('Search by name')"
-                                    :class="{
-                                        'invalid-bg': formErrors.name,
-                                    }"
-                                />
-
-                                <div
-                                    class="invalid-feedback animated fadeIn"
-                                    v-if="formErrors.name"
-                                >
-                                    {{ formErrors.name[0] }}
-                                </div>
-                            </div>
-
-                            <button
-                                v-if="formStatus == 1"
-                                @click="search(null)"
-                                class="btn btn-success"
-                            >
-                                <i class="bi bi-search"></i>
-                            </button>
-
-                            <button
-                                v-else
-                                class="btn btn-success"
-                                type="button"
-                            >
-                                <span
-                                    class="spinner-border spinner-border-sm"
-                                    role="status"
-                                    aria-hidden="true"
-                                ></span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col" class="text-center">#</th>
-                                    <th scope="col">
-                                        {{ translate("Name") }} <br />
-                                        {{ translate("Id") }}
-                                    </th>
-                                    <th scope="col">
-                                        {{ translate("Location") }}
-                                    </th>
-                                    <th scope="col">
-                                        {{ translate("Image") }}
-                                    </th>
-                                    <th scope="col">
-                                        {{ translate("Banner") }}
-                                    </th>
-                                    <th scope="col">
-                                        {{ translate("Action") }}
-                                    </th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                <tr
-                                    v-for="(community, index) in communities"
-                                    :key="community.id"
-                                >
-                                    <th class="text-center">
-                                        {{ index + 1 }}
-                                    </th>
-                                    <td>
-                                        <a
-                                            type="button"
-                                            class="c-linked c-mouse-over c-theme-text-color"
-                                            title="Detail"
-                                            :href="
-                                                '/community/details/' +
-                                                community.id
-                                            "
-                                        >
-                                            {{ community.name }} <br />
-                                        </a>
-                                        <br>
-                                        <span
-                                            class="c-linked "
-                                            @click="
-                                                copyToClipboard(community.id)
-                                            " title="Copy"
-                                            style="
-                                                cursor: pointer;
-                                                color: blue; 
-                                            "
-                                            >{{ community.id }}</span
-                                        >
-                                    </td>
-                                    <td>{{ community.location }}</td>
-                                    <td>
-                                        <image-zooming-component
-                                            :file="
-                                                community.main_image ??
-                                                'empty.png'
-                                            "
-                                            :width="70"
-                                        />
-                                    </td>
-                                    <td>
-                                        <image-zooming-component
-                                            :file="
-                                                community.banner ??
-                                                'empty.png'
-                                            "
-                                            :width="70"
-                                        />
-                                    </td>
-
-                                    <td>
-                                        <div class="btn-group">
-                                            <a
-                                                type="button"
-                                                class="btn btn-sm fs-6"
-                                                title="Edit"
-                                                :href="
-                                                    '/community/edit/' +
-                                                    community.id
-                                                "
-                                                ><i
-                                                    class="bi bi-pencil c-theme-text-color"
-                                                ></i
-                                            ></a>
-                                            <DeleteModal
-                                                :deleteId="community.id"
-                                                @deleteThis="deleteThis"
-                                            />
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="text-center">
-                        <button
-                            v-if="pagination.next_page_url"
-                            @click="search(pagination.next_page_url)"
-                            class="btn btn-success"
-                        >
-                            {{ translate("Load More") }}
-                        </button>
-                    </div>
-                </div>
+  <div class="card shadow-lg border-0 rounded-4">
+    <div class="card-body pt-4 bg-light">
+      
+      <!-- Search Input -->
+      <div class="row g-3 p-3">
+        <div class="input-group">
+          <div class="form-outline col-md-5">
+            <input
+              type="text"
+              v-model="form.name"
+              class="form-control rounded-pill shadow-sm"
+              id="name"
+              :placeholder="translate('Search by name')"
+              :class="{ 'is-invalid': formErrors.name }"
+            />
+            <div
+              class="invalid-feedback animated fadeIn"
+              v-if="formErrors.name"
+            >
+              {{ formErrors.name[0] }}
             </div>
-        </section>
+          </div>
+
+          <button
+            v-if="formStatus == 1"
+            @click="search(null)"
+            class="btn btn-primary ms-2 rounded-pill shadow-sm"
+          >
+            <i class="bi bi-search"></i>
+          </button>
+
+          <button
+            v-else
+            class="btn btn-primary ms-2 rounded-pill shadow-sm"
+            type="button"
+          >
+            <span
+              class="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+            ></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Communities Table -->
+      <div class="table-responsive mt-4 rounded-4 shadow-sm">
+        <table class="table table-hover align-middle bg-white">
+          <thead class="table-primary text-dark">
+            <tr>
+              <th class="text-center">#</th>
+              <th>{{ translate("Name") }} <br />{{ translate("Id") }}</th>
+              <th>{{ translate("Location") }}</th>
+              <th>{{ translate("Image") }}</th>
+              <th>{{ translate("Banner") }}</th>
+              <th>{{ translate("Action") }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(community, index) in communities" :key="community.id">
+              <th class="text-center">{{ index + 1 }}</th>
+              
+              <!-- Name and ID -->
+              <td>
+                <a
+                  class="text-decoration-none text-primary fw-semibold"
+                  title="Detail"
+                  :href="'/community/details/' + community.id"
+                >
+                  {{ community.name }} <br />
+                </a>
+                <br />
+                <span
+                  class="c-linked"
+                  @click="copyToClipboard(community.id)"
+                  title="Copy"
+                  style="cursor: pointer; color: blue;"
+                >
+                  {{ community.id }}
+                </span>
+              </td>
+
+              <!-- Location -->
+              <td>{{ community.location }}</td>
+
+              <!-- Images -->
+              <td>
+                <image-zooming-component
+                  :file="community.main_image ?? 'empty.png'"
+                  :width="70"
+                />
+              </td>
+              <td>
+                <image-zooming-component
+                  :file="community.banner ?? 'empty.png'"
+                  :width="70"
+                />
+              </td>
+
+              <!-- Actions -->
+              <td>
+                <div class="btn-group">
+                  <a
+                    class="btn btn-sm fs-6"
+                    title="Edit"
+                    :href="'/community/edit/' + community.id"
+                  >
+                    <i class="bi bi-pencil text-primary"></i>
+                  </a>
+                  <DeleteModal
+                    :deleteId="community.id"
+                    @deleteThis="deleteThis"
+                  />
+                </div>
+              </td>
+            </tr>
+
+            <!-- No Communities Found -->
+            <tr v-if="communities.length === 0">
+              <td colspan="6" class="text-center text-muted py-4">
+                {{ translate("No communities found.") }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Load More Button -->
+      <div class="text-center mt-4">
+        <button
+          v-if="pagination.next_page_url"
+          @click="search(pagination.next_page_url)"
+          class="btn btn-primary rounded-pill shadow-sm"
+        >
+          {{ translate("Load More") }}
+        </button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
     </Master>
 </template>
 

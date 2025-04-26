@@ -29,170 +29,149 @@
         </div>
 
         <section class="section">
-            <div class="card c-card-border">
-                <div class="card-body pt-4">
-                    <div class="row g-3 p-3">
-                        <div class="input-group">
-                            <div class="form-outline col-md-5">
-                                <input
-                                    type="text"
-                                    v-model="form.name"
-                                    class="form-control c-searchbox-radius"
-                                    property_id="name"
-                                    :placeholder="translate('Search by name')"
-                                    :class="{
-                                        'invalid-bg': formErrors.name,
-                                    }"
-                                />
-
-                                <div
-                                    class="invalid-feedback animated fadeIn"
-                                    v-if="formErrors.name"
-                                >
-                                    {{ formErrors.name[0] }}
-                                </div>
-                            </div>
-
-                            <button
-                                v-if="formStatus == 1"
-                                @click="search(null)"
-                                class="btn btn-success"
-                            >
-                                <i class="bi bi-search"></i>
-                            </button>
-
-                            <button
-                                v-else
-                                class="btn btn-success"
-                                type="button"
-                            >
-                                <span
-                                    class="spinner-border spinner-border-sm"
-                                    role="status"
-                                    aria-hidden="true"
-                                ></span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">#</th>
-                                    <th>
-                                        {{ translate("Name") }}
-                                    </th>
-                                    <th>
-                                        {{ translate("Property In Community") }}
-                                    </th>
-                                    <th>
-                                        {{ translate("Image") }}
-                                    </th>
-                                    <th>
-                                        {{ translate("Banner") }}
-                                    </th>
-                                    <th>
-                                        {{ translate("Action") }}
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr
-                                    v-for="(property, index) in properties"
-                                    :key="property.property_id"
-                                >
-                                    <th class="text-center">
-                                        {{ index + 1 }}
-                                    </th>
-                                    <td>
-                                        <a
-                                            type="button"
-                                            class="c-linked c-mouse-over c-theme-text-color"
-                                            title="Details"
-                                            :href="
-                                                '/property/details/' +
-                                                property.property_id
-                                            "
-                                        >
-                                            {{ property.title }}
-                                        </a>
-                                    </td>
-                                    <td v-if="property.community.id">
-                                        <a
-                                            type="button"
-                                            class="c-linked c-mouse-over c-theme-text-color"
-                                            title="Details"
-                                            :href="
-                                                '/community/details/' +
-                                                property.community.id
-                                            "
-                                        >
-                                            {{ property.community.name }}
-                                        </a>
-                                    </td>
-                                    <td v-else>
-                                        <span class="c-theme-text-color"
-                                            >{{ translate("No community added") }}</span
-                                        > 
-                                    </td>
-                                    <!-- <td>{{ property.location }}</td> -->
-                                    <td>
-                                        <image-zooming-component
-                                            :file="
-                                                property.main_image ??
-                                                'empty.png'
-                                            "
-                                            :width="70"
-                                        />
-                                    </td>
-                                    <td>
-                                        <image-zooming-component
-                                            :file="
-                                                property.banner ??
-                                                'empty.png'
-                                            "
-                                            :width="70"
-                                        />
-                                    </td>
-
-                                    <td>
-                                        <div class="btn-group">
-                                            <a
-                                                type="button"
-                                                class="btn btn-sm fs-6"
-                                                title="Edit"
-                                                :href="
-                                                    '/property/edit/' +
-                                                    property.property_id
-                                                "
-                                                ><i
-                                                    class="bi bi-pencil c-theme-text-color"
-                                                ></i
-                                            ></a>
-                                            <DeleteModal
-                                                :deleteId="property.property_id"
-                                                @deleteThis="deleteThis"
-                                            />
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="text-center">
-                        <button
-                            v-if="pagination.next_page_url"
-                            @click="search(pagination.next_page_url)"
-                            class="btn btn-success"
-                        >
-                            {{ translate("Load More") }}
-                        </button>
-                    </div>
-                </div>
+  <div class="card shadow-lg border-0 rounded-4">
+    <div class="card-body pt-4 bg-light">
+      
+      <!-- Search Input -->
+      <div class="row g-3 p-3">
+        <div class="input-group">
+          <div class="form-outline col-md-5">
+            <input
+              type="text"
+              v-model="form.name"
+              class="form-control rounded-pill shadow-sm"
+              property_id="name"
+              :placeholder="translate('Search by name')"
+              :class="{ 'is-invalid': formErrors.name }"
+            />
+            <div
+              class="invalid-feedback animated fadeIn"
+              v-if="formErrors.name"
+            >
+              {{ formErrors.name[0] }}
             </div>
-        </section>
+          </div>
+
+          <button
+            v-if="formStatus == 1"
+            @click="search(null)"
+            class="btn btn-primary ms-2 rounded-pill shadow-sm"
+          >
+            <i class="bi bi-search"></i>
+          </button>
+
+          <button
+            v-else
+            class="btn btn-primary ms-2 rounded-pill shadow-sm"
+            type="button"
+          >
+            <span
+              class="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+            ></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Properties Table -->
+      <div class="table-responsive mt-4 rounded-4 shadow-sm">
+        <table class="table table-hover align-middle bg-white">
+          <thead class="table-primary text-dark">
+            <tr>
+              <th class="text-center">#</th>
+              <th>{{ translate("Name") }}</th>
+              <th>{{ translate("Property In Community") }}</th>
+              <th>{{ translate("Image") }}</th>
+              <th>{{ translate("Banner") }}</th>
+              <th>{{ translate("Action") }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(property, index) in properties" :key="property.property_id">
+              <th class="text-center">{{ index + 1 }}</th>
+              
+              <!-- Title -->
+              <td>
+                <a
+                  class="text-decoration-none text-primary fw-semibold"
+                  title="Details"
+                  :href="'/property/details/' + property.property_id"
+                >
+                  {{ property.title }}
+                </a>
+              </td>
+
+              <!-- Community -->
+              <td v-if="property.community?.id">
+                <a
+                  class="text-decoration-none text-success fw-semibold"
+                  title="Details"
+                  :href="'/community/details/' + property.community.id"
+                >
+                  {{ property.community.name }}
+                </a>
+              </td>
+              <td v-else>
+                <span class="text-muted">{{ translate("No community added") }}</span>
+              </td>
+
+              <!-- Images -->
+              <td>
+                <image-zooming-component
+                  :file="property.main_image ?? 'empty.png'"
+                  :width="70"
+                />
+              </td>
+              <td>
+                <image-zooming-component
+                  :file="property.banner ?? 'empty.png'"
+                  :width="70"
+                />
+              </td>
+
+              <!-- Actions -->
+              <td>
+                <div class="btn-group">
+                  <a
+                    class="btn btn-sm  "
+                    title="Edit"
+                    :href="'/property/edit/' + property.property_id"
+                  >
+                    <i class="bi bi-pencil"></i>
+                  </a>
+                  <DeleteModal
+                    :deleteId="property.property_id"
+                    @deleteThis="deleteThis"
+                  />
+                </div>
+              </td>
+            </tr>
+
+            <tr v-if="properties.length === 0">
+              <td colspan="6" class="text-center text-muted py-4">
+                {{ translate("No properties found.") }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Load More Button -->
+      <div class="text-center mt-4">
+        <button
+          v-if="pagination.next_page_url"
+          @click="search(pagination.next_page_url)"
+          class="btn btn-primary rounded-pill shadow-sm"
+        >
+          {{ translate("Load More") }}
+        </button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
     </Master>
 </template>
 

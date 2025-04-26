@@ -29,22 +29,20 @@
         </div>
 
         <section class="section">
-            <div class="card c-card-border">
-                <div class="card-body pt-4">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body pt-4 bg-light">
+                    <!-- Search Input -->
                     <div class="row g-3 p-3">
                         <div class="input-group">
                             <div class="form-outline col-md-5">
                                 <input
                                     type="text"
                                     v-model="form.name"
-                                    class="form-control c-searchbox-radius"
+                                    class="form-control rounded-pill shadow-sm"
                                     id="name"
                                     :placeholder="translate('Search by name')"
-                                    :class="{
-                                        'invalid-bg': formErrors.name,
-                                    }"
+                                    :class="{ 'is-invalid': formErrors.name }"
                                 />
-
                                 <div
                                     class="invalid-feedback animated fadeIn"
                                     v-if="formErrors.name"
@@ -56,14 +54,14 @@
                             <button
                                 v-if="formStatus == 1"
                                 @click="search(null)"
-                                class="btn btn-success"
+                                class="btn btn-primary ms-2 rounded-pill shadow-sm"
                             >
                                 <i class="bi bi-search"></i>
                             </button>
 
                             <button
                                 v-else
-                                class="btn btn-success"
+                                class="btn btn-primary ms-2 rounded-pill shadow-sm"
                                 type="button"
                             >
                                 <span
@@ -75,50 +73,33 @@
                         </div>
                     </div>
 
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
+                    <!-- HOAs Table -->
+                    <div class="table-responsive mt-4 rounded-4 shadow-sm">
+                        <table class="table table-hover align-middle bg-white">
+                            <thead class="table-primary text-dark">
                                 <tr>
-                                    <th scope="col" class="text-center">#</th>
-                                    <th scope="col">
-                                        {{ translate("Name") }}
-                                    </th>
-                                    <th scope="col">
-                                        {{ translate("Fee") }}
-                                    </th>
-                                    <th scope="col">
-                                        {{ translate("Frequency") }}
-                                    </th>
-                                    <th scope="col">
-                                        {{ translate("Master plan") }}
-                                    </th>
-                                    <th scope="col">
-                                        {{ translate("Sub association") }}
-                                    </th>
-                                    <th scope="col">
-                                        {{ translate("Action") }}
-                                    </th>
+                                    <th class="text-center">#</th>
+                                    <th>{{ translate("Name") }}</th>
+                                    <th>{{ translate("Fee") }}</th>
+                                    <th>{{ translate("Frequency") }}</th>
+                                    <th>{{ translate("Master plan") }}</th>
+                                    <th>{{ translate("Sub association") }}</th>
+                                    <th>{{ translate("Action") }}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-for="(hoa, index) in hoas" :key="hoa.id">
-                                    <th class="text-center">
-                                        {{ index + 1 }}
-                                    </th>
+                                    <th class="text-center">{{ index + 1 }}</th>
                                     <td>
                                         {{ hoa.name }}
-                                        <br>
+                                        <br />
                                         <span
-                                            class="c-linked c-mouse-over"
-                                            @click="
-                                                copyToClipboard(hoa.id)
-                                            "
-                                            style="
-                                                cursor: pointer;
-                                                color: blue; 
-                                            "
-                                            >{{ hoa.id }}</span
+                                            class="text-primary c-linked c-mouse-over"
+                                            @click="copyToClipboard(hoa.id)"
+                                            style="cursor: pointer"
                                         >
+                                            {{ hoa.id }}
+                                        </span>
                                     </td>
                                     <td>{{ hoa.fee }}</td>
                                     <td>{{ hoa.frequency }}</td>
@@ -128,14 +109,12 @@
                                     <td>
                                         <div class="btn-group">
                                             <a
-                                                type="button"
-                                                class="btn btn-sm fs-6"
+                                                class="btn btn-sm btn-outline-primary rounded-pill"
                                                 title="Edit"
                                                 :href="'/hoa/edit/' + hoa.id"
-                                                ><i
-                                                    class="bi bi-pencil c-theme-text-color"
-                                                ></i
-                                            ></a>
+                                            >
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
                                             <DeleteModal
                                                 :deleteId="hoa.id"
                                                 @deleteThis="deleteThis"
@@ -143,15 +122,25 @@
                                         </div>
                                     </td>
                                 </tr>
+
+                                <tr v-if="hoas.length === 0">
+                                    <td
+                                        colspan="7"
+                                        class="text-center text-muted py-4"
+                                    >
+                                        {{ translate("No HOAs found.") }}
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
 
-                    <div class="text-center">
+                    <!-- Load More Button -->
+                    <div class="text-center mt-4">
                         <button
                             v-if="pagination.next_page_url"
                             @click="search(pagination.next_page_url)"
-                            class="btn btn-success"
+                            class="btn btn-primary rounded-pill shadow-sm"
                         >
                             {{ translate("Load More") }}
                         </button>

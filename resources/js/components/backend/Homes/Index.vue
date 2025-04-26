@@ -16,7 +16,7 @@
                     </ol>
                 </nav>
             </div>
-            <div>
+            <!-- <div>
                 <a
                     class="btn btn-success"
                     title="Details"
@@ -25,26 +25,24 @@
                     <i class="bi bi-plus-lg"></i>
                     {{ translate("Add new home") }}
                 </a>
-            </div>
+            </div> -->
         </div>
 
         <section class="section">
-            <div class="card c-card-border">
-                <div class="card-body pt-4">
-                    <div class="row g-3 p-3">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body pt-4 bg-light">
+                    <!-- Search Input -->
+                    <!-- <div class="row g-3 p-3">
                         <div class="input-group">
                             <div class="form-outline col-md-5">
                                 <input
                                     type="text"
                                     v-model="form.name"
-                                    class="form-control c-searchbox-radius"
+                                    class="form-control rounded-pill shadow-sm"
                                     id="name"
                                     :placeholder="translate('Search by name')"
-                                    :class="{
-                                        'invalid-bg': formErrors.name,
-                                    }"
+                                    :class="{ 'is-invalid': formErrors.name }"
                                 />
-
                                 <div
                                     class="invalid-feedback animated fadeIn"
                                     v-if="formErrors.name"
@@ -56,14 +54,14 @@
                             <button
                                 v-if="formStatus == 1"
                                 @click="search(null)"
-                                class="btn btn-success"
+                                class="btn btn-primary ms-2 rounded-pill shadow-sm"
                             >
                                 <i class="bi bi-search"></i>
                             </button>
 
                             <button
                                 v-else
-                                class="btn btn-success"
+                                class="btn btn-primary ms-2 rounded-pill shadow-sm"
                                 type="button"
                             >
                                 <span
@@ -73,26 +71,17 @@
                                 ></span>
                             </button>
                         </div>
-                    </div>
+                    </div> -->
 
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
+                    <!-- Quick Move Homes Table -->
+                    <div class="table-responsive mt-4 rounded-4 shadow-sm">
+                        <table class="table table-hover align-middle bg-white">
+                            <thead class="table-primary text-dark">
                                 <tr>
-                                    <th scope="col" class="text-center">#</th>
-                                    <th scope="col">
-                                        {{ translate("Name") }}
-                                    </th>
-                                    <!-- <th scope="col">
-                                        {{ translate("Location") }}
-                                    </th> -->
-                                    <th scope="col">
-                                        {{ translate("Image") }}
-                                    </th>
-                                    <th scope="col">
-                                        {{ translate("Banner") }}
-                                    </th>
-                                    
+                                    <th class="text-center">#</th>
+                                    <th>{{ translate("Name") }}</th>
+                                    <th>{{ translate("Image") }}</th>
+                                    <th>{{ translate("Banner") }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -100,13 +89,12 @@
                                     v-for="(home, index) in QuickMoveHomes"
                                     :key="home.id"
                                 >
-                                    <th class="text-center">
-                                        {{ index + 1 }}
-                                    </th>
+                                    <th class="text-center">{{ index + 1 }}</th>
+
+                                    <!-- Title -->
                                     <td>
                                         <a
-                                            type="button"
-                                            class="c-linked c-mouse-over c-theme-text-color"
+                                            class="text-decoration-none text-primary fw-semibold"
                                             title="Details"
                                             :href="
                                                 '/property/details/' +
@@ -117,10 +105,12 @@
                                         </a>
                                     </td>
 
+                                    <!-- Images -->
                                     <td>
                                         <image-zooming-component
                                             :file="
-                                                home.property_record.main_image ?? 'empty.png'
+                                                home.property_record
+                                                    .main_image ?? 'empty.png'
                                             "
                                             :width="70"
                                         />
@@ -128,23 +118,32 @@
                                     <td>
                                         <image-zooming-component
                                             :file="
-                                                home.property_record.banner ?? 'empty.png'
+                                                home.property_record.banner ??
+                                                'empty.png'
                                             "
                                             :width="70"
                                         />
                                     </td>
+                                </tr>
 
-                                    
+                                <tr v-if="QuickMoveHomes.length === 0">
+                                    <td
+                                        colspan="4"
+                                        class="text-center text-muted py-4"
+                                    >
+                                        {{ translate("No properties found.") }}
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
 
-                    <div class="text-center">
+                    <!-- Load More Button -->
+                    <div class="text-center mt-4">
                         <button
                             v-if="pagination.next_page_url"
                             @click="search(pagination.next_page_url)"
-                            class="btn btn-success"
+                            class="btn btn-primary rounded-pill shadow-sm"
                         >
                             {{ translate("Load More") }}
                         </button>
