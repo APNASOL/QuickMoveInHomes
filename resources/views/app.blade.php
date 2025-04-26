@@ -99,6 +99,8 @@
     <div id="app">
         @if(Route::currentRouteName() === 'website')
         <index-component />
+        @elseif(Route::currentRouteName() === '/')
+        <index-component />
 
         @elseif(Route::currentRouteName() === 'register')
         <register-component />

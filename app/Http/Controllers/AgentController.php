@@ -74,7 +74,7 @@ class AgentController extends Controller
             $User = new User;
             $User->name = $request->agent_name;
             $User->email = $request->email;
-            $User->email_verified_at = Carbon::now();
+            // $User->email_verified_at = Carbon::now();
             $User->role = "agent";
             $User->password = Hash::make($randomPassword);
 

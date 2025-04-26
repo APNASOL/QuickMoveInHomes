@@ -1010,7 +1010,8 @@ class PropertyController extends Controller
 
     public function fetch_customer_agreements()
     {
-        $agreements = CustomerAgentConnection::all();
+        $agreements = CustomerAgentConnection::orderByDesc('date')->get();
+
         foreach ($agreements as $agreement) {
             $property_record       = Property::where('property_id', $agreement->property_id)->first();
             $agreement->home_title = $property_record ? $property_record->title : "N/A";
@@ -1022,6 +1023,7 @@ class PropertyController extends Controller
             $agreement->agent_name = $agent_record ? $agent_record->name : "N/A";
 
         }
+    
         return $agreements;
     }
 

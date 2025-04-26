@@ -40,6 +40,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function ($message = null) {
     return view('app');
 })->name('website');
+Route::get('/', function ($message = null) {
+    return view('app');
+})->name('/');
 
 Route::get('/recommendation', function () {
     return view('app');
