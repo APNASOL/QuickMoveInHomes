@@ -1116,4 +1116,21 @@ class HomeController extends Controller
         $location = $location;
         return view('app', compact('location'));
     }
+
+
+    // privary_policy
+    public function privacy_policy()
+    {
+        return view('app');
+    }
+    // terms_of_policy
+    public function terms_of_policy()
+    {
+        return view('app');
+    }
+    // cookie_policy
+    public function cookie_policy()
+    {
+        return view('app');
+    }
 }

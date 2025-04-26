@@ -350,7 +350,7 @@
                             ref="openRegisterModal"
                             data-bs-toggle="modal"
                             data-bs-target="#registerusermodal"
-                            class="btn btn-sm btn-primary text-white mt-1 c-pointer"
+                            class="btn btn-sm c-btn-theme-primary text-white mt-1 c-pointer"
                             @click="clearFields"
                         >
                             {{ translate("Register") }}
@@ -780,7 +780,7 @@
                                         type="submit"
                                         @click="register"
                                     >
-                                        {{ translate("Register") }}
+                                        {{ translate("Register") }} 
                                     </button>
 
                                     <button
@@ -788,7 +788,7 @@
                                         type="submit"
                                         v-else
                                     >
-                                        {{ translate("Register") }}
+                                        {{ translate("Register") }} 
                                         <span
                                             class="spinner-border spinner-border-sm"
                                             role="status"
@@ -898,12 +898,12 @@
                             >
                         </li>
                         <li class="mb-2">
-                            <a href="#" class="text-white text-decoration-none"
+                            <a href="/privacy-policy" class="text-white text-decoration-none"
                                 >Privacy Policy</a
                             >
                         </li>
                         <li class="mb-2">
-                            <a href="#" class="text-white text-decoration-none"
+                            <a href="/terms-of-services" class="text-white text-decoration-none"
                                 >Terms of Service</a
                             >
                         </li>
@@ -974,13 +974,13 @@
             >
                 <div>© 2025 BrandNewHomesVegas. All rights reserved.</div>
                 <div class="d-flex gap-3">
-                    <a href="#" class="text-white text-decoration-none"
+                    <a href="/privacy-policy" class="text-white text-decoration-none"
                         >Privacy Policy</a
                     >
-                    <a href="#" class="text-white text-decoration-none"
+                    <a href="/terms-of-services" class="text-white text-decoration-none"
                         >Terms of Service</a
                     >
-                    <a href="#" class="text-white text-decoration-none"
+                    <a href="/cookie-policy" class="text-white text-decoration-none"
                         >Cookie Policy</a
                     >
                 </div>

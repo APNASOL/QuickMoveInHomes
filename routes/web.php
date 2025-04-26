@@ -202,7 +202,15 @@ Route::get('/homes-agents/{property_id}', [HomeController::class, 'agents'])->na
 Route::get('/blog-details/{id}', [BlogPostsController::class, 'blog_details'])->name('blog-details');
 Route::get('/detailed-incentive/{id}', [IndexController::class, 'detailed_incentive'])->name('detailed-incentive');
 Route::get('/homes-list/{location?}', [HomeController::class, 'homes_search_by_location'])->name('homes-list');
- 
+
 Route::get('/map', function () {
     return view('app');
 })->name('map');
+
+
+// privary-policy
+Route::get('/privacy-policy', [HomeController::class, 'privacy_policy'])->name('privacy-policy');
+// terms-of-services
+Route::get('/terms-of-services', [HomeController::class, 'terms_of_policy'])->name('terms-of-services');
+// cookie-policy
+Route::get('/cookie-policy', [HomeController::class, 'cookie_policy'])->name('cookie-policy'); 

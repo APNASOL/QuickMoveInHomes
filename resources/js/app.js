@@ -268,6 +268,15 @@ app.component("map-component",  map_front_end);
 
 
 // Quick Move Homes external website
+//cookie-policy
+import cookie_policy from '@components/CookiePolicy.vue';
+app.component("cookie-policy-component",  cookie_policy);
+//  terms-of-service-component
+import terms_of_service from '@components/TermsOfService.vue';
+app.component("terms-of-service-component",  terms_of_service);
+//privacy-policy
+import privacy_policy from '@components/PrivacyPolicy.vue';
+app.component("privacy-policy-component",  privacy_policy);
 
 
 

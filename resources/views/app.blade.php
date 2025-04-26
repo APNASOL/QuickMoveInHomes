@@ -29,10 +29,15 @@
     $external_website = getExternalWebsiteData();
     $logged_in_user = logedInUser();
     $logo = $external_website->white_logo ?? "";
+ 
     $user_home_visiting_history_count = user_home_visiting_history_count();
 
     @endphp
-    <link rel="icon" type="image/png" href="{{ $logo }}">
+    
+    @if($logo)
+       
+        <link rel="icon" :href="/images/default_image.png" type="image/png">
+    @endif
 
     <script>
         let translations = @json($translations);
@@ -311,6 +316,13 @@
         <customer-help-component />
 
 
+        <!-- cookie-policy -->
+        @elseif(Route::currentRouteName() === 'cookie-policy')
+        <cookie-policy-component />
+        @elseif(Route::currentRouteName() === 'privacy-policy')
+        <privacy-policy-component />
+        @elseif(Route::currentRouteName() === 'terms-of-services')
+        <terms-of-service-component />
 
 
         @else

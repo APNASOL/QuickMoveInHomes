@@ -92,11 +92,11 @@ export default {
     text-transform: uppercase;
 }
 
-.c-main-title {
+/* .c-main-title {
     font-size: 28px;
     font-weight: bold;
     color: rgb(61, 102, 143);
-}
+} */
 
 .c-tags {
     font-size: 18px;
