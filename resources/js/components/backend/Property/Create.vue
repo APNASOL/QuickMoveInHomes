@@ -616,7 +616,7 @@
                         </div>
                         <div class="col-12 col-md-6">
                             <label for="listing_status">{{
-                                translate("Construction status")
+                                translate("Listing status")
                             }}</label>
                             <Multiselect
                                 v-model="form.listing_status"

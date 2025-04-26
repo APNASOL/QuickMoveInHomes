@@ -430,7 +430,7 @@ export default {
   },
   methods: {
     statusBadgeClass(status) {
-      console.log(status);
+      
       switch (status) {
         case "Pending":
           return "bg-warning text-dark";

@@ -346,7 +346,7 @@
                                                         }}
                                                     </p>
                                                 </div>
-                                                <div class="col-md-3">
+                                                <!-- <div class="col-md-3">
                                                     <h4 class="c-tab-sub">
                                                         Stories
                                                     </h4>
@@ -356,7 +356,7 @@
                                                             "N/A"
                                                         }}
                                                     </p>
-                                                </div>
+                                                </div> -->
                                                 <div class="col-md-3">
                                                     <h4 class="c-tab-sub">
                                                         Lot Size
@@ -477,7 +477,7 @@
                                                         }}
                                                     </p>
                                                 </div>
-                                                <div class="col-md-3">
+                                                <!-- <div class="col-md-3">
                                                     <h4 class="c-tab-sub">
                                                         HOA ID
                                                     </h4>
@@ -486,7 +486,7 @@
                                                             Home.hoa_id ?? "N/A"
                                                         }}
                                                     </p>
-                                                </div>
+                                                </div> -->
                                                 <div class="col-md-3">
                                                     <h4 class="c-tab-sub">
                                                         Association Fee
@@ -503,10 +503,11 @@
                                                         CIC
                                                     </h4>
                                                     <p class="c-tabs-values">
-                                                        {{ Home.cic ?? "N/A" }}
+                                                        {{ Home.cic ? "Yes"
+                                                                : "No" }}
                                                     </p>
                                                 </div>
-                                                <div class="col-md-3">
+                                                <!-- <div class="col-md-3">
                                                     <h4 class="c-tab-sub">
                                                         School ID
                                                     </h4>
@@ -516,7 +517,7 @@
                                                             "N/A"
                                                         }}
                                                     </p>
-                                                </div>
+                                                </div> -->
                                                 <div class="col-md-3">
                                                     <h4 class="c-tab-sub">
                                                         Is Open House
@@ -590,13 +591,12 @@
                                                 </div>
                                                 <div class="col-md-3">
                                                     <h4 class="c-tab-sub">
-                                                        Closet Location
+                                                        Closet Location 
                                                     </h4>
                                                     <p class="c-tabs-values">
                                                         {{
                                                             Home.feature
-                                                                .closet_location ??
-                                                            "N/A"
+                                                                .closet_location ? "Yes" : "No"
                                                         }}
                                                     </p>
                                                 </div>
@@ -609,8 +609,7 @@
                                                     <p class="c-tabs-values">
                                                         {{
                                                             Home.feature
-                                                                .bathroom_type ??
-                                                            "N/A"
+                                                                .bathroom_type  ? "Yes" : "No"
                                                         }}
                                                     </p>
                                                 </div>
@@ -621,8 +620,7 @@
                                                     <p class="c-tabs-values">
                                                         {{
                                                             Home.feature
-                                                                .bathroom_status ??
-                                                            "N/A"
+                                                                .bathroom_status ? "Yes" : "No"
                                                         }}
                                                     </p>
                                                 </div>
@@ -661,8 +659,7 @@
                                                     <p class="c-tabs-values">
                                                         {{
                                                             Home.feature
-                                                                .pool_shape ??
-                                                            "N/A"
+                                                                .pool_shape  ? "Yes" : "No"
                                                         }}
                                                     </p>
                                                 </div>
@@ -673,8 +670,7 @@
                                                     <p class="c-tabs-values">
                                                         {{
                                                             Home.feature
-                                                                .water_features ??
-                                                            "N/A"
+                                                                .water_features  ? "Yes" : "No"
                                                         }}
                                                     </p>
                                                 </div>
@@ -685,8 +681,7 @@
                                                     <p class="c-tabs-values">
                                                         {{
                                                             Home.feature
-                                                                .pool_status ??
-                                                            "N/A"
+                                                                .pool_status ? "Yes" : "No"
                                                         }}
                                                     </p>
                                                 </div>
@@ -706,39 +701,36 @@
                                                 <!-- Fencing -->
                                                 <div class="col-md-3">
                                                     <h4 class="c-tab-sub">
-                                                        Fencing Material
+                                                        Fencing
                                                     </h4>
                                                     <p class="c-tabs-values">
                                                         {{
                                                             Home.feature
-                                                                .fencing_material ??
-                                                            "N/A"
+                                                                .fencing_material ? "Yes" : "No"
                                                         }}
                                                     </p>
                                                 </div>
-                                                <div class="col-md-3">
+                                                <!-- <div class="col-md-3">
                                                     <h4 class="c-tab-sub">
                                                         Fencing Status
                                                     </h4>
                                                     <p class="c-tabs-values">
                                                         {{
                                                             Home.feature
-                                                                .fencing_status ??
-                                                            "N/A"
+                                                                .fencing_status ? "Yes" : "No"
                                                         }}
                                                     </p>
-                                                </div>
+                                                </div> -->
 
                                                 <!-- Bedroom -->
                                                 <div class="col-md-3">
                                                     <h4 class="c-tab-sub">
-                                                        Bedroom Location
+                                                        Bedroom
                                                     </h4>
                                                     <p class="c-tabs-values">
                                                         {{
                                                             Home.feature
-                                                                .bedroom_location ??
-                                                            "N/A"
+                                                                .bedroom_location ? "Yes" : "No"
                                                         }}
                                                     </p>
                                                 </div>
@@ -746,13 +738,12 @@
                                                 <!-- Fireplace -->
                                                 <div class="col-md-3">
                                                     <h4 class="c-tab-sub">
-                                                        Fireplace Type
+                                                        Fireplace
                                                     </h4>
                                                     <p class="c-tabs-values">
                                                         {{
                                                             Home.feature
-                                                                .fireplace_type ??
-                                                            "N/A"
+                                                                .fireplace_type ? "Yes" : "No"
                                                         }}
                                                     </p>
                                                 </div>
@@ -760,13 +751,12 @@
                                                 <!-- Kitchen -->
                                                 <div class="col-md-3">
                                                     <h4 class="c-tab-sub">
-                                                        Kitchen Pantry Type
+                                                        Kitchen Pantry
                                                     </h4>
                                                     <p class="c-tabs-values">
                                                         {{
                                                             Home.feature
-                                                                .kitchen_pantry_type ??
-                                                            "N/A"
+                                                                .kitchen_pantry_type ? "Yes" : "No"
                                                         }}
                                                     </p>
                                                 </div>
@@ -804,13 +794,12 @@
                                                 <!-- Foundation -->
                                                 <div class="col-md-3">
                                                     <h4 class="c-tab-sub">
-                                                        Foundation Conditions
+                                                        Foundation 
                                                     </h4>
                                                     <p class="c-tabs-values">
                                                         {{
                                                             Home.feature
-                                                                .foundation_conditions ??
-                                                            "N/A"
+                                                                .foundation_conditions ? "Yes" : "No"
                                                         }}
                                                     </p>
                                                 </div>
@@ -872,38 +861,21 @@
                                                         }}
                                                     </p>
                                                 </div>
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        CIC
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{ Home.cic ?? "N/A" }}
-                                                    </p>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        HOA ID
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.hoa_id ?? "N/A"
-                                                        }}
-                                                    </p>
-                                                </div>
+                                                 
+                                                 
                                                 <div class="col-md-3">
                                                     <h4 class="c-tab-sub">
                                                         Size Range
                                                     </h4>
                                                     <p class="c-tabs-values">
                                                         {{
-                                                            Home.size_from ??
-                                                            "N/A"
+                                                            Home.size_from 
                                                         }}
                                                         -
                                                         {{
-                                                            Home.size_to ??
-                                                            "N/A"
+                                                            Home.size_to  
                                                         }}
+                                                        SQFT
                                                     </p>
                                                 </div>
                                             </div>

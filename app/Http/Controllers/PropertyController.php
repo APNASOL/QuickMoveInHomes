@@ -792,6 +792,7 @@ class PropertyController extends Controller
         } else {
             $property->incentives = [];
         }
+       
 
         // Initialize the property data array
         $propertyData = [
@@ -851,6 +852,7 @@ class PropertyController extends Controller
             'banner'                => $property_banner,
 
             'price_from' => $property->price_from,
+            'listing_status' => $property->listing_status,
             'price_to' => $property->price_from,
             'stories' => $property->price_from,
             'full_bath' => $property->price_from,
