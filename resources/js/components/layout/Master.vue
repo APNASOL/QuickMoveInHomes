@@ -829,119 +829,152 @@
     <button ref="closeModal" hidden="hidden" data-bs-dismiss="modal"></button>
     <!-- footer -->
 
-    <footer class="footer bg-light text-dark pt-5">
+    <footer class="footer c-bg-color text-white pt-5">
         <div class="container">
             <div class="row">
-                <!-- Logo Section -->
-                <div class="col-md-3 mb-4">
+                <!-- Brand and Newsletter -->
+                <div class="col-md-4 mb-4">
                     <a href="/">
                         <img :src="logo" :alt="name" width="200" class="mb-3" />
                     </a>
-                    <p class="text-muted">
-                        Your trusted business partner for digital solutions.
-                    </p>
-                </div>
 
-                <!-- Business Info -->
-                <div class="col-md-3 mb-4">
-                    <h5 class="fw-bold c-theme-color">Business</h5>
-                    <hr class="opacity-100" />
+                    <h5 class="fw-bold">BrandNewHomesVegas</h5>
+                    <p class="text-white">
+                        Your trusted partner in real estate, helping you find
+                        the perfect place to call home.
+                    </p>
+
+                    <h6 class="mt-4 mb-2">Follow Us</h6>
+                    <div class="d-flex gap-3">
+                        <a :href="facebook_link" target="_blank" class="text-light"
+                            ><i class="bi bi-facebook fs-4"></i
+                        ></a>
+                        <a href="#" class="text-light"
+                            ><i class="bi bi-twitter fs-4"></i
+                        ></a>
+                        <a :href="instagram_link" target="_blank" class="text-light"
+                            ><i class="bi bi-instagram fs-4"></i
+                        ></a>
+                        <a href="#" class="text-light"
+                            ><i class="bi bi-linkedin fs-4"></i
+                        ></a>
+                        <a :href="youtube_link" target="_blank" class="text-light"
+                            ><i class="bi bi-youtube fs-4"></i
+                        ></a>
+                    </div>
+                </div>
+                <!-- About -->
+                <div class="col-md-2 mb-4">
+                    <h6 class="fw-bold">About</h6>
                     <ul class="list-unstyled">
                         <li>
                             <a
                                 href="/about"
-                                class="text-dark text-decoration-none d-block py-1"
+                                class="text-white text-decoration-none"
                                 >About Us</a
                             >
                         </li>
                         <li>
                             <a
-                                href="/services"
-                                class="text-dark text-decoration-none d-block py-1"
-                                >Our Services</a
-                            >
-                        </li>
-                        <li>
-                            <a
-                                href="/blogs"
-                                class="text-dark text-decoration-none d-block py-1"
-                                >Blogs</a
+                                href="/help"
+                                class="text-white text-decoration-none"
+                                >Help Center</a
                             >
                         </li>
                         <li>
                             <a
                                 href="/contact"
-                                class="text-dark text-decoration-none d-block py-1"
+                                class="text-white text-decoration-none"
                                 >Contact</a
                             >
                         </li>
+                        <li>
+                            <a href="#" class="text-white text-decoration-none"
+                                >Privacy Policy</a
+                            >
+                        </li>
+                        <li>
+                            <a href="#" class="text-white text-decoration-none"
+                                >Terms of Service</a
+                            >
+                        </li>
                     </ul>
                 </div>
-
-                <!-- Customer Support Section -->
-                <div class="col-md-3 mb-4">
-                    <h5 class="fw-bold c-theme-color">Customer Support</h5>
-                    <hr class="opacity-100" />
+                <!-- Discover -->
+                <div class="col-md-2 mb-4">
+                    <h6 class="fw-bold">Discover</h6>
                     <ul class="list-unstyled">
-                        <li v-if="external_website.website_email">
-                            <a
-                                class="text-dark text-decoration-none d-block py-1"
-                                :href="
-                                    'mailto:' + external_website.website_email
-                                "
+                        <li>
+                            <a href="/" class="text-white text-decoration-none"
+                                >Home</a
                             >
-                                📧 {{ external_website.website_email }}
-                            </a>
                         </li>
-                        <li v-if="external_website.website_phone">
+                        <li>
                             <a
-                                class="text-dark text-decoration-none d-block py-1"
-                                :href="'tel:' + external_website.website_phone"
+                                href="all/communities"
+                                class="text-white text-decoration-none"
+                                >Communities</a
                             >
-                                📞 {{ external_website.website_phone }}
-                            </a>
                         </li>
-                        <!-- <li>
-                        <a href="/about" class="text-dark text-decoration-none d-block py-1">❓ FAQs</a>
-                    </li>
-                    <li>
-                        <a href="/support" class="text-dark text-decoration-none d-block py-1">🛠 Support Center</a>
-                    </li> -->
+                        <li>
+                            <a
+                                href="/all/open/houses/"
+                                class="text-white text-decoration-none"
+                                >Open Houses</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="/all-incentives"
+                                class="text-white text-decoration-none"
+                                >Incentives</a
+                            >
+                        </li>
                     </ul>
                 </div>
 
-                <!-- Social Media -->
-                <div class="col-md-3 mb-4">
-                    <h5 class="fw-bold c-theme-color">Follow Us</h5>
-                    <hr class="opacity-100" />
-                    <div class="d-flex gap-3">
-                        <a
-                            :href="facebook_link"
-                            target="_blank"
-                            class="text-dark"
-                        >
-                            <i class="bi bi-facebook fs-3"></i>
-                        </a>
-                        <a :href="instagram_link" target="_blank">
-                            <i class="bi bi-instagram fs-3 text-danger"></i>
-                        </a>
-                        <a :href="twitter_link" target="_blank">
-                            <i class="bi bi-twitter fs-3 text-primary"></i>
-                        </a>
-                        <a :href="youtube_link" target="_blank">
-                            <i class="bi bi-youtube fs-3 text-danger"></i>
-                        </a>
-                    </div>
+                <!-- Resources -->
+                <div class="col-md-2 mb-4">
+                    <h6 class="fw-bold">Resources</h6>
+                    <ul class="list-unstyled">
+                        <li>
+                            <a
+                                href="/blogs"
+                                class="text-white text-decoration-none"
+                                >Blog</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="/all-events"
+                                class="text-white text-decoration-none"
+                                >Events</a
+                            >
+                        </li>
+                        <!-- <li><a href="#" class="text-white text-decoration-none">Guides</a></li>
+            <li><a href="#" class="text-white text-decoration-none">Help Center</a></li> -->
+                    </ul>
                 </div>
             </div>
 
-            <hr class="c-theme-color opacity-100" />
+            <hr class="border-secondary" />
 
-            <div class="text-center py-3">
-                <p class="mb-0">
-                    © {{ new Date().getFullYear() }} <strong>{{ name }}</strong
-                    >. All rights reserved.
-                </p>
+            <!-- Bottom Bar -->
+            <div
+                class="d-flex flex-column flex-md-row justify-content-between py-3 text-whitesmall"
+            >
+                <div>© 2025 BrandNewHomesVegas. All rights reserved.</div>
+                <div class="d-flex gap-3">
+                    <a href="#" class="text-white text-decoration-none"
+                        >Privacy Policy</a
+                    >
+                    <a href="#" class="text-white text-decoration-none"
+                        >Terms of Service</a
+                    >
+                    <a href="#" class="text-white text-decoration-none"
+                        >Cookie Policy</a
+                    >
+                </div>
             </div>
         </div>
     </footer>
@@ -1861,5 +1894,11 @@ label {
 
 .uppercase {
     text-transform: uppercase;
+}
+.footer {
+    background-color: #163259 !important;
+    color: white !important;
+    padding: 20px 0;
+    font-size: 14px;
 }
 </style>
