@@ -402,8 +402,7 @@ export default {
             peroperties_count: "",
             communities_count: "",
             agents_count: "",
-          
-            user_role: "test",
+           
             logged_in_user: logged_in_user,
             agent_history: "",
             customer_history: [],

@@ -23,25 +23,40 @@
                                 <div class="agent-image-container">
                                     <img
                                         class="agent-image"
-                                        :src="agent.image ?? '/images/default_image.png'"
+                                        :src="
+                                            agent.image ??
+                                            '/images/default_image.png'
+                                        "
                                         alt="Agent Image"
                                     />
                                 </div>
-                                <div class="agent-info card-body d-flex flex-column">
+                                <div
+                                    class="agent-info card-body d-flex flex-column"
+                                >
                                     <h5 class="agent-name">{{ agent.name }}</h5>
-                                    <h6 class="agent-agency">{{ agent.agency_name }}</h6>
+                                    <h6 class="agent-agency">
+                                        {{ agent.agency_name }}
+                                    </h6>
                                     <p class="agent-details">
-                                        <strong>Email:</strong> {{ agent.email }}<br />
-                                        <strong>Contact:</strong> {{ agent.contact }}<br />
-                                        <strong>Experience:</strong> {{ agent.experience }} years<br />
-                                        <strong>Languages:</strong> {{ agent.languages }}<br />
-                                        <strong>Specialties:</strong> {{ agent.specialties }}
+                                        <strong>Email:</strong> {{ agent.email
+                                        }}<br />
+                                        <strong>Contact:</strong>
+                                        {{ agent.contact }}<br />
+                                        <strong>Experience:</strong>
+                                        {{ agent.experience }} years<br />
+                                        <strong>Languages:</strong>
+                                        {{ agent.languages }}<br />
+                                        <strong>Specialties:</strong>
+                                        {{ agent.specialties }}
                                     </p>
                                     <p class="agent-bio">
                                         {{ agent.biography }}
                                     </p>
-                                    
-                                    <button class="btn btn-primary mt-3 w-100" @click="openModal(agent.id)">
+
+                                    <button
+                                        class="btn btn-primary mt-3 w-100"
+                                        @click="openModal(agent.id)"
+                                    >
                                         {{ translate("Request to Connect") }}
                                     </button>
                                 </div>
@@ -58,44 +73,103 @@
                 data-bs-toggle="modal"
                 data-bs-target="#contractModal"
                 ref="openContractModal"
+            ></button>
+            <div
+                class="modal fade"
+                id="contractModal"
+                tabindex="-1"
+                aria-hidden="true"
             >
-              
-            </button>
-            <div class="modal fade" id="contractModal" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <b class="modal-title">
                                 {{ translate("Customer Information") }}
                             </b>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ref="closeContactModel"></button>
+                            <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                                ref="closeContactModel"
+                            ></button>
                         </div>
                         <div class="modal-body">
                             <form @submit.prevent="submitForm">
                                 <div class="mb-3">
-                                    <label for="name" class="form-label">{{ translate("Name") }}</label>
-                                    <input type="text" class="form-control" id="name" v-model="form.name" :class="{ 'is-invalid': formErrors.name }" />
-                                    <div class="invalid-feedback" v-if="formErrors.name">
+                                    <label for="name" class="form-label">{{
+                                        translate("Name")
+                                    }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="name"
+                                        v-model="form.name"
+                                        :class="{
+                                            'is-invalid': formErrors.name,
+                                        }"
+                                    />
+                                    <div
+                                        class="invalid-feedback"
+                                        v-if="formErrors.name"
+                                    >
                                         {{ formErrors.name[0] }}
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="email" class="form-label">{{ translate("Email") }}</label>
-                                    <input type="email" class="form-control" id="email" v-model="form.email" :class="{ 'is-invalid': formErrors.email }" />
-                                    <div class="invalid-feedback" v-if="formErrors.email">
+                                    <label for="email" class="form-label">{{
+                                        translate("Email")
+                                    }}</label>
+                                    <input
+                                        type="email"
+                                        class="form-control"
+                                        id="email"
+                                        v-model="form.email"
+                                        :class="{
+                                            'is-invalid': formErrors.email,
+                                        }"
+                                    />
+                                    <div
+                                        class="invalid-feedback"
+                                        v-if="formErrors.email"
+                                    >
                                         {{ formErrors.email[0] }}
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="phone" class="form-label">{{ translate("Phone Number") }}</label>
-                                    <input type="tel" class="form-control" id="phone" v-model="form.phone" :class="{ 'is-invalid': formErrors.phone }" />
-                                    <div class="invalid-feedback" v-if="formErrors.phone">
+                                    <label for="phone" class="form-label">{{
+                                        translate("Phone Number")
+                                    }}</label>
+                                    <input
+                                        type="tel"
+                                        class="form-control"
+                                        id="phone"
+                                        v-model="form.phone"
+                                        :class="{
+                                            'is-invalid': formErrors.phone,
+                                        }"
+                                    />
+                                    <div
+                                        class="invalid-feedback"
+                                        v-if="formErrors.phone"
+                                    >
                                         {{ formErrors.phone[0] }}
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary w-100" :disabled="loading">
-                                    <span v-if="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                    <span v-if="!loading">{{ translate("Connect") }}</span>
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary w-100"
+                                    :disabled="loading"
+                                >
+                                    <span
+                                        v-if="loading"
+                                        class="spinner-border spinner-border-sm"
+                                        role="status"
+                                        aria-hidden="true"
+                                    ></span>
+                                    <span v-if="!loading">{{
+                                        translate("Connect")
+                                    }}</span>
                                 </button>
                             </form>
                         </div>
@@ -116,7 +190,7 @@ export default {
         return {
             all_agents: [],
             formErrors: [],
-            form: { name: "", email: "", phone: "" },
+            form: { name: "", email: "", phone: "",property_id: "" },
             selectedAgentId: null,
             loading: false,
         };
@@ -124,6 +198,7 @@ export default {
     created() {
         this.getAgents();
     },
+    props: ["property_id"],
     methods: {
         async getAgents() {
             try {
@@ -146,10 +221,13 @@ export default {
             formData.append("email", this.form.email);
             formData.append("phone", this.form.phone);
             formData.append("agent_id", this.selectedAgentId);
+            formData.append("property_id", this.property_id);
 
             try {
                 await axios.post("/api/connect/customer/agents", formData);
-                toastr.success("Request placed successfully, an agent will contact you soon.");
+                toastr.success(
+                    "Request placed successfully, an agent will contact you soon."
+                );
                 this.$refs.closeContactModel.click();
                 this.form = { name: "", email: "", phone: "" };
             } catch (error) {
@@ -237,8 +315,7 @@ export default {
     width: 100%;
     font-weight: bold;
 }
-.c-section-main-details
-{
+.c-section-main-details {
     background-color: #f1f1f1 !important;
 }
 </style>

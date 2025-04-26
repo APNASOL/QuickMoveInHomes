@@ -3,7 +3,7 @@
         <div class="d-flex justify-content-between align-items-center">
             <div class="pagetitle">
                 <h3 class="mb-0 c-theme-text-color">
-                    <span>Customer Agreements</span>
+                    <span>Connected Customers</span>
                 </h3>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
@@ -23,7 +23,6 @@
             <div class="card c-card-border">
                 <div class="card-body pt-4">
                     <div class="table-responsive">
-                       
                         <table class="table table-striped">
                             <thead>
                                 <tr>
@@ -32,10 +31,10 @@
                                     <th>Agent</th>
                                     <th>Property</th>
                                     <th>Date</th>
-                                    <th>Status</th>
-                                    <th>Terms Agreed</th>
-                                    <th>Agreement Type</th>
-                                    <th>Date & Time</th> 
+                                    <th>Agent Connection Status</th>
+                                    <!-- <th>Terms Agreed</th>
+                                    <th>Agreement Type</th> -->
+                                    <th>Date & Time</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -43,7 +42,7 @@
                                     v-for="(agreement, index) in agreements"
                                     :key="agreement.id"
                                 >
-                                <th class="text-center">
+                                    <th class="text-center">
                                         {{ index + 1 }}
                                     </th>
                                     <td>{{ agreement.customer_name }}</td>
@@ -57,13 +56,16 @@
                                                 '/property/details/' +
                                                 agreement.property_id
                                             "
-                                        >{{ agreement.home_title }}</a></td>
+                                            >{{ agreement.home_title }}</a
+                                        >
+                                    </td>
                                     <td>{{ agreement.date }}</td>
                                     <td>{{ agreement.current_status }}</td>
-                                    <td>{{ agreement.terms_agreed }}</td>
-                                    <td>{{ agreement.agreement_type }}</td>
-                                    <td>{{ formatDate(agreement.created_at) }}</td>
-                                    
+                                    <!-- <td>{{ agreement.terms_agreed }}</td>
+                                    <td>{{ agreement.agreement_type }}</td> -->
+                                    <td>
+                                        {{ formatDate(agreement.created_at) }}
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -114,25 +116,27 @@ export default {
                     }
                 });
         },
-        
+
         formatDate(dateTime) {
-                const date = new Date(dateTime);
-                
-                // Get the hours and minutes
-                let hours = date.getHours();
-                const minutes = date.getMinutes();
-                const ampm = hours >= 12 ? 'PM' : 'AM';
+            const date = new Date(dateTime);
 
-                // Convert to 12-hour format
-                hours = hours % 12;
-                hours = hours ? hours : 12; // the hour '0' should be '12'
+            // Get the hours and minutes
+            let hours = date.getHours();
+            const minutes = date.getMinutes();
+            const ampm = hours >= 12 ? "PM" : "AM";
 
-                // Format minutes
-                const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+            // Convert to 12-hour format
+            hours = hours % 12;
+            hours = hours ? hours : 12; // the hour '0' should be '12'
 
-                // Format date as "YYYY-MM-DD HH:mm AM/PM"
-                return `${date.toISOString().slice(0, 10)} ${hours}:${formattedMinutes} ${ampm}`;
-            }
+            // Format minutes
+            const formattedMinutes = minutes < 10 ? "0" + minutes : minutes;
+
+            // Format date as "YYYY-MM-DD HH:mm AM/PM"
+            return `${date
+                .toISOString()
+                .slice(0, 10)} ${hours}:${formattedMinutes} ${ampm}`;
+        },
     },
 };
 </script>

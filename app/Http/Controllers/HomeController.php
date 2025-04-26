@@ -1035,81 +1035,81 @@ class HomeController extends Controller
     //     return 'success';
     // }
     public function connect_customer_agents(Request $request)
-{
-    // Validate the request
-    $request->validate([
-        'name'        => 'required|string|max:255',
-        'email'       => 'required|email',
-        'phone'       => 'required|string|max:20',
-        'property_id' => 'required',
-        'agent_id'    => 'required',
-    ]);
+    { 
+        // Validate the request
+        $request->validate([
+            'name'        => 'required|string|max:255',
+            'email'       => 'required|email',
+            'phone'       => 'required|string|max:20',
+            'property_id' => 'required',
+            'agent_id'    => 'required',
+        ]);
 
-    // Check if user exists
-    $user = User::where('email', $request->email)->first();
+        // Check if user exists
+        $user = User::where('email', $request->email)->first();
 
-    $isNewUser = false;
-    $password = Str::random(10); // Generate a random password
+        $isNewUser = false;
+        $password = Str::random(10); // Generate a random password
 
-    if (!$user) {
-        // Create new user if not found
-        $user = new User();
-        $user->name     = $request->name;
-        $user->email    = $request->email;
-        $user->phone    = $request->phone;
-        $user->role    = 'customer';
-        $user->email_verified_at    =  Carbon::now();
-        $user->password = bcrypt($password); // Encrypt password
-        $user->save();
-        
-        $isNewUser = true;
+        if (!$user) {
+            // Create new user if not found
+            $user = new User();
+            $user->name     = $request->name;
+            $user->email    = $request->email;
+            $user->phone    = $request->phone;
+            $user->role    = 'customer';
+            $user->email_verified_at    =  Carbon::now();
+            $user->password = bcrypt($password); // Encrypt password
+            $user->save();
+            
+            $isNewUser = true;
+        }
+
+        // Store in CustomerAgentConnection
+        $agentConnection = new CustomerAgentConnection();
+        $agentConnection->id = Str::orderedUuid();
+        $agentConnection->agent_id = $request->agent_id;
+        $agentConnection->property_id = $request->property_id;
+        $agentConnection->customer_id = $user->id;
+        $agentConnection->date = Carbon::now();
+        $agentConnection->current_status = 'Pending';
+        $agentConnection->save();
+
+        // Fetch Property and Agent Information
+        $property = Property::where('property_id', $request->property_id)
+                            ->select('title')
+                            ->first();
+                            $agent = Agent::where('id', $request->agent_id)
+                            ->select('name','license_number')
+                            ->first();
+                        
+
+        // Prepare email data
+        $emailData = [
+            'name'     => $request->name,
+            'property' => $property,
+            'agent'    => $agent,
+        ];
+
+        if ($isNewUser) {
+            // If new user, include login credentials
+            $emailData['email']    = $request->email;
+            $emailData['password'] = $password;
+
+            Mail::send('Emails.new_user_interest', $emailData, function ($message) use ($request) {
+                $message->to($request->email)
+                        ->subject('Welcome! Your Account & Property Interest Details');
+            });
+        } else {
+            // If existing user, send only property and agent details
+            Mail::send('Emails.existing_user_interest', $emailData, function ($message) use ($request) {
+                $message->to($request->email)
+                        ->subject('Property Interest Confirmation');
+            });
+        }
+
+        return response()->json(['message' => 'Success', 'customer_id' => $user->id], 201);
     }
-
-    // Store in CustomerAgentConnection
-    $agentConnection = new CustomerAgentConnection();
-    $agentConnection->id = Str::orderedUuid();
-    $agentConnection->agent_id = $request->agent_id;
-    $agentConnection->property_id = $request->property_id;
-    $agentConnection->customer_id = $user->id;
-    $agentConnection->date = Carbon::now();
-    $agentConnection->current_status = 'Pending';
-    $agentConnection->save();
-
-    // Fetch Property and Agent Information
-    $property = Property::where('property_id', $request->property_id)
-                        ->select('title')
-                        ->first();
-                        $agent = Agent::where('id', $request->agent_id)
-                        ->select('name','license_number')
-                        ->first();
-                    
-
-    // Prepare email data
-    $emailData = [
-        'name'     => $request->name,
-        'property' => $property,
-        'agent'    => $agent,
-    ];
-
-    if ($isNewUser) {
-        // If new user, include login credentials
-        $emailData['email']    = $request->email;
-        $emailData['password'] = $password;
-
-        Mail::send('Emails.new_user_interest', $emailData, function ($message) use ($request) {
-            $message->to($request->email)
-                    ->subject('Welcome! Your Account & Property Interest Details');
-        });
-    } else {
-        // If existing user, send only property and agent details
-        Mail::send('Emails.existing_user_interest', $emailData, function ($message) use ($request) {
-            $message->to($request->email)
-                    ->subject('Property Interest Confirmation');
-        });
-    }
-
-    return response()->json(['message' => 'Success', 'customer_id' => $user->id], 201);
-}
 
     public function homes_search_by_location($location = null)
     {

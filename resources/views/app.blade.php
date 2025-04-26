@@ -42,10 +42,15 @@
     <script>
         let translations = @json($translations);
         window.translations = JSON.stringify(translations);
+
         let external_website = @json($external_website);
         window.external_website = JSON.stringify(external_website);
+
         let logged_in_user = @json($logged_in_user);
-        window.logged_in_user = logged_in_user;
+        window.logged_in_user = JSON.stringify(logged_in_user);
+
+        // let logo = @json($logo);
+        // window.logged_in_user = logged_in_user;
         let user_home_visiting_history_count = @json($user_home_visiting_history_count);
         window.user_home_visiting_history_count = user_home_visiting_history_count;
     </script>
