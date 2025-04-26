@@ -388,6 +388,12 @@ class HomeController extends Controller
         $name = 'all-communities';
         return view('app', compact('name'));
     }
+    public function all_open_houses()
+    {
+        $name = 'all-open-houses';
+        
+        return view('app', compact('name'));
+    }
     public function get_community_details($id)
     {
         // Get the community

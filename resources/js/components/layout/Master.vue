@@ -84,6 +84,16 @@
                         Communities
                         </a>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a
+                            class="nav-link"
+                            href="/all/open/houses/"
+                            id="navbarDropdownDeals"
+                            role="button"
+                        >
+                        Open Houses
+                        </a>
+                    </li>
 
                     <!-- <li class="nav-item dropdown">
                        
@@ -122,8 +132,7 @@
                         </ul>
                     </li> -->
 
-                    <li class="nav-item dropdown">
-                        <!-- Dropdown trigger -->
+                    <!-- <li class="nav-item dropdown"> 
                         <a
                             class="nav-link dropdown-toggle"
                             href="#"
@@ -134,8 +143,7 @@
                         >
                             Open Houses
                         </a>
-
-                        <!-- Dropdown menu -->
+ 
                         <ul
                             class="dropdown-menu"
                             aria-labelledby="navbarDropdownOpenHouses"
@@ -155,7 +163,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </li>
+                    </li> -->
                     <!-- <li class="nav-item dropdown">
                        
                         <a

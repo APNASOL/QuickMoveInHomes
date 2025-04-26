@@ -109,6 +109,9 @@ app.component("front-community-details-component", detatiledCommunity);
 import CommunitiesAll from "@components/CommunitiesAll.vue";
 app.component("front-all-communites-component", CommunitiesAll);
 
+import OpenHAll from "@components/OpenHousesAll.vue";
+app.component("front-all-opne-houses-component", OpenHAll);
+
  
 // Languages components
 import languages from "@components/backend/Language/Index.vue";

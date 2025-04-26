@@ -289,6 +289,8 @@
         <front-community-details-component :community_id="'{{ $community_id }}'" />
         @elseif(Route::currentRouteName() === 'all.communities')
         <front-all-communites-component  />
+        @elseif(Route::currentRouteName() === 'all.open.houses')
+        <front-all-opne-houses-component  />
 
         @elseif(Route::currentRouteName() === 'welcome-email')
         <welcome-email-component />

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Builder;
@@ -8,11 +7,10 @@ use App\Models\Event;
 use App\Models\Incentive;
 use App\Models\OpenHouse;
 use App\Models\Property;
+use App\Models\PropertyFeature;
 use App\Models\PropertyIncentive;
 use App\Models\Upload;
 use Carbon\Carbon;
-use App\Models\PropertyFeature;
-
 use DB;
 use Illuminate\Http\Request;
 
@@ -30,59 +28,55 @@ class IndexController extends Controller
         }
 
         foreach ($properties as $property) {
-            
-         
-            $property->main_image = NULL; 
-            $property->bathrooms = $property->half_bath +  $property->full_bath;
-            
+
+            $property->main_image = null;
+            $property->bathrooms  = $property->half_bath + $property->full_bath;
+
             $images = json_decode($property->images);
             if ($images) {
-                $uploads = Upload::whereIn('id', $images)->get();
+                $uploads     = Upload::whereIn('id', $images)->get();
                 $firstUpload = $uploads->first();
 
                 if ($firstUpload) {
-                    $file_image = $firstUpload->file_name;
+                    $file_image           = $firstUpload->file_name;
                     $property->main_image = get_storage_url($file_image);
-                }else
-                {
+                } else {
                     $property->main_image = '/images/default_image.png';
                 }
             }
-            
-            $propertyFeature = PropertyFeature::where('property_id', $property->property_id)->select('parking_enclosure')->first();
+
+            $propertyFeature             = PropertyFeature::where('property_id', $property->property_id)->select('parking_enclosure')->first();
             $property->parking_enclosure = $propertyFeature->parking_enclosure ?? 0;
 
             $PropertyIncentive = PropertyIncentive::where('property_id', $property->property_id)->first();
-            if($PropertyIncentive)
-            {
+            if ($PropertyIncentive) {
                 // $incentive = Incentive::where('id', $PropertyIncentive->incentive_id)->first();
                 // $property->incentive = $incentive;
                 $property->incentive = 1;
             }
-            
+
         }
 
         return $properties;
     }
- 
 
     public function communities(Request $request)
     {
         // Start the query on the communities table
         $communities = DB::table('communities');
-    
+
         // Apply filter based on the request if a name is provided
         if ($request->name !== null && $request->name !== "null") {
             $communities->where('name', 'LIKE', '%' . $request->name . '%');
         }
-    
+
         // Retrieve the last 3 communities randomly
         $communities = $communities->latest('id')->take(3)->get()->shuffle();
-    
+
         // Loop through each community
         foreach ($communities as $community) {
             $community->homes_count = Property::where('community_id', $community->id)->count();
-    
+
             // Handle the main image
             if ($community->main_image) {
                 $uploaded_image = Upload::find($community->main_image);
@@ -91,26 +85,26 @@ class IndexController extends Controller
                 }
             }
         }
-    
+
         return $communities;
     }
     public function all_communities(Request $request)
     {
         // Start the query on the communities table
         $communities = DB::table('communities');
-    
+
         // Apply filter based on the request if a name is provided
         if ($request->name !== null && $request->name !== "null") {
             $communities->where('name', 'LIKE', '%' . $request->name . '%');
         }
-    
+
         // Retrieve the last 3 communities randomly
         $communities = $communities->latest('id')->get()->shuffle();
-    
+
         // Loop through each community
         foreach ($communities as $community) {
             $community->homes_count = Property::where('community_id', $community->id)->count();
-    
+
             // Handle the main image
             if ($community->main_image) {
                 $uploaded_image = Upload::find($community->main_image);
@@ -119,15 +113,65 @@ class IndexController extends Controller
                 }
             }
         }
-    
+
         return $communities;
     }
-    
+
+    public function all_open_houses(Request $request)
+    {
+        // Get the current date and time
+        $currentDate = now();
+        $currentTime = $currentDate->format('H:i:s');
+
+        // Fetch properties where 'is_open_house' is true
+        $properties = Property::where('is_open_house', 'true')
+            ->orWhere('is_open_house', true)
+            ->get();
+
+        // Filter properties based on open house availability
+        $filteredProperties = $properties->reject(function ($property) use ($currentDate, $currentTime) {
+            $open_house_record = OpenHouse::where('property_id', $property->property_id)->first();
+
+            if (! $open_house_record) {
+                return true; // Exclude if no open house record
+            }
+
+            if ($open_house_record->date > $currentDate->toDateString()) {
+                return false; // Include if future date
+            } elseif ($open_house_record->date == $currentDate->toDateString()) {
+                if ($open_house_record->end_time >= $currentTime) {
+                    return false; // Include if today and time valid
+                }
+            }
+
+            // Otherwise, mark property and delete open house
+            $property->update(['is_open_house' => false]);
+            $open_house_record->delete();
+
+            return true; // Exclude from final list
+        });
+
+        // Add main_image to each property
+        $filteredProperties->map(function ($property) {
+            $images = json_decode($property->images);
+
+            if ($property->main_image) {
+                $uploaded_image = Upload::find($property->main_image);
+                if ($uploaded_image) {
+                    $property->main_image = get_storage_url($uploaded_image->file_name);
+                }
+            }
+
+            return $property;
+        });
+
+        return $filteredProperties->values(); // reindex the collection before returning
+    }
 
     public function all_events()
     {
         $currentDate = Carbon::now();
-        $events = Event::where('date', '>', $currentDate)->get();
+        $events      = Event::where('date', '>', $currentDate)->get();
         foreach ($events as $event) {
             if ($event->image) {
                 $uploaded_image = Upload::where('id', $event->image)->first();
@@ -160,7 +204,7 @@ class IndexController extends Controller
         foreach ($properties as $property) {
             // Initialize variable to store total 'interest_rate_first_year' (percentage) value
             $total_incentives_percentage = 0;
-            $current_date = now();
+            $current_date                = now();
 
             // Fetch related incentives for the property
             $incentives_ids = PropertyIncentive::where('property_id', $property->property_id)
@@ -188,7 +232,7 @@ class IndexController extends Controller
                     $original_price = $property->price;
 
                     // Apply the incentive percentage: (Price - (Price * (Percentage / 100)))
-                    $discount = $original_price * ($total_incentives_percentage / 100);
+                    $discount                  = $original_price * ($total_incentives_percentage / 100);
                     $new_price_after_incentive = $original_price - $discount;
 
                     // Store the new price in the property object
@@ -199,7 +243,7 @@ class IndexController extends Controller
                 $property->valid_incentives = $valid_incentives;
 
                 // Process main image (if applicable)
-                 if ($property->main_image) {
+                if ($property->main_image) {
                     $uploaded_image = Upload::find($property->main_image);
                     if ($uploaded_image) {
                         $property->main_image = get_storage_url($uploaded_image->file_name);
@@ -211,7 +255,7 @@ class IndexController extends Controller
             }
         }
 
-        // Return the properties with their details and valid incentives
+                                            // Return the properties with their details and valid incentives
         return $properties_with_incentives; // Correct return value
     }
 
@@ -299,7 +343,7 @@ class IndexController extends Controller
     public function selected_incentives_properties($id)
     {
 
-        $incentive = Incentive::where('id', $id)->first();
+        $incentive        = Incentive::where('id', $id)->first();
         $incentive_banner = '';
         // Format incentive_banner image URL
         if ($incentive && $incentive->incentive_banner) {
@@ -322,7 +366,7 @@ class IndexController extends Controller
 
             // Initialize variable to store total 'interest_rate_first_year' (percentage) value
             $total_incentives_percentage = 0;
-            $current_date = now();
+            $current_date                = now();
 
             // Fetch related incentives for the property
             $incentives_ids = PropertyIncentive::where('property_id', $property->property_id)
@@ -350,7 +394,7 @@ class IndexController extends Controller
                     $original_price = $property->price;
 
                     // Apply the incentive percentage: (Price - (Price * (Percentage / 100)))
-                    $discount = $original_price * ($total_incentives_percentage / 100);
+                    $discount                  = $original_price * ($total_incentives_percentage / 100);
                     $new_price_after_incentive = $original_price - $discount;
 
                     // Store the new price in the property object
@@ -359,9 +403,9 @@ class IndexController extends Controller
 
                 // Store valid incentives in the property object
                 $property->valid_incentives = $valid_incentives;
-                
+
                 // Process main image (if applicable)
-                 if ($property->main_image) {
+                if ($property->main_image) {
                     $uploaded_image = Upload::find($property->main_image);
                     if ($uploaded_image) {
                         $property->main_image = get_storage_url($uploaded_image->file_name);
@@ -373,7 +417,7 @@ class IndexController extends Controller
             }
         }
 
-        // Return the properties with their details and valid incentives
+                                                                                                                                                  // Return the properties with their details and valid incentives
         return ['properties_with_incentives' => $properties_with_incentives, 'incentive' => $incentive, 'incentive_banner' => $incentive_banner]; // Correct return value
     }
 
@@ -403,7 +447,7 @@ class IndexController extends Controller
             $open_house_record = OpenHouse::where('property_id', $property->property_id)->first();
 
             // Check if open house record exists
-            if (!$open_house_record) {
+            if (! $open_house_record) {
                 return true; // Exclude if no open house record
             }
 
