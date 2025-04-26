@@ -364,9 +364,9 @@ html,
 body {
     height: 100%;
 }
-. {
+/* . {
     animation: ing 1s infinite;
-}
+} */
 @keyframes ing {
     0%,
     100% {
