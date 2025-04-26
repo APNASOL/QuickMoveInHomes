@@ -4,22 +4,22 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\AmenityController;
 use App\Http\Controllers\BlogPostsController;
-use App\Http\Controllers\BuilderController; 
-use App\Http\Controllers\IndexController; 
+use App\Http\Controllers\BuilderController;
+use App\Http\Controllers\CommunitiesController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\HOAController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HomesController;
 use App\Http\Controllers\IncentivesController;
-use App\Http\Controllers\CommunitiesController;
-use App\Http\Controllers\OurPromisesController;
+use App\Http\Controllers\IndexController;
 use App\Http\Controllers\LanguageController;
-use App\Http\Controllers\LasVegasRegionController; 
+use App\Http\Controllers\LasVegasRegionController;
 use App\Http\Controllers\NeighborhoodController;
+use App\Http\Controllers\OurPromisesController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\EventController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,7 +41,6 @@ Route::get('/', function ($message = null) {
     return view('app');
 })->name('website');
 
- 
 Route::get('/recommendation', function () {
     return view('app');
 })->name('recommendation');
@@ -61,29 +60,37 @@ Route::get('/reset-password/{user_id}', function ($user_id) {
     return view('app', compact('user_id'));
 })->name('reset-password');
 
-Route::get('/external-website', function () {
-    return view('app');
-})->name('external-website');
+
 Route::get('/customer-visits', function () {
     return view('app');
 })->name('customer-visits');
-Route::get('/customer-agreements', function () {
-    return view('app');
-})->name('customer-agreements');
-Route::get('/help', function () { 
+
+Route::get('/help', function () {
     return view('app');
 })->name('help');
 
 Route::get('/profile-settings', [UserController::class, 'profile_settings'])->name('profile-settings');
- 
+
 Route::get('/contact', [HomeController::class, 'contact_us'])->name('contact');
 Route::get('/blogs', [HomeController::class, 'blogs'])->name('blogs');
 
 Route::get('/verify-email/{token?}', [UserController::class, 'verify_email']);
 
 // making the route name main.dashboard and url /admin/dashboard
-Route::middleware(['auth:sanctum'])->group(function () {
+
+ 
+
+ 
+
+Route::middleware('auth')->group(function () {
+    // Routes for logged-in users
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/profile-settings', [UserController::class, 'profile_settings'])->name('profile-settings');
+});
+
+ 
+    Route::middleware(['admin'])->group(function () {
+    // Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 
     //  Home Quick Move Routes
     //  Hoas
@@ -115,12 +122,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/amenity/create', [AmenityController::class, 'create'])->name('amenity.create');
     Route::get('/amenity/edit/{id}', [AmenityController::class, 'edit'])->name('amenity.edit');
 
-   //  communities
-   Route::get('/communities', [CommunitiesController::class, 'index'])->name('communities');
-   Route::get('/community/create', [CommunitiesController::class, 'create'])->name('community.create');
-   Route::get('/community/edit/{id}', [CommunitiesController::class, 'edit'])->name('community.edit');
-   Route::get('/community/details/{id}', [CommunitiesController::class, 'details'])->name('community.details');
-   Route::get('/scraped-communities-upload', [CommunitiesController::class, 'upload'])->name('upload.communities');
+    //  communities
+    Route::get('/communities', [CommunitiesController::class, 'index'])->name('communities');
+    Route::get('/community/create', [CommunitiesController::class, 'create'])->name('community.create');
+    Route::get('/community/edit/{id}', [CommunitiesController::class, 'edit'])->name('community.edit');
+    Route::get('/community/details/{id}', [CommunitiesController::class, 'details'])->name('community.details');
+    Route::get('/scraped-communities-upload', [CommunitiesController::class, 'upload'])->name('upload.communities');
     //  homes
     Route::get('/homes', [HomesController::class, 'index'])->name('homes');
     Route::get('/home/create', [HomesController::class, 'create'])->name('home.create');
@@ -134,7 +141,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     //  dynamic emails
     Route::get('/welcome-email', [SettingController::class, 'welcome_email'])->name('welcome-email');
     Route::get('/reset-password-email', [SettingController::class, 'reset_password_email'])->name('reset-password-email');
-    
+
     //  homes
     Route::get('/scraped-properties-upload', [PropertyController::class, 'upload'])->name('upload');
     Route::get('/properties', [PropertyController::class, 'index'])->name('properties');
@@ -156,6 +163,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/create-our-promise', [OurPromisesController::class, 'create'])->name('create-our-promise');
     Route::get('/edit-our-promise/{id}', [OurPromisesController::class, 'edit'])->name('edit-our-promise');
 
+
+    Route::get('/customer-agreements', function () {
+        return view('app');
+    })->name('customer-agreements');
+    Route::get('/external-website', function () {
+        return view('app');
+    })->name('external-website');
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -184,7 +198,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/contact-details/{id}', [UserController::class, 'contact_details'])->name('contact-details');
 
     //  call-now
- 
+
 });
 
 Route::get('/all/homes', [HomeController::class, 'visit_all_homes'])->name('all.homes');
@@ -207,10 +221,9 @@ Route::get('/map', function () {
     return view('app');
 })->name('map');
 
-
 // privary-policy
 Route::get('/privacy-policy', [HomeController::class, 'privacy_policy'])->name('privacy-policy');
 // terms-of-services
 Route::get('/terms-of-services', [HomeController::class, 'terms_of_policy'])->name('terms-of-services');
 // cookie-policy
-Route::get('/cookie-policy', [HomeController::class, 'cookie_policy'])->name('cookie-policy'); 
+Route::get('/cookie-policy', [HomeController::class, 'cookie_policy'])->name('cookie-policy');
