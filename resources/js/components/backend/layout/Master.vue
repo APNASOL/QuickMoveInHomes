@@ -86,374 +86,182 @@
             </nav>
         </header>
 
-        <aside
-            class="sidebar mt-3"
-            :class="{ 'sidebar-toggle': isSidebarToggled }"
-        >
-            <ul class="sidebar-nav">
-                <!-- Dashboard -->
-                <li class="nav-item">
-                    <a
-                        class="nav-link"
-                        :class="{ active: isActive('/dashboard') }"
-                        href="/dashboard"
-                    >
-                        <i class="bi bi-speedometer2 me-2"></i>
-                        <span>Dashboard</span>
+        <aside class="sidebar mt-3" :class="{ 'sidebar-toggle': isSidebarToggled }">
+    <ul class="sidebar-nav">
+        <!-- Dashboard -->
+        <li class="nav-item">
+            <a class="nav-link" :class="{ active: isActive('/dashboard') }" href="/dashboard">
+                <i class="bi bi-speedometer2 me-2 text-primary"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+
+        <!-- Properties Dropdown -->
+        <li class="nav-item" v-if="user_role == 'admin'">
+            <a class="nav-link" @click.prevent="toggleDropdown('properties-nav')" href="#">
+                <i class="bi bi-building me-2 text-warning"></i>
+                <span>Properties</span>
+                <i class="bi bi-chevron-down ms-5 text-info"></i>
+            </a>
+            <ul id="properties-nav" class="collapse nav-content" :class="{ show: openDropdowns['properties-nav'] }">
+                <li>
+                    <a class="nav-link" :class="{ active: isActive('/properties') }" href="/properties">
+                        <i class="bi bi-file-earmark-text me-2 text-success"></i> Properties
                     </a>
                 </li>
-
-                <!-- Properties Dropdown -->
-                <li class="nav-item" v-if="user_role == 'admin'">
-                    
-                    <a
-                        class="nav-link"
-                        @click.prevent="toggleDropdown('properties-nav')"
-                        href="#"
-                    >
-                        <i class="bi bi-building me-2"></i>
-                        <span>Properties</span>
-                        <i class="bi bi-chevron-down ms-5"></i>
+                <li>
+                    <a class="nav-link" :class="{ active: isActive('/scraped-properties-upload') }" href="/scraped-properties-upload">
+                        <i class="bi bi-upload me-2 text-danger"></i> Scraped Data Upload
                     </a>
-                    <ul
-                        id="properties-nav"
-                        class="collapse nav-content"
-                        :class="{ show: openDropdowns['properties-nav'] }"
-                    >
-                        <li>
-                            <a
-                                class="nav-link"
-                                :class="{ active: isActive('/properties') }"
-                                href="/properties"
-                                ><i class="bi bi-file-earmark-text me-2"></i>
-                                Properties</a
-                            >
-                        </li>
-                        <li>
-                            <a
-                                class="nav-link"
-                                :class="{
-                                    active: isActive(
-                                        '/scraped-properties-upload'
-                                    ),
-                                }"
-                                href="/scraped-properties-upload"
-                                ><i class="bi bi-upload me-2"></i> Scraped Data
-                                Upload</a
-                            >
-                        </li>
-                        <li>
-                            <a
-                                class="nav-link"
-                                :class="{ active: isActive('/agents') }"
-                                href="/agents"
-                                ><i class="bi bi-person-check me-2"></i>
-                                Agents</a
-                            >
-                        </li>
-                        <li>
-                            <a
-                                class="nav-link"
-                                :class="{ active: isActive('/homes') }"
-                                href="/homes"
-                                ><i class="bi bi-house-door me-2"></i> Quick
-                                Move In</a
-                            >
-                        </li>
-                    </ul>
                 </li>
-
-                <!-- Communities Dropdown -->
-                <li class="nav-item" v-if="user_role == 'admin'">
-                    <a
-                        class="nav-link"
-                        @click.prevent="toggleDropdown('communities-nav')"
-                        href="#"
-                    >
-                        <i class="bi bi-person-heart me-2"></i>
-                        <span>Communities</span>
-                        <i class="bi bi-chevron-down ms-5"></i>
+                <li>
+                    <a class="nav-link" :class="{ active: isActive('/agents') }" href="/agents">
+                        <i class="bi bi-person-check me-2 text-primary"></i> Agents
                     </a>
-                    <ul
-                        id="communities-nav"
-                        class="collapse nav-content"
-                        :class="{ show: openDropdowns['communities-nav'] }"
-                    >
-                        <li>
-                            <a
-                                class="nav-link"
-                                :class="{ active: isActive('/communities') }"
-                                href="/communities"
-                                ><i class="bi bi-map me-2"></i> Communities</a
-                            >
-                        </li>
-                        <li>
-                            <a
-                                class="nav-link"
-                                :class="{
-                                    active: isActive(
-                                        '/scraped-communities-upload'
-                                    ),
-                                }"
-                                href="/scraped-communities-upload"
-                                ><i class="bi bi-upload me-2"></i> Scraped Data
-                                Upload</a
-                            >
-                        </li>
-                        <li>
-                            <a
-                                class="nav-link"
-                                :class="{ active: isActive('/builders') }"
-                                href="/builders"
-                                ><i class="bi bi-tools me-2"></i> Builders</a
-                            >
-                        </li>
-                    </ul>
                 </li>
-
-                <!-- Customers Dropdown -->
-                <li v-if="user_role == 'admin'">
-                    <a
-                        class="nav-link"
-                        :class="{
-                            active: isActive('/customer-agreements'),
-                        }"
-                        href="/customer-agreements"
-                        ><i class="bi bi-file-earmark-text me-2"></i> Connected
-                        Customers</a
-                    >
-                </li>
-
-                <!-- <li class="nav-item">
-          <a
-            class="nav-link"
-            @click.prevent="toggleDropdown('customers-nav')"
-            href="#"
-          >
-            <i class="bi bi-people me-2"></i>
-            <span>Customers</span>
-            <i class="bi bi-chevron-down ms-5"></i>
-          </a>
-
-          <ul
-            id="customers-nav"
-            class="collapse nav-content"
-            :class="{ show: openDropdowns['customers-nav'] }"
-          >
-            <li>
-              <a
-                class="nav-link"
-                :class="{
-                  active: isActive('/customer-agreements'),
-                }"
-                href="/customer-agreements"
-                ><i class="bi bi-file-earmark-text me-2"></i> Customer
-                Agreements</a
-              >
-            </li>
-            <li>
-              <a
-                class="nav-link"
-                :class="{
-                  active: isActive('/customer-visits'),
-                }"
-                href="/customer-visits"
-                ><i class="bi bi-people me-2"></i> Customer Visits</a
-              >
-            </li>
-          </ul>
-        </li> -->
-
-                <!-- Customer Management -->
-                <!-- <li><a class="nav-link" :class="{ active: isActive('/customer-agreements') }" href="/customer-agreements"><i class="bi bi-file-earmark-text me-2"></i> Customer Agreements</a></li>
-            <li><a class="nav-link" :class="{ active: isActive('/customer-visits') }" href="/customer-visits"><i class="bi bi-people me-2"></i> Customer Visits</a></li> -->
-
-                <!-- HOA & Locations Dropdown -->
-                <li class="nav-item" v-if="user_role == 'admin'">
-                    <a
-                        class="nav-link"
-                        @click.prevent="toggleDropdown('hoa-locations-nav')"
-                        href="#"
-                    >
-                        <i class="bi bi-globe me-2"></i>
-                        <span>Area & Associations</span>
-                        <i class="bi bi-chevron-down ms-5"></i>
+                <li>
+                    <a class="nav-link" :class="{ active: isActive('/homes') }" href="/homes">
+                        <i class="bi bi-house-door me-2 text-info"></i> Quick Move In
                     </a>
-
-                    <ul
-                        id="hoa-locations-nav"
-                        class="collapse nav-content"
-                        :class="{ show: openDropdowns['hoa-locations-nav'] }"
-                    >
-                        <li>
-                            <a
-                                class="nav-link"
-                                :class="{ active: isActive('/home-owners') }"
-                                href="/home-owners"
-                                ><i class="bi bi-people me-2"></i> HOA</a
-                            >
-                        </li>
-                        <li>
-                            <a
-                                class="nav-link"
-                                :class="{ active: isActive('/amenities') }"
-                                href="/amenities"
-                                ><i class="bi bi-bag me-2"></i> Amenities</a
-                            >
-                        </li>
-                        <li>
-                            <a
-                                class="nav-link"
-                                :class="{ active: isActive('/regions') }"
-                                href="/regions"
-                                ><i class="bi bi-map me-2"></i> Regions</a
-                            >
-                        </li>
-                        <li>
-                            <a
-                                class="nav-link"
-                                :class="{ active: isActive('/schools') }"
-                                href="/schools"
-                                ><i class="bi bi-book me-2"></i> Schools</a
-                            >
-                        </li>
-                        <li>
-                            <a
-                                class="nav-link"
-                                :class="{ active: isActive('/neighborhoods') }"
-                                href="/neighborhoods"
-                                ><i class="bi bi-house-door me-2"></i>
-                                Neighborhood</a
-                            >
-                        </li>
-                    </ul>
-                </li>
-
-                <!-- Blog & Content -->
-
-                <li v-if="user_role == 'admin'">
-                    <a
-                        class="nav-link"
-                        :class="{ active: isActive('/blogs/posts') }"
-                        href="/blogs/posts"
-                        ><i class="bi bi-journal me-2"></i> Blog Posts</a
-                    >
-                </li>
-                <li v-if="user_role == 'admin'">
-                    <a
-                        class="nav-link"
-                        :class="{ active: isActive('/events') }"
-                        href="/events"
-                        ><i class="bi bi-calendar-check me-2"></i> Events</a
-                    >
-                </li>
-                <li v-if="user_role == 'admin'">
-                    <a
-                        class="nav-link"
-                        :class="{ active: isActive('/incentives') }"
-                        href="/incentives"
-                        ><i class="bi bi-gift me-2"></i> Incentives</a
-                    >
-                </li>
-
-                <!-- Business & Settings -->
-
-                <li class="nav-item" v-if="user_role == 'admin'">
-                    <a
-                        class="nav-link"
-                        @click.prevent="toggleDropdown('settings-nav')"
-                        href="#"
-                    >
-                        <i class="bi bi-gear me-2"></i>
-                        <span>Settings</span>
-                        <i class="bi bi-chevron-down ms-5"></i>
-                    </a>
-                    <ul
-                        id="settings-nav"
-                        class="collapse nav-content"
-                        :class="{ show: openDropdowns['settings-nav'] }"
-                    >
-                        <li>
-                            <a
-                                class="nav-link"
-                                :class="{ active: isActive('/our-promises') }"
-                                href="/our-promises"
-                                ><i class="bi bi-question-circle me-2"></i> Why
-                                Choose</a
-                            >
-                        </li>
-                        <li>
-                            <a
-                                class="nav-link"
-                                :class="{
-                                    active: isActive('/user-contacted-us'),
-                                }"
-                                href="/user-contacted-us"
-                                ><i class="bi bi-person me-2"></i> User
-                                Contact</a
-                            >
-                        </li>
-                        <li>
-                            <a
-                                class="nav-link"
-                                :class="{
-                                    active: isActive('/external-website'),
-                                }"
-                                href="/external-website"
-                                ><i class="bi bi-gear me-2"></i> Settings</a
-                            >
-                        </li>
-                    </ul>
-                </li>
-
-                <!-- <li><a class="nav-link" :class="{ active: isActive('/our-promises') }" href="/our-promises"><i class="bi bi-question-circle me-2"></i> Why Choose</a></li>
-            <li><a class="nav-link" :class="{ active: isActive('/user-contacted-us') }" href="/user-contacted-us"><i class="bi bi-person me-2"></i> User Contact</a></li>
-            <li><a class="nav-link" :class="{ active: isActive('/external-website') }" href="/external-website"><i class="bi bi-gear me-2"></i> Settings</a></li> -->
-
-                <!-- Emails Dropdown -->
-                <li class="nav-item" v-if="user_role == 'admin'">
-                    <a
-                        class="nav-link"
-                        @click.prevent="toggleDropdown('emails-nav')"
-                        href="#"
-                    >
-                        <i class="bi bi-envelope me-2"></i>
-                        <span>Emails</span>
-                        <i class="bi bi-chevron-down ms-5"></i>
-                    </a>
-                    <ul
-                        id="emails-nav"
-                        class="collapse nav-content"
-                        :class="{ show: openDropdowns['emails-nav'] }"
-                    >
-                        <li>
-                            <a
-                                class="nav-link"
-                                :class="{ active: isActive('/welcome-email') }"
-                                href="/welcome-email"
-                                ><i
-                                    class="bi bi-envelope-arrow-up-fill me-2"
-                                ></i>
-                                Welcome Email</a
-                            >
-                        </li>
-                        <li>
-                            <a
-                                class="nav-link"
-                                :class="{
-                                    active: isActive('/reset-password-email'),
-                                }"
-                                href="/reset-password-email"
-                                ><i
-                                    class="bi bi-envelope-arrow-up-fill me-2"
-                                ></i>
-                                Reset Password Email</a
-                            >
-                        </li>
-                    </ul>
                 </li>
             </ul>
-        </aside>
+        </li>
+
+        <!-- Communities Dropdown -->
+        <li class="nav-item" v-if="user_role == 'admin'">
+            <a class="nav-link" @click.prevent="toggleDropdown('communities-nav')" href="#">
+                <i class="bi bi-person-heart me-2 text-danger"></i>
+                <span>Communities</span>
+                <i class="bi bi-chevron-down ms-5 text-success"></i>
+            </a>
+            <ul id="communities-nav" class="collapse nav-content" :class="{ show: openDropdowns['communities-nav'] }">
+                <li>
+                    <a class="nav-link" :class="{ active: isActive('/communities') }" href="/communities">
+                        <i class="bi bi-map me-2 text-info"></i> Communities
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" :class="{ active: isActive('/scraped-communities-upload') }" href="/scraped-communities-upload">
+                        <i class="bi bi-upload me-2 text-warning"></i> Scraped Data Upload
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" :class="{ active: isActive('/builders') }" href="/builders">
+                        <i class="bi bi-tools me-2 text-primary"></i> Builders
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <!-- Customers Dropdown -->
+        <li v-if="user_role == 'admin'">
+            <a class="nav-link" :class="{ active: isActive('/customer-agreements') }" href="/customer-agreements">
+                <i class="bi bi-file-earmark-text me-2 text-success"></i> Connected Customers
+            </a>
+        </li>
+
+        <!-- Area & Associations Dropdown -->
+        <li class="nav-item" v-if="user_role == 'admin'">
+            <a class="nav-link" @click.prevent="toggleDropdown('hoa-locations-nav')" href="#">
+                <i class="bi bi-globe me-2 text-primary"></i>
+                <span>Area & Associations</span>
+                <i class="bi bi-chevron-down ms-5 text-warning"></i>
+            </a>
+            <ul id="hoa-locations-nav" class="collapse nav-content" :class="{ show: openDropdowns['hoa-locations-nav'] }">
+                <li>
+                    <a class="nav-link" :class="{ active: isActive('/home-owners') }" href="/home-owners">
+                        <i class="bi bi-people me-2 text-info"></i> HOA
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" :class="{ active: isActive('/amenities') }" href="/amenities">
+                        <i class="bi bi-bag me-2 text-success"></i> Amenities
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" :class="{ active: isActive('/regions') }" href="/regions">
+                        <i class="bi bi-map me-2 text-primary"></i> Regions
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" :class="{ active: isActive('/schools') }" href="/schools">
+                        <i class="bi bi-book me-2 text-warning"></i> Schools
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" :class="{ active: isActive('/neighborhoods') }" href="/neighborhoods">
+                        <i class="bi bi-house-door me-2 text-danger"></i> Neighborhood
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <!-- Blog & Content -->
+        <li v-if="user_role == 'admin'">
+            <a class="nav-link" :class="{ active: isActive('/blogs/posts') }" href="/blogs/posts">
+                <i class="bi bi-journal me-2 text-primary"></i> Blog Posts
+            </a>
+        </li>
+        <li v-if="user_role == 'admin'">
+            <a class="nav-link" :class="{ active: isActive('/events') }" href="/events">
+                <i class="bi bi-calendar-check me-2 text-success"></i> Events
+            </a>
+        </li>
+        <li v-if="user_role == 'admin'">
+            <a class="nav-link" :class="{ active: isActive('/incentives') }" href="/incentives">
+                <i class="bi bi-gift me-2 text-info"></i> Incentives
+            </a>
+        </li>
+
+        <!-- Settings Dropdown -->
+        <li class="nav-item" v-if="user_role == 'admin'">
+            <a class="nav-link" @click.prevent="toggleDropdown('settings-nav')" href="#">
+                <i class="bi bi-gear me-2 text-warning"></i>
+                <span>Settings</span>
+                <i class="bi bi-chevron-down ms-5 text-danger"></i>
+            </a>
+            <ul id="settings-nav" class="collapse nav-content" :class="{ show: openDropdowns['settings-nav'] }">
+                <li>
+                    <a class="nav-link" :class="{ active: isActive('/our-promises') }" href="/our-promises">
+                        <i class="bi bi-question-circle me-2 text-primary"></i> Why Choose
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" :class="{ active: isActive('/user-contacted-us') }" href="/user-contacted-us">
+                        <i class="bi bi-person me-2 text-danger"></i> User Contact
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" :class="{ active: isActive('/external-website') }" href="/external-website">
+                        <i class="bi bi-gear me-2 text-success"></i> Settings
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <!-- Emails Dropdown -->
+        <li class="nav-item" v-if="user_role == 'admin'">
+            <a class="nav-link" @click.prevent="toggleDropdown('emails-nav')" href="#">
+                <i class="bi bi-envelope me-2 text-primary"></i>
+                <span>Emails</span>
+                <i class="bi bi-chevron-down ms-5 text-success"></i>
+            </a>
+            <ul id="emails-nav" class="collapse nav-content" :class="{ show: openDropdowns['emails-nav'] }">
+                <li>
+                    <a class="nav-link" :class="{ active: isActive('/welcome-email') }" href="/welcome-email">
+                        <i class="bi bi-envelope-arrow-up-fill me-2 text-info"></i> Welcome Email
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" :class="{ active: isActive('/reset-password-email') }" href="/reset-password-email">
+                        <i class="bi bi-envelope-arrow-up-fill me-2 text-warning"></i> Reset Password Email
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</aside>
+
 
         <main
             class="min-vh-100"
