@@ -11,7 +11,7 @@
             </div>
         </section>
 
-        <div class="c-section-main-details container">
+        <div class="c-section-main-details container mb-5">
             <div v-if="blog_posts && blog_posts.length">
                 <div class="mx-4 pt-3">
                     <div class="row text-center g-2">

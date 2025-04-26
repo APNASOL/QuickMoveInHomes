@@ -156,7 +156,29 @@
                                         {{ formErrors.phone[0] }}
                                     </div>
                                 </div>
+
                                 <button
+                                        v-if="!loading"
+                                        class="btn c-btn-theme-primary w-100"
+                                        type="submit" 
+                                    >
+                                        {{ translate("Connect") }}
+                                    </button>
+
+                                    <button
+                                        class="btn c-btn-theme-primary w-100"
+                                        type="submit"
+                                        v-else
+                                    >
+                                        {{ translate("Connecting") }}
+                                        <span
+                                            class="spinner-border spinner-border-sm"
+                                            role="status"
+                                            aria-hidden="true"
+                                        ></span>
+                                    </button>
+
+                                <!-- <button
                                     type="submit"
                                     class="btn c-btn-theme-primary w-100"
                                     :disabled="loading"
@@ -170,7 +192,7 @@
                                     <span v-if="!loading">{{
                                         translate("Connect")
                                     }}</span>
-                                </button>
+                                </button> -->
                             </form>
                         </div>
                     </div>

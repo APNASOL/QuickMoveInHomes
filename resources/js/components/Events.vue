@@ -57,15 +57,15 @@
                                         }}
                                     </span>
                                 </div>
-                                <div class="text-center mt-3">
+                                <div class="mt-2">
                                     <a
                                         :href="
                                             'http://' + event.registeration_link
                                         "
                                         target="_blank"
-                                        class="btn btn-primary"
+                                        class="btn c-btn-theme-primary w-100"
                                     >
-                                        Register
+                                        Details & Registration
                                     </a>
                                 </div>
                             </div>
