@@ -833,10 +833,10 @@
         <div class="container">
             <div class="row">
                 <!-- Brand and Newsletter -->
-                <div class="col-md-4 mb-4">
-                    <a href="/">
+                <div class="offset-md-1 col-md-4 mb-4">
+                    <!-- <a href="/">
                         <img :src="logo" :alt="name" width="200" class="mb-3" />
-                    </a>
+                    </a> -->
 
                     <h5 class="fw-bold">BrandNewHomesVegas</h5>
                     <p class="text-white">
@@ -846,19 +846,28 @@
 
                     <h6 class="mt-4 mb-2">Follow Us</h6>
                     <div class="d-flex gap-3">
-                        <a :href="facebook_link" target="_blank" class="text-light"
+                        <a
+                            :href="facebook_link"
+                            target="_blank"
+                            class="text-light"
                             ><i class="bi bi-facebook fs-4"></i
                         ></a>
                         <a href="#" class="text-light"
                             ><i class="bi bi-twitter fs-4"></i
                         ></a>
-                        <a :href="instagram_link" target="_blank" class="text-light"
+                        <a
+                            :href="instagram_link"
+                            target="_blank"
+                            class="text-light"
                             ><i class="bi bi-instagram fs-4"></i
                         ></a>
                         <a href="#" class="text-light"
                             ><i class="bi bi-linkedin fs-4"></i
                         ></a>
-                        <a :href="youtube_link" target="_blank" class="text-light"
+                        <a
+                            :href="youtube_link"
+                            target="_blank"
+                            class="text-light"
                             ><i class="bi bi-youtube fs-4"></i
                         ></a>
                     </div>
@@ -867,33 +876,33 @@
                 <div class="col-md-2 mb-4">
                     <h6 class="fw-bold">About</h6>
                     <ul class="list-unstyled">
-                        <li>
+                        <li class="mb-2">
                             <a
                                 href="/about"
                                 class="text-white text-decoration-none"
                                 >About Us</a
                             >
                         </li>
-                        <li>
+                        <li class="mb-2">
                             <a
                                 href="/help"
                                 class="text-white text-decoration-none"
                                 >Help Center</a
                             >
                         </li>
-                        <li>
+                        <li class="mb-2">
                             <a
                                 href="/contact"
                                 class="text-white text-decoration-none"
                                 >Contact</a
                             >
                         </li>
-                        <li>
+                        <li class="mb-2">
                             <a href="#" class="text-white text-decoration-none"
                                 >Privacy Policy</a
                             >
                         </li>
-                        <li>
+                        <li class="mb-2">
                             <a href="#" class="text-white text-decoration-none"
                                 >Terms of Service</a
                             >
@@ -904,26 +913,26 @@
                 <div class="col-md-2 mb-4">
                     <h6 class="fw-bold">Discover</h6>
                     <ul class="list-unstyled">
-                        <li>
+                        <li class="mb-2">
                             <a href="/" class="text-white text-decoration-none"
                                 >Home</a
                             >
                         </li>
-                        <li>
+                        <li class="mb-2">
                             <a
                                 href="all/communities"
                                 class="text-white text-decoration-none"
                                 >Communities</a
                             >
                         </li>
-                        <li>
+                        <li class="mb-2">
                             <a
                                 href="/all/open/houses/"
                                 class="text-white text-decoration-none"
                                 >Open Houses</a
                             >
                         </li>
-                        <li>
+                        <li class="mb-2">
                             <a
                                 href="/all-incentives"
                                 class="text-white text-decoration-none"
@@ -937,14 +946,14 @@
                 <div class="col-md-2 mb-4">
                     <h6 class="fw-bold">Resources</h6>
                     <ul class="list-unstyled">
-                        <li>
+                        <li class="mb-2">
                             <a
                                 href="/blogs"
                                 class="text-white text-decoration-none"
                                 >Blog</a
                             >
                         </li>
-                        <li>
+                        <li class="mb-2">
                             <a
                                 href="/all-events"
                                 class="text-white text-decoration-none"
@@ -961,7 +970,7 @@
 
             <!-- Bottom Bar -->
             <div
-                class="d-flex flex-column flex-md-row justify-content-between py-3 text-whitesmall"
+                class="offset-md-1 d-flex flex-column flex-md-row justify-content-between py-3 text-whitesmall"
             >
                 <div>© 2025 BrandNewHomesVegas. All rights reserved.</div>
                 <div class="d-flex gap-3">
