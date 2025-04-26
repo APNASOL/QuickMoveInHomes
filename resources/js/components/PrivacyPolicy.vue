@@ -14,9 +14,9 @@
         <div class="bg-white mb-5">
             <div class="FAQ bg-light">
                 <div class="container  rounded">
-                    <div >
+                    <div>
                         <p>
-                           We value and respect the
+                            We value and respect the
                             privacy of our clients, prospects, and website
                             visitors. This Privacy Policy explains how we
                             collect, use, store, and protect your personal
@@ -130,5 +130,4 @@ html,
 body {
     height: 100%;
 }
- 
 </style>
