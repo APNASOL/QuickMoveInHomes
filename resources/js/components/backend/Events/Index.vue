@@ -26,86 +26,94 @@
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-body pt-4">
-                <div class="accordion" id="eventsAccordion">
-                    <div
-                        class="accordion-item"
-                        v-for="(event, index) in events"
-                        :key="event.id"
+        <div class="card shadow-lg border-0 rounded-4">
+    <div class="card-body pt-4 bg-light">
+        <div class="accordion" id="eventsAccordion">
+            <div
+                class="accordion-item mb-3 rounded-4 overflow-hidden shadow-sm"
+                v-for="(event, index) in events"
+                :key="event.id"
+            >
+                <h2 class="accordion-header" :id="'heading' + event.id">
+                    <button
+                        class="accordion-button bg-gradient bg-primary text-white fw-semibold"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        :data-bs-target="'#collapse' + event.id"
+                        aria-expanded="true"
+                        :aria-controls="'collapse' + event.id"
                     >
-                        <h2 class="accordion-header" :id="'heading' + event.id">
-                            <button
-                                class="accordion-button"
-                                type="button"
-                                data-bs-toggle="collapse"
-                                :data-bs-target="'#collapse' + event.id"
-                                aria-expanded="true"
-                                :aria-controls="'collapse' + event.id"
-                            >
-                                <span class="me-3">{{ index + 1 }}</span>
-                                {{ event.title }} - {{ event.date }}
-                            </button>
-                        </h2>
-                        <div
-                            :id="'collapse' + event.id"
-                            class="accordion-collapse collapse"
-                            :aria-labelledby="'heading' + event.id"
-                            data-bs-parent="#eventsAccordion"
-                        >
-                            <div class="accordion-body">
-                                <div class="mb-3">
-                                    <div>
-                                        <image-zooming-component
-                                            :file="event.image ?? 'empty.png'"
-                                            :width="150"
-                                        />
-                                    </div>
-                                </div>
-
-                                <p>
-                                    <strong>{{ translate("Title") }}:</strong>
-                                    {{ event.title }}
-                                </p>
-                                <p>
-                                    <strong>{{ translate("Date") }}:</strong>
-                                    {{ event.date }}
-                                </p>
-                                <p>
-                                    <strong
-                                        >{{
-                                            translate("Registration Link")
-                                        }}:</strong
-                                    >
-
-                                    <u> {{ event.registeration_link }}</u>
-                                </p>
-
-                                <strong>{{ translate("Description") }}:</strong>
-                                <div
-                                    class="content ql-editor"
-                                    v-html="event.description"
-                                ></div>
-
-                                <div>
-                                    <a
-                                        class="btn"
-                                        :href="'/event/edit/' + event.id"
-                                        title="Edit Event"
-                                    >
-                                        <i class="bi bi-pencil"></i>
-                                    </a>
-                                    <DeleteModal
-                                        :deleteId="event.id"
-                                        @deleteThis="deleteThis"
-                                    />
-                                </div>
+                        <span class="me-3">{{ index + 1 }}</span>
+                        {{ event.title }} - {{ event.date }}
+                    </button>
+                </h2>
+                <div
+                    :id="'collapse' + event.id"
+                    class="accordion-collapse collapse"
+                    :aria-labelledby="'heading' + event.id"
+                    data-bs-parent="#eventsAccordion"
+                >
+                    <div class="accordion-body bg-white">
+                        <!-- Event Image -->
+                        <div class="mb-3">
+                            <div>
+                                <image-zooming-component
+                                    :file="event.image ?? 'empty.png'"
+                                    :width="200"
+                                />
                             </div>
+                        </div>
+
+                        <!-- Event Details -->
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <strong>{{ translate("Title") }}:</strong>
+                                <p>{{ event.title }}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <strong>{{ translate("Date") }}:</strong>
+                                <p>{{ event.date }}</p>
+                            </div>
+                        </div>
+
+                        <!-- Registration Link -->
+                        <div class="mb-3">
+                            <strong>{{ translate("Registration Link") }}:</strong>
+                            <a :href="event.registeration_link" target="_blank" class="text-decoration-none">
+                                <u>{{ event.registeration_link }}</u>
+                            </a>
+                        </div>
+
+                        <!-- Event Description -->
+                        <div class="mb-3">
+                            <strong>{{ translate("Description") }}:</strong>
+                            <div
+                                class="content ql-editor"
+                                v-html="event.description"
+                            ></div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="d-flex justify-content-end p-2">
+                            <a
+                                class="btn btn-sm btn-primary"
+                                :href="'/event/edit/' + event.id"
+                                title="Edit Event"
+                            >
+                                <i class="bi bi-pencil"></i> {{ translate('Edit') }}
+                            </a>
+                            <DeleteModal
+                                :deleteId="event.id"
+                                @deleteThis="deleteThis"
+                            />
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
     </Master>
 </template>
 

@@ -29,22 +29,19 @@
         </div>
 
         <section class="section">
-            <div class="card c-card-border">
-                <div class="card-body pt-4">
-                    <div class="row g-3 p-3">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-body pt-4 bg-light">
+            <div class="row g-3 p-3">
                         <div class="input-group">
                             <div class="form-outline col-md-5">
                                 <input
                                     type="text"
                                     v-model="form.title"
-                                    class="form-control c-searchbox-radius"
+                                    class="form-control rounded-pill shadow-sm"
                                     id="title"
                                     :placeholder="translate('Search by title')"
-                                    :class="{
-                                        'invalid-bg': formErrors.title,
-                                    }"
+                                    :class="{ 'is-invalid': formErrors.title }"
                                 />
-
                                 <div
                                     class="invalid-feedback animated fadeIn"
                                     v-if="formErrors.title"
@@ -56,14 +53,14 @@
                             <button
                                 v-if="formStatus == 1"
                                 @click="search(null)"
-                                class="btn btn-success"
+                                class="btn btn-primary ms-2 rounded-pill shadow-sm"
                             >
                                 <i class="bi bi-search"></i>
                             </button>
 
                             <button
                                 v-else
-                                class="btn btn-success"
+                                class="btn btn-primary ms-2 rounded-pill shadow-sm"
                                 type="button"
                             >
                                 <span
@@ -75,99 +72,87 @@
                         </div>
                     </div>
 
-                    <div class="accordion" id="accordionExample">
-                        <div
-                            class="accordion-item"
-                            v-for="(incentive, index) in incentives"
-                            :key="incentive.id"
-                        >
-                            <h2 class="accordion-header">
-                                <button
-                                    class="accordion-button collapsed"
-                                    type="button"
-                                    :data-bs-toggle="'collapse'"
-                                    :data-bs-target="'#collapse' + index"
-                                    :aria-expanded="
-                                        index === 0 ? 'true' : 'false'
-                                    "
-                                    :aria-controls="'collapse' + index"
-                                >
-                                   <b> {{ incentive.title }} -
-                                    {{ incentive.interest_rate_first_year }}% -
-                                    {{ incentive.builder_name }}</b>
-                                    
-                                </button>
-                            </h2>
-                            <div
-                                :id="'collapse' + index"
-                                class="accordion-collapse collapse"
-                                data-bs-parent="#accordionExample"
-                            >
-                                <div class="accordion-body">
-                                    <strong>Status:</strong>
-                                    {{ incentive.status }}<br /> 
-                                    <strong>Start Date:</strong>
-                                    {{ incentive.start_date }}<br />
-                                    <strong>End Date:</strong>
-                                    {{ incentive.end_date }}<br />
-
-                                    <strong>Descriptions:</strong>
-                                    <div
-                                        class="content ql-editor"
-                                        v-html="incentive.description"
-                                    ></div>
-                                    <div>
-                                        <strong>Banner</strong>
-                                        <br />
-                                        <image-zooming-component
-                                            :file="
-                                                incentive.incentive_banner ??
-                                                'empty.png'
-                                            "
-                                            :width="350"
-                                        />
-                                    </div>
-
-                                    <div class="btn-group mt-2">
-                                        <a
-                                            type="button"
-                                            class="btn btn-sm fs-6"
-                                            title="Edit"
-                                            :href="
-                                                '/incentive/edit/' +
-                                                incentive.id
-                                            "
-                                        >
-                                            <i
-                                                class="bi bi-pencil c-theme-text-color"
-                                            ></i>
-                                        </a>
-                                        <DeleteModal
-                                            :deleteId="incentive.id"
-                                            @deleteThis="deleteThis"
-                                        />
-
-                                    
-                                    </div>
-                                    <br>
-                                    Created at on : {{ incentive.created_at }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="text-center mt-4">
+            <div class="accordion" id="accordionExample">
+                <div
+                    class="accordion-item mb-3 rounded-4 overflow-hidden shadow-sm"
+                    v-for="(incentive, index) in incentives"
+                    :key="incentive.id"
+                >
+                    <h2 class="accordion-header">
                         <button
-                            v-if="pagination.next_page_url"
-                            @click="search(pagination.next_page_url)"
-                            class="btn btn-success"
+                            class="accordion-button bg-gradient bg-primary text-white fw-semibold"
+                            type="button"
+                            :data-bs-toggle="'collapse'"
+                            :data-bs-target="'#collapse' + index"
+                            :aria-expanded="index === 0 ? 'true' : 'false'"
+                            :aria-controls="'collapse' + index"
                         >
-                            {{ translate("Load More") }}
+                            <b> {{ incentive.title }} -
+                                {{ incentive.interest_rate_first_year }}% -
+                                {{ incentive.builder_name }}</b>
                         </button>
+                    </h2>
+                    <div
+                        :id="'collapse' + index"
+                        class="accordion-collapse collapse"
+                        data-bs-parent="#accordionExample"
+                    >
+                        <div class="accordion-body bg-white">
+                            <strong>Status:</strong>
+                            {{ incentive.status }}<br />
+                            <strong>Start Date:</strong>
+                            {{ incentive.start_date }}<br />
+                            <strong>End Date:</strong>
+                            {{ incentive.end_date }}<br />
+
+                            <strong>Descriptions:</strong>
+                            <div
+                                class="content ql-editor"
+                                v-html="incentive.description"
+                            ></div>
+                            <div>
+                                <strong>Banner</strong>
+                                <br />
+                                <image-zooming-component
+                                    :file="incentive.incentive_banner ?? 'empty.png'"
+                                    :width="350"
+                                />
+                            </div>
+
+                            <div class="btn-group mt-2">
+                                <a
+                                    type="button"
+                                    class="btn btn-sm fs-6"
+                                    title="Edit"
+                                    :href="'/incentive/edit/' + incentive.id"
+                                >
+                                    <i class="bi bi-pencil c-theme-text-color"></i>
+                                </a>
+                                <DeleteModal
+                                    :deleteId="incentive.id"
+                                    @deleteThis="deleteThis"
+                                />
+                            </div>
+                            <br />
+                            Created at on : {{ incentive.created_at }}
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
+
+            <div class="text-center mt-4">
+                <button
+                    v-if="pagination.next_page_url"
+                    @click="search(pagination.next_page_url)"
+                    class="btn btn-success"
+                >
+                    {{ translate("Load More") }}
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
     </Master>
 </template>
 
