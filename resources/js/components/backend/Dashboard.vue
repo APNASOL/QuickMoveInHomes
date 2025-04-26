@@ -154,34 +154,29 @@
                             </a>
                         </div>
                         <div class="col-12 mt-4">
-                            <div
-                                class="card shadow-sm border-0"
-                                style="border-radius: 20px"
-                            >
-                                <div class="card-body pt-4">
+                            <div class="card shadow-lg border-0 rounded-4">
+                                <div class="card-body pt-4 bg-light">
                                     <h5 class="card-title mb-4">
                                         Recent Connected Customers
                                     </h5>
 
-                                    <div class="table-responsive">
+                                    <div
+                                        class="table-responsive mt-4 rounded-4 shadow-sm"
+                                    >
                                         <table
-                                            class="table table-hover align-middle"
+                                            class="table table-hover align-middle bg-white"
                                         >
                                             <thead
-                                                class="table-light"
+                                                class="table-primary text-dark"
                                                 style="
-                                                    background: linear-gradient(
-                                                        135deg,
-                                                        #5fa1dd,
-                                                        #3d668f
-                                                    );
-                                                    color: white;
                                                     border-top-left-radius: 10px;
                                                     border-top-right-radius: 10px;
                                                 "
                                             >
                                                 <tr>
-                                                    <th>#</th>
+                                                    <th class="text-center">
+                                                        #
+                                                    </th>
                                                     <th>Customer</th>
                                                     <th>Agent</th>
                                                     <th>Property</th>
@@ -200,8 +195,10 @@
                                                         vertical-align: middle;
                                                     "
                                                 >
-                                                    <td>{{ index + 1 }}</td>
-                                                    <td class="fw-semibold">
+                                                    <td class="text-center">
+                                                        {{ index + 1 }}
+                                                    </td>
+                                                    <td class="c-title">
                                                         {{
                                                             agreement.customer_name
                                                         }}
@@ -217,7 +214,7 @@
                                                                 '/property/details/' +
                                                                 agreement.property_id
                                                             "
-                                                            class="text-decoration-none fw-bold"
+                                                            class="text-decoration-none fw-bold c-title"
                                                             style="
                                                                 color: #3498db;
                                                             "
@@ -264,7 +261,7 @@
                                                 >
                                                     <td
                                                         colspan="7"
-                                                        class="text-muted py-4"
+                                                        class="text-center text-muted py-4"
                                                     >
                                                         No agreements found.
                                                     </td>
@@ -272,6 +269,8 @@
                                             </tbody>
                                         </table>
                                     </div>
+
+                                    <!-- Load More Button -->
                                 </div>
                             </div>
                         </div>
@@ -911,3 +910,9 @@ export default {
     },
 };
 </script>
+<style>
+.c-title
+{
+    color: #163259 !important; 
+}
+</style>

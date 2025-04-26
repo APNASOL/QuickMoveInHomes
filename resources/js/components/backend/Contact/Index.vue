@@ -193,7 +193,7 @@ export default {
 </script>
 <style>
 .c-linked {
-    color: red;
+    color: #163259 !important; 
     text-decoration: none;
 }
 .c-mouse-over {
