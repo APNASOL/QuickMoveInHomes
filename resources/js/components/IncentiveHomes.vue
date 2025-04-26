@@ -231,8 +231,7 @@ export default {
 }
 .read-more {
     color: #002855;
-    cursor: pointer;
-
+    cursor: pointer; 
     font-weight: bold;
 }
 </style>

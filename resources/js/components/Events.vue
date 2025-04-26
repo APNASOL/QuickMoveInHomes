@@ -16,63 +16,57 @@
 
         <div class="c-section-main-details container">
             <div v-if="events && events.length">
-                <div class="mx-4 pt-3">
-                    <div class="row">
+                <div class="row text-center g-2">
+                    <div
+                        v-for="event in events"
+                        :key="event.id"
+                        class="col-md-4 mb-3 d-flex align-items-stretch"
+                    >
                         <div
-                            v-for="event in events"
-                            :key="event.id"
-                            class="col-md-4 mb-3 d-flex align-items-stretch"
+                            class="card c-border-design image-cover flex-fill p-2"
                         >
-                            <div class="card c-border-design">
-                                <div class="card-img-wrapper">
-                                    <img
-                                        :src="event.image"
-                                        class="card-img-top"
-                                        :alt="event.title"
-                                        @error="setAltImg"
-                                    />
-                                </div>
-                                <div
-                                    class="card-body text-start d-flex flex-column"
-                                >
-                                    <h4 class="c-main-title text-center">
-                                        {{ event.title }}
-                                    </h4>
-                                    <b class="text-center">{{ event.date }}</b>
-                                    <div
-                                        class="content ql-editor flex-grow-1 mt-2"
+                            <div class="card-img-wrapper">
+                                <img
+                                    :src="event.image"
+                                    class="rounded-top"
+                                    width="100%"
+                                    height="200px"
+                                    @error="setAltImg"
+                                />
+                            </div>
+                            <div
+                                class="card-body text-start d-flex flex-column"
+                            >
+                                <h4 class="c-main-title text-center">
+                                    {{ event.title }}
+                                </h4>
+                                <b class="text-center">{{ event.date }}</b>
+                                <div class="content ql-editor flex-grow-1 mt-2">
+                                    <span
+                                        v-html="getTruncatedDescription(event)"
+                                    ></span>
+                                    <span
+                                        v-if="event.description.length > 200"
+                                        class="read-more"
+                                        @click="toggleDescription(event.id)"
                                     >
-                                        <span
-                                            v-html="
-                                                getTruncatedDescription(event)
-                                            "
-                                        ></span>
-                                        <span
-                                            v-if="
-                                                event.description.length > 200
-                                            "
-                                            class="read-more"
-                                            @click="toggleDescription(event.id)"
-                                        >
-                                            {{
-                                                showFullDescription[event.id]
-                                                    ? "Show Less"
-                                                    : "Read More"
-                                            }}
-                                        </span>
-                                    </div>
-                                    <div class="text-center mt-3">
-                                        <a
-                                            :href="
-                                                'http://' +
-                                                event.registeration_link
-                                            "
-                                            target="_blank"
-                                            class="btn btn-primary"
-                                        >
-                                            Register
-                                        </a>
-                                    </div>
+                                        {{
+                                            showFullDescription[event.id]
+                                                ? "Show Less"
+                                                : "Read More"
+                                        }}
+                                    </span>
+                                </div>
+                                <div class="text-center mt-3">
+                                    <a
+                                        :href="
+                                            'http://' + event.registeration_link
+                                        "
+                                        target="_blank"
+                                        class="btn btn-primary"
+                                    >
+                                        Register
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -146,62 +140,52 @@ export default {
 .uppercase {
     text-transform: uppercase;
 }
-
-.c-sub-title {
-    font-family: "Inter", sans-serif;
+.c-tags {
+    font-family: Inter, sans-serif;
     font-size: 20px;
     font-weight: 400;
     line-height: 28px;
     color: rgb(61, 102, 143);
 }
+.c-info {
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: rgb(23, 38, 54);
+}
+.team-member img {
+    border-radius: 50%;
+    object-fit: cover;
+}
 
-h2,
-h3,
-h4,
-h5 {
-    font-family: "Raleway", sans-serif;
-    color: rgb(61, 102, 143);
-    line-height: 1.55rem;
-    font-weight: bold;
+.card-body h4 {
+    margin: 0;
 }
 
 .card {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    background-color: white;
-    border: 1px solid #eee;
-    border-radius: 8px;
-    overflow: hidden;
+    justify-content: space-between;
+    height: 100%; /* Ensures equal height */
 }
 
-.card-img-wrapper {
+.card img {
     width: 100%;
-    height: 200px;
-    overflow: hidden;
-}
-
-.card-img-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: 200px; /* Set fixed height for image */
+    object-fit: cover; /* Make image cover the top of the card */
+    border-radius: 10px; /* Optional: rounded corners */
 }
 
 .card-body {
-    flex-grow: 1;
-    padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    flex-grow: 1; /* Ensures body stretches to fill remaining space */
 }
-
 .read-more {
     color: #002855;
     cursor: pointer;
     font-weight: bold;
-}
-
-.ql-editor {
-    padding: 0px !important;
 }
 </style>
