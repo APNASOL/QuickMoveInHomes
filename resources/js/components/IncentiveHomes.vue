@@ -64,9 +64,9 @@
                                         incentive.incentive_banner ??
                                         'error.png'
                                     "
-                                    class="rounded-circle"
-                                    width="150"
-                                    height="150"
+                                    class="rounded-top"
+                                    width="100%"
+                                    height="200px"
                                     :alt="incentive.title"
                                     @error="setAltImg"
                                 />
@@ -204,18 +204,35 @@ export default {
     border-radius: 50%;
     object-fit: cover;
 }
-.read-more {
-    color: #002855;
-    cursor: pointer;
-    margin-left: 5px;
-}
+
 .card-body h4 {
     margin: 0;
 }
+
 .card {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 100%; /* Ensures equal height */
+}
+
+.card img {
+    width: 100%;
+    height: 200px; /* Set fixed height for image */
+    object-fit: cover; /* Make image cover the top of the card */
+    border-radius: 10px; /* Optional: rounded corners */
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1; /* Ensures body stretches to fill remaining space */
+}
+.read-more {
+    color: #002855;
+    cursor: pointer;
+
+    font-weight: bold;
 }
 </style>

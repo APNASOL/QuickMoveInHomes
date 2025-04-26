@@ -40,10 +40,8 @@
         </div>
     </div>
 
-    <nav
-        class="navbar navbar-expand-lg  bg-theme c-navbar-color sticky-top "
-    >
-    <!-- <nav class="navbar navbar-expand-lg  bg-theme c-navbar-color"> -->
+    <nav class="navbar navbar-expand-lg bg-theme c-navbar-color sticky-top">
+        <!-- <nav class="navbar navbar-expand-lg  bg-theme c-navbar-color"> -->
         <div class="container">
             <!-- Navbar brand -->
 
@@ -81,7 +79,7 @@
                             id="navbarDropdownDeals"
                             role="button"
                         >
-                        Communities
+                            Communities
                         </a>
                     </li>
                     <li class="nav-item dropdown">
@@ -91,7 +89,7 @@
                             id="navbarDropdownDeals"
                             role="button"
                         >
-                        Open Houses
+                            Open Houses
                         </a>
                     </li>
 
@@ -344,6 +342,20 @@
                             </li>
                         </ul>
                     </li>
+                    <li>
+                        <!-- create a button with a title Register to opne register modal data-bs-toggle="modal"
+                                    data-bs-target="#registerusermodal" -->
+                        <button
+                            v-if="!logged_in_user"
+                            ref="openRegisterModal"
+                            data-bs-toggle="modal"
+                            data-bs-target="#registerusermodal"
+                            class="btn btn-sm btn-primary text-white mt-1 c-pointer"
+                            @click="clearFields"
+                        >
+                            {{ translate("Register") }}
+                        </button>
+                    </li>
 
                     <li class="c-top-bar-section-inside-navbar">
                         <span v-if="youtube_link">
@@ -397,7 +409,13 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="text-center text-black mt-4">
-                        <h2>Login</h2>
+                        <div>
+                            <img :src="logo" :alt="name" width="110" />
+                        </div>
+                    </div>
+
+                    <div class="text-center text-black mt-4">
+                        <h2 class="c-main-title">Login</h2>
                     </div>
                     <div class="block-content p-4">
                         <form @submit.prevent="login">
@@ -462,7 +480,7 @@
                                 </div>
                             </div>
                         </form>
-                        <div class="col-12 theme-color-red">
+                        <!-- <div class="col-12 theme-color-red">
                             <p class="small mb-0 theme-color-red">
                                 <br />
 
@@ -474,7 +492,7 @@
                                     {{ translate("Register new user") }}
                                 </a>
                             </p>
-                        </div>
+                        </div> -->
                         <div class="col-12 theme-color-red">
                             <p class="small mb-0 theme-color-red">
                                 <br />
@@ -583,9 +601,18 @@
                         </div>
                         <div v-else>
                             <div class="text-center text-black mt-4">
-                                <h5 class="card-title text-center pb-0 fs-4">
+                                <div class="text-center text-black mt-4">
+                                    <div>
+                                        <img
+                                            :src="logo"
+                                            :alt="name"
+                                            width="110"
+                                        />
+                                    </div>
+                                </div>
+                                <h2 class="c-main-title">
                                     {{ translate("Reset your password") }}
-                                </h5>
+                                </h2>
                             </div>
                             <form class="row g-0">
                                 <!-- <h1 class="h3 mb-3 fw-normal">Please sign in</h1> -->
@@ -659,14 +686,17 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="text-center text-black mt-4">
-                        <h2>Register user</h2>
+                        <div>
+                            <img :src="logo" :alt="name" width="110" />
+                        </div>
+                    </div>
+
+                    <div class="text-center text-black mt-4">
+                        <h2 class="c-main-title">Register User</h2>
                     </div>
                     <div class="block-content p-4">
-                        <div class="row">
+                        <div class="row g-2">
                             <div class="col-12">
-                                <label for="email" class="form-label"
-                                    >{{ translate("Full name") }}
-                                </label>
                                 <input
                                     type="text"
                                     class="form-control"
@@ -686,9 +716,6 @@
                             </div>
 
                             <div class="col-12">
-                                <label for="email" class="form-label mt-2"
-                                    >{{ translate("Email") }}
-                                </label>
                                 <input
                                     type="text"
                                     class="form-control"
@@ -707,9 +734,6 @@
                             </div>
 
                             <div class="col-12">
-                                <label for="password" class="form-label mt-2"
-                                    >{{ translate("Password") }}
-                                </label>
                                 <input
                                     type="password"
                                     class="form-control"
@@ -729,11 +753,6 @@
                             </div>
 
                             <div class="col-12">
-                                <label
-                                    for="confirm_password"
-                                    class="form-label mt-2"
-                                    >{{ translate("Confirm password") }}
-                                </label>
                                 <input
                                     type="password"
                                     class="form-control"
@@ -810,93 +829,122 @@
     <button ref="closeModal" hidden="hidden" data-bs-dismiss="modal"></button>
     <!-- footer -->
 
-    
     <footer class="footer bg-light text-dark pt-5">
-    <div class="container">
-        <div class="row">
-            <!-- Logo Section -->
-            <div class="col-md-3 mb-4">
-                <a href="/">
-                    <img :src="logo" :alt="name" width="200" class="mb-3" />
-                </a>
-                <p class="text-muted">Your trusted business partner for digital solutions.</p>
-            </div>
+        <div class="container">
+            <div class="row">
+                <!-- Logo Section -->
+                <div class="col-md-3 mb-4">
+                    <a href="/">
+                        <img :src="logo" :alt="name" width="200" class="mb-3" />
+                    </a>
+                    <p class="text-muted">
+                        Your trusted business partner for digital solutions.
+                    </p>
+                </div>
 
-            <!-- Business Info -->
-            <div class="col-md-3 mb-4">
-                <h5 class="fw-bold c-theme-color">Business</h5>
-                <hr class=" opacity-100 " />
-                <ul class="list-unstyled">
-                    <li>
-                        <a href="/about" class="text-dark text-decoration-none d-block py-1">About Us</a>
-                    </li>
-                    <li>
-                        <a href="/services" class="text-dark text-decoration-none d-block py-1">Our Services</a>
-                    </li>
-                    <li>
-                        <a href="/blogs" class="text-dark text-decoration-none d-block py-1">Blogs</a>
-                    </li>
-                    <li>
-                        <a href="/contact" class="text-dark text-decoration-none d-block py-1">Contact</a>
-                    </li>
-                </ul>
-            </div>
+                <!-- Business Info -->
+                <div class="col-md-3 mb-4">
+                    <h5 class="fw-bold c-theme-color">Business</h5>
+                    <hr class="opacity-100" />
+                    <ul class="list-unstyled">
+                        <li>
+                            <a
+                                href="/about"
+                                class="text-dark text-decoration-none d-block py-1"
+                                >About Us</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="/services"
+                                class="text-dark text-decoration-none d-block py-1"
+                                >Our Services</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="/blogs"
+                                class="text-dark text-decoration-none d-block py-1"
+                                >Blogs</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="/contact"
+                                class="text-dark text-decoration-none d-block py-1"
+                                >Contact</a
+                            >
+                        </li>
+                    </ul>
+                </div>
 
-            <!-- Customer Support Section -->
-            <div class="col-md-3 mb-4">
-                <h5 class="fw-bold c-theme-color">Customer Support</h5>
-                <hr class="  opacity-100" />
-                <ul class="list-unstyled">
-                    <li v-if="external_website.website_email">
-                        <a class="text-dark text-decoration-none d-block py-1"
-                            :href="'mailto:' + external_website.website_email">
-                            📧 {{ external_website.website_email }}
-                        </a>
-                    </li>
-                    <li v-if="external_website.website_phone">
-                        <a class="text-dark text-decoration-none d-block py-1"
-                            :href="'tel:' + external_website.website_phone">
-                            📞 {{ external_website.website_phone }}
-                        </a>
-                    </li>
-                    <!-- <li>
+                <!-- Customer Support Section -->
+                <div class="col-md-3 mb-4">
+                    <h5 class="fw-bold c-theme-color">Customer Support</h5>
+                    <hr class="opacity-100" />
+                    <ul class="list-unstyled">
+                        <li v-if="external_website.website_email">
+                            <a
+                                class="text-dark text-decoration-none d-block py-1"
+                                :href="
+                                    'mailto:' + external_website.website_email
+                                "
+                            >
+                                📧 {{ external_website.website_email }}
+                            </a>
+                        </li>
+                        <li v-if="external_website.website_phone">
+                            <a
+                                class="text-dark text-decoration-none d-block py-1"
+                                :href="'tel:' + external_website.website_phone"
+                            >
+                                📞 {{ external_website.website_phone }}
+                            </a>
+                        </li>
+                        <!-- <li>
                         <a href="/about" class="text-dark text-decoration-none d-block py-1">❓ FAQs</a>
                     </li>
                     <li>
                         <a href="/support" class="text-dark text-decoration-none d-block py-1">🛠 Support Center</a>
                     </li> -->
-                </ul>
-            </div>
+                    </ul>
+                </div>
 
-            <!-- Social Media -->
-            <div class="col-md-3 mb-4">
-                <h5 class="fw-bold c-theme-color">Follow Us</h5>
-                <hr class="  opacity-100" />
-                <div class="d-flex gap-3">
-                    <a :href="facebook_link" target="_blank" class="text-dark">
-                        <i class="bi bi-facebook fs-3"></i>
-                    </a>
-                    <a :href="instagram_link" target="_blank">
-                        <i class="bi bi-instagram fs-3 text-danger"></i>
-                    </a>
-                    <a :href="twitter_link" target="_blank">
-                        <i class="bi bi-twitter fs-3 text-primary"></i>
-                    </a>
-                    <a :href="youtube_link" target="_blank">
-                        <i class="bi bi-youtube fs-3 text-danger"></i>
-                    </a>
+                <!-- Social Media -->
+                <div class="col-md-3 mb-4">
+                    <h5 class="fw-bold c-theme-color">Follow Us</h5>
+                    <hr class="opacity-100" />
+                    <div class="d-flex gap-3">
+                        <a
+                            :href="facebook_link"
+                            target="_blank"
+                            class="text-dark"
+                        >
+                            <i class="bi bi-facebook fs-3"></i>
+                        </a>
+                        <a :href="instagram_link" target="_blank">
+                            <i class="bi bi-instagram fs-3 text-danger"></i>
+                        </a>
+                        <a :href="twitter_link" target="_blank">
+                            <i class="bi bi-twitter fs-3 text-primary"></i>
+                        </a>
+                        <a :href="youtube_link" target="_blank">
+                            <i class="bi bi-youtube fs-3 text-danger"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
+
+            <hr class="c-theme-color opacity-100" />
+
+            <div class="text-center py-3">
+                <p class="mb-0">
+                    © {{ new Date().getFullYear() }} <strong>{{ name }}</strong
+                    >. All rights reserved.
+                </p>
+            </div>
         </div>
-
-        <hr class="c-theme-color opacity-100" />
-
-        <div class="text-center py-3">
-            <p class="mb-0">© {{ new Date().getFullYear() }} <strong>{{ name }}</strong>. All rights reserved.</p>
-        </div>
-    </div>
-</footer>
-
+    </footer>
 
     <button
         type="button"
@@ -1265,7 +1313,7 @@ export default {
 </script>
 <style>
 body {
-    font-family: Inter, sans-serif !important;  
+    font-family: Inter, sans-serif !important;
     background-color: #f7fafc;
 }
 p {

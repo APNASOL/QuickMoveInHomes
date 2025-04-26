@@ -1,8 +1,6 @@
 <template>
     <Master>
         <section class="p-3 bg-white">
-            <!-- Removed container for full width -->
-            <!-- Hero Section -->
             <div class="row align-items-center p-3">
                 <div class="col-md-12 text-center">
                     <h1 class="uppercase c-main-title">
@@ -23,32 +21,27 @@
                         <div
                             v-for="event in events"
                             :key="event.id"
-                            class="col-md-4 mb-3 d-flex"
+                            class="col-md-4 mb-3 d-flex align-items-stretch"
                         >
-                            <div
-                                class="card c-border-design image-cover text-center"
-                            >
-                                <a
-                                    :href="'http://' + event.registeration_link"
-                                    target="_blank"
-                                >
+                            <div class="card c-border-design">
+                                <div class="card-img-wrapper">
                                     <img
                                         :src="event.image"
-                                        class="card-img-top c-card-img-border rounded-circle mt-2"
+                                        class="card-img-top"
                                         :alt="event.title"
                                         @error="setAltImg"
                                     />
-                                </a>
-                                <div class="card-body text-start">
-                                    <h4 class="c-main-title">
+                                </div>
+                                <div
+                                    class="card-body text-start d-flex flex-column"
+                                >
+                                    <h4 class="c-main-title text-center">
                                         {{ event.title }}
                                     </h4>
-
-                                    <b>
-                                        {{ event.date }}
-                                    </b>
-
-                                    <div class="content ql-editor">
+                                    <b class="text-center">{{ event.date }}</b>
+                                    <div
+                                        class="content ql-editor flex-grow-1 mt-2"
+                                    >
                                         <span
                                             v-html="
                                                 getTruncatedDescription(event)
@@ -67,6 +60,18 @@
                                                     : "Read More"
                                             }}
                                         </span>
+                                    </div>
+                                    <div class="text-center mt-3">
+                                        <a
+                                            :href="
+                                                'http://' +
+                                                event.registeration_link
+                                            "
+                                            target="_blank"
+                                            class="btn btn-primary"
+                                        >
+                                            Register
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -138,42 +143,16 @@ export default {
 </script>
 
 <style scoped>
-.top-section {
-    position: relative;
-    height: 300px;
-    background-size: cover;
-    background-position: center;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    width: 100%;
-    overflow: hidden;
-}
-
 .uppercase {
     text-transform: uppercase;
 }
 
-.info-overlay {
-    background: rgba(1, 6, 13, 0.8);
-    padding: 20px;
-    width: 100%;
-    border-radius: 0px !important;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.title {
-    font-size: 24px;
-    margin: 0;
-}
-
-.read-more {
-    color: #002855;
-    cursor: pointer;
-    margin-left: 5px;
+.c-sub-title {
+    font-family: "Inter", sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 28px;
+    color: rgb(61, 102, 143);
 }
 
 h2,
@@ -191,28 +170,35 @@ h5 {
     flex-direction: column;
     height: 100%;
     background-color: white;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.card-img-wrapper {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.card-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .card-body {
     flex-grow: 1;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
-.image-cover {
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-}
-
-.image-cover img {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    object-position: center;
-    border-radius: 50%;
+.read-more {
+    color: #002855;
+    cursor: pointer;
+    font-weight: bold;
 }
 
 .ql-editor {
