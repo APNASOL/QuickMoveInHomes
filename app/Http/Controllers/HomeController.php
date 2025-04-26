@@ -732,7 +732,7 @@ class HomeController extends Controller
 
             if ($property->is_open_house) {
                 $open_house = OpenHouse::where('property_id', $property->property_id)->first();
-                dd("ind");
+                
                 $property->open_house_data = $open_house;
             }
 

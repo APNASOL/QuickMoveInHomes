@@ -44,9 +44,9 @@ Route::get('/', function ($message = null) {
 Route::get('/recommendation', function () {
     return view('app');
 })->name('recommendation');
-Route::get('/login', function () {
-    return view('app');
-})->name('login');
+// Route::get('/login', function () {
+//     return view('app');
+// })->name('login');
 
 Route::get('/register', function () {
     return view('app');

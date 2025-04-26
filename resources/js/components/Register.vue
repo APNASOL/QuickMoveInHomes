@@ -199,7 +199,7 @@ export default {
                     toastr.success(
                         this.translate("Email sent please check to verify")
                     );
-                    window.location.href = "/login";
+                    window.location.href = "/";
                     this.formErrors = [];
                 })
                 .catch((error) => {

@@ -187,22 +187,26 @@
                               <h5 class="mb-0 text-primary">
                                 {{ entry.user.name }}
                               </h5>
-                              <small class="text-muted">{{
+                              <small class="text-muted">Email : {{
                                 entry.user.email
+                              }}</small>
+                              <br>
+                              <small class="text-muted" v-if="entry.user.phone">Phone : {{
+                                entry.user.phone
                               }}</small>
                             </div>
                           </div>
 
                           <hr />
 
-                          <div class="mb-3">
+                          <!-- <div class="mb-3">
                             <strong class="text-secondary"
                               >Connection Date:</strong
                             >
                             <div>
                               {{ entry.date }}
                             </div>
-                          </div>
+                          </div> -->
 
                           <div class="mb-3">
                             <strong class="text-secondary"

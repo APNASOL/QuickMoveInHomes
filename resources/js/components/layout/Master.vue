@@ -409,13 +409,19 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="text-center text-black mt-4">
-                        <div>
-                            <img :src="logo" :alt="name" width="110" />
+                        <div class="text-center mb-4">
+                            <img
+                                :src="logo"
+                                @error="setAltImg"
+                                alt="Logo"
+                                class="logo mb-3"
+                                width="130"
+                            />
+                            <h2 class="h5 fw-bold">{{ name }}</h2>
+                            <p class="text-muted small">
+                                Welcome back! Please login.
+                            </p>
                         </div>
-                    </div>
-
-                    <div class="text-center text-black mt-4">
-                        <h2 class="c-main-title">Login</h2>
                     </div>
                     <div class="block-content p-4">
                         <form @submit.prevent="login">
@@ -602,17 +608,20 @@
                         <div v-else>
                             <div class="text-center text-black mt-4">
                                 <div class="text-center text-black mt-4">
-                                    <div>
+                                    <div class="text-center mb-4">
                                         <img
                                             :src="logo"
-                                            :alt="name"
-                                            width="110"
+                                            @error="setAltImg"
+                                            alt="Logo"
+                                            class="logo mb-3"
+                                            width="130"
                                         />
+                                        <h2 class="h5 fw-bold">{{ name }}</h2>
+                                        <p class="text-muted small">
+                                            Reset your password.
+                                        </p>
                                     </div>
                                 </div>
-                                <h2 class="c-main-title">
-                                    {{ translate("Reset your password") }}
-                                </h2>
                             </div>
                             <form class="row g-0">
                                 <!-- <h1 class="h3 mb-3 fw-normal">Please sign in</h1> -->
@@ -686,13 +695,17 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="text-center text-black mt-4">
-                        <div>
-                            <img :src="logo" :alt="name" width="110" />
+                        <div class="text-center mb-4">
+                            <img
+                                :src="logo"
+                                @error="setAltImg"
+                                alt="Logo"
+                                class="logo mb-2"
+                                width="130"
+                            />
+                            <h2 class="h5 fw-bold">{{ name }}</h2>
+                            <p class="text-muted small">Create a new account</p>
                         </div>
-                    </div>
-
-                    <div class="text-center text-black mt-4">
-                        <h2 class="c-main-title">Register User</h2>
                     </div>
                     <div class="block-content p-4">
                         <div class="row g-2">
@@ -780,7 +793,7 @@
                                         type="submit"
                                         @click="register"
                                     >
-                                        {{ translate("Register") }} 
+                                        {{ translate("Register") }}
                                     </button>
 
                                     <button
@@ -788,7 +801,7 @@
                                         type="submit"
                                         v-else
                                     >
-                                        {{ translate("Register") }} 
+                                        {{ translate("Register") }}
                                         <span
                                             class="spinner-border spinner-border-sm"
                                             role="status"
@@ -898,12 +911,16 @@
                             >
                         </li>
                         <li class="mb-2">
-                            <a href="/privacy-policy" class="text-white text-decoration-none"
+                            <a
+                                href="/privacy-policy"
+                                class="text-white text-decoration-none"
                                 >Privacy Policy</a
                             >
                         </li>
                         <li class="mb-2">
-                            <a href="/terms-of-services" class="text-white text-decoration-none"
+                            <a
+                                href="/terms-of-services"
+                                class="text-white text-decoration-none"
                                 >Terms of Service</a
                             >
                         </li>
@@ -974,13 +991,19 @@
             >
                 <div>© 2025 BrandNewHomesVegas. All rights reserved.</div>
                 <div class="d-flex gap-3">
-                    <a href="/privacy-policy" class="text-white text-decoration-none"
+                    <a
+                        href="/privacy-policy"
+                        class="text-white text-decoration-none"
                         >Privacy Policy</a
                     >
-                    <a href="/terms-of-services" class="text-white text-decoration-none"
+                    <a
+                        href="/terms-of-services"
+                        class="text-white text-decoration-none"
                         >Terms of Service</a
                     >
-                    <a href="/cookie-policy" class="text-white text-decoration-none"
+                    <a
+                        href="/cookie-policy"
+                        class="text-white text-decoration-none"
                         >Cookie Policy</a
                     >
                 </div>
