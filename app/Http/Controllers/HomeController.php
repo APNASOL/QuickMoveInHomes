@@ -588,7 +588,7 @@ class HomeController extends Controller
     }
 
     public function quickSearch(Request $request)
-    {
+    { 
         $currentDate = now()->format('Y-m-d');
         // Validate request
         $request->validate([
@@ -647,10 +647,11 @@ class HomeController extends Controller
             }
         }
 
-        if ($request->is_open_house === true || $request->is_open_house === "true") {
-            $properties->where('is_open_house', $request->is_open_house);
-
+        if ($request->is_open_house == true || $request->is_open_house == "true") {
+            $properties->where('is_open_house', 1); // always 1 
         }
+         
+        // dd("Test",$request->is_open_house);
 
         // Apply price filtering
         if ($request->min_price && $request->max_price) {

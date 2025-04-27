@@ -1,18 +1,20 @@
 <template>
     <Master>
         <div class="accordion" id="mainAccordion">
-            <div class="accordion-item">
+            <div
+                class="accordion-item border-0 shadow rounded-4 overflow-hidden"
+            >
                 <h2 class="accordion-header">
                     <button
-                        class="accordion-button c-theme-color"
-                        style="height: 20px !important"
+                        class="accordion-button collapsed text-white fw-bold fs-5"
                         type="button"
                         data-bs-toggle="collapse"
                         data-bs-target="#mainAccordionCollapse"
                         aria-expanded="true"
                         aria-controls="mainAccordionCollapse"
+                        style="background-color: #163259; padding: 1rem 1.5rem"
                     >
-                        Filter
+                        🔎 Filter Your Search
                     </button>
                 </h2>
                 <div
@@ -20,279 +22,229 @@
                     class="accordion-collapse collapse show"
                     data-bs-parent="#mainAccordion"
                 >
-                    <div class="accordion-body">
-                        <div class="row mb-2">
-                            <div class="col-4 col">
+                    <div class="accordion-body bg-light p-4">
+                        <div class="row g-4">
+                            <!-- Search -->
+                            <div class="col-md-4">
                                 <input
                                     type="text"
-                                    class="form-control"
                                     v-model="main_search_field"
                                     :placeholder="
-                                        translate(
-                                            'Enter an address, city or ZIP code'
-                                        )
+                                        translate('Enter address, city, or ZIP')
                                     "
                                     @change="quickSearch"
+                                    class="form-control rounded-3 shadow-sm border-0 p-3"
+                                    style="background-color: #f8f9fa"
                                 />
                             </div>
-                            <div class="col-4 col">
-                                <div class="d-flex">
+
+                            <!-- Price Range -->
+                            <div class="col-md-4">
+                                <div class="d-flex gap-2">
                                     <input
                                         type="number"
-                                        class="form-control me-1"
                                         v-model="min_price"
                                         placeholder="Min Price"
                                         @change="quickSearch"
+                                        class="form-control rounded-3 shadow-sm border-0 p-3"
+                                        style="background-color: #f8f9fa"
                                     />
                                     <input
                                         type="number"
-                                        class="form-control"
                                         v-model="max_price"
                                         placeholder="Max Price"
                                         @change="quickSearch"
+                                        class="form-control rounded-3 shadow-sm border-0 p-3"
+                                        style="background-color: #f8f9fa"
                                     />
                                 </div>
                             </div>
 
-                            <div class="col-4 col">
-                                <div class="d-flex">
+                            <!-- SQRF Range -->
+                            <div class="col-md-4">
+                                <div class="d-flex gap-2">
                                     <input
                                         type="number"
-                                        class="form-control me-1"
                                         v-model="min_square_feet"
                                         placeholder="Min SQRF"
                                         @change="quickSearch"
+                                        class="form-control rounded-3 shadow-sm border-0 p-3"
+                                        style="background-color: #f8f9fa"
                                     />
                                     <input
                                         type="number"
-                                        class="form-control"
                                         v-model="max_square_feet"
                                         placeholder="Max SQRF"
                                         @change="quickSearch"
+                                        class="form-control rounded-3 shadow-sm border-0 p-3"
+                                        style="background-color: #f8f9fa"
                                     />
                                 </div>
                             </div>
-                            <div class="mt-2 col-4 col">
-                                <div class="d-flex">
+
+                            <!-- Lot Size -->
+                            <div class="col-md-4">
+                                <div class="d-flex gap-2">
                                     <input
                                         type="number"
-                                        class="form-control me-1"
                                         v-model="min_lot_size"
                                         placeholder="Min Lot Size"
                                         @change="quickSearch"
+                                        class="form-control rounded-3 shadow-sm border-0 p-3"
+                                        style="background-color: #f8f9fa"
                                     />
                                     <input
                                         type="number"
-                                        class="form-control"
                                         v-model="max_lot_size"
                                         placeholder="Max Lot Size"
                                         @change="quickSearch"
+                                        class="form-control rounded-3 shadow-sm border-0 p-3"
+                                        style="background-color: #f8f9fa"
                                     />
                                 </div>
                             </div>
 
-                            <div class="mt-2 col-3 col">
-                                <label for="">Bathrooms</label>
-
-                                <a
-                                    href="#"
-                                    class="btn"
-                                    :class="{
-                                        'btn-outline-warning': bathroom === 1,
-                                        '': bathroom !== 1,
-                                    }"
-                                    @click.prevent="
-                                        bathroom = 1;
-                                        quickSearch();
-                                    "
+                            <!-- Bathrooms -->
+                            <div class="col-md-4">
+                                <label
+                                    class="form-label fw-semibold mb-2 text-dark"
+                                    >Bathrooms</label
                                 >
-                                    1
-                                </a>
-                                <a
-                                    href="#"
-                                    class="btn"
-                                    :class="{
-                                        'btn-outline-warning': bathroom === 2,
-                                        '': bathroom !== 2,
-                                    }"
-                                    @click.prevent="
-                                        bathroom = 2;
-                                        quickSearch();
-                                    "
-                                >
-                                    2
-                                </a>
-                                <a
-                                    href="#"
-                                    class="btn"
-                                    :class="{
-                                        'btn-outline-warning': bathroom === 3,
-                                        '': bathroom !== 3,
-                                    }"
-                                    @click.prevent="
-                                        bathroom = 3;
-                                        quickSearch();
-                                    "
-                                >
-                                    3
-                                </a>
-                                <a
-                                    href="#"
-                                    class="btn"
-                                    :class="{
-                                        'btn-outline-warning': bathroom === 4,
-                                        '': bathroom !== 4,
-                                    }"
-                                    @click.prevent="
-                                        bathroom = 4;
-                                        quickSearch();
-                                    "
-                                >
-                                    4
-                                </a>
-                                <a
-                                    href="#"
-                                    class="btn"
-                                    :class="{
-                                        'btn-outline-warning': bathroom === 5,
-                                        '': bathroom !== 5,
-                                    }"
-                                    @click.prevent="
-                                        bathroom = 5;
-                                        quickSearch();
-                                    "
-                                >
-                                    5
-                                </a>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <template v-for="n in 5">
+                                        <button
+                                            type="button"
+                                            class="btn btn-outline-primary rounded-pill px-3 py-2"
+                                            :class="{
+                                                'btn-primary text-white shadow-sm':
+                                                    bathroom === n,
+                                            }"
+                                            @click.prevent="
+                                                bathroom = n;
+                                                quickSearch();
+                                            "
+                                            style="
+                                                border-color: #163259;
+                                                color: #163259;
+                                            "
+                                        >
+                                            {{ n }}
+                                        </button>
+                                    </template>
+                                </div>
                             </div>
 
-                            <div class="mt-2 col-3 col">
-                                <label for="">Bedrooms</label>
-                                <a
-                                    href="#"
-                                    class="btn"
-                                    :class="{
-                                        'btn-outline-warning': bedrooms === 1,
-                                        '': bedrooms !== 1,
-                                    }"
-                                    @click.prevent="
-                                        bedrooms = 1;
-                                        quickSearch();
-                                    "
+                            <!-- Bedrooms -->
+                            <div class="col-md-4">
+                                <label
+                                    class="form-label fw-semibold mb-2 text-dark"
+                                    >Bedrooms</label
                                 >
-                                    1
-                                </a>
-                                <a
-                                    href="#"
-                                    class="btn"
-                                    :class="{
-                                        'btn-outline-warning': bedrooms === 2,
-                                        '': bedrooms !== 2,
-                                    }"
-                                    @click.prevent="
-                                        bedrooms = 2;
-                                        quickSearch();
-                                    "
-                                >
-                                    2
-                                </a>
-                                <a
-                                    href="#"
-                                    class="btn"
-                                    :class="{
-                                        'btn-outline-warning': bedrooms === 3,
-                                        '': bedrooms !== 3,
-                                    }"
-                                    @click.prevent="
-                                        bedrooms = 3;
-                                        quickSearch();
-                                    "
-                                >
-                                    3
-                                </a>
-                                <a
-                                    href="#"
-                                    class="btn"
-                                    :class="{
-                                        'btn-outline-warning': bedrooms === 4,
-                                        '': bedrooms !== 4,
-                                    }"
-                                    @click.prevent="
-                                        bedrooms = 4;
-                                        quickSearch();
-                                    "
-                                >
-                                    4
-                                </a>
-                                <a
-                                    href="#"
-                                    class="btn"
-                                    :class="{
-                                        'btn-outline-warning': bedrooms === 5,
-                                        '': bedrooms !== 5,
-                                    }"
-                                    @click.prevent="
-                                        bedrooms = 5;
-                                        quickSearch();
-                                    "
-                                >
-                                    5
-                                </a>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <template v-for="n in 5">
+                                        <button
+                                            type="button"
+                                            class="btn btn-outline-primary rounded-pill px-3 py-2"
+                                            :class="{
+                                                'btn-primary text-white shadow-sm':
+                                                    bedrooms === n,
+                                            }"
+                                            @click.prevent="
+                                                bedrooms = n;
+                                                quickSearch();
+                                            "
+                                            style="
+                                                border-color: #163259;
+                                                color: #163259;
+                                            "
+                                        >
+                                            {{ n }}
+                                        </button>
+                                    </template>
+                                </div>
                             </div>
 
-                            <div class="mt-3 col-2 col">
-                                <label class="custom-checkbox">
+                            <!-- Open House (Toggle Switch Style) -->
+                            <div
+                                class="col-md-4 d-flex align-items-center mt-3"
+                            >
+                                <div class="form-check form-switch">
                                     <input
+                                        class="form-check-input"
                                         type="checkbox"
                                         v-model="is_open_house"
+                                        id="openHouseSwitch"
                                         @change="quickSearch"
+                                        style="
+                                            width: 3rem;
+                                            height: 1.5rem;
+                                            background-color: #e0e0e0;
+                                            border: none;
+                                            transition: background-color 0.3s
+                                                ease;
+                                        "
+                                        :style="
+                                            is_open_house
+                                                ? 'background-color: #28a745;'
+                                                : 'background-color: #e0e0e0;'
+                                        "
                                     />
-                                    <span class="checkmark"></span>
-                                    <!-- Custom checkbox styling -->
-                                    Is Open House
-                                </label>
+                                    <label
+                                        class="form-check-label ms-3 fw-semibold text-dark"
+                                        for="openHouseSwitch"
+                                    >
+                                        Open House Only
+                                    </label>
+                                </div>
                             </div>
 
-                            <div class="mt-3 col d-flex justify-content-end">
-                                <button
-                                    ref="openFilter"
-                                    data-bs-target="#filterModal"
-                                    data-bs-toggle="modal"
-                                    class="btn btn-primary w-30"
-                                >
-                                    Advance
-                                </button>
-                                <button
-                                    @click="resetForm"
-                                    class="btn btn-primary w-30 ms-1"
-                                >
-                                    Reset
-                                </button>
-                            </div>
-                            <!-- <div class="mt-2 col-1">
-                                <button
-                                    ref="openFilter"
-                                    data-bs-target="#filterModal"
-                                    data-bs-toggle="modal"
-                                    class="btn btn-primary beat"
-                                >
-                                    Advance
-                                </button>
+                            <!-- Buttons -->
+                            <div class="col-12 text-end mt-4">
+                                <div class="d-flex justify-content-end gap-3">
+                                    <!-- Advanced Filters Button -->
+                                    <button
+                                        ref="openFilter"
+                                        data-bs-target="#filterModal"
+                                        data-bs-toggle="modal"
+                                        class="btn rounded-3 px-4 py-2 d-flex align-items-center justify-content-center"
+                                        style="
+                                            background-color: #163259;
+                                            color: #fff;
+                                            border: none;
+                                            transition: 0.3s;
+                                            box-shadow: 0 4px 6px
+                                                rgba(0, 0, 0, 0.1);
+                                        "
+                                        @mouseover="hoverEffect = true"
+                                        @mouseleave="hoverEffect = false"
+                                    >
+                                        <i class="bi bi-funnel-fill me-2"></i>
+                                        <!-- Icon for filtering -->
+                                        <span>Advanced Filters</span>
+                                    </button>
 
-                                
-                            </div> -->
+                                    <!-- Reset Button -->
+                                    <button
+                                        @click="resetForm"
+                                        class="btn btn-outline-primary rounded-3 px-4 py-2 d-flex align-items-center justify-content-center"
+                                        style="
+                                            background-color: #163259;
+                                            color: #fff;
+                                            border: none;
+                                            transition: 0.3s;
+                                            box-shadow: 0 4px 6px
+                                                rgba(0, 0, 0, 0.1);
+                                        "
+                                        @mouseover="hoverEffect = true"
+                                        @mouseleave="hoverEffect = false"
+                                    >
+                                        <i class="bi bi-arrow-repeat me-2"></i>
+                                        <!-- Icon for reset -->
+                                        <span>Reset</span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-
-                        <!-- <div class="row">
-                            <div class="col-12 d-flex justify-content-end mt-4">
-                                <button
-                                    class="btn btn-primary"
-                                    @click="main_searching"
-                                >
-                                    Search
-                                </button>
-                            </div>
-                        </div> -->
                     </div>
                 </div>
             </div>
@@ -1576,6 +1528,7 @@ export default {
         quickSearch() {
             let formData = new FormData();
             formData.append("is_open_house", this.is_open_house ?? "");
+
             formData.append("main_search_field", this.main_search_field ?? "");
 
             formData.append("min_price", this.min_price ?? "");
