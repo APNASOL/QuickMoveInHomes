@@ -67,8 +67,14 @@ function addMarkers() {
     markers.length = 0; // Clear the markers array
     // Check if the markerClusterer exists before attempting to clear it
     if (markerClusterer) {
-        markerClusterer.clearMarkers(); // Clear markers from the clusterer
-    }
+    markerClusterer.setMap(null); // Remove previous clusterer
+    markerClusterer = null; // Reset
+}
+    markerClusterer = new MarkerClusterer({
+        map: map.value,
+        markers: markers,
+    });
+
 
     // Ensure homes prop is an array and contains valid home data
     if (Array.isArray(props.homes) && props.homes.length > 0) {
