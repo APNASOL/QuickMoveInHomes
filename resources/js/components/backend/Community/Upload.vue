@@ -126,6 +126,42 @@
                         </div>
                     </div>
 
+                    <div v-if="processingStatus" class="mt-3">
+                        <div class="progress">
+                            <div
+                                class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
+                                role="progressbar"
+                                :style="{ width: processingPercentage + '%' }"
+                                :aria-valuenow="processingPercentage"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                            >
+                                Uploading: {{ processingPercentage }}%
+                            </div>
+                        </div>
+                        <p v-if="processingStatus" class="text-muted mt-2">
+                            <span v-if="processingPercentage <= 10"
+                                >Uploading & starting ZIP extraction...</span
+                            >
+                            <span v-else-if="processingPercentage <= 40"
+                                >Extracting ZIP files...</span
+                            >
+                            <span v-else-if="processingPercentage <= 70"
+                                >Importing Excel data...</span
+                            >
+                            <span v-else-if="processingPercentage <= 80"
+                                >Cleaning up files...</span
+                            >
+                            <span v-else-if="processingPercentage <= 90"
+                                >Finalizing upload...</span
+                            >
+                            <span v-else-if="processingPercentage <= 99"
+                                >Wrapping up...</span
+                            >
+                            <span v-else>Completed!</span>
+                        </p>
+                    </div>
+
                     <!-- Upload Button -->
                     <div class="text-center mt-4">
                         <button
@@ -160,8 +196,11 @@ export default {
             excelFile: null,
             imageZip: null,
             loading: false,
-            excelDragging: false, // For Excel dropzone feedback
-            zipDragging: false, // For ZIP dropzone feedback
+            uploadPercentage: 0,
+            jobId: null,
+            processingPercentage: 0,
+            processingStatus: false,
+            pollingInterval: null,
         };
     },
     methods: {
@@ -191,30 +230,81 @@ export default {
         triggerZipPicker() {
             this.$refs.zipInput.click();
         },
+
         uploadFiles() {
             if (!this.excelFile || !this.imageZip) return;
 
             this.loading = true;
+            this.uploadPercentage = 0;
+            this.jobId = Date.now().toString(); // simple unique ID
+            this.startPollingProgress();
             const formData = new FormData();
             formData.append("file", this.excelFile);
             formData.append("images", this.imageZip);
+            formData.append("job_id", this.jobId);
 
             axios
-                .post("/api/communities/scrap/data/upload", formData)
+                .post("/api/communities/scrap/data/upload", formData, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                    onUploadProgress: (progressEvent) => {
+                        if (progressEvent.lengthComputable) {
+                            this.uploadPercentage = Math.round(
+                                (progressEvent.loaded / progressEvent.total) *
+                                    100
+                            );
+                        }
+                    },
+                })
                 .then(() => {
-                    toastr.success("Files uploaded successfully!");
-                    window.location.href = "/communities";
+                    toastr.success("Communities processed successfully!");
+                    // this.startPollingProgress(); // Start tracking server-side
                 })
                 .catch((error) => {
-                    toastr.error(
-                        error.response?.data?.message ||
-                            "An error occurred while uploading."
-                    );
-                })
-                .finally(() => {
                     this.loading = false;
+                    toastr.error(
+                        error.response?.data?.message || "Upload failed."
+                    );
                 });
         },
+
+        //         uploadFiles() {
+        //     if (!this.excelFile || !this.imageZip) return;
+
+        //     this.loading = true;
+        //     this.uploadPercentage = 0;
+
+        //     const formData = new FormData();
+        //     formData.append("file", this.excelFile);
+        //     formData.append("images", this.imageZip);
+
+        //     axios
+        //         .post("/api/communities/scrap/data/upload", formData, {
+        //             headers: {
+        //                 "Content-Type": "multipart/form-data",
+        //             },
+        //             onUploadProgress: (progressEvent) => {
+        //                 if (progressEvent.lengthComputable) {
+        //                     this.uploadPercentage = Math.round(
+        //                         (progressEvent.loaded / progressEvent.total) * 100
+        //                     );
+        //                 }
+        //             },
+        //         })
+        //         .then(() => {
+        //             toastr.success("Files uploaded successfully!");
+        //             window.location.href = "/communities";
+        //         })
+        //         .catch((error) => {
+        //             toastr.error(
+        //                 error.response?.data?.message ||
+        //                     "An error occurred while uploading."
+        //             );
+        //         })
+        //         .finally(() => {
+        //             this.loading = false;
+        //         });
+        // },
+
         formatFileSize(size) {
             const kb = 1024;
             const mb = kb * 1024;
@@ -224,6 +314,40 @@ export default {
         },
         getFileExtension(filename) {
             return filename.split(".").pop();
+        },
+        startPollingProgress() {
+            this.processingStatus = true;
+            this.processingPercentage = 1;
+
+            this.pollingInterval = setInterval(() => {
+                axios
+                    .get(`/api/communities/scrap/status/${this.jobId}`)
+                    .then((res) => {
+                        const backendProgress = res.data.progress;
+
+                        if (backendProgress >= 0) {
+                            this.processingPercentage = backendProgress;
+                        }
+
+                        if (backendProgress === 100) {
+                            clearInterval(this.pollingInterval);
+                            this.processingStatus = false;
+                            this.loading = false;
+
+                            toastr.success(
+                                "Communities processed successfully!"
+                            );
+                            setTimeout(() => {
+                                window.location.href = "/communities";
+                            }, 1000);
+                        } else if (backendProgress === -1) {
+                            clearInterval(this.pollingInterval);
+                            this.processingStatus = false;
+                            this.loading = false;
+                            toastr.error("Processing failed.");
+                        }
+                    });
+            }, 500); // Faster polling interval
         },
     },
 };

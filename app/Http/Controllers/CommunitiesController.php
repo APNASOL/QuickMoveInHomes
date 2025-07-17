@@ -21,7 +21,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
  
 use Illuminate\Support\Facades\File;
-  
+  use Illuminate\Support\Facades\Cache;
+
 
 class CommunitiesController extends Controller
 {
@@ -79,55 +80,107 @@ class CommunitiesController extends Controller
         return view('app', compact('name'));
     }
 
-    public function uploadCommunities(Request $request)
-    {
-        $request->validate([
-            'file'   => 'required|file|mimes:xlsx',
-            'images' => 'required|file|mimes:zip',
-        ]);
+    // public function uploadCommunities(Request $request)
+    // {
+    //     $request->validate([
+    //         'file'   => 'required|file|mimes:xlsx',
+    //         'images' => 'required|file|mimes:zip',
+    //     ]);
 
-        try {
-            // Step 1: Handle Images (Unzip)
-            $zipPath     = $request->file('images')->store('real_public/temp', 'real_public');
-            $extractPath = public_path('real_public/temp/'); // Extract to temporary folder in real_public
+    //     try {
+    //         // Step 1: Handle Images (Unzip)
+    //         $zipPath     = $request->file('images')->store('real_public/temp', 'real_public');
+    //         $extractPath = public_path('real_public/temp/'); // Extract to temporary folder in real_public
 
-            // Ensure the extraction directory exists
-            if (! File::exists($extractPath)) {
-                File::makeDirectory($extractPath, 0755, true);
-            }
+    //         // Ensure the extraction directory exists
+    //         if (! File::exists($extractPath)) {
+    //             File::makeDirectory($extractPath, 0755, true);
+    //         }
 
-            // Step 2: Unzip the uploaded file
-            $zip         = new ZipArchive;
-            $zipFilePath = public_path('real_public/temp/' . basename($zipPath)); // Get full path of ZIP file
+    //         // Step 2: Unzip the uploaded file
+    //         $zip         = new ZipArchive;
+    //         $zipFilePath = public_path('real_public/temp/' . basename($zipPath)); // Get full path of ZIP file
 
-            // Check if the ZIP file exists
-            if (! file_exists($zipFilePath)) {
-                return response()->json(['error' => 'ZIP file does not exist at the path: ' . $zipFilePath], 500);
-            }
+    //         // Check if the ZIP file exists
+    //         if (! file_exists($zipFilePath)) {
+    //             return response()->json(['error' => 'ZIP file does not exist at the path: ' . $zipFilePath], 500);
+    //         }
 
-            // Open and extract the ZIP file
-            if ($zip->open($zipFilePath) === true) {
-                $zip->extractTo($extractPath); // Extract to local path within real_public
-                $zip->close();
-            } else {
-                return response()->json(['error' => 'Failed to unzip the images.'], 500);
-            }
+    //         // Open and extract the ZIP file
+    //         if ($zip->open($zipFilePath) === true) {
+    //             $zip->extractTo($extractPath); // Extract to local path within real_public
+    //             $zip->close();
+    //         } else {
+    //             return response()->json(['error' => 'Failed to unzip the images.'], 500);
+    //         }
 
-            // Step 3: Import Communities from Excel
-            Excel::import(new CommunitiesImport($extractPath), $request->file('file'));
+    //         // Step 3: Import Communities from Excel
+    //         Excel::import(new CommunitiesImport($extractPath), $request->file('file'));
 
-                                                            // Clean up temporary files
-            Storage::disk('real_public')->delete($zipPath); // Delete the ZIP from real_public disk
-            File::deleteDirectory($extractPath);            // Delete extracted images directory
+    //                                                         // Clean up temporary files
+    //         Storage::disk('real_public')->delete($zipPath); // Delete the ZIP from real_public disk
+    //         File::deleteDirectory($extractPath);            // Delete extracted images directory
 
-            return response()->json(['message' => 'Communities uploaded successfully'], 200);
+    //         return response()->json(['message' => 'Communities uploaded successfully'], 200);
 
-        } catch (\Exception $e) {
-            // Log and return an error message
-            // \Log::error('Error uploading Communities: ' . $e->getMessage());
-            return response()->json(['error' => 'An error occurred while uploading communities. Details: ' . $e->getMessage()], 500);
-        }
+    //     } catch (\Exception $e) {
+    //         // Log and return an error message
+    //         // \Log::error('Error uploading Communities: ' . $e->getMessage());
+    //         return response()->json(['error' => 'An error occurred while uploading communities. Details: ' . $e->getMessage()], 500);
+    //     }
+    // }
+   public function uploadCommunities(Request $request)
+{
+    $request->validate([
+        'file'   => 'required|file|mimes:xlsx',
+        'images' => 'required|file|mimes:zip',
+        'job_id' => 'required|string',
+    ]);
+
+    $jobId = $request->input('job_id');
+    Cache::put("community_upload_progress_$jobId", 1); // Start
+
+    try {
+        // ZIP Extracting
+        Cache::put("community_upload_progress_$jobId", 10);
+        $zipPath = $request->file('images')->store('real_public/temp', 'real_public');
+        $extractPath = public_path('real_public/temp/');
+        if (!File::exists($extractPath)) File::makeDirectory($extractPath, 0755, true);
+
+        $zip = new \ZipArchive;
+        $zipFilePath = public_path('real_public/temp/' . basename($zipPath));
+        if (!$zip->open($zipFilePath)) throw new \Exception("ZIP failed");
+
+        $zip->extractTo($extractPath);
+        $zip->close();
+        Cache::put("community_upload_progress_$jobId", 40); // After ZIP done
+
+        // Excel Import
+        Cache::put("community_upload_progress_$jobId", 60); // Starting Excel import
+        Excel::import(new \App\Imports\CommunitiesImport($extractPath), $request->file('file'));
+        Cache::put("community_upload_progress_$jobId", 70); // After Excel import
+
+        // Cleanup
+        Cache::put("community_upload_progress_$jobId", 80);
+        Storage::disk('real_public')->delete($zipPath);
+        File::deleteDirectory($extractPath);
+
+        // Finalizing
+        Cache::put("community_upload_progress_$jobId", 90);
+        sleep(1); // Optional: simulate processing delay
+        Cache::put("community_upload_progress_$jobId", 100);
+
+        return response()->json(['message' => 'Upload completed'], 200);
+    } catch (\Exception $e) {
+        Cache::put("community_upload_progress_$jobId", -1);
+        return response()->json([
+            'error' => 'Upload failed: ' . $e->getMessage()
+        ], 500);
     }
+}
+
+
+
 
     public function store(Request $request)
     {  

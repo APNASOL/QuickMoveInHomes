@@ -183,6 +183,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/scrap/data/upload', [PropertyController::class, 'uploadProperties'])->name('scrap.data.upload');
     Route::post('/communities/scrap/data/upload', [CommunitiesController::class, 'uploadCommunities'])->name('communities.scrap.data.upload');
 
+
+    // progress status for community upload
+    Route::get('/communities/scrap/status/{jobId}', function ($jobId) {
+        return response()->json([
+            'progress' => Cache::get("community_upload_progress_$jobId", 0)
+        ]);
+    });
+
     // languages
     Route::get('/get-existing-languges', [LanguageController::class, 'languages_data'])->name('get-existing-languges');
 

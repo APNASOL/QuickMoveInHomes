@@ -125,6 +125,21 @@
                             />
                         </div>
                     </div>
+<div v-if="loading" class="mt-3">
+    <div class="progress">
+        <div
+            class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
+            role="progressbar"
+            :style="{ width: uploadPercentage + '%' }"
+            :aria-valuenow="uploadPercentage"
+            aria-valuemin="0"
+            aria-valuemax="100"
+        >
+            {{ uploadPercentage }}%
+        </div>
+    </div>
+</div>
+
 
                     <!-- Upload Button -->
                     <div class="text-center mt-4">
@@ -161,6 +176,7 @@ export default {
             loading: false,
             excelDragging: false, // For Excel dropzone feedback
             zipDragging: false, // For ZIP dropzone feedback
+            uploadPercentage: 0, 
         };
     },
     methods: {
@@ -190,30 +206,44 @@ export default {
         triggerZipPicker() {
             this.$refs.zipInput.click();
         },
-        uploadFiles() {
-            if (!this.excelFile || !this.imageZip) return;
+      uploadFiles() {
+    if (!this.excelFile || !this.imageZip) return;
 
-            this.loading = true;
-            const formData = new FormData();
-            formData.append("file", this.excelFile);
-            formData.append("images", this.imageZip);
+    this.loading = true;
+    this.uploadPercentage = 0;
 
-            axios
-                .post("/api/scrap/data/upload", formData)
-                .then(() => {
-                    toastr.success("Files uploaded successfully!");
-                    window.location.href = "properties";
-                })
-                .catch((error) => {
-                    toastr.error(
-                        error.response?.data?.message ||
-                            "An error occurred while uploading."
+    const formData = new FormData();
+    formData.append("file", this.excelFile);
+    formData.append("images", this.imageZip);
+
+    axios
+        .post("/api/scrap/data/upload", formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+            onUploadProgress: (progressEvent) => {
+                if (progressEvent.lengthComputable) {
+                    this.uploadPercentage = Math.round(
+                        (progressEvent.loaded / progressEvent.total) * 100
                     );
-                })
-                .finally(() => {
-                    this.loading = false;
-                });
-        },
+                }
+            },
+        })
+        .then(() => {
+            toastr.success("Files uploaded successfully!");
+            window.location.href = "/properties";
+        })
+        .catch((error) => {
+            toastr.error(
+                error.response?.data?.message ||
+                    "An error occurred while uploading."
+            );
+        })
+        .finally(() => {
+            this.loading = false;
+        });
+},
+
         formatFileSize(size) {
             const kb = 1024;
             const mb = kb * 1024;

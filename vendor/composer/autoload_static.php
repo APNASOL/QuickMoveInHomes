@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit4f5f939b2746b5fb154d121866cf2ade
+class ComposerStaticInit5b96cae21abff8e44027b9869777eb9a
 {
     public static $files = array (
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
@@ -333,13 +333,13 @@ class ComposerStaticInit4f5f939b2746b5fb154d121866cf2ade
         ),
         'Spatie\\LaravelIgnition\\' => 
         array (
-            0 => __DIR__ . '/..' . '/spatie/error-solutions/legacy/laravel-ignition',
-            1 => __DIR__ . '/..' . '/spatie/laravel-ignition/src',
+            0 => __DIR__ . '/..' . '/spatie/laravel-ignition/src',
+            1 => __DIR__ . '/..' . '/spatie/error-solutions/legacy/laravel-ignition',
         ),
         'Spatie\\Ignition\\' => 
         array (
-            0 => __DIR__ . '/..' . '/spatie/error-solutions/legacy/ignition',
-            1 => __DIR__ . '/..' . '/spatie/ignition/src',
+            0 => __DIR__ . '/..' . '/spatie/ignition/src',
+            1 => __DIR__ . '/..' . '/spatie/error-solutions/legacy/ignition',
         ),
         'Spatie\\FlareClient\\' => 
         array (
@@ -587,12 +587,10 @@ class ComposerStaticInit4f5f939b2746b5fb154d121866cf2ade
         'App\\Http\\Controllers\\AgentController' => __DIR__ . '/../..' . '/app/Http/Controllers/AgentController.php',
         'App\\Http\\Controllers\\AmenityController' => __DIR__ . '/../..' . '/app/Http/Controllers/AmenityController.php',
         'App\\Http\\Controllers\\BlogPostsController' => __DIR__ . '/../..' . '/app/Http/Controllers/BlogPostsController.php',
-        'App\\Http\\Controllers\\BookingController' => __DIR__ . '/../..' . '/app/Http/Controllers/BookingController.php',
         'App\\Http\\Controllers\\BuilderController' => __DIR__ . '/../..' . '/app/Http/Controllers/BuilderController.php',
         'App\\Http\\Controllers\\CallMeNowController' => __DIR__ . '/../..' . '/app/Http/Controllers/CallMeNowController.php',
         'App\\Http\\Controllers\\CommunitiesController' => __DIR__ . '/../..' . '/app/Http/Controllers/CommunitiesController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
-        'App\\Http\\Controllers\\CustomPagesController' => __DIR__ . '/../..' . '/app/Http/Controllers/CustomPagesController.php',
         'App\\Http\\Controllers\\EventController' => __DIR__ . '/../..' . '/app/Http/Controllers/EventController.php',
         'App\\Http\\Controllers\\HOAController' => __DIR__ . '/../..' . '/app/Http/Controllers/HOAController.php',
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
@@ -602,17 +600,16 @@ class ComposerStaticInit4f5f939b2746b5fb154d121866cf2ade
         'App\\Http\\Controllers\\LanguageController' => __DIR__ . '/../..' . '/app/Http/Controllers/LanguageController.php',
         'App\\Http\\Controllers\\LasVegasRegionController' => __DIR__ . '/../..' . '/app/Http/Controllers/LasVegasRegionController.php',
         'App\\Http\\Controllers\\NeighborhoodController' => __DIR__ . '/../..' . '/app/Http/Controllers/NeighborhoodController.php',
-        'App\\Http\\Controllers\\OfficeController' => __DIR__ . '/../..' . '/app/Http/Controllers/OfficeController.php',
         'App\\Http\\Controllers\\OurPromisesController' => __DIR__ . '/../..' . '/app/Http/Controllers/OurPromisesController.php',
         'App\\Http\\Controllers\\PropertyController' => __DIR__ . '/../..' . '/app/Http/Controllers/PropertyController.php',
         'App\\Http\\Controllers\\SchoolController' => __DIR__ . '/../..' . '/app/Http/Controllers/SchoolController.php',
         'App\\Http\\Controllers\\SettingController' => __DIR__ . '/../..' . '/app/Http/Controllers/SettingController.php',
-        'App\\Http\\Controllers\\StoryController' => __DIR__ . '/../..' . '/app/Http/Controllers/StoryController.php',
-        'App\\Http\\Controllers\\TourController' => __DIR__ . '/../..' . '/app/Http/Controllers/TourController.php',
-        'App\\Http\\Controllers\\TourCountriesController' => __DIR__ . '/../..' . '/app/Http/Controllers/TourCountriesController.php',
         'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
+        'App\\Http\\Middleware\\AdminMiddleware' => __DIR__ . '/../..' . '/app/Http/Middleware/AdminMiddleware.php',
+        'App\\Http\\Middleware\\AgentMiddleware' => __DIR__ . '/../..' . '/app/Http/Middleware/AgentMiddleware.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
+        'App\\Http\\Middleware\\CustomerMiddleware' => __DIR__ . '/../..' . '/app/Http/Middleware/CustomerMiddleware.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
         'App\\Http\\Middleware\\PreventRequestsDuringMaintenance' => __DIR__ . '/../..' . '/app/Http/Middleware/PreventRequestsDuringMaintenance.php',
         'App\\Http\\Middleware\\RedirectIfAuthenticated' => __DIR__ . '/../..' . '/app/Http/Middleware/RedirectIfAuthenticated.php',
@@ -621,9 +618,8 @@ class ComposerStaticInit4f5f939b2746b5fb154d121866cf2ade
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\ValidateSignature' => __DIR__ . '/../..' . '/app/Http/Middleware/ValidateSignature.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Imports\\CommunitiesImport' => __DIR__ . '/../..' . '/app/Imports/CommunitiesImport.php',
         'App\\Imports\\PropertiesImport' => __DIR__ . '/../..' . '/app/Imports/PropertiesImport.php',
-        'App\\Models\\AccommodationOtherImag' => __DIR__ . '/../..' . '/app/Models/AccommodationOtherImag.php',
-        'App\\Models\\ActivityOtherImag' => __DIR__ . '/../..' . '/app/Models/ActivityOtherImag.php',
         'App\\Models\\Agent' => __DIR__ . '/../..' . '/app/Models/Agent.php',
         'App\\Models\\Amenity' => __DIR__ . '/../..' . '/app/Models/Amenity.php',
         'App\\Models\\BlogPost' => __DIR__ . '/../..' . '/app/Models/BlogPost.php',
@@ -638,42 +634,25 @@ class ComposerStaticInit4f5f939b2746b5fb154d121866cf2ade
         'App\\Models\\Contact' => __DIR__ . '/../..' . '/app/Models/Contact.php',
         'App\\Models\\Country' => __DIR__ . '/../..' . '/app/Models/Country.php',
         'App\\Models\\CountryFaq' => __DIR__ . '/../..' . '/app/Models/CountryFaq.php',
-        'App\\Models\\CustomPage' => __DIR__ . '/../..' . '/app/Models/CustomPage.php',
-        'App\\Models\\CustomPageTours' => __DIR__ . '/../..' . '/app/Models/CustomPageTours.php',
         'App\\Models\\CustomerAgentConnection' => __DIR__ . '/../..' . '/app/Models/CustomerAgentConnection.php',
         'App\\Models\\CustomerVisitingHomesHistory' => __DIR__ . '/../..' . '/app/Models/CustomerVisitingHomesHistory.php',
         'App\\Models\\Event' => __DIR__ . '/../..' . '/app/Models/Event.php',
+        'App\\Models\\FloorPlan' => __DIR__ . '/../..' . '/app/Models/FloorPlan.php',
         'App\\Models\\HOA' => __DIR__ . '/../..' . '/app/Models/HOA.php',
         'App\\Models\\Incentive' => __DIR__ . '/../..' . '/app/Models/Incentive.php',
         'App\\Models\\Language' => __DIR__ . '/../..' . '/app/Models/Language.php',
         'App\\Models\\LasVegasRegion' => __DIR__ . '/../..' . '/app/Models/LasVegasRegion.php',
         'App\\Models\\Neighborhood' => __DIR__ . '/../..' . '/app/Models/Neighborhood.php',
-        'App\\Models\\Office' => __DIR__ . '/../..' . '/app/Models/Office.php',
         'App\\Models\\OpenHouse' => __DIR__ . '/../..' . '/app/Models/OpenHouse.php',
         'App\\Models\\OurPromise' => __DIR__ . '/../..' . '/app/Models/OurPromise.php',
         'App\\Models\\Property' => __DIR__ . '/../..' . '/app/Models/Property.php',
         'App\\Models\\PropertyFeature' => __DIR__ . '/../..' . '/app/Models/PropertyFeature.php',
         'App\\Models\\PropertyIncentive' => __DIR__ . '/../..' . '/app/Models/PropertyIncentive.php',
         'App\\Models\\QuickMoveHome' => __DIR__ . '/../..' . '/app/Models/QuickMoveHome.php',
-        'App\\Models\\QuickMoveInHome' => __DIR__ . '/../..' . '/app/Models/QuickMoveInHome.php',
         'App\\Models\\School' => __DIR__ . '/../..' . '/app/Models/School.php',
         'App\\Models\\Seo' => __DIR__ . '/../..' . '/app/Models/Seo.php',
         'App\\Models\\Setting' => __DIR__ . '/../..' . '/app/Models/Setting.php',
-        'App\\Models\\SingleTourCountry' => __DIR__ . '/../..' . '/app/Models/SingleTourCountry.php',
-        'App\\Models\\Story' => __DIR__ . '/../..' . '/app/Models/Story.php',
-        'App\\Models\\Tour' => __DIR__ . '/../..' . '/app/Models/Tour.php',
-        'App\\Models\\TourAccommodation' => __DIR__ . '/../..' . '/app/Models/TourAccommodation.php',
-        'App\\Models\\TourActivity' => __DIR__ . '/../..' . '/app/Models/TourActivity.php',
-        'App\\Models\\TourBooking' => __DIR__ . '/../..' . '/app/Models/TourBooking.php',
-        'App\\Models\\TourCalendar' => __DIR__ . '/../..' . '/app/Models/TourCalendar.php',
-        'App\\Models\\TourCountry' => __DIR__ . '/../..' . '/app/Models/TourCountry.php',
-        'App\\Models\\TourItinerary' => __DIR__ . '/../..' . '/app/Models/TourItinerary.php',
-        'App\\Models\\TourOtherImage' => __DIR__ . '/../..' . '/app/Models/TourOtherImage.php',
-        'App\\Models\\TourPriceInclude' => __DIR__ . '/../..' . '/app/Models/TourPriceInclude.php',
-        'App\\Models\\TourTag' => __DIR__ . '/../..' . '/app/Models/TourTag.php',
-        'App\\Models\\TourUsefullInformation' => __DIR__ . '/../..' . '/app/Models/TourUsefullInformation.php',
         'App\\Models\\Translation' => __DIR__ . '/../..' . '/app/Models/Translation.php',
-        'App\\Models\\TripHightlight' => __DIR__ . '/../..' . '/app/Models/TripHightlight.php',
         'App\\Models\\Upload' => __DIR__ . '/../..' . '/app/Models/Upload.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
@@ -8044,10 +8023,10 @@ class ComposerStaticInit4f5f939b2746b5fb154d121866cf2ade
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit4f5f939b2746b5fb154d121866cf2ade::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit4f5f939b2746b5fb154d121866cf2ade::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit4f5f939b2746b5fb154d121866cf2ade::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit4f5f939b2746b5fb154d121866cf2ade::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit5b96cae21abff8e44027b9869777eb9a::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit5b96cae21abff8e44027b9869777eb9a::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit5b96cae21abff8e44027b9869777eb9a::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit5b96cae21abff8e44027b9869777eb9a::$classMap;
 
         }, null, ClassLoader::class);
     }

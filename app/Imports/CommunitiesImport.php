@@ -155,7 +155,7 @@ class CommunitiesImport implements ToCollection, WithHeadingRow
                 $community->files = !empty($uploadedImageIds) ? json_encode($uploadedImageIds) : null;
                 $community->main_image = $uploadedImageIds[0] ?? null;
                 $community->banner = $uploadedImageIds[1] ?? null;
-                $community->save();
+                // $community->save();
             }
             
             DB::commit();
