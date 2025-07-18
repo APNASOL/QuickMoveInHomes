@@ -146,7 +146,7 @@
                                 >Extracting ZIP...</span
                             >
                             <span v-else-if="processingPercentage <= 70"
-                                >Importing Excel...</span
+                                >Importing Excel data , Cleaning up files & Finalizing upload...</span
                             >
                             <span v-else-if="processingPercentage <= 80"
                                 >Cleaning up files...</span

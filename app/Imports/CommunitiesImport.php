@@ -43,7 +43,7 @@ class CommunitiesImport implements ToCollection, WithHeadingRow
                 Log::info("Processing row: " . json_encode($row->toArray()));
 
                 $community = new Community();
-                $community->id = Str::orderedUuid();
+                $community->id = $row['id'];
                 $community->name = $row['name'] ?? null;
                 $community->description = $row['description'] ?? null;
                 $community->location = $row['location'] ?? null;

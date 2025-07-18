@@ -147,7 +147,7 @@
                                 >Extracting ZIP files...</span
                             >
                             <span v-else-if="processingPercentage <= 70"
-                                >Importing Excel data...</span
+                                >Importing Excel data , Cleaning up files & Finalizing upload...</span
                             >
                             <span v-else-if="processingPercentage <= 80"
                                 >Cleaning up files...</span
@@ -256,7 +256,10 @@ export default {
                     },
                 })
                 .then(() => {
-                    toastr.success("Uploaded Successfully!");
+                    toastr.success(
+                                "Communities processed successfully!"
+                            );
+                    // toastr.success("Uploaded Successfully!");
                     // this.startPollingProgress(); // Start tracking server-side
                 })
                 .catch((error) => {
@@ -334,9 +337,7 @@ export default {
                             this.processingStatus = false;
                             this.loading = false;
 
-                            // toastr.success(
-                            //     "Communities processed successfully!"
-                            // );
+                            
                             setTimeout(() => {
                                 window.location.href = "/communities";
                             }, 1000);
