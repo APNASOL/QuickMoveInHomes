@@ -256,7 +256,7 @@ export default {
                     },
                 })
                 .then(() => {
-                    toastr.success("Communities processed successfully!");
+                    toastr.success("Uploaded Successfully!");
                     // this.startPollingProgress(); // Start tracking server-side
                 })
                 .catch((error) => {
@@ -334,9 +334,9 @@ export default {
                             this.processingStatus = false;
                             this.loading = false;
 
-                            toastr.success(
-                                "Communities processed successfully!"
-                            );
+                            // toastr.success(
+                            //     "Communities processed successfully!"
+                            // );
                             setTimeout(() => {
                                 window.location.href = "/communities";
                             }, 1000);

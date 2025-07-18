@@ -153,7 +153,7 @@ class CommunitiesController extends Controller
 
         $zip->extractTo($extractPath);
         $zip->close();
-        Cache::put("community_upload_progress_$jobId", 40); // After ZIP done
+        Cache::put("community_upload_progress_$jobId", 30); // After ZIP done
 
         // Excel Import
         Cache::put("community_upload_progress_$jobId", 60); // Starting Excel import
