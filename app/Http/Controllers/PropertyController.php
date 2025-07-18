@@ -65,9 +65,9 @@ class PropertyController extends Controller
         Cache::put("property_upload_progress_$jobId", 40); // After ZIP
 
         // Step 2: Excel import
-        Cache::put("property_upload_progress_$jobId", 60);
+        Cache::put("property_upload_progress_$jobId", 85);
         Excel::import(new \App\Imports\PropertiesImport($extractPath), $request->file('file'));
-        Cache::put("property_upload_progress_$jobId", 70); // After import
+        Cache::put("property_upload_progress_$jobId", 88); // After import
 
         // Step 3: Cleanup
         Cache::put("property_upload_progress_$jobId", 80);
