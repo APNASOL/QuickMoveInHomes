@@ -256,9 +256,9 @@ export default {
                     },
                 })
                 .then(() => {
-                    toastr.success(
-                                "Communities processed successfully!"
-                            );
+                    // toastr.success(
+                    //             "Communities processed successfully!"
+                    //         );
                     // toastr.success("Uploaded Successfully!");
                     // this.startPollingProgress(); // Start tracking server-side
                 })

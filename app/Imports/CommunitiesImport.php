@@ -24,7 +24,7 @@ class CommunitiesImport implements ToCollection, WithHeadingRow
 
     public function __construct($extractPath)
     {
-        $this->extractPath = rtrim($extractPath, '/'); // Ensure clean path format
+        $this->extractPath = rtrim($extractPath, '/');
         Log::info("CommunitiesImport initialized with extract path: " . $this->extractPath);
     }
 
@@ -42,96 +42,64 @@ class CommunitiesImport implements ToCollection, WithHeadingRow
 
                 Log::info("Processing row: " . json_encode($row->toArray()));
 
-                $community = new Community();
-                $community->id = $row['id'];
-                $community->name = $row['name'] ?? null;
-                $community->description = $row['description'] ?? null;
-                $community->location = $row['location'] ?? null;
-                $community->longitude = $row['longitude'] ?? null;
-                $community->latitude = $row['latitude'] ?? null;
-                $community->map_location = $row['map_location'] ?? null;
-                $community->legal_subdivision = $row['legal_subdivision'] ?? null;
-                $community->nearby_properties = $row['nearby_properties'] ?? null;
-                $community->masterplan = $row['masterplan'] ?? null;
-                $community->sub_association = $row['sub_association'] ?? null;
-                $community->cic = $row['cic'] ?? null;
-                $community->lid = $row['lid'] ?? null;
-                $community->cid = $row['cid'] ?? null;
-                $community->sid_lid_fee = $row['sid_lid_fee'] ?? null;
-                $community->sid_lid_payment_frequency = $row['sid_lid_payment_frequency'] ?? null;
-                $community->proximity_to_strip = $row['proximity_to_strip'] ?? null;
-                $community->proximity_to_airport = $row['proximity_to_airport'] ?? null;
-                $community->nearby_attractions = $row['nearby_attractions'] ?? null;
-                $community->hoa_id = $row['hoa_id'] ?? null;
-                // $community->las_vegas_region_id = $row['las_vegas_region_id'] ?? null;
-                // $community->neighborhood_id = $row['neighborhood_id'] ?? null;
-                // $community->amenity_id = $row['amenity_id'] ?? null;
+                $community = Community::find($row['id']) ?? new Community();
+
+                if ($community->exists) {
+                    CommunityLasVegasRegion::where('community_id', $community->id)->delete();
+                    CommunityNeighborhood::where('community_id', $community->id)->delete();
+                    CommunityAmenity::where('community_id', $community->id)->delete();
+
+                    if ($community->files) {
+                        $oldImageIds = json_decode($community->files, true);
+                        Upload::whereIn('id', $oldImageIds)->get()->each(function ($upload) {
+                            Storage::delete($upload->file_name);
+                            $upload->delete();
+                        });
+                    }
+                } else {
+                    $community->id = $row['id'];
+                }
+
+                $community->fill([
+                    'name' => $row['name'] ?? null,
+                    'description' => $row['description'] ?? null,
+                    'location' => $row['location'] ?? null,
+                    'longitude' => $row['longitude'] ?? null,
+                    'latitude' => $row['latitude'] ?? null,
+                    'map_location' => $row['map_location'] ?? null,
+                    'legal_subdivision' => $row['legal_subdivision'] ?? null,
+                    'nearby_properties' => $row['nearby_properties'] ?? null,
+                    'masterplan' => $row['masterplan'] ?? null,
+                    'sub_association' => $row['sub_association'] ?? null,
+                    'cic' => $row['cic'] ?? null,
+                    'lid' => $row['lid'] ?? null,
+                    'cid' => $row['cid'] ?? null,
+                    'sid_lid_fee' => $row['sid_lid_fee'] ?? null,
+                    'sid_lid_payment_frequency' => $row['sid_lid_payment_frequency'] ?? null,
+                    'proximity_to_strip' => $row['proximity_to_strip'] ?? null,
+                    'proximity_to_airport' => $row['proximity_to_airport'] ?? null,
+                    'nearby_attractions' => $row['nearby_attractions'] ?? null,
+                    'hoa_id' => $row['hoa_id'] ?? null
+                ]);
                 $community->save();
-                Log::info("Community saved: " . $community->id);
 
-                // if (!empty($row['las_vegas_region_id'])) {
-                //     CommunityLasVegasRegion::create([
-                //         'id' => Str::orderedUuid(), // Ensure 'id' is set
-                //         'community_id' => $community->id,
-                //         'las_vegas_regions_id' => $row['las_vegas_region_id'],
-                //     ]);
-                // }
-                
-                
-                // if (!empty($row['neighborhood_id'])) {
-                //     CommunityNeighborhood::create([
-                //         'id' => Str::orderedUuid(), // Generate a new UUID for the id
-                //         'community_id' => $community->id,
-                //         'neighborhood_id' => $row['neighborhood_id'],
-                //     ]);
-                // }
-                
-                // if (!empty($row['amenity_id'])) {
-                //     CommunityAmenity::create([
-                //         'id' => Str::orderedUuid(), // Generate a new UUID for the id
-                //         'community_id' => $community->id,
-                //         'amenity_id' => $row['amenity_id'],
-                //     ]);
-                // }
-
-                 // Handle las_vegas_region_id (multiple values possible)
-                 if (!empty($row['las_vegas_region_id'])) {
-                    $regions = array_map('trim', explode(',', $row['las_vegas_region_id']));
-                    foreach ($regions as $region) {
-                        CommunityLasVegasRegion::create([
-                            'id' => Str::orderedUuid(), // Generate a new UUID for the id
-                            'community_id' => $community->id,
-                            'las_vegas_regions_id' => $region,
-                        ]);
+                foreach ([
+                    'las_vegas_region_id' => ['model' => CommunityLasVegasRegion::class, 'column' => 'las_vegas_regions_id'],
+                    'neighborhood_id' => ['model' => CommunityNeighborhood::class, 'column' => 'neighborhood_id'],
+                    'amenity_id' => ['model' => CommunityAmenity::class, 'column' => 'amenity_id']
+                ] as $field => $config) {
+                    Log::info("Modeel : " . $config['model'] . " for field: " . $field);
+                    if (!empty($row[$field])) {
+                        foreach (array_map('trim', explode(',', $row[$field])) as $val) {
+                            $config['model']::create([
+                                'id' => Str::orderedUuid(),
+                                'community_id' => $community->id,
+                                $config['column'] => $val,
+                            ]);
+                        }
                     }
                 }
 
-                // Handle neighborhood_id (multiple values possible)
-                if (!empty($row['neighborhood_id'])) {
-                    $neighborhoods = array_map('trim', explode(',', $row['neighborhood_id']));
-                    foreach ($neighborhoods as $neighborhood) {
-                        CommunityNeighborhood::create([
-                            'id' => Str::orderedUuid(), // Generate a new UUID for the id
-                            'community_id' => $community->id,
-                            'neighborhood_id' => $neighborhood,
-                        ]);
-                    }
-                }
-
-                // Handle amenity_id (multiple values possible)
-                if (!empty($row['amenity_id'])) {
-                    $amenities = array_map('trim', explode(',', $row['amenity_id']));
-                    foreach ($amenities as $amenity) {
-                        CommunityAmenity::create([
-                            'id' => Str::orderedUuid(), // Generate a new UUID for the id
-                            'community_id' => $community->id,
-                            'amenity_id' => $amenity,
-                        ]);
-                    }
-                }
-                
-
-                // Handle files
                 $imageNames = isset($row['files']) ? array_map('trim', explode(',', $row['files'])) : [];
                 $uploadedImageIds = [];
 
@@ -141,13 +109,13 @@ class CommunitiesImport implements ToCollection, WithHeadingRow
                         $newImageName = 'real_public/CommunitiesFiles/' . Str::random(40) . '.' . pathinfo($imageName, PATHINFO_EXTENSION);
                         Storage::put($newImageName, file_get_contents($imagePath));
 
-                        $upload = new Upload();
-                        $upload->file_original_name = $imageName;
-                        $upload->file_name = $newImageName;
-                        $upload->file_size = filesize($imagePath);
-                        $upload->extension = pathinfo($imageName, PATHINFO_EXTENSION);
-                        $upload->type = mime_content_type($imagePath);
-                        $upload->save();
+                        $upload = Upload::create([
+                            'file_original_name' => $imageName,
+                            'file_name' => $newImageName,
+                            'file_size' => filesize($imagePath),
+                            'extension' => pathinfo($imageName, PATHINFO_EXTENSION),
+                            'type' => mime_content_type($imagePath),
+                        ]);
                         $uploadedImageIds[] = $upload->id;
                     }
                 }
@@ -157,7 +125,7 @@ class CommunitiesImport implements ToCollection, WithHeadingRow
                 $community->banner = $uploadedImageIds[1] ?? null;
                 $community->save();
             }
-            
+
             DB::commit();
             Log::info("Communities import process completed successfully.");
         } catch (\Exception $e) {
