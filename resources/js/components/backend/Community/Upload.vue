@@ -129,7 +129,7 @@
                     <div v-if="processingStatus" class="mt-3">
                         <div class="progress">
                             <div
-                                class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
+                                class="progress-bar progress-bar-striped progress-bar-animated bg-success"
                                 role="progressbar"
                                 :style="{ width: processingPercentage + '%' }"
                                 :aria-valuenow="processingPercentage"

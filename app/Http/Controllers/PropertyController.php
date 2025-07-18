@@ -23,9 +23,67 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use ZipArchive;
+use Illuminate\Support\Facades\Cache; // make sure this is imported
+
 
 class PropertyController extends Controller
 {
+
+    public function uploadProperties(Request $request)
+{
+    $request->validate([
+        'file'   => 'required|file|mimes:xlsx',
+        'images' => 'required|file|mimes:zip',
+        'job_id' => 'required|string',
+    ]);
+
+    $jobId = $request->input('job_id');
+    Cache::put("property_upload_progress_$jobId", 1);
+
+    try {
+        // Step 1: Handle ZIP
+        Cache::put("property_upload_progress_$jobId", 10);
+        $zipPath = $request->file('images')->store('real_public/temp', 'real_public');
+        $extractPath = public_path('real_public/temp/');
+        if (!File::exists($extractPath)) {
+            File::makeDirectory($extractPath, 0755, true);
+        }
+
+        $zip = new \ZipArchive;
+        $zipFilePath = public_path('real_public/temp/' . basename($zipPath));
+        if (!file_exists($zipFilePath)) {
+            throw new \Exception("ZIP file missing");
+        }
+
+        if ($zip->open($zipFilePath) === true) {
+            $zip->extractTo($extractPath);
+            $zip->close();
+        } else {
+            throw new \Exception("ZIP extraction failed");
+        }
+
+        Cache::put("property_upload_progress_$jobId", 40); // After ZIP
+
+        // Step 2: Excel import
+        Cache::put("property_upload_progress_$jobId", 60);
+        Excel::import(new \App\Imports\PropertiesImport($extractPath), $request->file('file'));
+        Cache::put("property_upload_progress_$jobId", 70); // After import
+
+        // Step 3: Cleanup
+        Cache::put("property_upload_progress_$jobId", 80);
+        Storage::disk('real_public')->delete($zipPath);
+        File::deleteDirectory($extractPath);
+
+        Cache::put("property_upload_progress_$jobId", 90); // Finalizing
+        sleep(1);
+        Cache::put("property_upload_progress_$jobId", 100);
+
+        return response()->json(['message' => 'Properties uploaded successfully'], 200);
+    } catch (\Exception $e) {
+        Cache::put("property_upload_progress_$jobId", -1);
+        return response()->json(['error' => 'Upload failed: ' . $e->getMessage()], 500);
+    }
+}
 
     // public function uploadProperties(Request $request)
     // {
@@ -165,55 +223,55 @@ class PropertyController extends Controller
     // }
 
     // upto here code is working
-    public function uploadProperties(Request $request)
-    {
-        $request->validate([
-            'file'   => 'required|file|mimes:xlsx',
-            'images' => 'required|file|mimes:zip',
-        ]);
+    // public function uploadProperties(Request $request)
+    // {
+    //     $request->validate([
+    //         'file'   => 'required|file|mimes:xlsx',
+    //         'images' => 'required|file|mimes:zip',
+    //     ]);
 
-        try {
-            // Step 1: Handle Images (Unzip)
-            $zipPath     = $request->file('images')->store('real_public/temp', 'real_public');
-            $extractPath = public_path('real_public/temp/'); // Extract to temporary folder in real_public
+    //     try {
+    //         // Step 1: Handle Images (Unzip)
+    //         $zipPath     = $request->file('images')->store('real_public/temp', 'real_public');
+    //         $extractPath = public_path('real_public/temp/'); // Extract to temporary folder in real_public
 
-            // Ensure the extraction directory exists
-            if (! File::exists($extractPath)) {
-                File::makeDirectory($extractPath, 0755, true);
-            }
+    //         // Ensure the extraction directory exists
+    //         if (! File::exists($extractPath)) {
+    //             File::makeDirectory($extractPath, 0755, true);
+    //         }
 
-            // Step 2: Unzip the uploaded file
-            $zip         = new ZipArchive;
-            $zipFilePath = public_path('real_public/temp/' . basename($zipPath)); // Get full path of ZIP file
+    //         // Step 2: Unzip the uploaded file
+    //         $zip         = new ZipArchive;
+    //         $zipFilePath = public_path('real_public/temp/' . basename($zipPath)); // Get full path of ZIP file
 
-            // Check if the ZIP file exists
-            if (! file_exists($zipFilePath)) {
-                return response()->json(['error' => 'ZIP file does not exist at the path: ' . $zipFilePath], 500);
-            }
+    //         // Check if the ZIP file exists
+    //         if (! file_exists($zipFilePath)) {
+    //             return response()->json(['error' => 'ZIP file does not exist at the path: ' . $zipFilePath], 500);
+    //         }
 
-            // Open and extract the ZIP file
-            if ($zip->open($zipFilePath) === true) {
-                $zip->extractTo($extractPath); // Extract to local path within real_public
-                $zip->close();
-            } else {
-                return response()->json(['error' => 'Failed to unzip the images.'], 500);
-            }
+    //         // Open and extract the ZIP file
+    //         if ($zip->open($zipFilePath) === true) {
+    //             $zip->extractTo($extractPath); // Extract to local path within real_public
+    //             $zip->close();
+    //         } else {
+    //             return response()->json(['error' => 'Failed to unzip the images.'], 500);
+    //         }
 
-            // Step 3: Import Properties from Excel
-            Excel::import(new PropertiesImport($extractPath), $request->file('file'));
+    //         // Step 3: Import Properties from Excel
+    //         Excel::import(new PropertiesImport($extractPath), $request->file('file'));
 
-                                                            // Clean up temporary files
-            Storage::disk('real_public')->delete($zipPath); // Delete the ZIP from real_public disk
-            File::deleteDirectory($extractPath);            // Delete extracted images directory
+    //                                                         // Clean up temporary files
+    //         Storage::disk('real_public')->delete($zipPath); // Delete the ZIP from real_public disk
+    //         File::deleteDirectory($extractPath);            // Delete extracted images directory
 
-            return response()->json(['message' => 'Properties uploaded successfully'], 200);
+    //         return response()->json(['message' => 'Properties uploaded successfully'], 200);
 
-        } catch (\Exception $e) {
-            // Log and return an error message
-            // \Log::error('Error uploading properties: ' . $e->getMessage());
-            return response()->json(['error' => 'An error occurred while uploading properties. Details: ' . $e->getMessage()], 500);
-        }
-    }
+    //     } catch (\Exception $e) {
+    //         // Log and return an error message
+    //         // \Log::error('Error uploading properties: ' . $e->getMessage());
+    //         return response()->json(['error' => 'An error occurred while uploading properties. Details: ' . $e->getMessage()], 500);
+    //     }
+    // }
 
     // this code are working
     // public function uploadProperties(Request $request)

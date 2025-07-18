@@ -181,8 +181,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/agent/delete/{id}', [AgentController::class, 'delete'])->name('agent.delete');
 
     Route::post('/scrap/data/upload', [PropertyController::class, 'uploadProperties'])->name('scrap.data.upload');
+    // progress status for property upload
+    Route::get('/scrap/data/status/{jobId}', function ($jobId) {
+    return response()->json([
+        'progress' => Cache::get("property_upload_progress_$jobId", 0)
+    ]);
+});
     Route::post('/communities/scrap/data/upload', [CommunitiesController::class, 'uploadCommunities'])->name('communities.scrap.data.upload');
-
 
     // progress status for community upload
     Route::get('/communities/scrap/status/{jobId}', function ($jobId) {

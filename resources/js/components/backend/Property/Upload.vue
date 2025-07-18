@@ -125,21 +125,38 @@
                             />
                         </div>
                     </div>
-<div v-if="loading" class="mt-3">
-    <div class="progress">
-        <div
-            class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
-            role="progressbar"
-            :style="{ width: uploadPercentage + '%' }"
-            :aria-valuenow="uploadPercentage"
-            aria-valuemin="0"
-            aria-valuemax="100"
-        >
-            {{ uploadPercentage }}%
-        </div>
-    </div>
-</div>
-
+                    <div v-if="processingStatus" class="mt-3">
+                        <div class="progress">
+                            <div
+                                 class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+                                role="progressbar"
+                                :style="{ width: processingPercentage + '%' }"
+                                :aria-valuenow="processingPercentage"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                            >
+                                Processing: {{ processingPercentage }}%
+                            </div>
+                        </div>
+                        <p class="text-muted small mt-2">
+                            <span v-if="processingPercentage <= 10"
+                                >Initializing upload...</span
+                            >
+                            <span v-else-if="processingPercentage <= 40"
+                                >Extracting ZIP...</span
+                            >
+                            <span v-else-if="processingPercentage <= 70"
+                                >Importing Excel...</span
+                            >
+                            <span v-else-if="processingPercentage <= 80"
+                                >Cleaning up files...</span
+                            >
+                            <span v-else-if="processingPercentage <= 90"
+                                >Finalizing...</span
+                            >
+                            <span v-else>Completed!</span>
+                        </p>
+                    </div>
 
                     <!-- Upload Button -->
                     <div class="text-center mt-4">
@@ -162,7 +179,7 @@
             </div>
         </section>
     </Master>
-</template> 
+</template>
 <script>
 import Master from "@components/backend/layout/Master.vue";
 import axios from "axios";
@@ -176,7 +193,11 @@ export default {
             loading: false,
             excelDragging: false, // For Excel dropzone feedback
             zipDragging: false, // For ZIP dropzone feedback
-            uploadPercentage: 0, 
+            uploadPercentage: 0,
+            jobId: null,
+            processingPercentage: 0,
+            processingStatus: false,
+            pollingInterval: null,
         };
     },
     methods: {
@@ -206,44 +227,75 @@ export default {
         triggerZipPicker() {
             this.$refs.zipInput.click();
         },
-      uploadFiles() {
-    if (!this.excelFile || !this.imageZip) return;
+        uploadFiles() {
+            if (!this.excelFile || !this.imageZip) return;
 
-    this.loading = true;
-    this.uploadPercentage = 0;
+            this.loading = true;
+            this.uploadPercentage = 0;
+            this.jobId = Date.now().toString();
 
-    const formData = new FormData();
-    formData.append("file", this.excelFile);
-    formData.append("images", this.imageZip);
+            // Start polling immediately
+            this.startPollingProgress();
 
-    axios
-        .post("/api/scrap/data/upload", formData, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-            onUploadProgress: (progressEvent) => {
-                if (progressEvent.lengthComputable) {
-                    this.uploadPercentage = Math.round(
-                        (progressEvent.loaded / progressEvent.total) * 100
+            const formData = new FormData();
+            formData.append("file", this.excelFile);
+            formData.append("images", this.imageZip);
+            formData.append("job_id", this.jobId);
+
+            axios
+                .post("/api/scrap/data/upload", formData, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                    onUploadProgress: (progressEvent) => {
+                        if (progressEvent.lengthComputable) {
+                            this.uploadPercentage = Math.round(
+                                (progressEvent.loaded / progressEvent.total) *
+                                    100
+                            );
+                        }
+                    },
+                })
+                .then(() => {
+                    toastr.success("Uploaded Successfully!"); 
+                })
+                .catch((error) => {
+                    this.loading = false;
+                    this.processingStatus = false;
+                    toastr.error(
+                        error.response?.data?.message || "Upload failed."
                     );
-                }
-            },
-        })
-        .then(() => {
-            toastr.success("Files uploaded successfully!");
-            window.location.href = "/properties";
-        })
-        .catch((error) => {
-            toastr.error(
-                error.response?.data?.message ||
-                    "An error occurred while uploading."
-            );
-        })
-        .finally(() => {
-            this.loading = false;
-        });
-},
+                });
+        },
 
+        startPollingProgress() {
+            this.processingStatus = true;
+            this.processingPercentage = 1;
+
+            this.pollingInterval = setInterval(() => {
+                axios
+                    .get(`/api/scrap/data/status/${this.jobId}`)
+                    .then((res) => {
+                        const progress = res.data.progress;
+                        if (progress >= 0) {
+                            this.processingPercentage = progress;
+                        }
+
+                        if (progress === 100) {
+                            clearInterval(this.pollingInterval);
+                            this.processingStatus = false;
+                            this.loading = false;
+
+                            setTimeout(() => {
+                                window.location.href = "/properties";
+                            }, 1000);
+                        } else if (progress === -1) {
+                            clearInterval(this.pollingInterval);
+                            this.processingStatus = false;
+                            this.loading = false;
+                            toastr.error("Processing failed.");
+                        }
+                    });
+            }, 500);
+        },
         formatFileSize(size) {
             const kb = 1024;
             const mb = kb * 1024;
