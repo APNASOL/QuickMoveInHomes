@@ -381,7 +381,7 @@ class PropertyController extends Controller
     public function fetchProperties(Request $request)
     {
         $propertiesQuery = DB::table('properties')
-            ->select('property_id', 'title', 'community_id', DB::raw('COALESCE(images, \'[]\') as images'));
+            ->select('property_id', 'title','address', 'community_id', DB::raw('COALESCE(images, \'[]\') as images'));
 
         if ($request->filled('name') && $request->name !== "null") {
             $propertiesQuery->where('title', 'LIKE', '%' . $request->name . '%');
@@ -425,7 +425,8 @@ class PropertyController extends Controller
             //     $file_image = $lastUpload->file_name;
             //     $property->banner = get_storage_url($file_image);
             // }
-
+          
+            $property->address = $property->address ?? '';
             $property->community = Community::where('id', $property->community_id)->first() ?? "";
 
         }

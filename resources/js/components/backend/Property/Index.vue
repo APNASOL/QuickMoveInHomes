@@ -82,6 +82,7 @@
               <th class="text-center">#</th>
               <th>{{ translate("Name") }}</th>
               <th>{{ translate("Property In Community") }}</th>
+              <th>{{ translate("Address") }}</th>
               <th>{{ translate("Image") }}</th>
               <th>{{ translate("Banner") }}</th>
               <th>{{ translate("Action") }}</th>
@@ -115,7 +116,9 @@
               <td v-else>
                 <span class="text-muted">{{ translate("No community added") }}</span>
               </td>
-
+              <td>
+                {{ property.address || translate("No address provided") }}
+              </td>
               <!-- Images -->
               <td>
                 <image-zooming-component
