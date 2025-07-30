@@ -12,7 +12,7 @@ class Community extends Model
     protected $table = 'communities';
     // The attributes that are mass assignable.
     protected $fillable = [
-        'id', 'name', 'description', 'location', 'amenity_id', 'hoa_id', 'neighborhood_id', 'las_vegas_region_id','longitude','latitude',
+        'id', 'builder_id','community_id','name', 'description', 'location', 'amenity_id', 'hoa_id', 'neighborhood_id', 'las_vegas_region_id','longitude','latitude',
         'files', 'map_location', 'legal_subdivision', 'nearby_properties', 'masterplan', 'sub_association', 'cic',
         'lid', 'cid', 'sid_lid_fee', 'sid_lid_payment_frequency', 'proximity_to_strip', 'proximity_to_airport',
         'nearby_attractions',

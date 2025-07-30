@@ -16,18 +16,18 @@ class Builder extends Model
     ];
 
     // Automatically generate UUID for the primary key.
-    protected static function boot()
-    {
-        parent::boot();
+    // protected static function boot()
+    // {
+    //     parent::boot();
 
-        static::creating(function ($model) {
-            if (empty($model->id)) {
-                $model->id = (string) Str::orderedUuid();
-            }
-        });
-    }
+    //     static::creating(function ($model) {
+    //         if (empty($model->id)) {
+    //             $model->id = (string) Str::orderedUuid();
+    //         }
+    //     });
+    // }
     // Indicate that the primary key is not auto-incrementing.
-    public $incrementing = false;
+    // public $incrementing = false;
 
     // The "type" of the primary key ID.
     protected $keyType = 'string';

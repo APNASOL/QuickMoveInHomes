@@ -57,10 +57,16 @@ class CommunitiesImport implements ToCollection, WithHeadingRow
                         });
                     }
                 } else {
-                    $community->id = $row['id'];
+                     $community->id = Str::orderedUuid();
                 }
 
-                $community->fill([
+                   Log::info("builder_id: " . $row['builder_id']);
+                   Log::info("builder_id: " . $row['builder_id']);
+
+
+                $community->fill([ 
+                    'community_id' => $row['community_id'] ?? null,
+                    'builder_id' => $row['builder_id'] ?? null,
                     'name' => $row['name'] ?? null,
                     'description' => $row['description'] ?? null,
                     'location' => $row['location'] ?? null,
@@ -84,46 +90,95 @@ class CommunitiesImport implements ToCollection, WithHeadingRow
                 $community->save();
 
                 foreach ([
-                    'las_vegas_region_id' => ['model' => CommunityLasVegasRegion::class, 'column' => 'las_vegas_regions_id'],
-                    'neighborhood_id' => ['model' => CommunityNeighborhood::class, 'column' => 'neighborhood_id'],
-                    'amenity_id' => ['model' => CommunityAmenity::class, 'column' => 'amenity_id']
-                ] as $field => $config) {
-                    Log::info("Modeel : " . $config['model'] . " for field: " . $field);
-                    if (!empty($row[$field])) {
-                        foreach (array_map('trim', explode(',', $row[$field])) as $val) {
-                            $config['model']::create([
-                                'id' => Str::orderedUuid(),
-                                'community_id' => $community->id,
-                                $config['column'] => $val,
-                            ]);
-                        }
-                    }
-                }
+    'las_vegas_region_id' => ['model' => CommunityLasVegasRegion::class, 'column' => 'las_vegas_regions_id', 'refTable' => 'las_vegas_regions'],
+    'neighborhood_id' => ['model' => CommunityNeighborhood::class, 'column' => 'neighborhood_id', 'refTable' => 'neighborhoods'],
+    'amenity_id' => ['model' => CommunityAmenity::class, 'column' => 'amenity_id', 'refTable' => 'amenities'],
+] as $field => $config) {
+    Log::info("Model: " . $config['model'] . " for field: " . $field);
 
-                $imageNames = isset($row['files']) ? array_map('trim', explode(',', $row['files'])) : [];
-                $uploadedImageIds = [];
+    if (!empty($row[$field])) {
+        foreach (array_map('trim', explode(',', $row[$field])) as $val) {
+            $val = trim($val); // clean spaces
+            if (!empty($val) && strtolower($val) !== 'null' && DB::table($config['refTable'])->where('id', $val)->exists()) {
+                $config['model']::create([
+                    'id' => Str::orderedUuid(),
+                    'community_id' => $community->id,
+                    $config['column'] => $val,
+                ]);
+            } else {
+                Log::warning("Skipped {$field} value: '{$val}' — invalid or not found in {$config['refTable']}");
+            }
+        }
+    }
+}
 
-                foreach ($imageNames as $imageName) {
-                    $imagePath = $this->extractPath . '/' . $imageName;
-                    if (file_exists($imagePath)) {
-                        $newImageName = 'real_public/CommunitiesFiles/' . Str::random(40) . '.' . pathinfo($imageName, PATHINFO_EXTENSION);
-                        Storage::put($newImageName, file_get_contents($imagePath));
 
-                        $upload = Upload::create([
-                            'file_original_name' => $imageName,
-                            'file_name' => $newImageName,
-                            'file_size' => filesize($imagePath),
-                            'extension' => pathinfo($imageName, PATHINFO_EXTENSION),
-                            'type' => mime_content_type($imagePath),
-                        ]);
-                        $uploadedImageIds[] = $upload->id;
-                    }
-                }
+                // $imageNames = isset($row['files']) ? array_map('trim', explode(',', $row['files'])) : [];
+                // $uploadedImageIds = [];
 
-                $community->files = !empty($uploadedImageIds) ? json_encode($uploadedImageIds) : null;
-                $community->main_image = $uploadedImageIds[0] ?? null;
-                $community->banner = $uploadedImageIds[1] ?? null;
-                $community->save();
+                // foreach ($imageNames as $imageName) {
+                //     $imagePath = $this->extractPath . '/' . $imageName;
+                //     if (file_exists($imagePath)) {
+                //         $newImageName = 'real_public/CommunitiesFiles/' . Str::random(40) . '.' . pathinfo($imageName, PATHINFO_EXTENSION);
+                //         Storage::put($newImageName, file_get_contents($imagePath));
+
+                //         $upload = Upload::create([
+                //             'file_original_name' => $imageName,
+                //             'file_name' => $newImageName,
+                //             'file_size' => filesize($imagePath),
+                //             'extension' => pathinfo($imageName, PATHINFO_EXTENSION),
+                //             'type' => mime_content_type($imagePath),
+                //         ]);
+                //         $uploadedImageIds[] = $upload->id;
+                //     }
+                // }
+$imageNames = isset($row['files'])
+    ? array_filter(array_map('trim', explode(',', preg_replace('/,\s+/', ',', $row['files']))))
+    : [];
+$mainImageName = trim($row['main_image'] ?? '');
+$bannerImageName = trim($row['banner'] ?? '');
+
+$allImages = array_filter(array_merge([$mainImageName, $bannerImageName], $imageNames), function ($img) {
+    return !empty($img) && strtolower($img) !== 'null';
+});
+
+if (empty($allImages)) {
+    Log::info("No valid images found for community: " . ($row['name'] ?? 'N/A') . ", skipping image upload.");
+    $community->files = null;
+    $community->main_image = null;
+    $community->banner = null;
+    $community->save();
+    continue; // Skip the image upload block
+}
+
+$uploadedImageIds = [];
+
+foreach ($allImages as $imageName) {
+    $imagePath = $this->extractPath . '/' . $imageName;
+
+    if (file_exists($imagePath)) {
+        $newImageName = 'real_public/CommunitiesFiles/' . Str::random(40) . '.' . pathinfo($imageName, PATHINFO_EXTENSION);
+        Storage::put($newImageName, file_get_contents($imagePath));
+
+        $upload = Upload::create([
+            'file_original_name' => $imageName,
+            'file_name' => $newImageName,
+            'file_size' => filesize($imagePath),
+            'extension' => pathinfo($imageName, PATHINFO_EXTENSION),
+            'type' => mime_content_type($imagePath),
+        ]);
+
+        $uploadedImageIds[] = $upload->id;
+    } else {
+        Log::warning("Image not found: {$imagePath}");
+    }
+}
+
+$community->files = !empty($uploadedImageIds) ? json_encode($uploadedImageIds) : null;
+$community->main_image = $uploadedImageIds[0] ?? null;
+$community->banner = $uploadedImageIds[1] ?? null;
+$community->save();
+
             }
 
             DB::commit();

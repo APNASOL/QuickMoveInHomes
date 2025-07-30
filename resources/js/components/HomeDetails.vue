@@ -8,10 +8,10 @@
                             <div>
                                 <h1 class="uppercase c-main-title">
                                     {{ Home.title }}
-                                    <h4>
-                                        {{ Home.property_type }}
-                                    </h4>
                                 </h1>
+                                <h4>
+                                    {{ Home.property_type }}
+                                </h4>
                             </div>
                             <!-- <div class="uppercase">
                                 <b>Starting at</b>

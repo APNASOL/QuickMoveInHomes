@@ -9,6 +9,7 @@ use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
+
 class BuilderController extends Controller
 {
     public function index()
@@ -60,11 +61,11 @@ class BuilderController extends Controller
             $builder = Builder::where('id', $request->id)->first();
         } else {
             $builder = new Builder();
-            $builder->id = Str::orderedUuid();
+            // $builder->id = Str::orderedUuid();
         }
         $builder->name = $request->name;
         $builder->description = $request->description;
- 
+ $builder->save();
         if ($request->communities) {
             BuildersCommunity::where('builder_id', $request->id)->delete();
 
@@ -72,8 +73,8 @@ class BuilderController extends Controller
             foreach ($communities_ids as $community_id) {
                 
                 $buildersCommunity = new BuildersCommunity;
-                $buildersCommunity->id = Str::orderedUuid();
-         
+                // $buildersCommunity->id = Str::orderedUuid();
+        //  dd($community_id);
                 $buildersCommunity->community_id = $community_id;
                 $buildersCommunity->builder_id = $builder->id;
                 $buildersCommunity->save();
@@ -83,7 +84,7 @@ class BuilderController extends Controller
 
         
 
-        $builder->save();
+        
 
         return 'success';
     }

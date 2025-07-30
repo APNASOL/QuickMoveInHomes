@@ -4,7 +4,7 @@
             <!-- Hero Section -->
             <div class="row align-items-center p-3">
                 <div class="col-md-12 text-center">
-                    <h1 class="uppercase c-main-title">New Home Communities!</h1>
+                    <h1 class="uppercase c-main-title">New Home Communities! test</h1>
                     <h4 class="c-tags">
                         Explore master-planned communities in the Las Vegas area
                     </h4>
@@ -28,7 +28,7 @@
                         v-for="(community, index) in Communities"
                         :key="community.id"
                         class="col"
-                    >
+                    > 
                         <div class="card border-0 shadow-sm h-100">
                             <div class="overflow-hidden position-relative">
                                 <img
@@ -40,6 +40,10 @@
                             </div>
                             <div class="card-body">
                                 <h5 class="c-title">{{ community.name }}</h5>
+                                <p class="c-sub-title text-white">
+                                        {{ community.homes_count }} Homes
+                                    </p>
+                                    Test
                                 <small class="c-location"
                                     ><i class="bi bi-geo-alt me-2"></i
                                     >{{ community.location }}</small
