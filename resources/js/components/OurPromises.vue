@@ -1,27 +1,24 @@
 <template>
-    <div class="interactive-banner">
-        <div class="container py-5">
+    <div class="interactive-banner bg-light py-5">
+        <div class="container">
             <div class="row align-items-center">
-                <!-- Left Side: Heading, Paragraph, Buttons -->
-                <div
-                    class="col-12 col-lg-6 text-center text-lg-start mb-4 mb-lg-0"
-                >
-                    <h2 class="fw-bold mb-3 c-theme-color">
+                <!-- Left Side -->
+                <div class="col-12 col-lg-6 text-center text-lg-start mb-5 mb-lg-0">
+                    <h2 class="fw-bold mb-3" style="color: #023F86;">
                         Ready to Begin Your Real Estate Journey?
                     </h2>
-                    <p class="mb-4">
-                        Whether you're looking to buy, sell, or rent, we're here
-                        to help you every step of the way. Join thousands of
-                        satisfied users today.
+                    <p class="text-muted mb-4">
+                        Whether you're looking to buy, sell, or rent, we're here to help
+                        you every step of the way. Join thousands of satisfied users today.
                     </p>
-                    <div>
-                        <!-- <button class="btn btn-primary me-2">Create an Account</button> -->
-                        <a href="/contact" class="btn btn-light">Contact Us</a>
-                    </div>
+                    <a href="/contact" class="btn text-white px-4 py-2 rounded-pill fw-semibold"
+                       style="background-color: #023F86; border: 1px solid #023F86;">
+                        Contact Us
+                    </a>
                 </div>
 
-                <!-- Right Side: Promises Cards -->
-                <div class="col-12 col-lg-6 ">
+                <!-- Right Side Promises -->
+                <div class="col-12 col-lg-6">
                     <div class="row g-3">
                         <div
                             v-for="(promise, index) in Promises"
@@ -29,25 +26,22 @@
                             class="col-6"
                         >
                             <div
-                                class="card card-body text-start h-100 c-border-pr n shadow-sm c-hover-effect"
+                                class="card card-body text-start h-100 border-0 shadow-sm rounded-4 c-hover-effect"
+                                style="background-color: #f9fbfd;"
                             >
-                                <div class="t mb-2">
-                                    <!-- ICON/LOGO here -->
+                                <div class="d-flex align-items-center mb-2">
                                     <img
                                         :src="promise.icon"
                                         alt="Icon"
                                         class="me-2"
-                                        style="width: 40px"
+                                        style="width: 36px; height: 36px;"
                                         @error="setAltImg"
                                     />
-                                    <h6
-                                        class="fw-bold mb-0"
-                                        style="color: rgb(61, 102, 143)"
-                                    >
+                                    <h6 class="fw-bold mb-0" style="color: #023F86;">
                                         {{ promise.title }}
                                     </h6>
                                 </div>
-                                <p class="small text-muted">
+                                <p class="small text-muted mb-0">
                                     {{ promise.description }}
                                 </p>
                             </div>
@@ -58,7 +52,6 @@
         </div>
     </div>
 </template>
-
 <script>
 export default {
     created() {
@@ -66,8 +59,7 @@ export default {
     },
     data() {
         return {
-            Promises: "",
-            hoverIndex: null,
+            Promises: [],
         };
     },
     methods: {
@@ -78,7 +70,7 @@ export default {
                     this.Promises = response.data;
                 })
                 .catch((error) => {
-                    toastr.error(error.response.data.message);
+                    toastr.error(error.response?.data?.message || "Something went wrong.");
                 });
         },
         setAltImg(event) {
@@ -88,60 +80,26 @@ export default {
 };
 </script>
 <style scoped>
-.c-overflow-hidden {
-    overflow: hidden !important;
-}
-.c-destination-cards {
-    filter: brightness(60%);
-    transition: transform 0.5s ease;
-}
-
-.c-destination-cards.hovered {
-    transform: scale(1.3);
-}
-.icon-box {
-    position: relative;
-}
-
-.icon-box .icon {
-    position: absolute;
-    top: 0;
-    right: 0;
-}
-.c-border-promis-design {
-    border-radius: 0.25rem;
-}
-.c-h-fix {
-    min-height: 50px;
-}
-.c-border-promis-design {
-    border-radius: 0.5rem;
-    background-color: #f8f9fa; /* Light gray background for card */
-}
-
-.c-theme-color {
-    color: #ffffff; /* If you want white color or change accordingly */
-}
-
-/* Button adjustments if needed */
-/* .btn-primary {
-  background-color: rgb(61, 102, 143);
-  border-color: #0d6efd;
-} */
-
-.shadow-sm {
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-}
-  /* Smooth transition */
+/* Hover effect */
 .c-hover-effect {
-  transition: transform 0.3s ease-in-out, background-color 0.3s, box-shadow 0.3s;
+    transition: transform 0.3s ease, background-color 0.3s, box-shadow 0.3s;
+}
+.c-hover-effect:hover {
+    transform: scale(1.05);
+    background-color: #eaf4fb;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
-/* Zoom effect on hover */
-.c-hover-effect:hover {
-  transform: scale(1.05); /* Zoom 5% */
-  background-color: #eaf4fb; /* Light blue background */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+/* Make sure images don't break layout */
+img {
+    object-fit: contain;
+    max-width: 100%;
+    height: auto;
+}
+
+
+.btn:hover {
+  background-color: #035bb8 !important;
+  border-color: #035bb8 !important;
 }
 </style>
-
