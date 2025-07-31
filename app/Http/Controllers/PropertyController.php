@@ -427,7 +427,7 @@ class PropertyController extends Controller
             // }
           
             $property->address = $property->address ?? '';
-            $property->community = Community::where('id', $property->community_id)->first() ?? "";
+            $property->community = Community::where('community_id', $property->community_id)->first() ?? "";
 
         }
 
