@@ -1,287 +1,286 @@
 <template>
-    <div v-if="properties && properties.length">
+    <section class="py-5" v-if="properties && properties.length">
         <div class="container">
-            <div class="d-flex justify-content-between c-theme-color">
-                <div class="text-center">
-                    <h1 class="mt-4 c-main-title">Quick Move-In Homes</h1>
-                    <p class="c-sub-title">
-                        Discover our selection of brand new, move-in ready homes
-                        across Las Vegas Valley. These properties are complete
-                        and ready for immediate or near-term move-in.
-                    </p>
-                </div>
+            <!-- Section Header -->
+            <div class="text-center mb-5">
+                <h1 class="c-main-title fw-bold c-title">
+                    Quick Move-In Homes
+                </h1>
+                <p class="c-sub-title text-muted">
+                    Discover our selection of brand new, move-in ready homes
+                    across Las Vegas Valley. These properties are complete and
+                    ready for immediate or near-term move-in.
+                </p>
             </div>
-            <div class="mt-4">
-                <Carousel
-                    :settings="settings"
-                    :wrapAround="true"
-                    :breakpoints="breakpoints"
-                    :pauseAutoplayOnHover="true"
-                >
-                    <!-- :autoplay="2000" -->
-                    <Slide v-for="property in properties" :key="property.id">
-                        <div class="carousel__item">
-                            <GlobalCard
-                            :badge="
-                                        property.is_open_house == 1
-                                            ? 'Open House'
-                                            : 'Quick Move In'
-                                    "
-                                    :badge2="
-                                        property.incentive
-                                            ? 'Incentive Home'
-                                            : ''
-                                    "
-                                :main_image="property.main_image"
-                                :title="property.title"
-                                :property_id="property.property_id"
-                                :address="property.address"
-                                :bedrooms="property.bedrooms"
-                                :price="property.price"
-                                :bathrooms="property.bathrooms"
-                                :square_feet="property.square_feet"
-                                :garages="property.parking_enclosure"
-                            />
-                        </div>
-                    </Slide>
 
-                    <template #addons>
-                        <Navigation />
-                    </template>
-                </Carousel>
-            </div>
-        </div>
-    </div>
-
-    <!-- Button trigger modal -->
-    <button
-        hidden
-        type="button"
-        class="btn btn-primary"
-        data-bs-toggle="modal"
-        data-bs-target="#incentivesModal"
-        ref="openIncentivesModal"
-    ></button>
-
-    <!-- Modal -->
-    <div
-        class="modal fade c-modal"
-        id="incentivesModal"
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
-        tabindex="-1"
-        aria-labelledby="openIncentivesModal"
-        aria-hidden="true"
-    >
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div
-                class="modal-content p-2"
-                style="background-color: rgb(61, 102, 143); color: white"
+            <!-- Carousel -->
+            <Carousel
+                :settings="settings"
+                :wrapAround="true"
+                :breakpoints="breakpoints"
+                :pauseAutoplayOnHover="true"
             >
-                <div class="modal-header">
-                    <button
-                        type="button"
-                        class="btn-close"
-                        style="color: white !important"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                    ></button>
-                </div>
-                <div class="modal-body text-center">
-                    <h1
-                        class="modal-title text-center text-white c-main-title"
-                        id="openIncentivesModal"
-                    >
-                        MOVE-IN-READY INCENTIVES
-                    </h1>
-                    <p class="text-white c-sub-title">
-                        Available at ALL New Home Communities!
-                    </p>
-                    <a
-                        href="/all-incentives"
-                        class="btn btn-light c-custom-btn px-4 py-2 fw-semibold w-100 mt-2"
-                        >View Current Incentives →</a
-                    >
+                <Slide v-for="property in properties" :key="property.id">
+                    <div class="carousel__slide-item">
+                        <div
+                            class="card border-0 shadow-lg rounded-4 overflow-hidden h-100"
+                        >
+                            <!-- Image + Badges -->
+                            <div class="position-relative overflow-hidden">
+                                <img
+                                    :src="
+                                        property.main_image ??
+                                        '/images/default_image.png'
+                                    "
+                                    class="card-img-top transition-img"
+                                    :alt="property.title"
+                                    style="height: 220px; object-fit: cover"
+                                    @error="setAltImg"
+                                />
+                                <div
+                                    class="position-absolute top-0 start-0 m-2 d-flex flex-column gap-1"
+                                >
+                                    <span
+                                        class="badge rounded-pill text-white px-3 py-1"
+                                        style="
+                                            background-color: #023f86;
+                                            border: 1px solid #023f86;
+                                        "
+                                    >
+                                        {{
+                                            property.is_open_house == 1
+                                                ? "Open House"
+                                                : "Quick Move In"
+                                        }}
+                                    </span>
+                                    <span
+                                        v-if="property.incentive"
+                                        class="badge rounded-pill bg-info text-white px-3 py-1"
+                                    >
+                                        Incentive Home
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Icon Row Below Image -->
+                            <div
+                                class="px-4 py-2 border-bottom text-muted d-flex justify-content-between small"
+                            >
+                                <span title="Bedrooms">
+                                    <i class="bi bi-house-door me-1"></i
+                                    >{{ property.bedrooms }}
+                                </span>
+                                <span title="Bathrooms">
+                                    <i class="bi bi-droplet me-1"></i
+                                    >{{ property.bathrooms }}
+                                </span>
+                                <span title="Sq Ft">
+                                    <i class="bi bi-fullscreen me-1"></i
+                                    >{{ property.square_feet }}
+                                </span>
+                                <span title="Garage">
+                                    <i class="bi bi-car-front me-1"></i
+                                    >{{ property.parking_enclosure || "—" }}
+                                </span>
+                            </div>
+
+                            <!-- Card Body -->
+                            <div class="card-body d-flex flex-column px-4 py-3">
+                                <!-- Title -->
+                                <h5 class="fw-bold text-dark mb-1 c-title">
+                                    {{ property.title }}
+                                </h5>
+
+                                <!-- Address -->
+                                <p class="text-muted small mb-2">
+                                    {{ property.address }}
+                                </p>
+
+                                <!-- Price -->
+                                <div
+                                    class="text-dark mb-4"
+                                    style="font-size: 0.95rem"
+                                >
+                                    <span class="text-muted me-1"
+                                        ><i class="bi bi-currency-dollar"></i>
+                                        <strong>Price:</strong></span
+                                    >
+                                    ${{ formatPrice(property.price) }}
+                                </div>
+
+                                <!-- CTA -->
+                                <a
+                                    :href="
+                                        '/detailed/property/' +
+                                        property.property_id
+                                    "
+                                    class="btn btn-primary rounded-pill text-white fw-semibold w-100 mt-auto"
+                                    style="
+                                        background-color: #023f86;
+                                        border: 1px solid #023f86;
+                                    "
+                                >
+                                    View Property
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </Slide>
+
+                <template #addons>
+                    <Navigation />
+                </template>
+            </Carousel>
+
+            <!-- Incentive Modal -->
+            <button
+                hidden
+                ref="openIncentivesModal"
+                data-bs-toggle="modal"
+                data-bs-target="#incentivesModal"
+            ></button>
+            <div
+                class="modal fade"
+                id="incentivesModal"
+                tabindex="-1"
+                aria-hidden="true"
+            >
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content border-0 rounded-4 shadow-lg">
+                        <div class="modal-header border-0 pb-0">
+                            <h5
+                                class="modal-title text-primary fw-bold c-title"
+                            >
+                                🎁 MOVE-IN-READY INCENTIVES
+                            </h5>
+                            <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                            ></button>
+                        </div>
+                        <div class="modal-body text-center px-5 py-4">
+                            <p class="text-muted mb-4">
+                                Available at <strong>ALL</strong> New Home
+                                Communities!
+                            </p>
+                            <a
+                                href="/all-incentives"
+                                class="btn btn-primary text-white fw-semibold px-4 py-2 rounded-pill"
+                                style="
+                                    background-color: #023f86;
+                                    border: 1px solid #023f86;
+                                "
+                            >
+                                View Current Incentives →
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- Button trigger modal -->
+    </section>
 </template>
 
 <script>
 import { defineComponent } from "vue";
-// import { Carousel, Navigation, Slide } from "vue3-carousel";
-import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
-
+import { Carousel, Slide, Navigation } from "vue3-carousel";
 import "vue3-carousel/dist/carousel.css";
 
 export default defineComponent({
-    name: "Flash Sale",
+    name: "QuickMoveInHomes",
+    components: { Carousel, Slide, Navigation },
     data() {
         return {
             properties: [],
-            incentives_homes: [],
-
+            incentiveAvailable: null,
             settings: {
                 itemsToShow: 1,
                 transition: 500,
                 snapAlign: "center",
             },
             breakpoints: {
-                320: {
-                    // Smallest screens (mobile)
-                    itemsToShow: 1.2,
-                    snapAlign: "center",
-                    transition: 500,
-                },
-                576: {
-                    // Small phones & portrait tablets
-                    itemsToShow: 2,
-                    snapAlign: "center",
-                    transition: 500,
-                },
-                768: {
-                    // Tablets & small laptops
-                    itemsToShow: 2.5,
-                    snapAlign: "center",
-                    transition: 500,
-                },
-                992: {
-                    // Medium desktops
-                    itemsToShow: 3,
-                    snapAlign: "center",
-                    transition: 500,
-                },
-                1200: {
-                    // Large desktops
-                    itemsToShow: 4,
-                    snapAlign: "center",
-                    transition: 500,
-                },
-                1400: {
-                    // Extra large screens
-                    itemsToShow: 4.5,
-                    snapAlign: "center",
-                    transition: 500,
-                },
-                1600: {
-                    // Ultra-wide screens
-                    itemsToShow: 5,
-                    snapAlign: "center",
-                    transition: 500,
-                },
+                320: { itemsToShow: 1.2 },
+                576: { itemsToShow: 2 },
+                768: { itemsToShow: 2.5 },
+                992: { itemsToShow: 3 },
+                1200: { itemsToShow: 4 },
+                1600: { itemsToShow: 4 },
             },
-            incentiveAvailable: null,
         };
     },
     created() {
         this.getHomes();
     },
-    components: {
-        Carousel,
-        Slide,
-        Navigation,
-    },
     mounted() {
         this.checkIncentives();
     },
     methods: {
+        async getHomes() {
+            try {
+                const res = await axios.get("/api/front-homes/all");
+                this.properties = res.data;
+            } catch (err) {
+                toastr.error(
+                    err.response?.data?.message || "Failed to load homes."
+                );
+            }
+        },
+        async checkIncentives() {
+            try {
+                const res = await axios.get("/api/check-incentives");
+                this.incentiveAvailable = res.data;
+                if (this.incentiveAvailable === 1) {
+                    this.openModal();
+                }
+            } catch (err) {
+                toastr.error(
+                    err.response?.data?.message || "Error checking incentives."
+                );
+            }
+        },
         openModal() {
             setTimeout(() => {
                 this.$refs.openIncentivesModal.click();
-            }, 1000);
+            }, 800);
         },
-        async getHomes() {
-            await axios
-                .get("/api/front-homes/all")
-                .then((response) => {
-                    this.properties = response.data;
-                })
-                .catch((error) => {
-                    toastr.error(error.response.data.message);
-                });
-        },
-        async checkIncentives() {
-            await axios
-                .get("/api/check-incentives")
-                .then((response) => {
-                    this.incentiveAvailable = response.data;
-                    if (this.incentiveAvailable == 1) {
-                        this.openModal();
-                    }
-                })
-                .catch((error) => {
-                    toastr.error(error.response.data.message);
-                });
-        },
-
-        calculateDiscountPercentage(originalPrice, discountPercentage) {
-            const discountAmount = (discountPercentage / 100) * originalPrice;
-            const discountedPrice = originalPrice - discountAmount;
-            return Math.round(discountedPrice);
-        },
-        setAltImg(event) {
-            event.target.src = "/images/default_image.png";
+        setAltImg(e) {
+            e.target.src = "/images/default_image.png";
         },
         formatPrice(price) {
-            return Math.floor(price).toLocaleString(); // Removes the decimal portion
+            return Math.floor(price).toLocaleString();
         },
     },
 });
 </script>
+
 <style scoped>
-.carousel__slide {
-    padding: 5px;
+.carousel__slide-item {
+    padding: 12px;
+    display: flex;
+    justify-content: center;
 }
-
-.carousel__viewport {
-    perspective: 2000px;
+.card-img-top {
+    transition: transform 0.5s ease;
 }
-
-.carousel__track {
-    transform-style: preserve-3d;
+.transition-img:hover {
+    transform: scale(1.05);
 }
-
-.carousel__slide--sliding {
-    transition: 0.5s;
+.card {
+    transition: box-shadow 0.3s ease;
 }
-
-.carousel__slide {
-    opacity: 0.9;
-    transform: rotateY(-20deg) scale(0.9);
+.card:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
-
-.carousel__slide--active ~ .carousel__slide {
-    transform: rotateY(20deg) scale(0.9);
+.btn:hover {
+    background-color: #035bb8 !important;
+    border-color: #035bb8 !important;
 }
-
-.carousel__slide--prev {
-    opacity: 1;
-    transform: rotateY(-10deg) scale(0.9) !important;
-}
-
-.carousel__slide--next {
-    opacity: 1;
-    transform: rotateY(10deg) scale(0.9) !important;
-}
-
-.carousel__slide--active {
-    opacity: 1;
-    transform: rotateY(0) scale(1);
-}
-.c-card-img-overlay-name {
-    top: unset;
-    bottom: 120px;
-    text-align: left;
-    color: white;
-}
-
-.c-main-title {
-    font-family: Inter, sans-serif;
-
-    font-weight: 400;
-    line-height: 32px;
+.card-body span,
+.border-bottom span {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.875rem;
 }
 </style>
