@@ -44,7 +44,7 @@
         ${{ formatPrice(price) }}
       </div>
       <a
-        :href="'/detailed/property/' + property_id"
+        :href="'/home-detail/' + property_id"
         class="btn btn-primary rounded-pill text-white fw-semibold w-100 mt-auto"
         style="background-color: #023f86; border: 1px solid #023f86"
       >

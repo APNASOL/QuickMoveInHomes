@@ -1,5 +1,9 @@
 <template>
-    <section  id="quick-move-homes" class="py-5" v-if="properties && properties.length">
+    <section
+        id="quick-move-homes"
+        class="py-5"
+        v-if="properties && properties.length"
+    >
         <div class="container">
             <!-- Section Header -->
             <div class="text-center mb-5">
@@ -111,7 +115,7 @@
                                 <!-- CTA -->
                                 <a
                                     :href="
-                                        '/detailed/property/' +
+                                        '/home-details/' +
                                         property.property_id
                                     "
                                     class="btn btn-primary rounded-pill text-white fw-semibold w-100 mt-auto"
@@ -134,33 +138,37 @@
 
             <!-- Incentive Modal -->
             <!-- Incentive Modal (Vue Controlled) -->
-<div
-  v-if="showIncentive"
-  class="vue-modal-overlay"
-  @click.self="closeModal"
->
-  <div class="vue-modal-content">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <h5 class="text-primary fw-bold c-title mb-0">
-        🎁 MOVE-IN-READY INCENTIVES
-      </h5>
-      <button class="btn-close" @click="closeModal"></button>
-    </div>
-    <p class="text-muted mb-4 text-center">
-      Available at <strong>ALL</strong> New Home Communities!
-    </p>
-    <div class="text-center">
-      <a
-        href="/all-incentives"
-        class="btn btn-primary text-white fw-semibold px-4 py-2 rounded-pill"
-        style="background-color: #023f86; border: 1px solid #023f86"
-      >
-        View Current Incentives →
-      </a>
-    </div>
-  </div>
-</div>
-
+            <div
+                v-if="showIncentive"
+                class="vue-modal-overlay"
+                @click.self="closeModal"
+            >
+                <div class="vue-modal-content">
+                    <div
+                        class="d-flex justify-content-between align-items-center mb-3"
+                    >
+                        <h5 class="text-primary fw-bold c-title mb-0">
+                            🎁 MOVE-IN-READY INCENTIVES
+                        </h5>
+                        <button class="btn-close" @click="closeModal"></button>
+                    </div>
+                    <p class="text-muted mb-4 text-center">
+                        Available at <strong>ALL</strong> New Home Communities!
+                    </p>
+                    <div class="text-center">
+                        <a
+                            href="/all-incentives"
+                            class="btn btn-primary text-white fw-semibold px-4 py-2 rounded-pill"
+                            style="
+                                background-color: #023f86;
+                                border: 1px solid #023f86;
+                            "
+                        >
+                            View Current Incentives →
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 </template>
@@ -177,7 +185,7 @@ export default defineComponent({
         return {
             properties: [],
             incentiveAvailable: null,
-             showIncentive: false,
+            showIncentive: false,
             settings: {
                 itemsToShow: 1,
                 transition: 500,
@@ -201,27 +209,27 @@ export default defineComponent({
     },
     methods: {
         openModal() {
-  this.showIncentive = true;
+            this.showIncentive = true;
 
-  // Scroll to section
-  const section = document.getElementById("quick-move-homes");
-  if (section) {
-    section.scrollIntoView({ behavior: "smooth" });
-  }
+            // Scroll to section
+            const section = document.getElementById("quick-move-homes");
+            if (section) {
+                section.scrollIntoView({ behavior: "smooth" });
+            }
 
-  // Optional: lock scroll for modal
-  document.body.style.overflow = "hidden";
-},
+            // Optional: lock scroll for modal
+            document.body.style.overflow = "hidden";
+        },
 
-closeModal() {
-  this.showIncentive = false;
+        closeModal() {
+            this.showIncentive = false;
 
-  // Scroll back to top
-  window.scrollTo({ top: 0, behavior: "smooth" });
+            // Scroll back to top
+            window.scrollTo({ top: 0, behavior: "smooth" });
 
-  // Restore scrolling
-  document.body.style.overflow = "auto";
-},
+            // Restore scrolling
+            document.body.style.overflow = "auto";
+        },
 
         async getHomes() {
             try {
@@ -246,7 +254,7 @@ closeModal() {
                 );
             }
         },
-        
+
         setAltImg(e) {
             e.target.src = "/images/default_image.png";
         },
@@ -259,40 +267,40 @@ closeModal() {
 
 <style scoped>
 .vue-modal-overlay {
-  position: fixed;
-  z-index: 9999; /* Ensure it's the top layer */
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.55);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(2px);
+    position: fixed;
+    z-index: 9999; /* Ensure it's the top layer */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(2px);
 }
 
 .vue-modal-content {
-  background-color: #fff;
-  z-index: 10000; /* Make sure content sits above the overlay */
-  max-width: 500px;
-  width: 90%;
-  padding: 2rem;
-  border-radius: 1rem;
-  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.25);
-  animation: fadeInUp 0.3s ease-in-out;
-  position: relative;
+    background-color: #fff;
+    z-index: 10000; /* Make sure content sits above the overlay */
+    max-width: 500px;
+    width: 90%;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.25);
+    animation: fadeInUp 0.3s ease-in-out;
+    position: relative;
 }
 
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .carousel__slide-item {
