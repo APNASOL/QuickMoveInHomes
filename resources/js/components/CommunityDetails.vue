@@ -7,10 +7,10 @@
                         <div>
                             <h1 class="uppercase c-main-title">
                                 {{ community_details.name }}
-                                <h4>
-                                    {{ community_details.location }}
-                                </h4>
                             </h1>
+                            <h4>
+                                {{ community_details.location }}
+                            </h4>
                         </div>
                         <!-- <div class="location">
                                 <h3 class="master_plan">
