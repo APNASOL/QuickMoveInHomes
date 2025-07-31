@@ -22,18 +22,24 @@ class PropertiesImport implements ToCollection, WithHeadingRow
 
     public function __construct($extractPath)
     {
-        $this->extractPath = $extractPath; // Store the extraction path
+        $this->extractPath = $extractPath;
     }
 
     public function collection(Collection $rows)
     {
-        DB::beginTransaction(); // Start a transaction to ensure data consistency
+        DB::beginTransaction();
 
         try {
             foreach ($rows as $row) {
-                // Handle property data
-                $property = new Property();
-                $property->property_id = Str::orderedUuid(); // UUID for property_id
+                $property = Property::where('title', $row['title'])->first();
+                $isNew = false;
+
+                if (!$property) {
+                    $property = new Property();
+                    $property->property_id = Str::orderedUuid();
+                    $isNew = true;
+                }
+
                 $property->user_id = 1;
                 $property->community_id = $row['community_id'] ?? null;
                 $property->title = $row['title'] ?? null;
@@ -44,36 +50,31 @@ class PropertiesImport implements ToCollection, WithHeadingRow
                 $property->zip_code = $row['zip_code'] ?? null;
                 $property->longitude = $row['longitude'] ?? null;
                 $property->latitude = $row['latitude'] ?? null;
-                $price = $row['price']; 
-                $price_from = $row['price_from']; 
-                $price_to = $row['price_to']; 
-                // Remove any dollar signs and commas, then cast to integer
+
+                $price = $row['price'];
+                $price_from = $row['price_from'];
+                $price_to = $row['price_to'];
+
                 $cleanedPrice = (int) str_replace([',', '$'], '', $price);
                 $cleanedPriceFrom = (int) str_replace([',', '$'], '', $price_from);
                 $cleanedPriceTo = (int) str_replace([',', '$'], '', $price_to);
 
-                // Now you can store the cleaned price in the database
                 $property->price = $cleanedPrice;
-                $property->price_from = $cleanedPriceFrom; 
-                $property->price_to = $cleanedPriceTo; 
+                $property->price_from = $cleanedPriceFrom;
+                $property->price_to = $cleanedPriceTo;
 
+                $property->full_bath = $row['full_bath'] ?? null;
+                $property->half_bath = $row['half_bath'] ?? null;
+                $property->average_price_per_square = $row['average_price_per_square'] ?? null;
+                $property->listing_status = $row['listing_status'] ?? null;
+                $property->construction_status = $row['construction_status'] ?? null;
+                $property->size_from = $row['size_from'] ?? null;
+                $property->size_to = $row['size_to'] ?? null;
 
-
-                $property->full_bath = $row['full_bath'] ?? null; 
-                $property->half_bath = $row['half_bath'] ?? null; 
-                $property->average_price_per_square = $row['average_price_per_square'] ?? null; 
-                $property->listing_status = $row['listing_status'] ?? null; 
-                $property->construction_status = $row['construction_status'] ?? null; 
-                $property->size_from = $row['size_from'] ?? null; 
-                $property->size_to = $row['size_to'] ?? null; 
-
-                
- 
                 $property->bedrooms = $row['bedrooms'] ?? null;
-                $property->square_feet = isset($row['square_feet']) 
-    ? (float) preg_replace('/[^\d.]/', '', $row['square_feet']) 
-    : null;
-
+                $property->square_feet = isset($row['square_feet'])
+                    ? (float) preg_replace('/[^\d.]/', '', $row['square_feet'])
+                    : null;
 
                 $property->lot_size = $row['lot_size'] ?? null;
                 $property->property_type = $row['property_type'] ?? null;
@@ -85,7 +86,6 @@ class PropertiesImport implements ToCollection, WithHeadingRow
                 $property->school_id = $row['school_id'] ?? null;
                 $property->is_open_house = $row['is_open_house'] ?? null;
 
-                // Handle images
                 $imageNames = isset($row['images']) ? explode(',', $row['images']) : [];
                 $uploadedImageIds = [];
 
@@ -108,15 +108,17 @@ class PropertiesImport implements ToCollection, WithHeadingRow
                     }
                 }
 
-                // Save property with images
                 $property->images = !empty($uploadedImageIds) ? json_encode($uploadedImageIds) : null;
-                $property->main_image = $uploadedImageIds[0] ?? null; // Set first image as main or NULL
-                $property->banner = $uploadedImageIds[1] ?? null; // Set second image as banner or NULL
+                $property->main_image = $uploadedImageIds[0] ?? null;
+                $property->banner = $uploadedImageIds[1] ?? null;
                 $property->save();
 
-                // Create PropertyFeature entry
-                $propertyFeature = new PropertyFeature();
-                $propertyFeature->property_id = $property->property_id;
+                $propertyFeature = PropertyFeature::where('property_id', $property->property_id)->first();
+                if (!$propertyFeature) {
+                    $propertyFeature = new PropertyFeature();
+                    $propertyFeature->property_id = $property->property_id;
+                }
+
                 $propertyFeature->name = $row['feature_name'] ?? null;
                 $propertyFeature->description = $row['feature_description'] ?? null;
                 $propertyFeature->fireplace_type = $row['fireplace_type'] ?? null;
@@ -124,7 +126,7 @@ class PropertiesImport implements ToCollection, WithHeadingRow
                 $propertyFeature->reach_in = $row['reach_in'] ?? null;
                 $propertyFeature->walk_in = $row['walk_in'] ?? null;
                 $propertyFeature->laundry_closet = $row['laundry_closet'] ?? null;
-                $propertyFeature->closet_location = $row['closet_location'] ?? null;    
+                $propertyFeature->closet_location = $row['closet_location'] ?? null;
                 $propertyFeature->bedroom_location = $row['bedroom_location'] ?? null;
                 $propertyFeature->bathroom_type = $row['bathroom_type'] ?? null;
                 $propertyFeature->bathroom_status = $row['bathroom_status'] ?? null;
@@ -141,13 +143,16 @@ class PropertiesImport implements ToCollection, WithHeadingRow
                 $propertyFeature->foundation_conditions = $row['foundation_conditions'] ?? null;
                 $propertyFeature->save();
 
-                // Create QuickMoveHome entry
-                $quickMoveInHome = new QuickMoveHome();
-                $quickMoveInHome->id = Str::orderedUuid();
-                $quickMoveInHome->property_id = $property->property_id;
-                $quickMoveInHome->move_in_date = now(); // current date
-                $quickMoveInHome->incentives = null; // Set incentives to NULL
-                $quickMoveInHome->main_image = null; // Set main_image to NULL
+                $quickMoveInHome = QuickMoveHome::where('property_id', $property->property_id)->first();
+                if (!$quickMoveInHome) {
+                    $quickMoveInHome = new QuickMoveHome();
+                    $quickMoveInHome->id = Str::orderedUuid();
+                    $quickMoveInHome->property_id = $property->property_id;
+                }
+
+                $quickMoveInHome->move_in_date = now();
+                $quickMoveInHome->incentives = null;
+                $quickMoveInHome->main_image = null;
                 $quickMoveInHome->save();
             }
 
