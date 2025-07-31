@@ -106,7 +106,7 @@
                                     style="font-size: 0.95rem"
                                 >
                                     <span class="text-muted me-1"
-                                        ><i class="bi bi-currency-dollar"></i>
+                                        > 
                                         <strong>Price:</strong></span
                                     >
                                     ${{ formatPrice(property.price) }}

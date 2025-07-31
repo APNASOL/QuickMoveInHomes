@@ -176,7 +176,8 @@ class HomeController extends Controller
         }
 
         // Fetch community details
-        $community = Community::find($property->community_id);
+        $community = Community::where('community_id',$property->community_id)->first();
+        // dd($community.$property->title);
         if ($community && $community->main_image) {
             $community_upload = Upload::find($community->main_image);
             if ($community_upload) {
@@ -303,7 +304,7 @@ class HomeController extends Controller
     }
 
     public function community_all_homes($community_id)
-    {
+    { 
         $properties = Property::where('community_id', $community_id)
             ->inRandomOrder()  // Orders the results randomly
             ->limit(8)->get(); // Limit the results to 8 records

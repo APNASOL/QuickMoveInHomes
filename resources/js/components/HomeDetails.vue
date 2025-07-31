@@ -1,6 +1,7 @@
 <template>
     <Master>
         <div class="property-detail-section">
+          
             <div class="property-detail-section" v-if="Home">
                 <div class="top-section">
                     <div class="info-overlay">
@@ -101,10 +102,11 @@
 
                 <div
                     class="interactive-open-house-banner mb-2 rounded-lg shadow-lg bg-white p-4 border border-gray-300"
-                    v-if="Home.is_open_house && Home.is_open_house != 0"
+                    v-if="Home.is_open_house && Home.is_open_house != 0 && Home.is_open_house != 'Nil'"
                 >
+                {{Home.is_open_house}}
                     <div class="banner-content text-center container">
-                        <div class="c-main-title">OPEN HOUSE</div>
+                        <div class="c-main-title">OPEN HOUSE   {{}}</div>
                         <p
                             class="open_house_desc mt- text-gray-700 text-lg font-medium"
                         >
@@ -113,9 +115,7 @@
                         <div
                             class="details mt-4 flex flex-col gap-2 items-center text-gray-600 c-tabs-values"
                         >
-                            <p
-                                class="text-gray-700 text-lg font-medium"
-                            >
+                            <p class="text-gray-700 text-lg font-medium">
                                 <span
                                     class="icon bg-gray-200 text-gray-700 p-2 rounded-full"
                                 >
@@ -124,9 +124,7 @@
                                 {{ formatTime(Home.open_house_start_time) }} -
                                 {{ formatTime(Home.open_house_end_time) }}
                             </p>
-                            <p
-                                class="text-gray-700 text-lg font-medium "
-                            >
+                            <p class="text-gray-700 text-lg font-medium">
                                 <span
                                     class="icon bg-gray-200 text-gray-700 p-2 rounded-full"
                                 >
@@ -301,587 +299,133 @@
                                 </ul>
 
                                 <!-- Tab Content -->
-                                <div class="tab-content">
-                                    <div
-                                        class="tab-pane fade show active"
-                                        id="overview"
-                                    >
-                                        <h5 class="card-title c-card-main">
-                                            About {{ Home.title }}
-                                        </h5>
-                                        <!-- <h3 class="c-tab-title">
-                                                Property Overview
-                                            </h3> -->
-                                        <p class="c-tab-sub">
-                                            {{ Home.description }}
-                                        </p>
-                                        <hr />
-                                        <div class="mt-3">
-                                            <h3 class="c-tab-title">
-                                                Property Details
-                                            </h3>
-                                            <div class="row g-3">
-                                                <div
-                                                    class="col-md-3"
-                                                    v-if="Home.property_type"
-                                                >
-                                                    <h4 class="c-tab-sub">
-                                                        Home Type
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.property_type ??
-                                                            "N/A"
-                                                        }}
-                                                    </p>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Year Built
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.year_built ??
-                                                            "N/A"
-                                                        }}
-                                                    </p>
-                                                </div>
-                                                <!-- <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Stories
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.stories ??
-                                                            "N/A"
-                                                        }}
-                                                    </p>
-                                                </div> -->
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Lot Size
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.lot_size ??
-                                                            "N/A"
-                                                        }}
-                                                    </p>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Status
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.construction_status ??
-                                                            "N/A"
-                                                        }}
-                                                    </p>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Listing Status
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.listing_status ??
-                                                            "N/A"
-                                                        }}
-                                                    </p>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Bedrooms
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.bedrooms ??
-                                                            "N/A"
-                                                        }}
-                                                    </p>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Full Bath
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.full_bath ??
-                                                            "N/A"
-                                                        }}
-                                                    </p>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Half Bath
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.half_bath ??
-                                                            "N/A"
-                                                        }}
-                                                    </p>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Square Feet
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.square_feet ??
-                                                            "N/A"
-                                                        }}
-                                                    </p>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Size Range
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.size_from ??
-                                                            "N/A"
-                                                        }}
-                                                        -
-                                                        {{
-                                                            Home.size_to ??
-                                                            "N/A"
-                                                        }}
-                                                    </p>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Price Range
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.price_from ??
-                                                            "N/A"
-                                                        }}
-                                                        -
-                                                        {{
-                                                            Home.price_to ??
-                                                            "N/A"
-                                                        }}
-                                                    </p>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Average Price per Sq Ft
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.average_price_per_square ??
-                                                            "N/A"
-                                                        }}
-                                                    </p>
-                                                </div>
-                                                <!-- <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        HOA ID
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.hoa_id ?? "N/A"
-                                                        }}
-                                                    </p>
-                                                </div> -->
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Association Fee
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.association_fee ??
-                                                            "N/A"
-                                                        }}
-                                                    </p>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        CIC
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{ Home.cic ? "Yes"
-                                                                : "No" }}
-                                                    </p>
-                                                </div>
-                                                <!-- <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        School ID
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.school_id ??
-                                                            "N/A"
-                                                        }}
-                                                    </p>
-                                                </div> -->
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Is Open House
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.is_open_house
-                                                                ? "Yes"
-                                                                : "No"
-                                                        }}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                               <div class="tab-content">
+    <!-- Overview Tab -->
+     
+    <div class="tab-pane fade show active" id="overview">
+        <h5 class="card-title c-card-main" v-if="Home.title">
+            About {{ Home.title }}
+        </h5>
+        <p class="c-tab-sub" v-if="Home.description">
+            {{ Home.description }}
+        </p>
+        <hr v-if="Home.title || Home.description" />
 
-                                    <!-- <div
-                                            class="tab-pane fade"
-                                            id="specifications"
-                                        >
-                                        <h5 class="card-title c-card-main">
-                                                Specifications
-                                            </h5>
-                                            <p>No data added yet.</p>
-                                        </div> -->
-                                    <div class="tab-pane fade" id="features">
-                                        <div>
-                                            <h5 class="card-title c-card-main">
-                                                Home Features
-                                            </h5>
-                                            <hr />
-                                            <div class="row g-3">
-                                                <!-- Closets -->
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Reach-In Closet
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.feature
-                                                                .reach_in
-                                                                ? "Yes"
-                                                                : "No"
-                                                        }}
-                                                    </p>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Walk-In Closet
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.feature.walk_in
-                                                                ? "Yes"
-                                                                : "No"
-                                                        }}
-                                                    </p>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Laundry Closet
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.feature
-                                                                .laundry_closet
-                                                                ? "Yes"
-                                                                : "No"
-                                                        }}
-                                                    </p>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Closet Location 
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.feature
-                                                                .closet_location ? "Yes" : "No"
-                                                        }}
-                                                    </p>
-                                                </div>
+        <div class="mt-3" v-if="Home.property_type || Home.year_built || Home.lot_size || Home.construction_status || Home.listing_status || Home.bedrooms || Home.full_bath || Home.half_bath || Home.square_feet || Home.size_from || Home.size_to || Home.price_from || Home.price_to || Home.average_price_per_square || Home.association_fee || Home.cic || Home.is_open_house">
+            <h3 class="c-tab-title">Property Details</h3>
+            <div class="row g-3">
+                <div class="col-md-3" v-if="Home.property_type">
+                    <h4 class="c-tab-sub">Home Type</h4>
+                    <p class="c-tabs-values">{{ Home.property_type }}</p>
+                </div>
+                <div class="col-md-3" v-if="Home.year_built">
+                    <h4 class="c-tab-sub">Year Built</h4>
+                    <p class="c-tabs-values">{{ Home.year_built }}</p>
+                </div>
+                <div class="col-md-3" v-if="Home.lot_size">
+                    <h4 class="c-tab-sub">Lot Size</h4>
+                    <p class="c-tabs-values">{{ Home.lot_size }}</p>
+                </div>
+                <div class="col-md-3" v-if="Home.construction_status">
+                    <h4 class="c-tab-sub">Status</h4>
+                    <p class="c-tabs-values">{{ Home.construction_status }}</p>
+                </div>
+                <div class="col-md-3" v-if="Home.listing_status">
+                    <h4 class="c-tab-sub">Listing Status</h4>
+                    <p class="c-tabs-values">{{ Home.listing_status }}</p>
+                </div>
+                <div class="col-md-3" v-if="Home.bedrooms">
+                    <h4 class="c-tab-sub">Bedrooms</h4>
+                    <p class="c-tabs-values">{{ Home.bedrooms }}</p>
+                </div>
+                <div class="col-md-3" v-if="Home.full_bath">
+                    <h4 class="c-tab-sub">Full Bath</h4>
+                    <p class="c-tabs-values">{{ Home.full_bath }}</p>
+                </div>
+                <div class="col-md-3" v-if="Home.half_bath">
+                    <h4 class="c-tab-sub">Half Bath</h4>
+                    <p class="c-tabs-values">{{ Home.half_bath }}</p>
+                </div>
+                <div class="col-md-3" v-if="Home.square_feet">
+                    <h4 class="c-tab-sub">Square Feet</h4>
+                    <p class="c-tabs-values">{{ Home.square_feet }}</p>
+                </div>
+                <div class="col-md-3" v-if="Home.size_from || Home.size_to">
+                    <h4 class="c-tab-sub">Size Range</h4>
+                    <p class="c-tabs-values">{{ Home.size_from ?? 'N/A' }} - {{ Home.size_to ?? 'N/A' }}</p>
+                </div>
+                <div class="col-md-3" v-if="Home.price_from || Home.price_to">
+                    <h4 class="c-tab-sub">Price Range</h4>
+                    <p class="c-tabs-values">{{ Home.price_from ?? 'N/A' }} - {{ Home.price_to ?? 'N/A' }}</p>
+                </div>
+                <div class="col-md-3" v-if="Home.average_price_per_square">
+                    <h4 class="c-tab-sub">Average Price per Sq Ft</h4>
+                    <p class="c-tabs-values">{{ Home.average_price_per_square }}</p>
+                </div>
+                <div class="col-md-3" v-if="Home.association_fee">
+                    <h4 class="c-tab-sub">Association Fee</h4>
+                    <p class="c-tabs-values">{{ Home.association_fee }}</p>
+                </div>
+                <div class="col-md-3" v-if="Home.cic">
+                    <h4 class="c-tab-sub">CIC</h4>
+                    <p class="c-tabs-values">{{ Home.cic }}</p>
+                </div>
+                <div class="col-md-3" v-if="Home.is_open_house">
+                    <h4 class="c-tab-sub">Is Open House</h4>
+                    <p class="c-tabs-values">{{ Home.is_open_house }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                                                <!-- Bathroom -->
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Bathroom Type
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.feature
-                                                                .bathroom_type  ? "Yes" : "No"
-                                                        }}
-                                                    </p>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Bathroom Status
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.feature
-                                                                .bathroom_status ? "Yes" : "No"
-                                                        }}
-                                                    </p>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Private Bath
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.feature
-                                                                .private_bath
-                                                                ? "Yes"
-                                                                : "No"
-                                                        }}
-                                                    </p>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Outdoor Shower
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.feature
-                                                                .outdoor_shower
-                                                                ? "Yes"
-                                                                : "No"
-                                                        }}
-                                                    </p>
-                                                </div>
+    <!-- Features Tab -->
+    <div class="tab-pane fade" id="features" v-if="Home.feature">
+        <div>
+            <h5 class="card-title c-card-main">Home Features</h5>
+            <hr />
+            <div class="row g-3">
+                <div class="col-md-3" v-if="Home.feature.reach_in"><h4 class="c-tab-sub">Reach-In Closet</h4><p class="c-tabs-values">{{ Home.feature.reach_in }}</p></div>
+                <div class="col-md-3" v-if="Home.feature.walk_in"><h4 class="c-tab-sub">Walk-In Closet</h4><p class="c-tabs-values">{{ Home.feature.walk_in }}</p></div>
+                <div class="col-md-3" v-if="Home.feature.laundry_closet"><h4 class="c-tab-sub">Laundry Closet</h4><p class="c-tabs-values">{{ Home.feature.laundry_closet }}</p></div>
+                <div class="col-md-3" v-if="Home.feature.closet_location"><h4 class="c-tab-sub">Closet Location</h4><p class="c-tabs-values">{{ Home.feature.closet_location }}</p></div>
 
-                                                <!-- Pool -->
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Pool Shape
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.feature
-                                                                .pool_shape  ? "Yes" : "No"
-                                                        }}
-                                                    </p>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Water Features
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.feature
-                                                                .water_features  ? "Yes" : "No"
-                                                        }}
-                                                    </p>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Pool Status
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.feature
-                                                                .pool_status ? "Yes" : "No"
-                                                        }}
-                                                    </p>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Spa
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.feature.spa
-                                                                ? "Yes"
-                                                                : "No"
-                                                        }}
-                                                    </p>
-                                                </div>
+                <div class="col-md-3" v-if="Home.feature.bathroom_type"><h4 class="c-tab-sub">Bathroom Type</h4><p class="c-tabs-values">{{ Home.feature.bathroom_type }}</p></div>
+                <div class="col-md-3" v-if="Home.feature.bathroom_status"><h4 class="c-tab-sub">Bathroom Status</h4><p class="c-tabs-values">{{ Home.feature.bathroom_status }}</p></div>
+                <div class="col-md-3" v-if="Home.feature.private_bath"><h4 class="c-tab-sub">Private Bath</h4><p class="c-tabs-values">{{ Home.feature.private_bath }}</p></div>
+                <div class="col-md-3" v-if="Home.feature.outdoor_shower"><h4 class="c-tab-sub">Outdoor Shower</h4><p class="c-tabs-values">{{ Home.feature.outdoor_shower }}</p></div>
 
-                                                <!-- Fencing -->
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Fencing
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.feature
-                                                                .fencing_material ? "Yes" : "No"
-                                                        }}
-                                                    </p>
-                                                </div>
-                                                <!-- <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Fencing Status
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.feature
-                                                                .fencing_status ? "Yes" : "No"
-                                                        }}
-                                                    </p>
-                                                </div> -->
+                <div class="col-md-3" v-if="Home.feature.pool_shape"><h4 class="c-tab-sub">Pool Shape</h4><p class="c-tabs-values">{{ Home.feature.pool_shape }}</p></div>
+                <div class="col-md-3" v-if="Home.feature.water_features"><h4 class="c-tab-sub">Water Features</h4><p class="c-tabs-values">{{ Home.feature.water_features }}</p></div>
+                <div class="col-md-3" v-if="Home.feature.pool_status"><h4 class="c-tab-sub">Pool Status</h4><p class="c-tabs-values">{{ Home.feature.pool_status }}</p></div>
+                <div class="col-md-3" v-if="Home.feature.spa"><h4 class="c-tab-sub">Spa</h4><p class="c-tabs-values">{{ Home.feature.spa }}</p></div>
 
-                                                <!-- Bedroom -->
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Bedroom
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.feature
-                                                                .bedroom_location ? "Yes" : "No"
-                                                        }}
-                                                    </p>
-                                                </div>
+                <div class="col-md-3" v-if="Home.feature.fencing_material"><h4 class="c-tab-sub">Fencing</h4><p class="c-tabs-values">{{ Home.feature.fencing_material }}</p></div>
+                <div class="col-md-3" v-if="Home.feature.bedroom_location"><h4 class="c-tab-sub">Bedroom</h4><p class="c-tabs-values">{{ Home.feature.bedroom_location }}</p></div>
+                <div class="col-md-3" v-if="Home.feature.fireplace_type"><h4 class="c-tab-sub">Fireplace</h4><p class="c-tabs-values">{{ Home.feature.fireplace_type }}</p></div>
+                <div class="col-md-3" v-if="Home.feature.kitchen_pantry_type"><h4 class="c-tab-sub">Kitchen Pantry</h4><p class="c-tabs-values">{{ Home.feature.kitchen_pantry_type }}</p></div>
+                <div class="col-md-3" v-if="Home.feature.parking_enclosure"><h4 class="c-tab-sub">Parking Enclosure</h4><p class="c-tabs-values">{{ Home.feature.parking_enclosure }}</p></div>
+                <div class="col-md-3" v-if="Home.feature.landscape_maintenance"><h4 class="c-tab-sub">Landscape Maintenance</h4><p class="c-tabs-values">{{ Home.feature.landscape_maintenance }}</p></div>
+                <div class="col-md-3" v-if="Home.feature.foundation_conditions"><h4 class="c-tab-sub">Foundation</h4><p class="c-tabs-values">{{ Home.feature.foundation_conditions }}</p></div>
+            </div>
+        </div>
+    </div>
 
-                                                <!-- Fireplace -->
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Fireplace
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.feature
-                                                                .fireplace_type ? "Yes" : "No"
-                                                        }}
-                                                    </p>
-                                                </div>
+    <!-- Financial Tab -->
+    <div class="tab-pane fade" id="financial" v-if="Home.price || Home.price_from || Home.price_to || Home.average_price_per_square || Home.association_fee || Home.size_from || Home.size_to">
+        <div>
+            <h5 class="card-title c-card-main">Price and Fees</h5>
+            <hr />
+            <div class="row g-3">
+                <div class="col-md-3" v-if="Home.price"><h4 class="c-tab-sub">Price</h4><p class="c-tabs-values">{{ Home.price }}</p></div>
+                <div class="col-md-3" v-if="Home.price_from || Home.price_to"><h4 class="c-tab-sub">Price Range</h4><p class="c-tabs-values">{{ Home.price_from ?? 'N/A' }} - {{ Home.price_to ?? 'N/A' }}</p></div>
+                <div class="col-md-3" v-if="Home.average_price_per_square"><h4 class="c-tab-sub">Average Price per Sq Ft</h4><p class="c-tabs-values">{{ Home.average_price_per_square }}</p></div>
+                <div class="col-md-3" v-if="Home.association_fee"><h4 class="c-tab-sub">Association Fee</h4><p class="c-tabs-values">{{ Home.association_fee }}</p></div>
+                <div class="col-md-3" v-if="Home.size_from || Home.size_to"><h4 class="c-tab-sub">Size Range</h4><p class="c-tabs-values">{{ Home.size_from ?? 'N/A' }} - {{ Home.size_to ?? 'N/A' }} SQFT</p></div>
+            </div>
+        </div>
+    </div>
+</div>
 
-                                                <!-- Kitchen -->
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Kitchen Pantry
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.feature
-                                                                .kitchen_pantry_type ? "Yes" : "No"
-                                                        }}
-                                                    </p>
-                                                </div>
-
-                                                <!-- Parking -->
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Parking Enclosure
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.feature
-                                                                .parking_enclosure
-                                                                ? "Yes"
-                                                                : "No"
-                                                        }}
-                                                    </p>
-                                                </div>
-
-                                                <!-- Landscape Maintenance -->
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Landscape Maintenance
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.feature
-                                                                .landscape_maintenance
-                                                                ? "Yes"
-                                                                : "No"
-                                                        }}
-                                                    </p>
-                                                </div>
-
-                                                <!-- Foundation -->
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Foundation 
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.feature
-                                                                .foundation_conditions ? "Yes" : "No"
-                                                        }}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="financial">
-                                        <div>
-                                            <h5 class="card-title c-card-main">
-                                                Price and Fees
-                                            </h5>
-                                            <hr />
-                                            <div class="row g-3">
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Price
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.price ?? "N/A"
-                                                        }}
-                                                    </p>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Price Range
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.price_from ??
-                                                            "N/A"
-                                                        }}
-                                                        -
-                                                        {{
-                                                            Home.price_to ??
-                                                            "N/A"
-                                                        }}
-                                                    </p>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Average Price per Sq Ft
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.average_price_per_square ??
-                                                            "N/A"
-                                                        }}
-                                                    </p>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Association Fee
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.association_fee ??
-                                                            "N/A"
-                                                        }}
-                                                    </p>
-                                                </div>
-                                                 
-                                                 
-                                                <div class="col-md-3">
-                                                    <h4 class="c-tab-sub">
-                                                        Size Range
-                                                    </h4>
-                                                    <p class="c-tabs-values">
-                                                        {{
-                                                            Home.size_from 
-                                                        }}
-                                                        -
-                                                        {{
-                                                            Home.size_to  
-                                                        }}
-                                                        SQFT
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <div class="col-md-4 col-12">
@@ -1201,18 +745,18 @@ export default {
 
                 .then((response) => {
                     this.Home = response.data.property_info;
-
+               
                     this.Community = response.data.community_info;
                     this.incentive = response.data.incentive;
-                    this.getThisCommunityAllHomes();
+                    this.getThisCommunityAllHomes(this.Home.community_id);
                 })
                 .catch((error) => {
                     toastr.error(error.response.data.message);
                 });
         },
-        getThisCommunityAllHomes() {
+        getThisCommunityAllHomes(community_id) { 
             axios
-                .get(`/api/fetch-community-all-homes/${this.Community.id}`)
+                .get(`/api/fetch-community-all-homes/${community_id}`)
                 .then((response) => {
                     this.community_homes = response.data;
                 })
@@ -1229,16 +773,19 @@ export default {
             return new Date(date).toLocaleDateString(undefined, options);
         },
         formatTime(time) {
-            const [hours, minutes, seconds] = time.split(":");
-            let formattedHours = parseInt(hours, 10);
-            const period = formattedHours >= 12 ? "PM" : "AM";
+    if (!time || typeof time !== "string" || !time.includes(":")) {
+        return "N/A";
+    }
 
-            // Convert hours to 12-hour format
-            formattedHours = formattedHours % 12 || 12;
+    const [hours, minutes, seconds] = time.split(":");
+    let formattedHours = parseInt(hours, 10);
+    const period = formattedHours >= 12 ? "PM" : "AM";
 
-            // Return the formatted time with AM/PM
-            return `${formattedHours}:${minutes}:${seconds} ${period}`;
-        },
+    formattedHours = formattedHours % 12 || 12;
+
+    return `${formattedHours}:${minutes}:${seconds} ${period}`;
+}
+,
         formatPrice(price) {
             return Math.floor(price).toLocaleString(); // Removes the decimal portion
         },
@@ -1259,6 +806,7 @@ export default {
 .uppercase {
     text-transform: uppercase;
 }
+
 /* .top-section {
     position: relative;
     height: 300px; 
@@ -1277,6 +825,7 @@ export default {
     z-index: 3 !important;
     width: 100% !important;
 }
+
 .info-overlay {
     background: #f7fafc;
     padding: 10px;
@@ -1288,6 +837,7 @@ export default {
     line-height: 36px;
     color: rgb(23, 38, 54);
 }
+
 .info-card-overlay {
     background: #01060d9d;
     padding: 10px;
@@ -1317,6 +867,7 @@ export default {
     font-size: 20px;
     margin: 5px 0;
 }
+
 .c-tabs-price-color {
     font-family: "Playfair Display", serif;
     font-size: 30px;
@@ -1328,16 +879,19 @@ export default {
 .property-detail-section {
     background-color: #f1f1f1 !important;
 }
+
 .feature-state {
     font-size: 2.25rem;
     color: #002856 !important;
     font-weight: 300 !important;
 }
+
 .feature-title {
     font-size: 2.25rem;
     color: #002856 !important;
     font-weight: 300 !important;
 }
+
 .c-feature-title {
     color: #002856 !important;
     font-weight: 300 !important;
@@ -1355,6 +909,7 @@ export default {
     flex-direction: column;
     gap: 5px !important;
 }
+
 .c-slide-div > button {
     width: fit-content;
 }
@@ -1373,15 +928,18 @@ export default {
     text-align: center;
     padding: 20px 0;
 }
+
 .interactive-banner h1 {
     letter-spacing: 0.15em;
 }
+
 .c-card-img-overlay-name {
     top: unset;
     bottom: 120px;
     text-align: left;
     color: white;
 }
+
 .info-card-overlay {
     background: #bcd6f5b2;
     padding: 10px;
@@ -1413,6 +971,7 @@ export default {
 .icon {
     margin-right: 10px;
 }
+
 .open-house-tag {
     background-color: rgb(61, 102, 143);
     color: white;
@@ -1421,6 +980,7 @@ export default {
     font-weight: bold;
     border-radius: 10px;
 }
+
 @media (max-width: 768px) {
     .banner-content h3 {
         font-size: 20px;
@@ -1430,6 +990,7 @@ export default {
     .banner-content .date {
         font-size: 16px;
     }
+
     .open-house-tag {
         font-size: 12px;
     }
@@ -1442,6 +1003,7 @@ export default {
     padding: 10px;
     border-radius: 5px;
 }
+
 .blurred-box {
     margin-top: 10px;
     padding: 15px;
@@ -1451,34 +1013,41 @@ export default {
     color: rgba(0, 0, 0, 0.5);
     border-radius: 5px;
 }
+
 .placeholder-title {
     font-weight: bold;
     font-size: 18px;
     color: #333;
     margin-bottom: 10px;
 }
+
 .open_house_desc {
     text-align: left !important;
 }
+
 .c-anchor-style {
     text-decoration: none;
     color: #002855;
 }
+
 .c-anchor-style:hover {
     cursor: pointer;
     font-weight: bold;
 }
+
 .card-img-top {
     height: 240px;
     object-fit: cover;
 }
+
 /* Hover effect for image */
 .hover-effect {
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
 .hover-effect:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Adds a soft shadow */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    /* Adds a soft shadow */
 }
 
 /* Hover effect for image */
@@ -1487,11 +1056,14 @@ export default {
 }
 
 .icon-hover-effect:hover {
-    transform: scale(1.05); /* Slightly enlarges the image on hover */
+    transform: scale(1.05);
+    /* Slightly enlarges the image on hover */
 }
+
 .beat {
     animation: beating 1s infinite;
 }
+
 .price {
     font-family: "Playfair Display", serif !important;
     font-size: 25px !important;
@@ -1510,6 +1082,7 @@ export default {
     line-height: 28px;
     color: rgb(23, 38, 54);
 }
+
 .c-tab-sub {
     font-family: Inter, sans-serif;
     font-size: 16px;
@@ -1518,6 +1091,7 @@ export default {
     color: rgb(61, 102, 143);
     margin: 0;
 }
+
 .c-tabs-values {
     font-family: Inter, sans-serif !important;
     font-size: 16px !important;
@@ -1525,21 +1099,25 @@ export default {
     line-height: 24px !important;
     color: rgb(23, 38, 54) !important;
 }
+
 .c-text-theme {
     color: rgb(61, 102, 143) !important;
 }
+
 .nav-tabs .nav-link {
     color: rgb(61, 102, 143) !important;
     font-weight: bold !important;
 }
+
 .nav-tabs {
     background-color: #ffffff !important;
 }
+
 .c-card-main {
     font-family: "Playfair Display", serif;
     font-size: 30px;
     font-weight: 700;
     line-height: 36px;
-    color: rgb(45, 106, 159) !important ;
+    color: rgb(45, 106, 159) !important;
 }
 </style>
