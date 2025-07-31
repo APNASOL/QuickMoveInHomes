@@ -67,14 +67,13 @@ function addMarkers() {
     markers.length = 0; // Clear the markers array
     // Check if the markerClusterer exists before attempting to clear it
     if (markerClusterer) {
-    markerClusterer.setMap(null); // Remove previous clusterer
-    markerClusterer = null; // Reset
-}
+        markerClusterer.setMap(null); // Remove previous clusterer
+        markerClusterer = null; // Reset
+    }
     markerClusterer = new MarkerClusterer({
         map: map.value,
         markers: markers,
     });
-
 
     // Ensure homes prop is an array and contains valid home data
     if (Array.isArray(props.homes) && props.homes.length > 0) {
@@ -94,22 +93,83 @@ function addMarkers() {
                 });
 
                 const infoWindowContent = `
-    <a href="/home-details/${home.property_id}" style="text-decoration: none; color: inherit;">
-        <div style="width:150px; cursor: pointer;">
-            <img src="${home.main_image ? home.main_image : '/images/default_image.png'}" 
-                 alt="Image" 
-                 style="width:100%; height:auto; border-radius:6px;">
-            <p style="margin-top:10px; font-weight:bold;">
-                <strong>${home.title || ''}</strong><br>
-                ${home.price ? `<b>$${parseFloat(home.price).toLocaleString()}</b><br>` : ''}
-                ${home.bedrooms ? `${home.bedrooms} bds | ` : ''}
-                ${home.square_feet ? `${parseFloat(home.square_feet).toLocaleString()} sqft<br>` : ''}
-                ${home.property_type || ''}
-            </p>
-        </div>
-    </a>
-`;
+<a href="/home-details/${
+                    home.property_id
+                }" style="text-decoration: none; color: inherit;">
+  <div style="
+      width: 230px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fff;
+      transition: box-shadow 0.3s ease;
+  ">
+    <!-- Image -->
+    <div style="height: 130px; overflow: hidden;">
+      <img src="${
+          home.main_image ? home.main_image : "/images/default_image.png"
+      }" 
+           alt="Image" 
+           style="width: 100%; height: 100%; object-fit: cover;">
+    </div>
 
+    <!-- Content -->
+    <div style="padding: 12px;">
+      <h6 style="
+          margin: 0 0 6px 0;
+          font-size: 16px;
+          font-weight: 600;
+          color: #023f86;
+      ">${home.title || ""}</h6>
+
+      <div style="font-size: 14px; color: #444;">
+        ${
+            home.price
+                ? `<strong style="color: #000;">$${parseFloat(
+                      home.price
+                  ).toLocaleString()}</strong><br>`
+                : ""
+        }
+        ${home.bedrooms ? `${home.bedrooms} bd` : ""}${
+                    home.bathrooms ? ` | ${home.bathrooms} ba` : ""
+                }${
+                    home.square_feet
+                        ? ` | ${parseFloat(
+                              home.square_feet
+                          ).toLocaleString()} sqft`
+                        : ""
+                }
+        <div style="margin-top: 4px; font-size: 13px; color: #888;">${
+            home.property_type || ""
+        }</div>
+      </div>
+
+      <!-- Button -->
+      <div style="margin-top: 12px;">
+        <a href="/home-details/${home.property_id}" 
+           style="
+              display: block;
+              text-align: center;
+              background-color: #023f86;
+              color: #fff;
+              padding: 8px 12px;
+              border-radius: 999px;
+              font-size: 13px;
+              font-weight: 600;
+              text-decoration: none;
+              transition: background-color 0.3s ease;
+           "
+           onmouseover="this.style.backgroundColor='#035bb8'"
+           onmouseout="this.style.backgroundColor='#023f86'"
+        >
+          Visit Property
+        </a>
+      </div>
+    </div>
+  </div>
+</a>
+`;
 
                 const infoWindow = new google.maps.InfoWindow({
                     content: infoWindowContent,
