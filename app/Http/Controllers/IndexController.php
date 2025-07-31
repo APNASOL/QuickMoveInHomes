@@ -32,9 +32,8 @@ class IndexController extends Controller
             $property->main_image = null;
             // $property->bathrooms  = $property->half_bath + $property->full_bath;
             $full = (int) filter_var($property->full_bath, FILTER_SANITIZE_NUMBER_INT);
-$half = (int) filter_var($property->half_bath, FILTER_SANITIZE_NUMBER_INT);
-
-$property->bathrooms = $full + $half;
+            $half = (int) filter_var($property->half_bath, FILTER_SANITIZE_NUMBER_INT);
+            $property->bathrooms = $full + $half;
 
 
             $images = json_decode($property->images);

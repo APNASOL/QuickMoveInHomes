@@ -533,7 +533,11 @@ class HomeController extends Controller
             $property->banner     = null;
             $property->main_image = null;
     
-            $property->bathrooms = $property->half_bath +  $property->full_bath;
+            // $property->bathrooms = $property->half_bath +  $property->full_bath;
+        
+            $full = (int) filter_var($property->full_bath, FILTER_SANITIZE_NUMBER_INT);
+            $half = (int) filter_var($property->half_bath, FILTER_SANITIZE_NUMBER_INT);
+            $property->bathrooms = $full + $half;
             $propertyFeature = PropertyFeature::where('property_id', $property->property_id)->select('parking_enclosure')->first();
             $property->parking_enclosure = $propertyFeature->parking_enclosure ?? 0;
             // Fetch related property record

@@ -1,219 +1,184 @@
 <template>
-    <div>
-        <!-- Hero Section -->
-        <div class="hero-section position-relative text-white d-flex align-items-center justify-content-center text-center">
-            <!-- Background Image -->
-            <img
-                src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
-                alt="Background"
-                class="hero-image"
-            />
+  <div class="hero-section text-white d-flex align-items-center justify-content-center text-center">
+    <!-- Background -->
+    <img
+      src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
+      alt="Background"
+      class="hero-image"
+    />
+    <div class="overlay"></div>
 
-            <!-- Overlay Text and Search Box -->
-            <div class="overlay"></div>
-            <div class="content position-absolute text-center">
-                <h1 class="display-3 fw-bold mb-3">Brand New Homes in Las Vegas</h1>
-                <h3 class="mb-4 sub-contents">Discover move-in ready new construction homes across Las Vegas Valley</h3>
-                <div class="search-bar-container d-flex justify-content-center">
-                    <div class="search-bar input-group">
-                        <input
-                            type="text"
-                            class="form-control"
-                            placeholder="Enter an address, city, or ZIP code"
-                            v-model="searching_location"
-                        />
-                        <a
-                            v-if="formStatus"
-                            :href="'/homes-list/' + searching_location"
-                            type="submit"
-                            class="btn c-custom-btn"
-                            @click="activeSpinner"
-                        >
-                            <i class="bi bi-search"></i>
-                        </a>
-                        <a class="btn c-custom-btn" type="button" disabled v-else>
-                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        </a>
-                    </div>
-                    <div class="bg-white ms-2" style="border-radius: 0.25rem">
-                        <a class="searchHome" href="/search/homes" id="navbarDropdownDeals" role="button">
-                            <img src="/images/map-icon.png" height="50" />
-                        </a>
-                    </div>
-                </div>
-            </div>
+    <!-- Main Content -->
+    <div class="content position-absolute text-center px-4">
+      <h1 class="hero-heading">Find Your Dream Home in Las Vegas</h1>
+      <p class="hero-subheading mb-5">Explore beautifully crafted, move-in ready new construction homes.</p>
+
+      <!-- Search Area -->
+      <div class="d-flex justify-content-center align-items-center flex-wrap gap-2">
+        <div class="search-wrapper input-group shadow-sm">
+          <input
+            v-model="searching_location"
+            type="text"
+            class="form-control form-control-lg"
+            placeholder="Search by address, city, or ZIP code"
+          />
+          <a
+            v-if="formStatus"
+            :href="'/homes-list/' + searching_location"
+            class="btn btn-search"
+            @click="activeSpinner"
+          >
+            <i class="bi bi-search fs-5"></i>
+          </a>
+          <a class="btn btn-search disabled" v-else>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          </a>
         </div>
+
+        <!-- Map Button -->
+        <a class="map-icon-btn ms-2" href="/search/homes" title="Map View">
+          <img src="/images/map-icon.png" height="48" />
+        </a>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
 export default {
-    name: "HeroSection",
-    data() {
-        return {
-            searching_location: "",
-            formStatus: true,
-        };
+  name: "HeroSection",
+  data() {
+    return {
+      searching_location: "",
+      formStatus: true,
+    };
+  },
+  methods: {
+    activeSpinner() {
+      this.formStatus = false;
+      setTimeout(() => {
+        this.formStatus = true;
+      }, 2000);
     },
-    methods: {
-        activeSpinner() {
-            this.formStatus = false;
-            setTimeout(() => {
-                this.formStatus = true;
-            }, 2000);
-        },
-    },
+  },
 };
 </script>
 
 <style scoped>
-.c-custom-btn {
-    border-radius: 0rem 0.25rem 0.25rem 0rem !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    height: 50px;
-    width: 80px;
-    background-color: #0A3564 !important;
-    color: white;
-}
-
 .hero-section {
-    height: 50vh;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  height: 50vh;
+  position: relative;
+  overflow: hidden;
 }
 
 .hero-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
 }
 
 .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.4);
-    z-index: 2;
-    
+  background: rgba(0, 0, 0, 0.6);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
 }
 
 .content {
-    font-family: "Playfair Display", serif;
-font-size: 60px;
-font-weight: 700;
-line-height: 60px;
-color: rgb(255, 255, 255);
-    
-    z-index: 3;
-    width: 100%;
-   
-    
-}
-.sub-contents
-{
-    font-family: Inter, sans-serif;
-font-size: 24px;
-font-weight: 400;
-line-height: 32px;
-color: rgb(255, 255, 255);
+  z-index: 3;
+  max-width: 960px;
+  width: 100%;
+  animation: fadeInUp 0.8s ease;
 }
 
-.search-bar-container {
-    margin-top: 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.hero-heading {
+  font-family: "Playfair Display", serif;
+  font-size: 3.25rem;
+  font-weight: 800;
+  line-height: 1.3;
+  margin-bottom: 0.75rem;
 }
 
-.search-bar {
-    width: 100%;
-    max-width: 400px;
-    border-radius: 0.25rem;
+.hero-subheading {
+  font-size: 1.25rem;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  color: #f5f5f5;
 }
 
-.search-bar input {
-    border: none;
-    font-size: 1rem;
-    height: 50px;
-    border-top-left-radius: 0.25rem;
-    border-bottom-left-radius: 0.25rem;
+.search-wrapper {
+  max-width: 480px;
+  width: 100%;
+  border-radius: 999px;
+  overflow: hidden;
+  background: white;
 }
 
-.search-bar button {
-    border: none;
-    border-top-right-radius: 0.25rem;
-    border-bottom-right-radius: 0.25rem;
-    background-color: #fff;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s;
+.search-wrapper input {
+  border: none;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  height: 54px;
+  border-radius: 0;
 }
 
-.search-bar button:hover {
-    background-color: #f0f0f0;
+.btn-search {
+  background-color: #023f86;
+  color: white;
+  width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-search:hover {
+  background-color: #035bb8;
+}
+
+.map-icon-btn {
+  background: white;
+  padding: 6px 10px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s;
+}
+
+.map-icon-btn:hover img {
+  transform: scale(1.1);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 768px) {
-    .hero-section {
-        height: 50vh;
-    }
+  .hero-heading {
+    font-size: 2rem;
+  }
 
-    .content {
-        max-width: 90%;
-    }
+  .hero-subheading {
+    font-size: 1rem;
+  }
 
-    .search-bar input {
-        height: 50px;
-        font-size: 0.9rem;
-    }
-
-    .search-bar button {
-        width: 60px;
-    }
-}
-
-@media (max-width: 576px) {
-    .hero-section {
-        height: 45vh;
-    }
-
-    .display-4 {
-        font-size: 1.75rem;
-    }
-
-    .search-bar input {
-        height: 50px;
-        font-size: 0.85rem;
-    }
-
-    .search-bar button {
-        width: 50px;
-    }
-}
-
-.searchHome {
-    overflow: hidden;
-}
-
-.searchHome img {
-    transition: transform 0.3s ease;
-}
-
-.searchHome:hover img {
-    transform: scale(1.2);
+  .search-wrapper input {
+    height: 50px;
+    font-size: 0.95rem;
+  }
 }
 </style>
