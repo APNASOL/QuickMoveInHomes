@@ -49,386 +49,109 @@
                         </template>
                     </Carousel>
 
-                    <!-- Thumbnails Carousel -->
-                    <!-- <Carousel
-                            id="thumbnails"
-                            :items-to-show="4"
-                            :wrap-around="true"
-                            v-model="currentSlide"
-                            ref="carousel"
-                        >
-                            
-                            <Slide
-                                v-for="(file, index) in community_details.files"
-                                :key="index"
-                            >
-                                <div
-                                    class="carousel__item"
-                                    @click="slideTo(index)"
-                                    style="cursor: pointer"
-                                >
-                                    <img
-                                        :src="file.file_name"
-                                        :alt="file.file_original_name"
-                                        class="img-fluid"
-                                        style="
-                                            max-height: 100px;
-                                            object-fit: cover;
-                                        "
-                                    />
-                                </div>
-                            </Slide>
-                        </Carousel> -->
+                    
                 </div>
                 <div class="">
                     <div class="container">
-                        <div class="row g-3">
-                            <!-- Left Column (Main Details) -->
-                            <div class="col-md-8">
-                                <div class="card p-4 border-0 shadow">
-                                    <div class="card-body">
-                                        <h5 class="card-title c-card-main">
-                                            About {{ community_details.name }}
-                                        </h5>
-                                        <p class="card-text">
-                                            {{ community_details.description }}
-                                        </p>
+                        <div class="row g-4">
+    <!-- Left Column (Main Content) -->
+    <div class="col-md-8">
+        <div class="card border-0 shadow-lg rounded-4 p-4 h-100">
+            <h2 class="fw-bold text-dark mb-3">About {{ community_details.name }}</h2>
+            <p class="text-muted">{{ community_details.description }}</p>
 
-                                        <!-- Tabs Navigation -->
-                                        <ul
-                                            class="nav nav-tabs mt-3"
-                                            id="communityTabs"
-                                            role="tablist"
-                                        >
-                                            <li
-                                                class="nav-item"
-                                                role="presentation"
-                                            >
-                                                <button
-                                                    class="nav-link active"
-                                                    id="location-tab"
-                                                    data-bs-toggle="tab"
-                                                    data-bs-target="#location"
-                                                    type="button"
-                                                    role="tab"
-                                                >
-                                                    Location and Info
-                                                </button>
-                                            </li>
-                                            <li
-                                                class="nav-item"
-                                                role="presentation"
-                                            >
-                                                <button
-                                                    class="nav-link"
-                                                    id="hoa-tab"
-                                                    data-bs-toggle="tab"
-                                                    data-bs-target="#hoa"
-                                                    type="button"
-                                                    role="tab"
-                                                >
-                                                    HOA and Fees
-                                                </button>
-                                            </li>
-                                            <li
-                                                class="nav-item"
-                                                role="presentation"
-                                            >
-                                                <button
-                                                    class="nav-link"
-                                                    id="proximity-tab"
-                                                    data-bs-toggle="tab"
-                                                    data-bs-target="#proximity"
-                                                    type="button"
-                                                    role="tab"
-                                                >
-                                                    Proximity
-                                                </button>
-                                            </li>
-                                        </ul>
+            <!-- Tabs -->
+            <ul class="nav nav-tabs mt-4 border-bottom" id="communityTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active fw-semibold" id="location-tab"
+                        data-bs-toggle="tab" data-bs-target="#location" type="button" role="tab">
+                        Location and Info
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link fw-semibold" id="hoa-tab"
+                        data-bs-toggle="tab" data-bs-target="#hoa" type="button" role="tab">
+                        HOA and Fees
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link fw-semibold" id="proximity-tab"
+                        data-bs-toggle="tab" data-bs-target="#proximity" type="button" role="tab">
+                        Proximity
+                    </button>
+                </li>
+            </ul>
 
-                                        <!-- Tabs Content -->
-                                        <div
-                                            class="tab-content mt-3"
-                                            id="communityTabsContent"
-                                        >
-                                            <!-- Location & Info Tab -->
-                                            <div
-                                                class="tab-pane fade show active"
-                                                id="location"
-                                                role="tabpanel"
-                                            >
-                                                <h5
-                                                    class="card-title c-card-main mt-3"
-                                                >
-                                                    Location and Info
-                                                </h5>
-                                                <hr />
-                                                <ul class="list-group">
-                                                    <li class="list-group-item">
-                                                        <strong
-                                                            class="text-dark"
-                                                            >Map:</strong
-                                                        >
-                                                        {{
-                                                            community_details.map_location ||
-                                                            "N/A"
-                                                        }}
-                                                    </li>
-                                                    <li class="list-group-item">
-                                                        <strong
-                                                            class="text-dark"
-                                                            >Legal
-                                                            Subdivision:</strong
-                                                        >
-                                                        {{
-                                                            community_details.legal_subdivision ||
-                                                            "N/A"
-                                                        }}
-                                                    </li>
-                                                    <li class="list-group-item">
-                                                        <strong
-                                                            class="text-dark"
-                                                            >Nearby
-                                                            Properties:</strong
-                                                        >
-                                                        {{
-                                                            community_details.nearby_properties ||
-                                                            "N/A"
-                                                        }}
-                                                    </li>
-                                                    <li class="list-group-item">
-                                                        <strong
-                                                            class="text-dark"
-                                                            >Masterplan:</strong
-                                                        >
-                                                        {{
-                                                            community_details.masterplan ||
-                                                            "N/A"
-                                                        }}
-                                                    </li>
-                                                    <li class="list-group-item">
-                                                        <strong
-                                                            class="text-dark"
-                                                            >Sub
-                                                            Association:</strong
-                                                        >
-                                                        {{
-                                                            community_details.sub_association
-                                                                ? "Yes"
-                                                                : "No"
-                                                        }}
-                                                    </li>
-                                                </ul>
-                                            </div>
+            <!-- Tabs Content -->
+            <div class="tab-content mt-4">
+                <!-- Location and Info -->
+                <div class="tab-pane fade show active" id="location" role="tabpanel">
+                    <h5 class="mb-3 text-primary fw-semibold c-title">Location and Info</h5>
+                    <div class="row">
+                        <div class="col-md-6 mb-2"><strong>Map:</strong> {{ community_details.map_location ?? 'Nil' }}</div>
+                        <div class="col-md-6 mb-2"><strong>Legal Subdivision:</strong> {{ community_details.legal_subdivision ?? 'Nil' }}</div>
+                        <div class="col-md-6 mb-2"><strong>Nearby Properties:</strong> {{ community_details.nearby_properties ?? 'Nil' }}</div>
+                        <div class="col-md-6 mb-2"><strong>Masterplan:</strong> {{ community_details.masterplan ?? 'Nil' }}</div>
+                        <div class="col-md-6 mb-2"><strong>Sub Association:</strong> {{ community_details.sub_association ? 'Yes' : 'No' }}</div>
+                    </div>
+                </div>
 
-                                            <!-- HOA & Fees Tab -->
-                                            <div
-                                                class="tab-pane fade"
-                                                id="hoa"
-                                                role="tabpanel"
-                                            >
-                                                <h5
-                                                    class="card-title c-card-main mt-3"
-                                                >
-                                                    HOA and Fee
-                                                </h5>
-                                                <hr />
-                                                <ul class="list-group">
-                                                    <li class="list-group-item">
-                                                        <strong
-                                                            class="text-dark"
-                                                            >HOA:</strong
-                                                        >
-                                                        {{
-                                                            community_details.hoa ||
-                                                            "N/A"
-                                                        }}
-                                                    </li>
-                                                    <li class="list-group-item">
-                                                        <strong
-                                                            class="text-dark"
-                                                            >SID/LID
-                                                            Fee:</strong
-                                                        >
-                                                        ${{
-                                                            community_details.sid_lid_fee ||
-                                                            "N/A"
-                                                        }}
-                                                    </li>
-                                                    <li class="list-group-item">
-                                                        <strong
-                                                            class="text-dark"
-                                                            >Payment
-                                                            Frequency:</strong
-                                                        >
-                                                        {{
-                                                            community_details.sid_lid_payment_frequency ||
-                                                            "N/A"
-                                                        }}
-                                                    </li>
-                                                    <li class="list-group-item">
-                                                        <strong
-                                                            class="text-dark"
-                                                            >CIC:</strong
-                                                        >
-                                                        {{
-                                                            community_details.cic
-                                                                ? "Yes"
-                                                                : "No"
-                                                        }}
-                                                    </li>
-                                                    <li class="list-group-item">
-                                                        <strong
-                                                            class="text-dark"
-                                                            >LID:</strong
-                                                        >
-                                                        {{
-                                                            community_details.lid
-                                                                ? "Yes"
-                                                                : "No"
-                                                        }}
-                                                    </li>
-                                                </ul>
-                                            </div>
+                <!-- HOA and Fees -->
+                <div class="tab-pane fade" id="hoa" role="tabpanel">
+                    <h5 class="mb-3 text-primary fw-semibold c-title">HOA and Fees</h5>
+                    <div class="row">
+                        <div class="col-md-6 mb-2"><strong>HOA:</strong> {{ community_details.hoa ?? 'Nil' }}</div>
+                        <div class="col-md-6 mb-2"><strong>SID/LID Fee:</strong> ${{ community_details.sid_lid_fee ?? 'Nil' }}</div>
+                        <div class="col-md-6 mb-2"><strong>Payment Frequency:</strong> {{ community_details.sid_lid_payment_frequency ?? 'Nil' }}</div>
+                        <div class="col-md-6 mb-2"><strong>CIC:</strong> {{ community_details.cic ? 'Yes' : 'No' }}</div>
+                        <div class="col-md-6 mb-2"><strong>LID:</strong> {{ community_details.lid ? 'Yes' : 'No' }}</div>
+                    </div>
+                </div>
 
-                                            <!-- Proximity Tab -->
-                                            <div
-                                                class="tab-pane fade"
-                                                id="proximity"
-                                                role="tabpanel"
-                                            >
-                                                <h5
-                                                    class="card-title c-card-main mt-3"
-                                                >
-                                                    Proximity
-                                                </h5>
-                                                <hr />
-                                                <ul class="list-group">
-                                                    <li class="list-group-item">
-                                                        <strong
-                                                            class="text-dark"
-                                                            >Proximity to
-                                                            Strip:</strong
-                                                        >
-                                                        {{
-                                                            community_details.proximity_to_strip ||
-                                                            "N/A"
-                                                        }}
-                                                        miles
-                                                    </li>
-                                                    <li class="list-group-item">
-                                                        <strong
-                                                            class="text-dark"
-                                                            >Proximity to
-                                                            Airport:</strong
-                                                        >
-                                                        {{
-                                                            community_details.proximity_to_airport ||
-                                                            "N/A"
-                                                        }}
-                                                        miles
-                                                    </li>
-                                                    <li class="list-group-item">
-                                                        <strong
-                                                            class="text-dark"
-                                                            >Nearby
-                                                            Attractions:</strong
-                                                        >
-                                                        {{
-                                                            community_details.nearby_attractions ||
-                                                            "N/A"
-                                                        }}
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                <!-- Proximity -->
+                <div class="tab-pane fade" id="proximity" role="tabpanel">
+                    <h5 class="mb-3 text-primary fw-semibold c-title">Proximity</h5>
+                    <div class="row">
+                        <div class="col-md-6 mb-2"><strong>To Strip:</strong> {{ community_details.proximity_to_strip ?? 'Nil' }} miles</div>
+                        <div class="col-md-6 mb-2"><strong>To Airport:</strong> {{ community_details.proximity_to_airport ?? 'Nil' }} miles</div>
+                        <div class="col-md-12 mb-2"><strong>Nearby Attractions:</strong> {{ community_details.nearby_attractions ?? 'Nil' }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                            <!-- Right Column (Summary) -->
-                            <div class="col-md-4">
-                                <div class="card p-4 border-0 shadow">
-                                    <div class="card-body">
-                                        <div
-                                            v-if="
-                                                community_details.amenities &&
-                                                community_details.amenities
-                                                    .length > 0
-                                            "
-                                        >
-                                            <div class="open-house-tag mb-2">
-                                                <i
-                                                    class="bi bi-wifi text-white fs-5"
-                                                ></i
-                                                ><span class="ms-2"
-                                                    >Amenities</span
-                                                >
-                                            </div>
-                                            <ul class="list-unstyled">
-                                                <li
-                                                    v-for="(
-                                                        amenity, index
-                                                    ) in community_details.amenities"
-                                                    :key="index"
-                                                >
-                                                    <i
-                                                        class="bi bi-check2-circle"
-                                                    ></i>
-                                                    {{ amenity }}
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div
-                                            v-if="
-                                                community_details.neighborhoods &&
-                                                community_details.neighborhoods
-                                                    .length > 0
-                                            "
-                                        >
-                                            <div class="open-house-tag mb-2">
-                                                <i
-                                                    class="bi bi-house-check-fill text-white fs-5"
-                                                ></i
-                                                ><span class="ms-2"
-                                                    >Neighborhoods</span
-                                                >
-                                            </div>
-                                            <ul class="list-unstyled">
-                                                <li
-                                                    v-for="(
-                                                        neighborhood, index
-                                                    ) in community_details.neighborhoods"
-                                                    :key="index"
-                                                >
-                                                    <i
-                                                        class="bi bi-check2-circle"
-                                                    ></i>
-                                                    {{ neighborhood }}
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div>
-                                            <div class="open-house-tag mb-2">
-                                                <i
-                                                    class="bi bi-building text-white fs-5"
-                                                ></i
-                                                ><span class="ms-2"> HOA </span>
-                                            </div>
-                                            <ul class="list-unstyled">
-                                                <li>
-                                                    <i
-                                                        class="bi bi-check2-circle"
-                                                    ></i>
-                                                    {{ community_details.hoa }}
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+    <!-- Right Column (Sidebar) -->
+    <div class="col-md-4">
+        <div class="card border-0 shadow-lg rounded-4 p-4 h-100">
+            <div v-if="community_details.amenities?.length">
+                <h6 class="fw-bold text-muted">Amenities</h6>
+                <ul class="list-unstyled small">
+                    <li v-for="(item, index) in community_details.amenities" :key="index">
+                        {{ item }}
+                    </li>
+                </ul>
+                <hr />
+            </div>
+
+            <div v-if="community_details.neighborhoods?.length">
+                <h6 class="fw-bold text-muted">Neighborhoods</h6>
+                <ul class="list-unstyled small">
+                    <li v-for="(item, index) in community_details.neighborhoods" :key="index">
+                        {{ item }}
+                    </li>
+                </ul>
+                <hr />
+            </div>
+
+            <div v-if="community_details.hoa">
+                <h6 class="fw-bold text-muted">HOA</h6>
+                <p class="mb-0 small">{{ community_details.hoa }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
                     </div>
                 </div>
             </div>
