@@ -123,6 +123,11 @@ export default {
     components: {
         Master,
     },
+    data(){
+        return {
+             external_website: external_website,
+        }
+    }
 };
 </script>
 <style scoped>

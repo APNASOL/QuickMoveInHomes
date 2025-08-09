@@ -196,14 +196,17 @@
                                                     >Phone</label
                                                 >
                                                 <input
-                                                    type="number"
+                                                    type="tel"
                                                     class="form-control"
+                                                    v-model.trim="form.phone"
+                                                    inputmode="tel"
+                                                    placeholder="+1 7021234567 or 7021234567"
                                                     :class="{
                                                         'invalid-bg':
                                                             formErrors.phone,
                                                     }"
-                                                    v-model="form.phone"
                                                 />
+
                                                 <div
                                                     class="invalid-feedback animated fadeIn"
                                                     v-if="formErrors.phone"
@@ -235,25 +238,22 @@
                                             </div>
                                             <div class="mt-3">
                                                 <button
-                                                    type="submit"
-                                                    class="btn c-btn-theme-primary"
-                                                    v-if="formStatus"
+                                                    class="btn btn-success"
+                                                    :disabled="!formStatus"
                                                     @click="save"
                                                 >
-                                                    {{ translate("Send") }}
-                                                </button>
-                                                <button
-                                                    class="btn c-btn-theme-primary"
-                                                    type="button"
-                                                    disabled
-                                                    v-else
-                                                >
-                                                    {{ translate("Sending") }}
-                                                    <span
-                                                        class="spinner-border spinner-border-sm"
-                                                        role="status"
-                                                        aria-hidden="true"
-                                                    ></span>
+                                                    <span v-if="formStatus">{{
+                                                        translate("Send")
+                                                    }}</span>
+                                                    <span v-else>
+                                                        {{
+                                                            translate("Sending")
+                                                        }}
+                                                        <span
+                                                            class="spinner-border spinner-border-sm"
+                                                            aria-hidden="true"
+                                                        ></span>
+                                                    </span>
                                                 </button>
 
                                                 <!-- data-bs-toggle="collapse"
@@ -342,6 +342,15 @@ export default {
     },
     created() {
         this.fetchWesiteInfo();
+    },
+    watch: {
+        "form.phone"(val) {
+            if (val) {
+                this.form.phone = val
+                    .replace(/(?!^)\+/g, "")
+                    .replace(/[^\d+]/g, "");
+            }
+        },
     },
     data() {
         return {

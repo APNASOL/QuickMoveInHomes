@@ -294,7 +294,7 @@ export default {
             try {
                 await axios.post("/api/connect/customer/agents", formData);
                 toastr.success(
-                    "Request placed successfully, an agent will contact you soon."
+                    "Request Sent! An agent will contact you shortly."
                 );
                 this.$refs.closeContactModel.click();
                 this.form = { name: "", email: "", phone: "" };

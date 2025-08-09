@@ -3,7 +3,8 @@
         <div class="container">
             <!-- Title -->
             <div class="text-center mb-4">
-                <h1 class="fw-bold c-main-title c-theme-color">
+                 
+                 <h1 class="c-main-title fw-bold c-title">
                     Find Your Place in Our Communities!
                 </h1>
                 <p class="text-muted c-sub-title">

@@ -67,27 +67,50 @@
 
         <!-- Meet Our Team -->
         <section class="p-3 bg-white">
-            <div class="container">
-                <h1 class="profile-name py-3">Meet Our Team</h1>
-                <div class="row text-center mt-3">
-                    <div
-                        class="col-md-4 team-member"
-                        v-for="member in team"
-                        :key="member.id"
+    <div class="container">
+        <h1 class="profile-name py-3">Meet Our Team</h1>
+        <div class="row text-center mt-3">
+            <div
+                class="col-md-4 team-member mb-4"
+                v-for="member in team"
+                :key="member.id"
+            >
+                <img
+                    :src="member.image"
+                    alt="Team Member"
+                    class="rounded-circle mb-3"
+                    width="150"
+                    height="150"
+                />
+                <h5 class="mt-2">{{ member.name }}</h5>
+                <p class="text-muted mb-1">{{ member.position }}</p>
+
+                <!-- Optional bio -->
+                <p class="small text-secondary">{{ member.bio }}</p>
+
+                <!-- Contact buttons -->
+                <div>
+                    <a
+                        v-if="member.linkedin"
+                        :href="member.linkedin"
+                        target="_blank"
+                        class="btn btn-sm btn-outline-primary rounded-pill me-2"
                     >
-                        <img
-                            :src="member.image"
-                            alt="Team Member"
-                            class="rounded-circle"
-                            width="150"
-                            height="150"
-                        />
-                        <h5 class="mt-2">{{ member.name }}</h5>
-                        <p class="text-muted">{{ member.position }}</p>
-                    </div>
+                        <i class="bi bi-linkedin"></i> LinkedIn
+                    </a>
+                    <a
+                        v-if="member.email"
+                        :href="'mailto:' + member.email"
+                        class="btn btn-sm btn-outline-secondary rounded-pill"
+                    >
+                        <i class="bi bi-envelope"></i> Contact
+                    </a>
                 </div>
             </div>
-        </section>
+        </div>
+    </div>
+</section>
+
     </Master>
 </template>
 
@@ -104,41 +127,60 @@ export default {
                     name: "Yvonne Khoo",
                     position: "CEO & Founder",
                     image: "/images/about-1.jpg",
+                    bio: "Passionate about real estate and client success for over 15 years.",
+                    linkedin: "https://www.linkedin.com/in/yvonnekhoo",
+                    email: "yvonne@example.com"
                 },
                 {
                     id: 2,
                     name: "Alex Chun",
                     position: "Chief Operations Officer",
                     image: "/images/about-2.jpg",
+                    bio: "Expert in operations management and strategic planning.",
+                    linkedin: "https://www.linkedin.com/in/alexchun",
+                    email: "alex@example.com"
                 },
                 {
                     id: 3,
                     name: "Naeem Sheheryar",
                     position: "Director of Sales",
                     image: "/images/about-3.jpg",
+                    bio: "Leading sales with a focus on customer satisfaction.",
+                    linkedin: "https://www.linkedin.com/in/naeem-sheheryar",
+                    email: "naeem@example.com"
                 },
                 {
                     id: 4,
                     name: "Syed Umar Abrar",
                     position: "Digital Marketing & Data Analyst",
                     image: "/images/about-5.jpg",
+                    bio: "Driven by data, delivering impactful marketing campaigns.",
+                    linkedin: "https://www.linkedin.com/in/syedumarabrar",
+                    email: "umar@example.com"
                 },
                 {
                     id: 5,
                     name: "Abigail William",
                     position: "Product Manager",
                     image: "/images/about-6.jpg",
+                    bio: "Ensuring products meet market needs with innovative solutions.",
+                    linkedin: "https://www.linkedin.com/in/abigailwilliam",
+                    email: "abigail@example.com"
                 },
                 {
                     id: 6,
                     name: "Benjamin Elijah",
                     position: "Web Developer",
                     image: "/images/about-4.jpg",
+                    bio: "Building user-friendly and high-performing websites.",
+                    linkedin: "https://www.linkedin.com/in/benjaminelijah",
+                    email: "benjamin@example.com"
                 },
             ],
         };
     },
 };
+
 </script>
 
 <style scoped>

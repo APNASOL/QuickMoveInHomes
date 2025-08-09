@@ -17,7 +17,7 @@
                     <div>
                         <p>
                             These Terms of Service ("Terms") govern your access
-                            to and use of [Your Company Name]'s website and
+                            to and use of {{ external_website.name }}'s website and
                             services. By using our website or engaging with us
                             for real estate services, you agree to be bound by
                             these Terms. If you do not agree, please do not use
@@ -45,7 +45,7 @@
                         <p>
                             All content on this website, including text,
                             graphics, logos, and images, is the property of
-                            [Your Company Name] or its content suppliers and is
+                            {{ external_website.name }} or its content suppliers and is
                             protected by copyright, trademark, and other laws.
                             You may not reproduce, distribute, or create
                             derivative works from any content without our prior
@@ -61,7 +61,7 @@
                             information, but we make no guarantees regarding the
                             completeness, accuracy, or reliability of any
                             content. Our services are provided "as is" without
-                            warranties of any kind. [Your Company Name] shall
+                            warranties of any kind. {{ external_website.name }} shall
                             not be liable for any damages arising from your use
                             of our website or services.
                         </p>
@@ -100,6 +100,12 @@ export default {
     components: {
         Master,
     },
+    data()
+    {
+        return{
+             external_website: external_website,
+        }
+    }
 };
 </script>
 
