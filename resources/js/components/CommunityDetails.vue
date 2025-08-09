@@ -73,7 +73,7 @@
                     <div class="container">
                         <div class="row g-4">
                             <!-- Left Column (Main Content) -->
-                            <div class="col-md-8">
+                            <div :class="hasSidebar ? 'col-md-8' : 'col-md-12'">
                                 <div
                                     class="card border-0 shadow-lg rounded-4 p-4 h-100"
                                 >
@@ -301,7 +301,7 @@
                             </div>
 
                             <!-- Right Column (Sidebar) -->
-                            <div class="col-md-4">
+                            <div v-if="hasSidebar" class="col-md-4">
                                 <div
                                     class="card border-0 shadow-lg rounded-4 p-4 h-100"
                                 >
@@ -473,6 +473,14 @@ export default {
                     file_original_name: f.file_original_name || "",
                 }));
         },
+        hasSidebar() {
+        return (
+            (this.community_details.amenities && this.community_details.amenities.length > 0) ||
+            (this.community_details.neighborhoods && this.community_details.neighborhoods.length > 0) ||
+            (this.community_details.hoa && this.community_details.hoa !== 'Nil')
+        );
+    }
+
     },
     methods: {
         initMap() {
@@ -674,7 +682,7 @@ export default {
 }
 
 .interactive-banner {
-    background-color: rgb(61, 102, 143);
+    background-color: #023F86;
     color: white;
     text-align: center;
     padding: 20px 0;
@@ -700,7 +708,7 @@ export default {
     border-radius: 0px !important;
 }
 .open-house-tag {
-    background-color: rgb(61, 102, 143);
+    background-color: #023F86;
     color: white;
     padding: 5px 10px;
     font-size: 14px;
@@ -738,7 +746,7 @@ export default {
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
-    color: rgb(61, 102, 143);
+    color: #023F86;
 }
 .card {
     border: none;
@@ -770,7 +778,7 @@ export default {
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
-    color: rgb(61, 102, 143);
+    color: #023F86;
     margin: 0 !important;
 }
 
@@ -782,7 +790,7 @@ export default {
     color: rgb(23, 38, 54);
 }
 .bi-check2-circle {
-    color: rgb(61, 102, 143);
+    color: #023F86;
 }
 .c-card-main {
     font-family: "Playfair Display", serif;
@@ -793,7 +801,7 @@ export default {
 }
 
 .nav-tabs .nav-link {
-    color: rgb(61, 102, 143) !important;
+    color: #023F86 !important;
     font-weight: bold !important;
 }
 .nav-tabs {

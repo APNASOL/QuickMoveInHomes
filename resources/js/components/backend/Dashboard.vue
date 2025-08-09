@@ -27,7 +27,7 @@
                                     style="
                                         background: linear-gradient(
                                             135deg,
-                                            #3d668f,
+                                            #023F86,
                                             #5fa1dd
                                         );
                                         border-radius: 20px;

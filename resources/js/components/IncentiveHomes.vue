@@ -191,7 +191,7 @@ export default {
     font-size: 20px;
     font-weight: 400;
     line-height: 28px;
-    color: rgb(61, 102, 143);
+    color: #023F86;
 }
 .c-info {
     font-family: Inter, sans-serif;

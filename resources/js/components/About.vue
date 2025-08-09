@@ -94,7 +94,7 @@
                         v-if="member.linkedin"
                         :href="member.linkedin"
                         target="_blank"
-                        class="btn btn-sm btn-outline-primary rounded-pill me-2"
+                        class="btn btn-sm c-btn-theme-primary-outline rounded-pill me-2"
                     >
                         <i class="bi bi-linkedin"></i> LinkedIn
                     </a>
@@ -187,7 +187,7 @@ export default {
 .section-title {
     font-size: 32px;
     font-weight: bold;
-    color: #3d668f;
+    color: #023F86;
     margin-bottom: 20px;
 }
 
@@ -255,7 +255,7 @@ export default {
     font-size: 20px;
     font-weight: 400;
     line-height: 28px;
-    color: rgb(61, 102, 143);
+    color: #023F86;
 }
 .c-info {
     font-family: Inter, sans-serif;

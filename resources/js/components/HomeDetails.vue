@@ -75,7 +75,6 @@
                         Home.is_open_house != 'Nil'
                     "
                 >
-                    {{ Home.is_open_house }}
                     <div class="banner-content text-center container">
                         <div class="c-main-title">OPEN HOUSE {{}}</div>
                         <p
@@ -259,31 +258,56 @@
                                         </div>
                                     </div>
 
-                                    <!-- Tabs -->
-                                    <ul class="nav nav-tabs nav-fill mb-4">
-                                        <li class="nav-item">
+                                    <ul
+                                        class="nav nav-tabs nav-fill mb-4"
+                                        role="tablist"
+                                    >
+                                        <li
+                                            class="nav-item"
+                                            role="presentation"
+                                        >
                                             <button
                                                 class="nav-link active"
+                                                type="button"
+                                                role="tab"
                                                 data-bs-toggle="tab"
                                                 data-bs-target="#overview"
+                                                aria-controls="overview"
+                                                aria-selected="true"
                                             >
                                                 Overview
                                             </button>
                                         </li>
-                                        <li class="nav-item">
+
+                                        <li
+                                            class="nav-item"
+                                            role="presentation"
+                                        >
                                             <button
                                                 class="nav-link"
+                                                type="button"
+                                                role="tab"
                                                 data-bs-toggle="tab"
                                                 data-bs-target="#features"
+                                                aria-controls="features"
+                                                aria-selected="false"
                                             >
                                                 Features
                                             </button>
                                         </li>
-                                        <li class="nav-item">
+
+                                        <li
+                                            class="nav-item"
+                                            role="presentation"
+                                        >
                                             <button
                                                 class="nav-link"
+                                                type="button"
+                                                role="tab"
                                                 data-bs-toggle="tab"
                                                 data-bs-target="#financial"
+                                                aria-controls="financial"
+                                                aria-selected="false"
                                             >
                                                 Financial
                                             </button>
@@ -292,51 +316,67 @@
 
                                     <!-- Tab Content -->
                                     <div class="tab-content">
-                                        <!-- Overview Tab -->
-
+                                        <!-- ===================== OVERVIEW ===================== -->
                                         <div
                                             class="tab-pane fade show active"
                                             id="overview"
+                                            role="tabpanel"
                                         >
                                             <h5
                                                 class="card-title c-card-main"
-                                                v-if="Home.title"
+                                                v-if="isValid(Home?.title)"
                                             >
                                                 About {{ Home.title }}
                                             </h5>
+
                                             <p
                                                 class="c-tab-sub"
-                                                v-if="Home.description"
+                                                v-if="
+                                                    isValid(Home?.description)
+                                                "
                                             >
                                                 {{ Home.description }}
                                             </p>
+
                                             <hr
                                                 v-if="
-                                                    Home.title ||
-                                                    Home.description
+                                                    isValid(Home?.title) ||
+                                                    isValid(Home?.description)
                                                 "
                                             />
 
                                             <div
                                                 class="mt-3"
                                                 v-if="
-                                                    Home.property_type ||
-                                                    Home.year_built ||
-                                                    Home.lot_size ||
-                                                    Home.construction_status ||
-                                                    Home.listing_status ||
-                                                    Home.bedrooms ||
-                                                    Home.full_bath ||
-                                                    Home.half_bath ||
-                                                    Home.square_feet ||
-                                                    Home.size_from ||
-                                                    Home.size_to ||
-                                                    Home.price_from ||
-                                                    Home.price_to ||
-                                                    Home.average_price_per_square ||
-                                                    Home.association_fee ||
-                                                    Home.cic ||
-                                                    Home.is_open_house
+                                                    isValid(
+                                                        Home?.property_type
+                                                    ) ||
+                                                    isValid(Home?.year_built) ||
+                                                    isValid(Home?.lot_size) ||
+                                                    isValid(
+                                                        Home?.construction_status
+                                                    ) ||
+                                                    isValid(
+                                                        Home?.listing_status
+                                                    ) ||
+                                                    isValid(Home?.bedrooms) ||
+                                                    isValid(Home?.full_bath) ||
+                                                    isValid(Home?.half_bath) ||
+                                                    isValid(
+                                                        Home?.square_feet
+                                                    ) ||
+                                                    isValid(Home?.size_from) ||
+                                                    isValid(Home?.size_to) ||
+                                                    isValid(Home?.price_from) ||
+                                                    isValid(Home?.price_to) ||
+                                                    isValid(
+                                                        Home?.average_price_per_square
+                                                    ) ||
+                                                    isValid(
+                                                        Home?.association_fee
+                                                    ) ||
+                                                    isValid(Home?.cic) ||
+                                                    isValid(Home?.is_open_house)
                                                 "
                                             >
                                                 <h3 class="c-tab-title">
@@ -346,9 +386,9 @@
                                                     <div
                                                         class="col-md-3"
                                                         v-if="
-                                                            Home.property_type &&
-                                                            Home.property_type !=
-                                                                'Nil'
+                                                            isValid(
+                                                                Home?.property_type
+                                                            )
                                                         "
                                                     >
                                                         <h4 class="c-tab-sub">
@@ -362,12 +402,13 @@
                                                             }}
                                                         </p>
                                                     </div>
+
                                                     <div
                                                         class="col-md-3"
                                                         v-if="
-                                                            Home.year_built &&
-                                                            Home.year_built !=
-                                                                'Nil'
+                                                            isValid(
+                                                                Home?.year_built
+                                                            )
                                                         "
                                                     >
                                                         <h4 class="c-tab-sub">
@@ -381,12 +422,13 @@
                                                             }}
                                                         </p>
                                                     </div>
+
                                                     <div
                                                         class="col-md-3"
                                                         v-if="
-                                                            Home.lot_size &&
-                                                            Home.lot_size !=
-                                                                'Nil'
+                                                            isValid(
+                                                                Home?.lot_size
+                                                            )
                                                         "
                                                     >
                                                         <h4 class="c-tab-sub">
@@ -398,12 +440,13 @@
                                                             {{ Home.lot_size }}
                                                         </p>
                                                     </div>
+
                                                     <div
                                                         class="col-md-3"
                                                         v-if="
-                                                            Home.construction_status &&
-                                                            Home.construction_status !=
-                                                                'Nil'
+                                                            isValid(
+                                                                Home?.construction_status
+                                                            )
                                                         "
                                                     >
                                                         <h4 class="c-tab-sub">
@@ -417,12 +460,13 @@
                                                             }}
                                                         </p>
                                                     </div>
+
                                                     <div
                                                         class="col-md-3"
                                                         v-if="
-                                                            Home.listing_status &&
-                                                            Home.listing_status !=
-                                                                'Nil'
+                                                            isValid(
+                                                                Home?.listing_status
+                                                            )
                                                         "
                                                     >
                                                         <h4 class="c-tab-sub">
@@ -436,12 +480,13 @@
                                                             }}
                                                         </p>
                                                     </div>
+
                                                     <div
                                                         class="col-md-3"
                                                         v-if="
-                                                            Home.bedrooms &&
-                                                            Home.bedrooms !=
-                                                                'Nil'
+                                                            isValid(
+                                                                Home?.bedrooms
+                                                            )
                                                         "
                                                     >
                                                         <h4 class="c-tab-sub">
@@ -453,12 +498,13 @@
                                                             {{ Home.bedrooms }}
                                                         </p>
                                                     </div>
+
                                                     <div
                                                         class="col-md-3"
                                                         v-if="
-                                                            Home.full_bath &&
-                                                            Home.full_bath !=
-                                                                'Nil'
+                                                            isValid(
+                                                                Home?.full_bath
+                                                            )
                                                         "
                                                     >
                                                         <h4 class="c-tab-sub">
@@ -470,12 +516,13 @@
                                                             {{ Home.full_bath }}
                                                         </p>
                                                     </div>
+
                                                     <div
                                                         class="col-md-3"
                                                         v-if="
-                                                            Home.half_bath &&
-                                                            Home.half_bath !=
-                                                                'Nil'
+                                                            isValid(
+                                                                Home?.half_bath
+                                                            )
                                                         "
                                                     >
                                                         <h4 class="c-tab-sub">
@@ -487,12 +534,13 @@
                                                             {{ Home.half_bath }}
                                                         </p>
                                                     </div>
+
                                                     <div
                                                         class="col-md-3"
                                                         v-if="
-                                                            Home.square_feet &&
-                                                            Home.square_feet !=
-                                                                'Nil'
+                                                            isValid(
+                                                                Home?.square_feet
+                                                            )
                                                         "
                                                     >
                                                         <h4 class="c-tab-sub">
@@ -506,15 +554,16 @@
                                                             }}
                                                         </p>
                                                     </div>
+
                                                     <div
                                                         class="col-md-3"
                                                         v-if="
-                                                            (Home.size_from ||
-                                                                Home.size_to) &&
-                                                            (Home.size_from !=
-                                                                'Nil' ||
-                                                                Home.size_to !=
-                                                                    'Nil')
+                                                            isValid(
+                                                                Home?.size_from
+                                                            ) ||
+                                                            isValid(
+                                                                Home?.size_to
+                                                            )
                                                         "
                                                     >
                                                         <h4 class="c-tab-sub">
@@ -524,25 +573,28 @@
                                                             class="c-tabs-values"
                                                         >
                                                             {{
-                                                                Home.size_from ??
-                                                                "N/A"
+                                                                validOrNA(
+                                                                    Home?.size_from
+                                                                )
                                                             }}
                                                             -
                                                             {{
-                                                                Home.size_to ??
-                                                                "N/A"
+                                                                validOrNA(
+                                                                    Home?.size_to
+                                                                )
                                                             }}
                                                         </p>
                                                     </div>
+
                                                     <div
                                                         class="col-md-3"
                                                         v-if="
-                                                            (Home.price_from ||
-                                                                Home.price_to) &&
-                                                            (Home.price_from !=
-                                                                'Nil' ||
-                                                                Home.price_to !=
-                                                                    'Nil')
+                                                            isValid(
+                                                                Home?.price_from
+                                                            ) ||
+                                                            isValid(
+                                                                Home?.price_to
+                                                            )
                                                         "
                                                     >
                                                         <h4 class="c-tab-sub">
@@ -551,23 +603,29 @@
                                                         <p
                                                             class="c-tabs-values"
                                                         >
-                                                            {{
-                                                                Home.price_from ??
-                                                                "N/A"
+                                                            ${{
+                                                                validOrNA(
+                                                                    formatPrice(
+                                                                        Home?.price_from
+                                                                    )
+                                                                )
                                                             }}
-                                                            -
-                                                            {{
-                                                                Home.price_to ??
-                                                                "N/A"
+                                                            - ${{
+                                                                validOrNA(
+                                                                    formatPrice(
+                                                                        Home?.price_to
+                                                                    )
+                                                                )
                                                             }}
                                                         </p>
                                                     </div>
+
                                                     <div
                                                         class="col-md-3"
                                                         v-if="
-                                                            Home.average_price_per_square &&
-                                                            Home.average_price_per_square !=
-                                                                'Nil'
+                                                            isValid(
+                                                                Home?.average_price_per_square
+                                                            )
                                                         "
                                                     >
                                                         <h4 class="c-tab-sub">
@@ -582,12 +640,13 @@
                                                             }}
                                                         </p>
                                                     </div>
+
                                                     <div
                                                         class="col-md-3"
                                                         v-if="
-                                                            Home.association_fee &&
-                                                            Home.association_fee !=
-                                                                'Nil'
+                                                            isValid(
+                                                                Home?.association_fee
+                                                            )
                                                         "
                                                     >
                                                         <h4 class="c-tab-sub">
@@ -601,11 +660,11 @@
                                                             }}
                                                         </p>
                                                     </div>
+
                                                     <div
                                                         class="col-md-3"
                                                         v-if="
-                                                            Home.cic &&
-                                                            Home.cic != 'Nil'
+                                                            isValid(Home?.cic)
                                                         "
                                                     >
                                                         <h4 class="c-tab-sub">
@@ -617,12 +676,13 @@
                                                             {{ Home.cic }}
                                                         </p>
                                                     </div>
+
                                                     <div
                                                         class="col-md-3"
                                                         v-if="
-                                                            Home.is_open_house &&
-                                                            Home.is_open_house !=
-                                                                'Nil'
+                                                            isValid(
+                                                                Home?.is_open_house
+                                                            )
                                                         "
                                                     >
                                                         <h4 class="c-tab-sub">
@@ -632,7 +692,10 @@
                                                             class="c-tabs-values"
                                                         >
                                                             {{
-                                                                Home.is_open_house
+                                                                Home.is_open_house ==
+                                                                1
+                                                                    ? "Yes"
+                                                                    : "No"
                                                             }}
                                                         </p>
                                                     </div>
@@ -640,489 +703,525 @@
                                             </div>
                                         </div>
 
-                                        <!-- Features Tab -->
+                                        <!-- ===================== FEATURES ===================== -->
                                         <div
-                                            class="col-md-3"
-                                            v-if="
-                                                Home.feature.reach_in &&
-                                                Home.feature.reach_in != 'Nil'
-                                            "
+                                            class="tab-pane fade"
+                                            id="features"
+                                            role="tabpanel"
+                                            v-if="Home?.feature"
                                         >
-                                            <h4 class="c-tab-sub">
-                                                Reach-In Closet
-                                            </h4>
-                                            <p class="c-tabs-values">
-                                                {{ Home.feature.reach_in }}
-                                            </p>
+                                            <h3 class="c-tab-title">
+                                                Features
+                                            </h3>
+                                            <div class="row g-3">
+                                                <div
+                                                    class="col-md-3"
+                                                    v-if="
+                                                        isValid(
+                                                            Home.feature
+                                                                .reach_in
+                                                        )
+                                                    "
+                                                >
+                                                    <h4 class="c-tab-sub">
+                                                        Reach-In Closet
+                                                    </h4>
+                                                    <p class="c-tabs-values">
+                                                        {{
+                                                            Home.feature
+                                                                .reach_in
+                                                        }}
+                                                    </p>
+                                                </div>
+
+                                                <div
+                                                    class="col-md-3"
+                                                    v-if="
+                                                        isValid(
+                                                            Home.feature.walk_in
+                                                        )
+                                                    "
+                                                >
+                                                    <h4 class="c-tab-sub">
+                                                        Walk-In Closet
+                                                    </h4>
+                                                    <p class="c-tabs-values">
+                                                        {{
+                                                            Home.feature.walk_in
+                                                        }}
+                                                    </p>
+                                                </div>
+
+                                                <div
+                                                    class="col-md-3"
+                                                    v-if="
+                                                        isValid(
+                                                            Home.feature
+                                                                .laundry_closet
+                                                        )
+                                                    "
+                                                >
+                                                    <h4 class="c-tab-sub">
+                                                        Laundry Closet
+                                                    </h4>
+                                                    <p class="c-tabs-values">
+                                                        {{
+                                                            Home.feature
+                                                                .laundry_closet
+                                                        }}
+                                                    </p>
+                                                </div>
+
+                                                <div
+                                                    class="col-md-3"
+                                                    v-if="
+                                                        isValid(
+                                                            Home.feature
+                                                                .closet_location
+                                                        )
+                                                    "
+                                                >
+                                                    <h4 class="c-tab-sub">
+                                                        Closet Location
+                                                    </h4>
+                                                    <p class="c-tabs-values">
+                                                        {{
+                                                            Home.feature
+                                                                .closet_location
+                                                        }}
+                                                    </p>
+                                                </div>
+
+                                                <div
+                                                    class="col-md-3"
+                                                    v-if="
+                                                        isValid(
+                                                            Home.feature
+                                                                .bathroom_type
+                                                        )
+                                                    "
+                                                >
+                                                    <h4 class="c-tab-sub">
+                                                        Bathroom Type
+                                                    </h4>
+                                                    <p class="c-tabs-values">
+                                                        {{
+                                                            Home.feature
+                                                                .bathroom_type
+                                                        }}
+                                                    </p>
+                                                </div>
+
+                                                <div
+                                                    class="col-md-3"
+                                                    v-if="
+                                                        isValid(
+                                                            Home.feature
+                                                                .bathroom_status
+                                                        )
+                                                    "
+                                                >
+                                                    <h4 class="c-tab-sub">
+                                                        Bathroom Status
+                                                    </h4>
+                                                    <p class="c-tabs-values">
+                                                        {{
+                                                            Home.feature
+                                                                .bathroom_status
+                                                        }}
+                                                    </p>
+                                                </div>
+
+                                                <div
+                                                    class="col-md-3"
+                                                    v-if="
+                                                        isValid(
+                                                            Home.feature
+                                                                .private_bath
+                                                        )
+                                                    "
+                                                >
+                                                    <h4 class="c-tab-sub">
+                                                        Private Bath
+                                                    </h4>
+                                                    <p class="c-tabs-values">
+                                                        {{
+                                                            Home.feature
+                                                                .private_bath
+                                                        }}
+                                                    </p>
+                                                </div>
+
+                                                <div
+                                                    class="col-md-3"
+                                                    v-if="
+                                                        isValid(
+                                                            Home.feature
+                                                                .outdoor_shower
+                                                        )
+                                                    "
+                                                >
+                                                    <h4 class="c-tab-sub">
+                                                        Outdoor Shower
+                                                    </h4>
+                                                    <p class="c-tabs-values">
+                                                        {{
+                                                            Home.feature
+                                                                .outdoor_shower
+                                                        }}
+                                                    </p>
+                                                </div>
+
+                                                <div
+                                                    class="col-md-3"
+                                                    v-if="
+                                                        isValid(
+                                                            Home.feature
+                                                                .pool_shape
+                                                        )
+                                                    "
+                                                >
+                                                    <h4 class="c-tab-sub">
+                                                        Pool Shape
+                                                    </h4>
+                                                    <p class="c-tabs-values">
+                                                        {{
+                                                            Home.feature
+                                                                .pool_shape
+                                                        }}
+                                                    </p>
+                                                </div>
+
+                                                <div
+                                                    class="col-md-3"
+                                                    v-if="
+                                                        isValid(
+                                                            Home.feature
+                                                                .water_features
+                                                        )
+                                                    "
+                                                >
+                                                    <h4 class="c-tab-sub">
+                                                        Water Features
+                                                    </h4>
+                                                    <p class="c-tabs-values">
+                                                        {{
+                                                            Home.feature
+                                                                .water_features
+                                                        }}
+                                                    </p>
+                                                </div>
+
+                                                <div
+                                                    class="col-md-3"
+                                                    v-if="
+                                                        isValid(
+                                                            Home.feature
+                                                                .pool_status
+                                                        )
+                                                    "
+                                                >
+                                                    <h4 class="c-tab-sub">
+                                                        Pool Status
+                                                    </h4>
+                                                    <p class="c-tabs-values">
+                                                        {{
+                                                            Home.feature
+                                                                .pool_status
+                                                        }}
+                                                    </p>
+                                                </div>
+
+                                                <div
+                                                    class="col-md-3"
+                                                    v-if="
+                                                        isValid(
+                                                            Home.feature.spa
+                                                        )
+                                                    "
+                                                >
+                                                    <h4 class="c-tab-sub">
+                                                        Spa
+                                                    </h4>
+                                                    <p class="c-tabs-values">
+                                                        {{ Home.feature.spa }}
+                                                    </p>
+                                                </div>
+
+                                                <div
+                                                    class="col-md-3"
+                                                    v-if="
+                                                        isValid(
+                                                            Home.feature
+                                                                .fencing_material
+                                                        )
+                                                    "
+                                                >
+                                                    <h4 class="c-tab-sub">
+                                                        Fencing
+                                                    </h4>
+                                                    <p class="c-tabs-values">
+                                                        {{
+                                                            Home.feature
+                                                                .fencing_material
+                                                        }}
+                                                    </p>
+                                                </div>
+
+                                                <div
+                                                    class="col-md-3"
+                                                    v-if="
+                                                        isValid(
+                                                            Home.feature
+                                                                .bedroom_location
+                                                        )
+                                                    "
+                                                >
+                                                    <h4 class="c-tab-sub">
+                                                        Bedroom
+                                                    </h4>
+                                                    <p class="c-tabs-values">
+                                                        {{
+                                                            Home.feature
+                                                                .bedroom_location
+                                                        }}
+                                                    </p>
+                                                </div>
+
+                                                <div
+                                                    class="col-md-3"
+                                                    v-if="
+                                                        isValid(
+                                                            Home.feature
+                                                                .fireplace_type
+                                                        )
+                                                    "
+                                                >
+                                                    <h4 class="c-tab-sub">
+                                                        Fireplace
+                                                    </h4>
+                                                    <p class="c-tabs-values">
+                                                        {{
+                                                            Home.feature
+                                                                .fireplace_type
+                                                        }}
+                                                    </p>
+                                                </div>
+
+                                                <div
+                                                    class="col-md-3"
+                                                    v-if="
+                                                        isValid(
+                                                            Home.feature
+                                                                .kitchen_pantry_type
+                                                        )
+                                                    "
+                                                >
+                                                    <h4 class="c-tab-sub">
+                                                        Kitchen Pantry
+                                                    </h4>
+                                                    <p class="c-tabs-values">
+                                                        {{
+                                                            Home.feature
+                                                                .kitchen_pantry_type
+                                                        }}
+                                                    </p>
+                                                </div>
+
+                                                <div
+                                                    class="col-md-3"
+                                                    v-if="
+                                                        isValid(
+                                                            Home.feature
+                                                                .parking_enclosure
+                                                        )
+                                                    "
+                                                >
+                                                    <h4 class="c-tab-sub">
+                                                        Parking Enclosure
+                                                    </h4>
+                                                    <p class="c-tabs-values">
+                                                        {{
+                                                            Home.feature
+                                                                .parking_enclosure
+                                                        }}
+                                                    </p>
+                                                </div>
+
+                                                <div
+                                                    class="col-md-3"
+                                                    v-if="
+                                                        isValid(
+                                                            Home.feature
+                                                                .landscape_maintenance
+                                                        )
+                                                    "
+                                                >
+                                                    <h4 class="c-tab-sub">
+                                                        Landscape Maintenance
+                                                    </h4>
+                                                    <p class="c-tabs-values">
+                                                        {{
+                                                            Home.feature
+                                                                .landscape_maintenance
+                                                        }}
+                                                    </p>
+                                                </div>
+
+                                                <div
+                                                    class="col-md-3"
+                                                    v-if="
+                                                        isValid(
+                                                            Home.feature
+                                                                .foundation_conditions
+                                                        )
+                                                    "
+                                                >
+                                                    <h4 class="c-tab-sub">
+                                                        Foundation
+                                                    </h4>
+                                                    <p class="c-tabs-values">
+                                                        {{
+                                                            Home.feature
+                                                                .foundation_conditions
+                                                        }}
+                                                    </p>
+                                                </div>
+                                            </div>
                                         </div>
 
-                                        <div
-                                            class="col-md-3"
-                                            v-if="
-                                                Home.feature.walk_in &&
-                                                Home.feature.walk_in != 'Nil'
-                                            "
-                                        >
-                                            <h4 class="c-tab-sub">
-                                                Walk-In Closet
-                                            </h4>
-                                            <p class="c-tabs-values">
-                                                {{ Home.feature.walk_in }}
-                                            </p>
-                                        </div>
-
-                                        <div
-                                            class="col-md-3"
-                                            v-if="
-                                                Home.feature.laundry_closet &&
-                                                Home.feature.laundry_closet !=
-                                                    'Nil'
-                                            "
-                                        >
-                                            <h4 class="c-tab-sub">
-                                                Laundry Closet
-                                            </h4>
-                                            <p class="c-tabs-values">
-                                                {{
-                                                    Home.feature.laundry_closet
-                                                }}
-                                            </p>
-                                        </div>
-
-                                        <div
-                                            class="col-md-3"
-                                            v-if="
-                                                Home.feature.closet_location &&
-                                                Home.feature.closet_location !=
-                                                    'Nil'
-                                            "
-                                        >
-                                            <h4 class="c-tab-sub">
-                                                Closet Location
-                                            </h4>
-                                            <p class="c-tabs-values">
-                                                {{
-                                                    Home.feature.closet_location
-                                                }}
-                                            </p>
-                                        </div>
-
-                                        <div
-                                            class="col-md-3"
-                                            v-if="
-                                                Home.feature.bathroom_type &&
-                                                Home.feature.bathroom_type !=
-                                                    'Nil'
-                                            "
-                                        >
-                                            <h4 class="c-tab-sub">
-                                                Bathroom Type
-                                            </h4>
-                                            <p class="c-tabs-values">
-                                                {{ Home.feature.bathroom_type }}
-                                            </p>
-                                        </div>
-
-                                        <div
-                                            class="col-md-3"
-                                            v-if="
-                                                Home.feature.bathroom_status &&
-                                                Home.feature.bathroom_status !=
-                                                    'Nil'
-                                            "
-                                        >
-                                            <h4 class="c-tab-sub">
-                                                Bathroom Status
-                                            </h4>
-                                            <p class="c-tabs-values">
-                                                {{
-                                                    Home.feature.bathroom_status
-                                                }}
-                                            </p>
-                                        </div>
-
-                                        <div
-                                            class="col-md-3"
-                                            v-if="
-                                                Home.feature.private_bath &&
-                                                Home.feature.private_bath !=
-                                                    'Nil'
-                                            "
-                                        >
-                                            <h4 class="c-tab-sub">
-                                                Private Bath
-                                            </h4>
-                                            <p class="c-tabs-values">
-                                                {{ Home.feature.private_bath }}
-                                            </p>
-                                        </div>
-
-                                        <div
-                                            class="col-md-3"
-                                            v-if="
-                                                Home.feature.outdoor_shower &&
-                                                Home.feature.outdoor_shower !=
-                                                    'Nil'
-                                            "
-                                        >
-                                            <h4 class="c-tab-sub">
-                                                Outdoor Shower
-                                            </h4>
-                                            <p class="c-tabs-values">
-                                                {{
-                                                    Home.feature.outdoor_shower
-                                                }}
-                                            </p>
-                                        </div>
-
-                                        <div
-                                            class="col-md-3"
-                                            v-if="
-                                                Home.feature.pool_shape &&
-                                                Home.feature.pool_shape != 'Nil'
-                                            "
-                                        >
-                                            <h4 class="c-tab-sub">
-                                                Pool Shape
-                                            </h4>
-                                            <p class="c-tabs-values">
-                                                {{ Home.feature.pool_shape }}
-                                            </p>
-                                        </div>
-
-                                        <div
-                                            class="col-md-3"
-                                            v-if="
-                                                Home.feature.water_features &&
-                                                Home.feature.water_features !=
-                                                    'Nil'
-                                            "
-                                        >
-                                            <h4 class="c-tab-sub">
-                                                Water Features
-                                            </h4>
-                                            <p class="c-tabs-values">
-                                                {{
-                                                    Home.feature.water_features
-                                                }}
-                                            </p>
-                                        </div>
-
-                                        <div
-                                            class="col-md-3"
-                                            v-if="
-                                                Home.feature.pool_status &&
-                                                Home.feature.pool_status !=
-                                                    'Nil'
-                                            "
-                                        >
-                                            <h4 class="c-tab-sub">
-                                                Pool Status
-                                            </h4>
-                                            <p class="c-tabs-values">
-                                                {{ Home.feature.pool_status }}
-                                            </p>
-                                        </div>
-
-                                        <div
-                                            class="col-md-3"
-                                            v-if="
-                                                Home.feature.spa &&
-                                                Home.feature.spa != 'Nil'
-                                            "
-                                        >
-                                            <h4 class="c-tab-sub">Spa</h4>
-                                            <p class="c-tabs-values">
-                                                {{ Home.feature.spa }}
-                                            </p>
-                                        </div>
-
-                                        <div
-                                            class="col-md-3"
-                                            v-if="
-                                                Home.feature.fencing_material &&
-                                                Home.feature.fencing_material !=
-                                                    'Nil'
-                                            "
-                                        >
-                                            <h4 class="c-tab-sub">Fencing</h4>
-                                            <p class="c-tabs-values">
-                                                {{
-                                                    Home.feature
-                                                        .fencing_material
-                                                }}
-                                            </p>
-                                        </div>
-
-                                        <div
-                                            class="col-md-3"
-                                            v-if="
-                                                Home.feature.bedroom_location &&
-                                                Home.feature.bedroom_location !=
-                                                    'Nil'
-                                            "
-                                        >
-                                            <h4 class="c-tab-sub">Bedroom</h4>
-                                            <p class="c-tabs-values">
-                                                {{
-                                                    Home.feature
-                                                        .bedroom_location
-                                                }}
-                                            </p>
-                                        </div>
-
-                                        <div
-                                            class="col-md-3"
-                                            v-if="
-                                                Home.feature.fireplace_type &&
-                                                Home.feature.fireplace_type !=
-                                                    'Nil'
-                                            "
-                                        >
-                                            <h4 class="c-tab-sub">Fireplace</h4>
-                                            <p class="c-tabs-values">
-                                                {{
-                                                    Home.feature.fireplace_type
-                                                }}
-                                            </p>
-                                        </div>
-
-                                        <div
-                                            class="col-md-3"
-                                            v-if="
-                                                Home.feature
-                                                    .kitchen_pantry_type &&
-                                                Home.feature
-                                                    .kitchen_pantry_type !=
-                                                    'Nil'
-                                            "
-                                        >
-                                            <h4 class="c-tab-sub">
-                                                Kitchen Pantry
-                                            </h4>
-                                            <p class="c-tabs-values">
-                                                {{
-                                                    Home.feature
-                                                        .kitchen_pantry_type
-                                                }}
-                                            </p>
-                                        </div>
-
-                                        <div
-                                            class="col-md-3"
-                                            v-if="
-                                                Home.feature
-                                                    .parking_enclosure &&
-                                                Home.feature
-                                                    .parking_enclosure != 'Nil'
-                                            "
-                                        >
-                                            <h4 class="c-tab-sub">
-                                                Parking Enclosure
-                                            </h4>
-                                            <p class="c-tabs-values">
-                                                {{
-                                                    Home.feature
-                                                        .parking_enclosure
-                                                }}
-                                            </p>
-                                        </div>
-
-                                        <div
-                                            class="col-md-3"
-                                            v-if="
-                                                Home.feature
-                                                    .landscape_maintenance &&
-                                                Home.feature
-                                                    .landscape_maintenance !=
-                                                    'Nil'
-                                            "
-                                        >
-                                            <h4 class="c-tab-sub">
-                                                Landscape Maintenance
-                                            </h4>
-                                            <p class="c-tabs-values">
-                                                {{
-                                                    Home.feature
-                                                        .landscape_maintenance
-                                                }}
-                                            </p>
-                                        </div>
-
-                                        <div
-                                            class="col-md-3"
-                                            v-if="
-                                                Home.feature
-                                                    .foundation_conditions &&
-                                                Home.feature
-                                                    .foundation_conditions !=
-                                                    'Nil'
-                                            "
-                                        >
-                                            <h4 class="c-tab-sub">
-                                                Foundation
-                                            </h4>
-                                            <p class="c-tabs-values">
-                                                {{
-                                                    Home.feature
-                                                        .foundation_conditions
-                                                }}
-                                            </p>
-                                        </div>
-
-                                        <!-- Financial Tab -->
+                                        <!-- ===================== FINANCIAL ===================== -->
                                         <div
                                             class="tab-pane fade"
                                             id="financial"
+                                            role="tabpanel"
                                             v-if="
-                                                Home.price ||
-                                                Home.price_from ||
-                                                Home.price_to ||
-                                                Home.average_price_per_square ||
-                                                Home.association_fee ||
-                                                Home.size_from ||
-                                                Home.size_to
+                                                isValid(Home?.price) ||
+                                                isValid(Home?.price_from) ||
+                                                isValid(Home?.price_to) ||
+                                                isValid(
+                                                    Home?.average_price_per_square
+                                                ) ||
+                                                isValid(
+                                                    Home?.association_fee
+                                                ) ||
+                                                isValid(Home?.size_from) ||
+                                                isValid(Home?.size_to)
                                             "
                                         >
-                                            <div>
-                                                <h5
-                                                    class="card-title c-card-main"
+                                            <h5 class="card-title c-card-main">
+                                                Price and Fees
+                                            </h5>
+                                            <hr />
+                                            <div class="row g-3">
+                                                <div
+                                                    class="col-md-3"
+                                                    v-if="isValid(Home?.price)"
                                                 >
-                                                    Price and Fees
-                                                </h5>
-                                                <hr />
-                                                <div class="row g-3">
-                                                    <div
-                                                        class="col-md-3"
-                                                        v-if="
-                                                            Home.price &&
-                                                            Home.price != 'Nil'
-                                                        "
-                                                    >
-                                                        <h4 class="c-tab-sub">
-                                                            Price
-                                                        </h4>
-                                                        <p
-                                                            class="c-tabs-values"
-                                                        >
-                                                            ${{
+                                                    <h4 class="c-tab-sub">
+                                                        Price
+                                                    </h4>
+                                                    <p class="c-tabs-values">
+                                                        ${{
+                                                            formatPrice(
+                                                                Home.price
+                                                            )
+                                                        }}
+                                                    </p>
+                                                </div>
+
+                                                <div
+                                                    class="col-md-3"
+                                                    v-if="
+                                                        isValid(
+                                                            Home?.price_from
+                                                        ) ||
+                                                        isValid(Home?.price_to)
+                                                    "
+                                                >
+                                                    <h4 class="c-tab-sub">
+                                                        Price Range
+                                                    </h4>
+                                                    <p class="c-tabs-values">
+                                                        ${{
+                                                            validOrNA(
                                                                 formatPrice(
-                                                                    Home.price
+                                                                    Home?.price_from
                                                                 )
-                                                            }}
-                                                        </p>
-                                                    </div>
+                                                            )
+                                                        }}
+                                                        - ${{
+                                                            validOrNA(
+                                                                formatPrice(
+                                                                    Home?.price_to
+                                                                )
+                                                            )
+                                                        }}
+                                                    </p>
+                                                </div>
 
-                                                    <div
-                                                        class="col-md-3"
-                                                        v-if="
-                                                            (Home.price_from &&
-                                                                Home.price_from !=
-                                                                    'Nil') ||
-                                                            (Home.price_to &&
-                                                                Home.price_to !=
-                                                                    'Nil')
-                                                        "
-                                                    >
-                                                        <h4 class="c-tab-sub">
-                                                            Price Range
-                                                        </h4>
-                                                        <p
-                                                            class="c-tabs-values"
-                                                        >
-                                                            ${{
-                                                                Home.price_from !=
-                                                                "Nil"
-                                                                    ? formatPrice(
-                                                                          Home.price_from
-                                                                      )
-                                                                    : "N/A"
-                                                            }}
-                                                            - ${{
-                                                                Home.price_to !=
-                                                                "Nil"
-                                                                    ? formatPrice(
-                                                                          Home.price_to
-                                                                      )
-                                                                    : "N/A"
-                                                            }}
-                                                        </p>
-                                                    </div>
+                                                <div
+                                                    class="col-md-3"
+                                                    v-if="
+                                                        isValid(
+                                                            Home?.average_price_per_square
+                                                        )
+                                                    "
+                                                >
+                                                    <h4 class="c-tab-sub">
+                                                        Average Price per Sq Ft
+                                                    </h4>
+                                                    <p class="c-tabs-values">
+                                                        {{
+                                                            Home.average_price_per_square
+                                                        }}
+                                                    </p>
+                                                </div>
 
-                                                    <div
-                                                        class="col-md-3"
-                                                        v-if="
-                                                            Home.average_price_per_square &&
-                                                            Home.average_price_per_square !=
-                                                                'Nil'
-                                                        "
-                                                    >
-                                                        <h4 class="c-tab-sub">
-                                                            Average Price per Sq
-                                                            Ft
-                                                        </h4>
-                                                        <p
-                                                            class="c-tabs-values"
-                                                        >
-                                                            {{
-                                                                Home.average_price_per_square
-                                                            }}
-                                                        </p>
-                                                    </div>
+                                                <div
+                                                    class="col-md-3"
+                                                    v-if="
+                                                        isValid(
+                                                            Home?.association_fee
+                                                        )
+                                                    "
+                                                >
+                                                    <h4 class="c-tab-sub">
+                                                        Association Fee
+                                                    </h4>
+                                                    <p class="c-tabs-values">
+                                                        {{
+                                                            Home.association_fee
+                                                        }}
+                                                    </p>
+                                                </div>
 
-                                                    <div
-                                                        class="col-md-3"
-                                                        v-if="
-                                                            Home.association_fee &&
-                                                            Home.association_fee !=
-                                                                'Nil'
-                                                        "
-                                                    >
-                                                        <h4 class="c-tab-sub">
-                                                            Association Fee
-                                                        </h4>
-                                                        <p
-                                                            class="c-tabs-values"
-                                                        >
-                                                            {{
-                                                                Home.association_fee
-                                                            }}
-                                                        </p>
-                                                    </div>
-
-                                                    <div
-                                                        class="col-md-3"
-                                                        v-if="
-                                                            (Home.size_from &&
-                                                                Home.size_from !=
-                                                                    'Nil') ||
-                                                            (Home.size_to &&
-                                                                Home.size_to !=
-                                                                    'Nil')
-                                                        "
-                                                    >
-                                                        <h4 class="c-tab-sub">
-                                                            Size Range
-                                                        </h4>
-                                                        <p
-                                                            class="c-tabs-values"
-                                                        >
-                                                            {{
-                                                                Home.size_from !=
-                                                                "Nil"
-                                                                    ? Home.size_from
-                                                                    : "N/A"
-                                                            }}
-                                                            -
-                                                            {{
-                                                                Home.size_to !=
-                                                                "Nil"
-                                                                    ? Home.size_to
-                                                                    : "N/A"
-                                                            }}
-                                                            SQFT
-                                                        </p>
-                                                    </div>
+                                                <div
+                                                    class="col-md-3"
+                                                    v-if="
+                                                        isValid(
+                                                            Home?.size_from
+                                                        ) ||
+                                                        isValid(Home?.size_to)
+                                                    "
+                                                >
+                                                    <h4 class="c-tab-sub">
+                                                        Size Range
+                                                    </h4>
+                                                    <p class="c-tabs-values">
+                                                        {{
+                                                            validOrNA(
+                                                                Home?.size_from
+                                                            )
+                                                        }}
+                                                        -
+                                                        {{
+                                                            validOrNA(
+                                                                Home?.size_to
+                                                            )
+                                                        }}
+                                                        SQFT
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -1346,6 +1445,13 @@ export default {
         },
     },
     methods: {
+        isValid(v) {
+            return v !== undefined && v !== null && v !== "" && v !== "Nil";
+        },
+        validOrNA(v) {
+            return this.isValid(v) ? v : "N/A";
+        },
+
         // Method to set the current image based on thumbnail click
         setCurrentSlide(index) {
             this.currentIndex = index;
@@ -1447,7 +1553,7 @@ export default {
     font-size: 30px;
     font-weight: 700;
     line-height: 36px;
-    color: rgb(23, 38, 54);
+    color: #023f86;
 }
 
 .info-card-overlay {
@@ -1464,7 +1570,7 @@ export default {
     font-size: 14px;
     font-weight: 400;
     line-height: 20px;
-    color: rgb(61, 102, 143);
+    color: #023f86;
 }
 
 .c-basic-info-card-text {
@@ -1472,7 +1578,7 @@ export default {
     font-size: 16px;
     font-weight: 600;
     line-height: 24px;
-    color: rgb(23, 38, 54);
+    color: #023f86;
 }
 
 .price {
@@ -1485,7 +1591,7 @@ export default {
     font-size: 30px;
     font-weight: 700;
     line-height: 36px;
-    color: rgb(45, 106, 159);
+    color: #023f86;
 }
 
 .property-detail-section {
@@ -1535,7 +1641,7 @@ export default {
 }
 
 .interactive-banner {
-    background-color: rgb(61, 102, 143);
+    background-color: #023f86;
     color: white;
     text-align: center;
     padding: 20px 0;
@@ -1585,7 +1691,7 @@ export default {
 }
 
 .open-house-tag {
-    background-color: rgb(61, 102, 143);
+    background-color: #023f86;
     color: white;
     padding: 5px 10px;
     font-size: 14px;
@@ -1692,7 +1798,7 @@ export default {
     font-size: 20px;
     font-weight: 600;
     line-height: 28px;
-    color: rgb(23, 38, 54);
+    color: #023f86;
 }
 
 .c-tab-sub {
@@ -1700,7 +1806,7 @@ export default {
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
-    color: rgb(61, 102, 143);
+    color: #023f86;
     margin: 0;
 }
 
@@ -1709,15 +1815,15 @@ export default {
     font-size: 16px !important;
     font-weight: bold !important;
     line-height: 24px !important;
-    color: rgb(23, 38, 54) !important;
+    color: #023f86 !important;
 }
 
 .c-text-theme {
-    color: rgb(61, 102, 143) !important;
+    color: #023f86 !important;
 }
 
 .nav-tabs .nav-link {
-    color: rgb(61, 102, 143) !important;
+    color: #023f86 !important;
     font-weight: bold !important;
 }
 
@@ -1730,7 +1836,7 @@ export default {
     font-size: 30px;
     font-weight: 700;
     line-height: 36px;
-    color: rgb(45, 106, 159) !important;
+    color: #023f86 !important;
 }
 
 .sticky-sidebar {
@@ -1739,16 +1845,19 @@ export default {
     background: white;
     z-index: 2;
 }
+
 .btn-gradient {
     background: linear-gradient(90deg, #023f86, #035bb8);
     color: white;
     transition: all 0.3s ease-in-out;
     box-shadow: 0 4px 12px rgba(3, 91, 184, 0.3);
 }
+
 .btn-gradient:hover {
     transform: scale(1.03);
     background: linear-gradient(90deg, #035bb8, #023f86);
 }
+
 .info-box {
     background: #f7f9fc;
     padding: 1rem;
@@ -1756,6 +1865,7 @@ export default {
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
+
 .sidebar-label {
     font-size: 14px;
     font-weight: 600;
