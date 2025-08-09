@@ -18,31 +18,53 @@
                 </div>
 
                 <div class="container">
-                    <!-- Image Carousel in col-8 -->
-
-                    <!-- Main Carousel -->
+                    <!-- If 2+ images: show carousel -->
                     <Carousel
-                        :wrapAround="true"
+                        v-if="images.length > 1"
+                        v-model="currentSlide"
+                        :items-to-show="1"
+                        :wrap-around="true"
                         :transition="500"
                         id="gallery"
-                        :items-to-show="1"
-                        :wrap-around="false"
-                        v-model="currentSlide"
                     >
-                        <!-- Main Image Slides -->
-                        <Slide v-for="(file, index) in Home.files" :key="index">
+                        <Slide
+                            v-for="(file, idx) in images"
+                            :key="file.id || idx"
+                        >
                             <img
                                 :src="file.file_name"
-                                :alt="file.file_original_name"
+                                :alt="
+                                    file.file_original_name ||
+                                    'Image ' + (idx + 1)
+                                "
                                 class="img-fluid c-img-filter c-images-border-design w-100"
                                 style="height: 500px; object-fit: cover"
+                                @error="setAltImg($event)"
                             />
                         </Slide>
+
                         <template #addons>
                             <Navigation />
-                            <!-- <Pagination /> -->
+                            <!-- If you want dots later: <Pagination /> -->
                         </template>
                     </Carousel>
+
+                    <!-- If exactly 1 image: show plain image (no nav, no carousel) -->
+                    <div v-else-if="images.length === 1">
+                        <img
+                            :src="images[0].file_name"
+                            :alt="images[0].file_original_name || 'Image'"
+                            class="img-fluid c-img-filter c-images-border-design w-100"
+                            style="height: 500px; object-fit: cover"
+                            @error="setAltImg($event)"
+                        />
+                    </div>
+
+                    <!-- If none: show placeholder -->
+                    <!-- <div v-else class="d-flex align-items-center justify-content-center bg-light"
+       style="height: 500px; border-radius: 12px;">
+    <span class="text-muted">No images available</span>
+  </div> -->
                 </div>
 
                 <div
@@ -1308,7 +1330,21 @@ export default {
             currentSlide: 0,
         };
     },
-
+    computed: {
+        // Ensure we always have valid image objects
+        images() {
+            const files = Array.isArray(this.Home?.files)
+                ? this.Home.files
+                : [];
+            return files
+                .filter((f) => f && f.file_name) // must have a src
+                .map((f) => ({
+                    id: f.id ?? null,
+                    file_name: f.file_name, // ensure this is a full URL
+                    file_original_name: f.file_original_name || "",
+                }));
+        },
+    },
     methods: {
         // Method to set the current image based on thumbnail click
         setCurrentSlide(index) {

@@ -31,16 +31,16 @@
         <div
             class="px-4 py-2 border-bottom text-muted d-flex justify-content-between small"
         >
-            <span title="Bedrooms"
+            <span title="Bedrooms" v-if="bedrooms && bedrooms != 'Nill'"
                 ><i class="bi bi-house-door me-1"></i>{{ bedrooms }}</span
             >
-            <span title="Bathrooms"
+            <span title="Bathrooms" v-if="bathrooms && bathrooms != 'Nill'"
                 ><i class="bi bi-droplet me-1"></i>{{ bathrooms }}</span
             >
-            <span title="Sq Ft"
+            <span title="Sq Ft" v-if="square_feet && square_feet != 'Nill'"
                 ><i class="bi bi-fullscreen me-1"></i>{{ square_feet }}</span
             >
-            <span title="Garage"
+            <span title="Garage" v-if="garages && garages != 'Nill'"
                 ><i class="bi bi-car-front me-1"></i>{{ garages || "—" }}</span
             >
         </div>

@@ -70,21 +70,60 @@
                             <div
                                 class="px-4 py-2 border-bottom text-muted d-flex justify-content-between small"
                             >
-                                <span title="Bedrooms">
+                                <span
+                                    title="Bedrooms"
+                                    v-if="
+                                        property.bedrooms &&
+                                        property.bedrooms
+                                            .toString()
+                                            .trim()
+                                            .toLowerCase() !== 'nil'
+                                    "
+                                >
                                     <i class="bi bi-house-door me-1"></i
                                     >{{ property.bedrooms }}
                                 </span>
-                                <span title="Bathrooms">
+
+                                <span
+                                    title="Bathrooms"
+                                    v-if="
+                                        property.bathrooms &&
+                                        property.bathrooms
+                                            .toString()
+                                            .trim()
+                                            .toLowerCase() !== 'nil'
+                                    "
+                                >
                                     <i class="bi bi-droplet me-1"></i
                                     >{{ property.bathrooms }}
                                 </span>
-                                <span title="Sq Ft">
+
+                                <span
+                                    title="Sq Ft"
+                                    v-if="
+                                        property.square_feet &&
+                                        property.square_feet
+                                            .toString()
+                                            .trim()
+                                            .toLowerCase() !== 'nil'
+                                    "
+                                >
                                     <i class="bi bi-fullscreen me-1"></i
                                     >{{ property.square_feet }}
                                 </span>
-                                <span title="Garage">
+
+                                <span
+                                    title="Garage"
+                                    v-if="
+                                        property.parking_enclosure &&
+                                        property.parking_enclosure
+                                            .toString()
+                                            .trim()
+                                            .toLowerCase() !== 'nil'
+                                    "
+                                >
                                     <i class="bi bi-car-front me-1"></i
-                                    >{{ property.parking_enclosure || "—" }}
+                                    >{{ property.parking_enclosure }}
                                 </span>
                             </div>
 
@@ -105,8 +144,7 @@
                                     class="text-dark mb-4"
                                     style="font-size: 0.95rem"
                                 >
-                                    <span class="text-muted me-1"
-                                        > 
+                                    <span class="text-muted me-1">
                                         <strong>Price:</strong></span
                                     >
                                     ${{ formatPrice(property.price) }}
@@ -115,8 +153,7 @@
                                 <!-- CTA -->
                                 <a
                                     :href="
-                                        '/home-details/' +
-                                        property.property_id
+                                        '/home-details/' + property.property_id
                                     "
                                     class="btn btn-primary rounded-pill text-white fw-semibold w-100 mt-auto"
                                     style="
@@ -218,7 +255,7 @@ export default defineComponent({
             }
 
             // Optional: lock scroll for modal
-            document.body.style.overflow = "hidden";
+            document.body.style.overflow = "show";
         },
 
         closeModal() {
