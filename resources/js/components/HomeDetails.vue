@@ -187,9 +187,39 @@
                                                 <div
                                                     class="mt-2 fw-semibold fs-5"
                                                 >
-                                                    {{ Home.full_bath }} -
-                                                    {{ Home.half_bath ?? "0" }}
+                                                    {{
+                                                        String(
+                                                            Home.full_bath
+                                                        ).replace(
+                                                            /[^0-9.]/g,
+                                                            ""
+                                                        )
+                                                    }}
+                                                    <span
+                                                        v-if="
+                                                            Number(
+                                                                String(
+                                                                    Home.half_bath ??
+                                                                        '0'
+                                                                ).replace(
+                                                                    /[^0-9.]/g,
+                                                                    ''
+                                                                )
+                                                            ) > 0
+                                                        "
+                                                    >
+                                                        -
+                                                        {{
+                                                            String(
+                                                                Home.half_bath
+                                                            ).replace(
+                                                                /[^0-9.]/g,
+                                                                ""
+                                                            )
+                                                        }}
+                                                    </span>
                                                 </div>
+
                                                 <small class="text-muted"
                                                     >Bathrooms</small
                                                 >
