@@ -305,7 +305,9 @@ class HomeController extends Controller
 
     public function community_all_homes($community_id)
     { 
-        $properties = Property::where('community_id', $community_id)
+        $community_reference = Community::where('id',$community_id)->select('community_id')->first();
+        // dd($community_id,$community_reference->community_id);
+        $properties = Property::where('community_id', $community_reference->community_id)
             ->inRandomOrder()  // Orders the results randomly
             ->limit(8)->get(); // Limit the results to 8 records
 
