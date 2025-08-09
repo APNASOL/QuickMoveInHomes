@@ -1940,7 +1940,7 @@ label {
 }
 .c-sub-title {
     font-family: Inter, sans-serif !important;
-    font-size: 24px !important;
+    font-size: 16px !important;
     font-weight: 400 !important;
     line-height: 32px !important;
     color: #596773;

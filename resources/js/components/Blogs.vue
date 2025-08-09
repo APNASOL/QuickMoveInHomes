@@ -140,7 +140,7 @@ export default {
 
 .c-sub-title {
     font-family: "Raleway", sans-serif;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     color: rgb(61, 102, 143);
 }
