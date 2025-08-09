@@ -826,20 +826,62 @@ export default {
         },
 
         initOpenHouse(status) {
-            if (status == true) {
+            if (status) {
+                // Switching ON → open modal
                 this.$refs.openOpenHouseModal.click();
+                // Reset form fields
+                this.form.date = "";
+                this.form.start_time = "";
+                this.form.end_time = "";
+                this.form.description = "";
+                this.form.status = false;
             } else {
-                axios
-                    .get("/api/remove/property/open/house/" + this.property_id)
-                    .then((response) => {
-                        toastr.success(
-                            this.translate("Property removed as open House")
-                        );
-                        this.getPropertyDetails();
-                    })
-                    .catch((error) => {
-                        toastr.error(error.response.data.message);
-                    });
+                // Switching OFF → ask for confirmation
+                if (
+                    !this.property.is_open_house ||
+                    this.property.is_open_house == 0
+                ) {
+                    // No open house record to delete, just reset switch and exit
+                    this.form.status = false;
+                    return;
+                }
+
+                if (
+                    confirm(
+                        this.translate(
+                            "Are you sure you want to remove this property as an open house?"
+                        )
+                    )
+                ) {
+                    axios
+                        .get(
+                            "/api/remove/property/open/house/" +
+                                this.property_id
+                        )
+                        .then((response) => {
+                            toastr.success(
+                                this.translate("Property removed as open house")
+                            );
+                            this.getPropertyDetails();
+                            // Reset form fields
+                            this.form.date = "";
+                            this.form.start_time = "";
+                            this.form.end_time = "";
+                            this.form.description = "";
+                            this.form.status = false;
+                        })
+                        .catch((error) => {
+                            toastr.error(
+                                error.response?.data?.message ||
+                                    "Error removing open house"
+                            );
+                            // Reset switch in case of failure
+                            this.form.status = true;
+                        });
+                } else {
+                    // User canceled, revert the toggle
+                    this.form.status = true;
+                }
             }
         },
         savePropertyAsOpenHouse() {
