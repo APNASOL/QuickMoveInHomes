@@ -66,22 +66,23 @@ class IndexController extends Controller
 
     public function communities(Request $request)
     {
-        // Start the query on the communities table
-        $communities = DB::table('communities');
+        $communities = DB::table('communities')
+            ->when($request->name !== null && $request->name !== "null", function ($query) use ($request) {
+                $query->where('name', 'LIKE', '%' . $request->name . '%');
+            })
+            ->whereExists(function ($query) {
+                $query->select(DB::raw(1))
+                    ->from('properties')
+                    ->whereRaw('properties.community_id = communities.community_id');
+            })
+            ->latest('id')
+            ->take(3)
+            ->get()
+            ->shuffle();
 
-        // Apply filter based on the request if a name is provided
-        if ($request->name !== null && $request->name !== "null") {
-            $communities->where('name', 'LIKE', '%' . $request->name . '%');
-        }
-
-        // Retrieve the last 3 communities randomly
-        $communities = $communities->latest('id')->take(3)->get()->shuffle();
-
-        // Loop through each community
         foreach ($communities as $community) {
-            $community->homes_count = Property::where('community_id', $community->id)->count();
+            $community->homes_count = Property::where('community_id', $community->community_id)->count();
 
-            // Handle the main image
             if ($community->main_image) {
                 $uploaded_image = Upload::find($community->main_image);
                 if ($uploaded_image) {
@@ -92,6 +93,7 @@ class IndexController extends Controller
 
         return $communities;
     }
+
     public function all_communities(Request $request)
     {
         // Start the query on the communities table
