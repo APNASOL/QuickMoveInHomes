@@ -1,336 +1,660 @@
+<style scoped>
+/* Contact Page Styles */
+.contact-hero-section {
+    background: linear-gradient(
+        135deg,
+        rgba(26, 54, 93, 0.85) 0%,
+        rgba(45, 55, 72, 0.75) 100%
+    );
+    padding: 4rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+}
+
+.contact-title-main {
+    font-size: 3rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.contact-subtitle {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Contact Content */
+.contact-content {
+    background: white;
+    padding: 5rem 0;
+}
+
+.contact-grid {
+    display: flow;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+}
+
+/* Contact Info Card */
+.contact-info-card {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-radius: 20px;
+    padding: 2.5rem;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.contact-info-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1a365d;
+    margin-bottom: 1rem;
+}
+
+.contact-info-text {
+    font-size: 1.1rem;
+    color: #64748b;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.contact-detail {
+    margin-bottom: 1.5rem;
+}
+
+.contact-detail-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1a365d;
+    margin-bottom: 0.5rem;
+}
+
+.contact-detail-text {
+    font-size: 1rem;
+    color: #64748b;
+    line-height: 1.5;
+}
+
+/* Accordion Styles */
+.contact-accordion {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #f1f5f9;
+}
+
+.accordion-button {
+    background: linear-gradient(135deg, #1a365d, #2d3748) !important;
+    color: white !important;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border: none !important;
+    padding: 1.5rem !important;
+}
+
+.accordion-button:not(.collapsed) {
+    background: linear-gradient(135deg, #1a365d, #2d3748) !important;
+    color: white !important;
+    box-shadow: none !important;
+}
+
+.accordion-button::after {
+    filter: brightness(0) invert(1);
+}
+
+.accordion-body {
+    padding: 2rem !important;
+    background: #fafbfc;
+}
+
+.office-hours-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.office-hours-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.office-hours-list li:last-child {
+    border-bottom: none;
+}
+
+.office-hours-list strong {
+    color: #1a365d;
+}
+
+/* Form Toggle Buttons */
+.form-toggle-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.toggle-btn {
+    background: linear-gradient(
+  to right,
+  hsl(213 71% 45%),  /* lighter */
+  hsl(213 71% 30%)   /* darker */
+);
+    border: none;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    color: white;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.toggle-btn:hover {
+    background: linear-gradient(
+  to right,
+  hsl(213 71% 45%),  /* lighter */
+  hsl(213 71% 30%)   /* darker */
+);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px hsl(213 71% 45%);
+}
+
+/* Contact Form */
+.contact-form-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #f1f5f9;
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.form-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1a365d;
+    margin-bottom: 0.5rem;
+}
+
+.form-subtitle {
+    color: #64748b;
+    font-size: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.form-control {
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: #fafafa;
+}
+
+.form-control:focus {
+    border-color: #e53e3e;
+    box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.1);
+    background: white;
+}
+
+.invalid-bg {
+    border-color: #e53e3e !important;
+    background-color: #fed7d7 !important;
+}
+
+.invalid-feedback {
+    color: #e53e3e;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+/* Form Actions */
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.btn-send {
+    background: linear-gradient(135deg, #e53e3e, #c53030);
+    border: none;
+    border-radius: 12px;
+    padding: 0.75rem 2rem;
+    color: white;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    flex: 1;
+}
+
+.btn-send:hover:not(:disabled) {
+    background: linear-gradient(135deg, #c53030, #9b2c2c);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(229, 62, 62, 0.3);
+}
+
+.btn-send:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.btn-cancel {
+    background: #64748b;
+    border: none;
+    border-radius: 12px;
+    padding: 0.75rem 2rem;
+    color: white;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-cancel:hover {
+    background: #475569;
+    transform: translateY(-2px);
+}
+
+/* FAQ Section */
+.faq-section {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    padding: 5rem 0;
+}
+
+.faq-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a365d;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.faq-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+.faq-item {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid #f1f5f9;
+    transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.faq-question {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #1a365d;
+    margin-bottom: 1rem;
+}
+
+.faq-answer {
+    color: #64748b;
+    line-height: 1.6;
+}
+
+/* Decorative Elements */
+.section-decoration {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    background: linear-gradient(135deg, rgba(229, 62, 62, 0.1), rgba(255, 255, 255, 0.05));
+    border-radius: 50%;
+    filter: blur(30px);
+    z-index: 0;
+}
+
+.decoration-1 {
+    top: -30px;
+    right: -30px;
+}
+
+.decoration-2 {
+    bottom: -30px;
+    left: -30px;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .contact-title-main {
+        font-size: 2.5rem;
+    }
+
+    .form-toggle-buttons {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .contact-hero-section,
+    .contact-content,
+    .faq-section {
+        padding: 3rem 0;
+    }
+
+    .contact-title-main {
+        font-size: 2rem;
+    }
+
+    .contact-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .contact-info-card,
+    .contact-form-card {
+        padding: 2rem;
+    }
+
+    .faq-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .faq-item {
+        padding: 1.5rem;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 576px) {
+    .contact-title-main {
+        font-size: 1.8rem;
+    }
+
+    .contact-info-card,
+    .contact-form-card {
+        padding: 1.5rem;
+    }
+
+    .accordion-button {
+        padding: 1.25rem !important;
+        font-size: 1rem;
+    }
+
+    .accordion-body {
+        padding: 1.5rem !important;
+    }
+}
+
+/* Loading Animation */
+.spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+    border-width: 0.15em;
+}
+</style>
+
 <template>
     <Master>
-        <section class="container contact-section text-center py-5">
-            <div class="container">
-                <h2 class="contact-title">Contact Yvonne Khoo</h2>
+        <!-- Hero Section -->
+        <section class="contact-hero-section">
+            <div class="container position-relative" style="z-index: 1;">
+                <h1 class="contact-title-main">Contact Yvonne Khoo</h1>
                 <p class="contact-subtitle">
                     Ready to start your real estate journey? Whether you're
                     buying, selling, or just have questions, I'm here to help
                     you every step of the way.
                 </p>
             </div>
+
+            <!-- Decorative Elements -->
+            <div class="section-decoration decoration-1"></div>
+            <div class="section-decoration decoration-2"></div>
         </section>
 
-        <div class="bg-white p-4">
-            <section class="container mt-5">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="p-4 border-0 shadow w-100">
-                            <div class="card-body">
-                                <h4 class="contact-title">
-                                    Better yet, see us in person!
-                                </h4>
-                                <p class="c-para-contents">
-                                    We love our customers, so feel free to visit
-                                    during normal business hours.
+        <!-- Contact Content -->
+        <section class="contact-content">
+            <div class="container">
+                <div class="contact-grid">
+                    <!-- Left Column - Contact Info -->
+                    <div>
+                        <div class="contact-info-card">
+                            <h3 class="contact-info-title">Better yet, see us in person!</h3>
+                            <p class="contact-info-text">
+                                We love our customers, so feel free to visit during normal business hours.
+                            </p>
+
+                            <div class="contact-detail">
+                                <h5 class="contact-detail-title">Brand New Homes Vegas</h5>
+                                <p class="contact-detail-text">
+                                    10845 Griffith Peak Drive, Suite 2, Las Vegas, NV 89135
                                 </p>
-                                <h5 class="c-title">Brand New Homes Vegas</h5>
-                                <p class="c-para-contents">
-                                    10845 Griffith Peak Drive, Suite 2, Las
-                                    Vegas, NV 89135
-                                </p>
-                                <h5 class="c-title">
-                                    Phone | 24-Hour Emergency Assistance
-                                </h5>
-                                <p class="c-para-contents">
+                            </div>
+
+                            <div class="contact-detail">
+                                <h5 class="contact-detail-title">Phone | 24-Hour Emergency Assistance</h5>
+                                <p class="contact-detail-text">
                                     USA & Canada: (702) 819-0035 <br />
                                     Overseas: +1 (702) 819-0035
                                 </p>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div>
-                            <div
-                                class="collapse multi-collapse show"
-                                id="collapseContactInfo"
-                            >
-                                <div>
-                                    <div
-                                        class="accordion"
-                                        id="contactAccorddion"
-                                    >
-                                        <div class="accordion-item">
-                                            <h2
-                                                class="accordion-header contact-title"
-                                                id="headingOne"
-                                            >
-                                                <button
-                                                    class="accordion-button collapsed contact-title"
-                                                    type="button"
-                                                    data-bs-toggle="collapse"
-                                                    data-bs-target="#collapseOne"
-                                                    aria-expanded="true"
-                                                    aria-controls="collapseOne"
-                                                >
-                                                    OFFICE HOURS
-                                                </button>
-                                            </h2>
-
-                                            <div
-                                                id="collapseOne"
-                                                class="accordion-collapse collapse show p-4 border-0 shadow"
-                                                aria-labelledby="headingOne"
-                                                data-bs-parent="#contactAccorddion"
-                                            >
-                                                <div class="accordion-body">
-                                                    <ul class="list-unstyled">
-                                                        <li>
-                                                            <strong
-                                                                >Mon-Fri:</strong
-                                                            >
-                                                            10:00 AM - 06:00 PM
-                                                        </li>
-                                                        <li>
-                                                            <strong
-                                                                >Sat:</strong
-                                                            >
-                                                            11:00 AM - 03:00 PM
-                                                        </li>
-                                                        <li>
-                                                            <strong
-                                                                >Sun:</strong
-                                                            >
-                                                            Closed
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="mb-4">
-                                        <div
-                                            class="d-flex justify-content-between mt-3"
-                                        >
-                                            <button
-                                                class="btn c-btn-theme-primary w-50 me-2"
-                                                @click="showForm('Agent')"
-                                                data-bs-toggle="collapse"
-                                                data-bs-target=".multi-collapse"
-                                            >
-                                                {{
-                                                    translate(
-                                                        "DROP US A LINE AS AN AGENT"
-                                                    )
-                                                }}
-                                            </button>
-                                            <button
-                                                class="btn c-btn-theme-primary w-50"
-                                                @click="showForm('Customer')"
-                                                data-bs-toggle="collapse"
-                                                data-bs-target=".multi-collapse"
-                                            >
-                                                {{
-                                                    translate(
-                                                        "DROP US A LINE AS A CUSTOMER"
-                                                    )
-                                                }}
-                                            </button>
-                                        </div>
+                        <!-- Office Hours Accordion -->
+                        <div class="contact-accordion mt-4">
+                            <div class="accordion-item border-0">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#officeHours">
+                                        OFFICE HOURS
+                                    </button>
+                                </h2>
+                                <div id="officeHours" class="accordion-collapse collapse show">
+                                    <div class="accordion-body">
+                                        <ul class="office-hours-list">
+                                            <li>
+                                                <strong>Mon-Fri:</strong>
+                                                <span>10:00 AM - 06:00 PM</span>
+                                            </li>
+                                            <li>
+                                                <strong>Sat:</strong>
+                                                <span>11:00 AM - 03:00 PM</span>
+                                            </li>
+                                            <li>
+                                                <strong>Sun:</strong>
+                                                <span>Closed</span>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- form starts here -->
 
-                        <div>
-                            <div
-                                class="collapse multi-collapse"
-                                id="collapseContactForm"
+                        <!-- Form Toggle Buttons -->
+                        <div class="form-toggle-buttons">
+                            <button
+                                class="toggle-btn"
+                                @click="showForm('Agent')"
+                                data-bs-toggle="collapse"
+                                data-bs-target=".multi-collapse"
                             >
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="row g-3 c-bg-form p-2">
-                                            <b class="c-title contact-title"
-                                                >Dear
-                                                <i class="c-theme-color"
-                                                    >{{ contacting_user }}
-                                                </i>
-                                                Drop us a line</b
+                                {{ translate("DROP US A LINE AS AN AGENT") }}
+                            </button>
+                            <button
+                                class="toggle-btn"
+                                @click="showForm('Customer')"
+                                data-bs-toggle="collapse"
+                                data-bs-target=".multi-collapse"
+                            >
+                                {{ translate("DROP US A LINE AS A CUSTOMER") }}
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right Column - Contact Form -->
+                    <div>
+                        <div class="collapse multi-collapse" id="collapseContactForm">
+                            <div class="contact-form-card">
+                                <div class="form-header">
+                                    <h3 class="form-title">
+                                        Dear <span style="color: #e53e3e;">{{ contacting_user }}</span>, Drop us a line
+                                    </h3>
+                                    <p class="form-subtitle">We'll get back to you as soon as possible</p>
+                                </div>
+
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <label class="form-label">{{ translate("Your Full Name") }}</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            :class="{ 'invalid-bg': formErrors.name }"
+                                            v-model="form.name"
+                                        />
+                                        <div class="invalid-feedback" v-if="formErrors.name">
+                                            {{ formErrors.name[0] }}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="form-label">Email</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            :class="{ 'invalid-bg': formErrors.email }"
+                                            v-model="form.email"
+                                        />
+                                        <div class="invalid-feedback" v-if="formErrors.email">
+                                            {{ formErrors.email[0] }}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="form-label">Phone</label>
+                                        <input
+                                            type="tel"
+                                            class="form-control"
+                                            v-model.trim="form.phone"
+                                            inputmode="tel"
+                                            placeholder="+1 7021234567 or 7021234567"
+                                            :class="{ 'invalid-bg': formErrors.phone }"
+                                        />
+                                        <div class="invalid-feedback" v-if="formErrors.phone">
+                                            {{ formErrors.phone[0] }}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label class="form-label">Message</label>
+                                        <textarea
+                                            class="form-control"
+                                            :class="{ 'invalid-bg': formErrors.message }"
+                                            v-model="form.message"
+                                            rows="4"
+                                        ></textarea>
+                                        <div class="invalid-feedback" v-if="formErrors.message">
+                                            {{ formErrors.message[0] }}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="form-actions">
+                                            <button
+                                                class="btn-send"
+                                                :disabled="!formStatus"
+                                                @click="save"
                                             >
-                                            <div class="col-md-12">
-                                                <label class="form-label">{{
-                                                    translate("Your Full Name")
-                                                }}</label>
-                                                <input
-                                                    type="text"
-                                                    class="form-control"
-                                                    :class="{
-                                                        'invalid-bg':
-                                                            formErrors.name,
-                                                    }"
-                                                    v-model="form.name"
-                                                />
-                                                <div
-                                                    class="invalid-feedback animated fadeIn"
-                                                    v-if="formErrors.name"
-                                                >
-                                                    {{ formErrors.name[0] }}
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <label class="form-label"
-                                                    >Email</label
-                                                >
-                                                <input
-                                                    type="text"
-                                                    class="form-control"
-                                                    :class="{
-                                                        'invalid-bg':
-                                                            formErrors.email,
-                                                    }"
-                                                    v-model="form.email"
-                                                />
-                                                <div
-                                                    class="invalid-feedback animated fadeIn"
-                                                    v-if="formErrors.email"
-                                                >
-                                                    {{ formErrors.email[0] }}
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="form-label"
-                                                    >Phone</label
-                                                >
-                                                <input
-                                                    type="tel"
-                                                    class="form-control"
-                                                    v-model.trim="form.phone"
-                                                    inputmode="tel"
-                                                    placeholder="+1 7021234567 or 7021234567"
-                                                    :class="{
-                                                        'invalid-bg':
-                                                            formErrors.phone,
-                                                    }"
-                                                />
-
-                                                <div
-                                                    class="invalid-feedback animated fadeIn"
-                                                    v-if="formErrors.phone"
-                                                >
-                                                    {{ formErrors.phone[0] }}
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="message"
-                                                    >Message</label
-                                                >
-                                                <textarea
-                                                    class="form-control"
-                                                    id="message"
-                                                    :class="{
-                                                        'invalid-bg':
-                                                            formErrors.message,
-                                                    }"
-                                                    v-model="form.message"
-                                                    rows="3"
-                                                ></textarea>
-                                                <div
-                                                    class="invalid-feedback animated fadeIn"
-                                                    v-if="formErrors.message"
-                                                >
-                                                    {{ formErrors.message[0] }}
-                                                </div>
-                                            </div>
-                                            <div class="mt-3">
-                                                <button
-                                                    class="btn btn-success"
-                                                    :disabled="!formStatus"
-                                                    @click="save"
-                                                >
-                                                    <span v-if="formStatus">{{
-                                                        translate("Send")
-                                                    }}</span>
-                                                    <span v-else>
-                                                        {{
-                                                            translate("Sending")
-                                                        }}
-                                                        <span
-                                                            class="spinner-border spinner-border-sm"
-                                                            aria-hidden="true"
-                                                        ></span>
-                                                    </span>
-                                                </button>
-
-                                                <!-- data-bs-toggle="collapse"
-                                    data-bs-target="#collapseContactInfo"
-                                    aria-expanded="false"
-                                    aria-controls="collapseContactInfo" -->
-                                                <button
-                                                    class="btn btn-danger ms-3"
-                                                    type="button"
-                                                    data-bs-toggle="collapse"
-                                                    data-bs-target=".multi-collapse"
-                                                    aria-expanded="false"
-                                                    aria-controls="collapseContactForm collapseContactInfo"
-                                                    @click="showForm(null)"
-                                                >
-                                                    Cancel
-                                                </button>
-                                            </div>
+                                                <span v-if="formStatus">{{ translate("Send Message") }}</span>
+                                                <span v-else>
+                                                    {{ translate("Sending") }}
+                                                    <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                                                </span>
+                                            </button>
+                                            <button
+                                                class="btn-cancel"
+                                                type="button"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target=".multi-collapse"
+                                                @click="showForm(null)"
+                                            >
+                                                Cancel
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <!-- form ends here -->
-                    </div>
-                </div>
-            </section>
-            <div class="FAQ bg-light">
-                <div class="container my-5 p-4 rounded">
-                    <h2 class="fw-bold mb-4 contact-title">
-                        Frequently Asked Questions
-                    </h2>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <h6 class="fw-semibold c-title">
-                                How quickly can I expect a response?
-                            </h6>
-                            <p class="text-muted">
-                                I typically respond to all inquiries within 24
-                                hours, often much sooner during business hours.
-                            </p>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <h6 class="fw-semibold c-title">
-                                Do you work with out-of-state buyers?
-                            </h6>
-                            <p class="text-muted">
-                                Yes! I frequently work with clients relocating
-                                to Las Vegas and can facilitate virtual tours
-                                and remote transactions.
-                            </p>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <h6 class="fw-semibold c-title">
-                                What areas of Las Vegas do you serve?
-                            </h6>
-                            <p class="text-muted">
-                                I work throughout the entire Las Vegas Valley,
-                                including Las Vegas, North Las Vegas, Henderson,
-                                and surrounding areas.
-                            </p>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <h6 class="fw-semibold c-title">
-                                Do you charge for initial consultations?
-                            </h6>
-                            <p class="text-muted">
-                                No, I offer complimentary initial consultations
-                                to discuss your real estate needs and how I can
-                                help.
-                            </p>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <div class="container">
+                <h2 class="faq-title">Frequently Asked Questions</h2>
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <h4 class="faq-question">How quickly can I expect a response?</h4>
+                        <p class="faq-answer">
+                            I typically respond to all inquiries within 24 hours, often much sooner during business hours.
+                        </p>
+                    </div>
+                    <div class="faq-item">
+                        <h4 class="faq-question">Do you work with out-of-state buyers?</h4>
+                        <p class="faq-answer">
+                            Yes! I frequently work with clients relocating to Las Vegas and can facilitate virtual tours and remote transactions.
+                        </p>
+                    </div>
+                    <div class="faq-item">
+                        <h4 class="faq-question">What areas of Las Vegas do you serve?</h4>
+                        <p class="faq-answer">
+                            I work throughout the entire Las Vegas Valley, including Las Vegas, North Las Vegas, Henderson, and surrounding areas.
+                        </p>
+                    </div>
+                    <div class="faq-item">
+                        <h4 class="faq-question">Do you charge for initial consultations?</h4>
+                        <p class="faq-answer">
+                            No, I offer complimentary initial consultations to discuss your real estate needs and how I can help.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
     </Master>
 </template>
 
@@ -360,10 +684,8 @@ export default {
             website_phone: "",
             form: {
                 name: "",
-
                 phone: "",
                 email: "",
-
                 message: "",
                 contacted_from: "",
             },
@@ -401,7 +723,6 @@ export default {
                     this.website_address = response.data.website_address;
                     this.website_phone = response.data.website_phone;
                 })
-
                 .catch((error) => {
                     toastr.error(error.response.data.message);
                 });
@@ -416,10 +737,8 @@ export default {
                     );
                     this.form = {
                         name: "",
-
                         email: "",
                         phone: "",
-
                         message: "",
                     };
                     this.contactFormBtnStatus = 0;
@@ -438,46 +757,3 @@ export default {
     },
 };
 </script>
-<style scoped>
-html,
-body {
-    height: 100%;
-}
-
-.c-title {
-    font-family: Poppins, sans-serif;
-    font-size: 16px;
-    color: rgb(61, 102, 143);
-}
-.c-para-contents {
-    font-family: Poppins, sans-serif;
-    font-size: 14px;
-}
-
-.contact-section {
-    font-family: "Playfair Display", serif;
-    font-size: 36px;
-    font-weight: 700;
-    line-height: 40px;
-    color: rgb(61, 102, 143);
-}
-
-.contact-section {
-    background-color: #f8fafc; /* Light background */
-}
-
-.contact-title {
-    font-family: "Playfair Display", serif !important;
-    font-size: 28px;
-    font-weight: bold;
-    color: rgb(61, 102, 143);
-}
-
-.contact-subtitle {
-    font-family: Inter, sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 24px;
-    color: rgb(61, 102, 143);
-}
-</style>

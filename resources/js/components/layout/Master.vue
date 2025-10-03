@@ -1,39 +1,46 @@
 <template>
     <div class="c-top-bar-section">
-        <div class="c-top-bar-section d-flex justify-content-between">
-            <div>
-                <!-- Left-aligned social links -->
-                <div class="row d-flex">
-                    <div class="text-black">
-                        <a :href="'mailto:' + email" class="contact">
-                            {{ email }}
-                        </a>
-                        <i class="bi bi-telephone-outbound"></i>
-
-                        <a
-                            class="text-black ms-1 c-dec-none"
-                            :href="'tel:' + website_phone"
-                        >
-                            {{ website_phone }}
-                        </a>
-                    </div>
-                </div>
+        <div class="c-top-bar-content">
+            <div class="contact-info">
+                <a :href="'mailto:' + email" class="contact-item">
+                    <i class="bi bi-envelope contact-icon"></i>
+                    <span>{{ email }}</span>
+                </a>
+                <a
+                    class="contact-item c-dec-none"
+                    :href="'tel:' + website_phone"
+                >
+                    <i class="bi bi-telephone-outbound contact-icon"></i>
+                    <span>{{ website_phone }}</span>
+                </a>
             </div>
-            <!-- Phone number aligned to the right -->
-            <div class="ms-auto text-black">
+
+            <div class="social-links">
                 <span v-if="youtube_link">
-                    <a :href="youtube_link" target="_blank">
-                        <i class="bi bi-youtube text-danger"></i>
+                    <a
+                        :href="youtube_link"
+                        target="_blank"
+                        class="social-link youtube"
+                    >
+                        <i class="bi bi-youtube"></i>
                     </a>
                 </span>
                 <span v-if="instagram_link">
-                    <a :href="instagram_link" target="_blank">
-                        <i class="bi bi-instagram" style="color: #c13584"></i>
+                    <a
+                        :href="instagram_link"
+                        target="_blank"
+                        class="social-link instagram"
+                    >
+                        <i class="bi bi-instagram"></i>
                     </a>
                 </span>
                 <span v-if="facebook_link">
-                    <a :href="facebook_link" target="_blank">
-                        <i class="bi bi-facebook me-3 text-primary"></i>
+                    <a
+                        :href="facebook_link"
+                        target="_blank"
+                        class="social-link facebook"
+                    >
+                        <i class="bi bi-facebook"></i>
                     </a>
                 </span>
             </div>
@@ -41,9 +48,13 @@
     </div>
 
     <nav class="navbar navbar-expand-lg bg-theme c-navbar-color sticky-top">
-        <!-- <nav class="navbar navbar-expand-lg  bg-theme c-navbar-color"> -->
-        <div class="container">
-            <!-- Navbar brand -->
+        <div class="container position-relative">
+            <!-- Mobile logo -->
+            <h1 class="c-site-main-title d-lg-none">
+                <a href="/" class="c-link-style">
+                    <img :src="logo" :alt="name" width="110" />
+                </a>
+            </h1>
 
             <!-- Navbar toggle button -->
             <button
@@ -60,252 +71,87 @@
 
             <!-- Navbar links -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- Left side navigation -->
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <!-- Dropdown menus -->
-                    <li class="nav-item dropdown">
-                        <a
-                            class="nav-link"
-                            href="/"
-                            id="navbarDropdownDeals"
-                            role="button"
-                        >
-                            Home
-                        </a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/" role="button"> Home </a>
                     </li>
-                    <li class="nav-item dropdown">
+                    <li class="nav-item">
                         <a
                             class="nav-link"
                             href="/all/communities/"
-                            id="navbarDropdownDeals"
                             role="button"
                         >
                             Communities
                         </a>
                     </li>
-                    <li class="nav-item dropdown">
+                    <li class="nav-item">
                         <a
                             class="nav-link"
                             href="/all/open/houses/"
-                            id="navbarDropdownDeals"
                             role="button"
                         >
                             Open Houses
                         </a>
                     </li>
-
-                    <!-- <li class="nav-item dropdown">
-                       
-                        <a
-                            class="nav-link dropdown-toggle"
-                            href="#"
-                            id="navbarDropdownDestinations"
-                            role="button"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                        >
-                            Communities
-                        </a>
- 
-                        <ul
-                            class="dropdown-menu"
-                            aria-labelledby="navbarDropdownDestinations"
-                        >
-                            <li
-                                v-if="!communities.length"
-                                class="dropdown-item"
-                            >
-                                Loading...
-                            </li>
-                            <li
-                                v-for="community in communities"
-                                :key="community.id"
-                            >
-                                <a
-                                    class="dropdown-item"
-                                    :href="`/detailed/community/${community.id}`"
-                                >
-                                    {{ community.name }}
-                                </a>
-                            </li>
-                        </ul>
-                    </li> -->
-
-                    <!-- <li class="nav-item dropdown"> 
-                        <a
-                            class="nav-link dropdown-toggle"
-                            href="#"
-                            id="navbarDropdownOpenHouses"
-                            role="button"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                        >
-                            Open Houses
-                        </a>
- 
-                        <ul
-                            class="dropdown-menu"
-                            aria-labelledby="navbarDropdownOpenHouses"
-                        >
-                            <li v-if="!openHouses.length" class="dropdown-item">
-                                Loading...
-                            </li>
-                            <li
-                                v-for="openHouse in openHouses"
-                                :key="openHouse.id"
-                            >
-                                <a
-                                    class="dropdown-item"
-                                    :href="`/home-details/${openHouse.property_id}`"
-                                >
-                                    {{ openHouse.title }}
-                                </a>
-                            </li>
-                        </ul>
-                    </li> -->
-                    <!-- <li class="nav-item dropdown">
-                       
-                        <a
-                            class="nav-link dropdown-toggle"
-                            href="#"
-                            id="navbarDropdownOpenHouses"
-                            role="button"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                        >
-                            Incentives
-                        </a>
-
-                        
-                        <ul
-                            class="dropdown-menu"
-                            aria-labelledby="navbarDropdownOpenHouses"
-                        >
-                            <li
-                                v-for="incentive in incentives_list"
-                                :key="incentive.id"
-                            >
-                                <a
-                                    class="dropdown-item"
-                                    :href="`/incentive-details/${incentive.id}`"
-                                >
-                                    {{ incentive.title }}
-                                </a>
-                            </li>
-                        </ul>
-                    </li> -->
-
-                    <li class="nav-item dropdown">
+                    <li class="nav-item">
                         <a
                             class="nav-link"
                             href="/all-incentives"
-                            id="navbarDropdownDeals"
                             role="button"
                         >
                             Incentives
                         </a>
                     </li>
-                    <!-- <li class="nav-item dropdown"> 
-                        <a
-                            class="nav-link"
-                            href="/all-incentives"
-                            id="navbarDropdownDeals"
-                            role="button"
-                        >
-                        Search
-                        </a> 
-                    </li> -->
-
-                    <!-- <li class="nav-item dropdown">
-                        
-                        <a
-                            class="nav-link"
-                            href="/search/homes"
-                            id="navbarDropdownDeals"
-                            role="button"
-                        >
-                            <i class="bi bi-search"></i>
-                        </a>
-                         
-                    </li> -->
                 </ul>
-                <h1 class="mx-auto c-site-main-title">
-                    <a href="/" class="c-link-style">
-                        <!-- {{ name }} -->
-                        <img :src="logo" :alt="name" width="110" />
-                    </a>
-                </h1>
-                <!-- Right side dropdowns -->
-                <ul class="navbar-nav mb-2 mb-lg-0">
-                    <li class="nav-item dropdown">
-                        <a
-                            class="nav-link"
-                            href="/all-events"
-                            id="navbarDropdownDeals"
-                            role="button"
-                        >
+
+                <!-- Centered logo for desktop -->
+                <!-- <h1 class="navbar-brand-center d-none d-lg-block">
+                <a href="/" class="c-link-style">
+                    <img :src="logo" :alt="name" width="150" />
+                </a>
+            </h1> -->
+
+                <!-- Right side navigation -->
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/all-events" role="button">
                             Events
                         </a>
                     </li>
-
-                    <li class="nav-item dropdown">
-                        <!-- Dropdown trigger -->
-                        <a
-                            class="nav-link"
-                            href="/about-us"
-                            id="navbarDropdownDeals"
-                            role="button"
-                        >
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about-us" role="button">
                             About us
                         </a>
-                        <!-- Dropdown menu -->
                     </li>
-                    <li class="nav-item dropdown">
-                        <!-- Dropdown trigger -->
-                        <a
-                            class="nav-link"
-                            href="/contact"
-                            id="navbarDropdownDeals"
-                            role="button"
-                        >
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact" role="button">
                             Contact us
                         </a>
-                        <!-- Dropdown menu -->
                     </li>
-                    <li class="nav-item dropdown">
-                        <!-- Dropdown trigger -->
-                        <a
-                            class="nav-link"
-                            href="/blogs"
-                            id="navbarDropdownDeals"
-                            role="button"
-                        >
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blogs" role="button">
                             Blogs
                         </a>
-                        <!-- Dropdown menu -->
                     </li>
-                    <li class="nav-item dropdown">
-                        <a
-                            class="nav-link"
-                            href="/help"
-                            id="navbarDropdownDeals"
-                            role="button"
-                        >
+                    <li class="nav-item">
+                        <a class="nav-link" href="/help" role="button">
                             Help
                         </a>
                     </li>
 
-                    <!-- Login dropdown -->
+                    <!-- User account section -->
                     <li class="nav-item dropdown">
-                        <!-- Dropdown trigger -->
                         <a
                             v-if="logged_in_user"
-                            class="nav-link dropdown-toggle"
+                            class="nav-link dropdown-toggle d-flex align-items-center"
                             href="#"
                             role="button"
                             id="dropdownMenuLink"
                             data-bs-toggle="dropdown"
                             aria-expanded="false"
                         >
+                            <i class="bi bi-person-circle me-1"></i>
                             {{ logged_in_user.name }}
                         </a>
                         <a
@@ -313,20 +159,20 @@
                             ref="openLoginModal"
                             data-bs-toggle="modal"
                             data-bs-target="#loginModal"
-                            class="nav-link text-decoration-none c-pointer"
+                            class="nav-link d-flex align-items-center"
                             @click="clearFields"
                         >
+                            <i class="bi bi-box-arrow-in-right me-1"></i>
                             {{ translate("Login") }}
                         </a>
 
-                        <!-- Dropdown menu -->
                         <ul
                             class="dropdown-menu dropdown-menu-end"
                             aria-labelledby="dropdownMenuLink"
                         >
                             <li v-if="logged_in_user">
                                 <a class="dropdown-item" href="/dashboard">
-                                    <i class="bi bi-speedometer me-1"></i>
+                                    <i class="bi bi-speedometer me-2"></i>
                                     Dashboard
                                 </a>
                             </li>
@@ -342,61 +188,63 @@
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        <!-- create a button with a title Register to opne register modal data-bs-toggle="modal"
-                                    data-bs-target="#registerusermodal" -->
+
+                    <li class="nav-item ms-lg-2">
                         <button
                             v-if="!logged_in_user"
                             ref="openRegisterModal"
                             data-bs-toggle="modal"
                             data-bs-target="#registerusermodal"
-                            class="btn btn-sm c-btn-theme-primary text-white mt-1 c-pointer"
+                            class="btn c-btn-theme-primary-register text-white c-pointer"
                             @click="clearFields"
                         >
                             {{ translate("Register") }}
                         </button>
                     </li>
 
-                    <li class="c-top-bar-section-inside-navbar">
-                        <span v-if="youtube_link">
-                            <a :href="youtube_link">
-                                <i class="bi bi-youtube me-4 text-danger"></i>
+                    <!-- Social links for mobile -->
+                    <li class="c-top-bar-section-inside-navbar d-lg-none">
+                        <div class="d-flex justify-content-center mb-2">
+                            <span v-if="youtube_link">
+                                <a :href="youtube_link" class="me-3">
+                                    <i
+                                        class="bi bi-youtube text-danger fs-5"
+                                    ></i>
+                                </a>
+                            </span>
+                            <span v-if="instagram_link">
+                                <a :href="instagram_link" class="me-3">
+                                    <i
+                                        class="bi bi-instagram fs-5"
+                                        style="color: #c13584"
+                                    ></i>
+                                </a>
+                            </span>
+                            <span v-if="facebook_link">
+                                <a :href="facebook_link" class="me-3">
+                                    <i
+                                        class="bi bi-facebook text-primary fs-5"
+                                    ></i>
+                                </a>
+                            </span>
+                        </div>
+                        <div class="text-center">
+                            <a
+                                :href="'mailto:' + email"
+                                class="text-white contact d-block"
+                            >
+                                <i class="bi bi-envelope me-1"></i>{{ email }}
                             </a>
-                        </span>
-                        <span v-if="instagram_link">
-                            <a :href="instagram_link">
-                                <i
-                                    class="bi bi-instagram me-4"
-                                    style="color: #c13584"
-                                ></i>
+                            <a
+                                class="text-white d-block mt-1"
+                                :href="'tel:' + website_phone"
+                            >
+                                <i class="bi bi-telephone me-1"></i
+                                >{{ website_phone }}
                             </a>
-                        </span>
-                        <span v-if="facebook_link">
-                            <a :href="facebook_link">
-                                <i class="bi bi-facebook me-3 text-primary"></i>
-                            </a>
-                        </span>
-
-                        <a :href="'mailto:' + email" class="text-white contact">
-                            {{ email }}
-                        </a>
-
-                        <br />
-
-                        <a
-                            class="text-white ms-1"
-                            :href="'tel:' + website_phone"
-                        >
-                            {{ website_phone }}
-                        </a>
+                        </div>
                     </li>
                 </ul>
-                <h1 class="mx-auto c-site-secondary-title">
-                    <a href="/" class="c-link-style">
-                        <!-- {{ name }} -->
-                        <img :src="logo" :alt="name" width="150" />
-                    </a>
-                </h1>
             </div>
         </div>
     </nav>
@@ -405,33 +253,46 @@
         <slot></slot>
     </main>
     <div class="modal fade" id="loginModal" tabindex="-1">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-md">
             <div class="modal-content">
-                <div class="modal-body">
-                    <div class="text-center text-black mt-4">
-                        <div class="text-center mb-4">
-                            <img
-                                :src="logo"
-                                @error="setAltImg"
-                                alt="Logo"
-                                class="logo mb-3"
-                                width="130"
-                            />
-                            <h2 class="h5 fw-bold">{{ name }}</h2>
-                            <p class="text-muted small">
-                                Welcome back! Please login.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="block-content p-4">
-                        <form @submit.prevent="login">
-                            <!-- <h1 class="h3 mb-3 fw-normal">Please sign in</h1> -->
+                <!-- Close Button -->
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
 
+                <div class="modal-body">
+                    <!-- Header Section -->
+                    <div class="login-header">
+                        <img
+                            :src="logo"
+                            @error="setAltImg"
+                            alt="Logo"
+                            class="login-logo mb-3"
+                            width="130"
+                        />
+                        <h2 class="login-title">{{ name }}</h2>
+                        <p class="login-subtitle">
+                            Welcome back! Please login to your account.
+                        </p>
+                    </div>
+
+                    <!-- Login Form -->
+                    <div class="block-content">
+                        <form @submit.prevent="login">
                             <div class="mb-3">
+                                <label
+                                    for="loginEmail"
+                                    class="form-label small text-muted"
+                                    >Email Address</label
+                                >
                                 <input
-                                    type="Email"
+                                    id="loginEmail"
+                                    type="email"
                                     class="form-control"
-                                    placeholder="Email"
+                                    placeholder="Enter your email"
                                     v-model="form.email"
                                     :class="{
                                         'invalid-bg': formErrors.email,
@@ -444,11 +305,18 @@
                                     {{ formErrors.email[0] }}
                                 </div>
                             </div>
-                            <div class="mb-3">
+
+                            <div class="mb-4">
+                                <label
+                                    for="loginPassword"
+                                    class="form-label small text-muted"
+                                    >Password</label
+                                >
                                 <input
+                                    id="loginPassword"
                                     type="password"
                                     class="form-control"
-                                    placeholder="Password"
+                                    placeholder="Enter your password"
                                     v-model="form.password"
                                     :class="{
                                         'invalid-bg': formErrors.password,
@@ -461,57 +329,52 @@
                                     {{ formErrors.password[0] }}
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <div class="mt-2">
-                                    <button
-                                        v-if="formStatus == 1"
-                                        class="btn c-btn-theme-primary w-100"
-                                        type="submit"
-                                    >
-                                        {{ translate("Login") }}
-                                    </button>
 
-                                    <button
-                                        v-else
-                                        class="btn c-btn-theme-primary w-100"
-                                        type="submit"
-                                    >
-                                        {{ translate("Login") }}
-                                        <span
-                                            class="spinner-border spinner-border-sm"
-                                            role="status"
-                                            aria-hidden="true"
-                                        ></span>
-                                    </button>
-                                </div>
+                            <div class="d-grid gap-2">
+                                <button
+                                    v-if="formStatus == 1"
+                                    class="btn c-btn-theme-primary py-2"
+                                    type="submit"
+                                >
+                                    {{ translate("Login") }}
+                                </button>
+
+                                <button
+                                    v-else
+                                    class="btn c-btn-theme-primary py-2"
+                                    type="submit"
+                                    disabled
+                                >
+                                    <span
+                                        class="spinner-border spinner-border-sm me-2"
+                                        role="status"
+                                        aria-hidden="true"
+                                    ></span>
+                                    {{ translate("Logging in...") }}
+                                </button>
                             </div>
                         </form>
-                        <!-- <div class="col-12 theme-color-red">
-                            <p class="small mb-0 theme-color-red">
-                                <br />
 
-                                <a
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#registerusermodal"
-                                    class="text-decoration-none text-black c-pointer"
-                                >
-                                    {{ translate("Register new user") }}
-                                </a>
-                            </p>
-                        </div> -->
-                        <div class="col-12 theme-color-red">
-                            <p class="small mb-0 theme-color-red">
-                                <br />
+                        <!-- Additional Links -->
+                        <div class="login-links">
+                            <a
+                                ref="forgotPasswordModal"
+                                data-bs-toggle="modal"
+                                data-bs-target="#forgotpasswordmodal"
+                                class="login-link c-pointer"
+                            >
+                                {{ translate("Forgot password?") }}
+                            </a>
 
-                                <a
-                                    ref="forgotPasswordModal"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#forgotpasswordmodal"
-                                    class="text-decoration-none text-black c-pointer"
-                                >
-                                    {{ translate("Forgot password") }}
-                                </a>
-                            </p>
+                            <span class="text-muted">|</span>
+
+                            <a
+                                data-bs-toggle="modal"
+                                data-bs-target="#registerusermodal"
+                                class="login-link c-pointer"
+                            >
+                                {{ translate("Create new account") }}
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -519,197 +382,251 @@
         </div>
     </div>
     <div class="modal fade" id="forgotpasswordmodal" tabindex="-1">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-md">
             <div class="modal-content">
+                <!-- Close Button -->
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+
                 <div class="modal-body">
-                    <div class="block-content p-4">
-                        <div v-if="reset_password_status == 1">
-                            <div class="text-center text-black mt-4">
-                                <h5 class="card-title text-center pb-0 fs-4">
-                                    {{ translate("Reset your password") }}
-                                </h5>
-                            </div>
-
-                            <form class="row g-3">
-                                <div class="col-12">
-                                    <label for="password" class="form-label"
-                                        >{{ translate("Password") }}
-                                    </label>
-                                    <input
-                                        type="password"
-                                        class="form-control"
-                                        placeholder="Password"
-                                        :class="{
-                                            'invalid-bg':
-                                                resetFormErrors.password,
-                                        }"
-                                        v-model="resetForm.password"
-                                    />
-
-                                    <div
-                                        v-if="resetFormErrors.password"
-                                        class="invalid-feedback"
-                                    >
-                                        {{ resetFormErrors.password[0] }}
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <label for="password" class="form-label"
-                                        >{{ translate("Confirm password") }}
-                                    </label>
-                                    <input
-                                        type="password"
-                                        class="form-control"
-                                        placeholder="Confirm password"
-                                        :class="{
-                                            'invalid-bg':
-                                                resetFormErrors.confirm_password,
-                                        }"
-                                        id="confirm_password"
-                                        v-model="resetForm.confirm_password"
-                                    />
-                                    <div
-                                        v-if="resetFormErrors.confirm_password"
-                                        class="invalid-feedback"
-                                    >
-                                        {{
-                                            resetFormErrors.confirm_password[0]
-                                        }}
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="col-12 mt-2">
-                                        <button
-                                            type="button"
-                                            @click="resetPassword"
-                                            class="btn c-btn-theme-primary w-100"
-                                            v-if="resetFormStatus == 1"
-                                        >
-                                            {{ translate("Reset") }}
-                                        </button>
-                                        <button
-                                            class="btn c-btn-theme-primary w-100"
-                                            type="button"
-                                            v-else
-                                        >
-                                            {{ translate("Reseting") }}
-                                            <span
-                                                class="spinner-border spinner-border-sm"
-                                                role="status"
-                                                aria-hidden="true"
-                                            ></span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div v-else>
-                            <div class="text-center text-black mt-4">
-                                <div class="text-center text-black mt-4">
-                                    <div class="text-center mb-4">
-                                        <img
-                                            :src="logo"
-                                            @error="setAltImg"
-                                            alt="Logo"
-                                            class="logo mb-3"
-                                            width="130"
-                                        />
-                                        <h2 class="h5 fw-bold">{{ name }}</h2>
-                                        <p class="text-muted small">
-                                            Reset your password.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <form class="row g-0">
-                                <!-- <h1 class="h3 mb-3 fw-normal">Please sign in</h1> -->
-
-                                <div class="col-md-12 mt-3">
-                                    <input
-                                        type="Email"
-                                        class="form-control"
-                                        placeholder="Email"
-                                        :class="{
-                                            'invalid-bg':
-                                                forgotPasswordFormErrors.email,
-                                        }"
-                                        v-model="forgotPasswordForm.email"
-                                    />
-                                    <div
-                                        v-if="forgotPasswordFormErrors.email"
-                                        class="invalid-feedback d-block"
-                                    >
-                                        {{ forgotPasswordFormErrors.email[0] }}
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="mt-2">
-                                        <button
-                                            v-if="forgotPasswordFormStatus == 1"
-                                            class="btn c-btn-theme-primary w-100"
-                                            type="submit"
-                                            @click="forgotPassword"
-                                        >
-                                            {{ translate("Submit") }}
-                                        </button>
-
-                                        <button
-                                            class="btn c-btn-theme-primary w-100"
-                                            type="submit"
-                                            v-else
-                                        >
-                                            {{ translate("Submit") }}
-                                            <span
-                                                class="spinner-border spinner-border-sm"
-                                                role="status"
-                                                aria-hidden="true"
-                                            ></span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="col-12 theme-color-red">
-                            <p class="small mb-0 theme-color-red">
-                                <br />
-
-                                <a
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#loginModal"
-                                    class="text-decoration-none text-black c-pointer"
-                                >
-                                    {{ translate("Login") }}
-                                </a>
+                    <!-- Reset Password Form (Step 2) -->
+                    <div v-if="reset_password_status == 1">
+                        <div class="reset-header">
+                            <img
+                                :src="logo"
+                                @error="setAltImg"
+                                alt="Logo"
+                                class="reset-logo mb-3"
+                                width="130"
+                            />
+                            <h2 class="reset-title">
+                                {{ translate("Reset Your Password") }}
+                            </h2>
+                            <p class="reset-subtitle">
+                                Create a new password for your account.
                             </p>
                         </div>
+
+                        <form class="row g-3">
+                            <div class="col-12">
+                                <label for="password" class="form-label">
+                                    {{ translate("New Password") }}
+                                </label>
+                                <input
+                                    type="password"
+                                    class="form-control"
+                                    placeholder="Enter new password"
+                                    :class="{
+                                        'invalid-bg': resetFormErrors.password,
+                                    }"
+                                    v-model="resetForm.password"
+                                    @input="checkPasswordStrength"
+                                />
+                                <div
+                                    v-if="resetFormErrors.password"
+                                    class="invalid-feedback"
+                                >
+                                    {{ resetFormErrors.password[0] }}
+                                </div>
+                                <div
+                                    class="password-strength"
+                                    v-if="resetForm.password"
+                                >
+                                    <div>
+                                        Password strength:
+                                        <span :class="passwordStrengthClass">{{
+                                            passwordStrengthText
+                                        }}</span>
+                                    </div>
+                                    <div class="strength-bar">
+                                        <div
+                                            class="strength-fill"
+                                            :class="passwordStrengthBarClass"
+                                        ></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label
+                                    for="confirm_password"
+                                    class="form-label"
+                                >
+                                    {{ translate("Confirm New Password") }}
+                                </label>
+                                <input
+                                    type="password"
+                                    class="form-control"
+                                    placeholder="Confirm new password"
+                                    :class="{
+                                        'invalid-bg':
+                                            resetFormErrors.confirm_password,
+                                    }"
+                                    id="confirm_password"
+                                    v-model="resetForm.confirm_password"
+                                    @input="checkPasswordMatch"
+                                />
+                                <div
+                                    v-if="resetFormErrors.confirm_password"
+                                    class="invalid-feedback"
+                                >
+                                    {{ resetFormErrors.confirm_password[0] }}
+                                </div>
+                                <div
+                                    v-if="resetForm.confirm_password"
+                                    :class="passwordMatchClass"
+                                >
+                                    {{ passwordMatchText }}
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="d-grid gap-2 mt-3">
+                                    <button
+                                        type="button"
+                                        @click="resetPassword"
+                                        class="btn c-btn-theme-primary py-2"
+                                        v-if="resetFormStatus == 1"
+                                    >
+                                        {{ translate("Reset Password") }}
+                                    </button>
+                                    <button
+                                        class="btn c-btn-theme-primary py-2"
+                                        type="button"
+                                        v-else
+                                        disabled
+                                    >
+                                        <span
+                                            class="spinner-border spinner-border-sm me-2"
+                                            role="status"
+                                            aria-hidden="true"
+                                        ></span>
+                                        {{ translate("Resetting...") }}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Forgot Password Form (Step 1) -->
+                    <div v-else>
+                        <div class="reset-header">
+                            <img
+                                :src="logo"
+                                @error="setAltImg"
+                                alt="Logo"
+                                class="reset-logo mb-3"
+                                width="130"
+                            />
+                            <h2 class="reset-title">{{ name }}</h2>
+                            <p class="reset-subtitle">
+                                Enter your email address and we'll send you a
+                                link to reset your password.
+                            </p>
+                        </div>
+
+                        <form class="row g-0">
+                            <div class="col-12 mb-3">
+                                <label for="forgotEmail" class="form-label"
+                                    >Email Address</label
+                                >
+                                <input
+                                    id="forgotEmail"
+                                    type="email"
+                                    class="form-control"
+                                    placeholder="Enter your email"
+                                    :class="{
+                                        'invalid-bg':
+                                            forgotPasswordFormErrors.email,
+                                    }"
+                                    v-model="forgotPasswordForm.email"
+                                />
+                                <div
+                                    v-if="forgotPasswordFormErrors.email"
+                                    class="invalid-feedback d-block"
+                                >
+                                    {{ forgotPasswordFormErrors.email[0] }}
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="d-grid gap-2">
+                                    <button
+                                        v-if="forgotPasswordFormStatus == 1"
+                                        class="btn c-btn-theme-primary py-2"
+                                        type="button"
+                                        @click="forgotPassword"
+                                    >
+                                        {{ translate("Send Reset Link") }}
+                                    </button>
+
+                                    <button
+                                        class="btn c-btn-theme-primary py-2"
+                                        type="button"
+                                        v-else
+                                        disabled
+                                    >
+                                        <span
+                                            class="spinner-border spinner-border-sm me-2"
+                                            role="status"
+                                            aria-hidden="true"
+                                        ></span>
+                                        {{ translate("Sending...") }}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Back to Login Link -->
+                    <div class="reset-links">
+                        <a
+                            data-bs-toggle="modal"
+                            data-bs-target="#loginModal"
+                            class="reset-link c-pointer"
+                        >
+                            ← {{ translate("Back to Login") }}
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="modal fade" id="registerusermodal" tabindex="-1">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-md">
             <div class="modal-content">
+                <!-- Close Button -->
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+
                 <div class="modal-body">
-                    <div class="text-center text-black mt-4">
-                        <div class="text-center mb-4">
-                            <img
-                                :src="logo"
-                                @error="setAltImg"
-                                alt="Logo"
-                                class="logo mb-2"
-                                width="130"
-                            />
-                            <h2 class="h5 fw-bold">{{ name }}</h2>
-                            <p class="text-muted small">Create a new account</p>
-                        </div>
+                    <!-- Header Section -->
+                    <div class="register-header">
+                        <img
+                            :src="logo"
+                            @error="setAltImg"
+                            alt="Logo"
+                            class="register-logo mb-2"
+                            width="130"
+                        />
+                        <h2 class="register-title">{{ name }}</h2>
+                        <p class="register-subtitle">
+                            Create your account to get started
+                        </p>
                     </div>
-                    <div class="block-content p-4">
-                        <div class="row g-2">
-                            <div class="col-12">
+
+                    <!-- Registration Form -->
+                    <div class="block-content">
+                        <form @submit.prevent="register">
+                            <div class="form-group">
                                 <input
                                     type="text"
                                     class="form-control"
@@ -728,7 +645,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-12">
+                            <div class="form-group">
                                 <input
                                     type="email"
                                     class="form-control"
@@ -736,7 +653,7 @@
                                         'invalid-bg': registerFormErrors.email,
                                     }"
                                     v-model="registerForm.email"
-                                    :placeholder="translate('Email')"
+                                    :placeholder="translate('Email address')"
                                 />
                                 <div
                                     v-if="registerFormErrors.email"
@@ -745,7 +662,8 @@
                                     {{ registerFormErrors.email[0] }}
                                 </div>
                             </div>
-                            <div class="col-12">
+
+                            <div class="form-group">
                                 <input
                                     type="text"
                                     class="form-control"
@@ -763,7 +681,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-12">
+                            <div class="form-group">
                                 <input
                                     type="password"
                                     class="form-control"
@@ -773,6 +691,7 @@
                                     }"
                                     v-model="registerForm.password"
                                     :placeholder="translate('Password')"
+                                    @input="checkPasswordStrength"
                                 />
                                 <div
                                     v-if="registerFormErrors.password"
@@ -780,9 +699,26 @@
                                 >
                                     {{ registerFormErrors.password[0] }}
                                 </div>
+                                <div
+                                    class="password-strength"
+                                    v-if="registerForm.password"
+                                >
+                                    <div>
+                                        Password strength:
+                                        <span :class="passwordStrengthClass">{{
+                                            passwordStrengthText
+                                        }}</span>
+                                    </div>
+                                    <div class="strength-bar">
+                                        <div
+                                            class="strength-fill"
+                                            :class="passwordStrengthBarClass"
+                                        ></div>
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="col-12">
+                            <div class="form-group">
                                 <input
                                     type="password"
                                     class="form-control"
@@ -792,6 +728,7 @@
                                     }"
                                     v-model="registerForm.confirm_password"
                                     :placeholder="translate('Confirm password')"
+                                    @input="checkPasswordMatch"
                                 />
                                 <div
                                     v-if="registerFormErrors.confirm_password"
@@ -799,55 +736,49 @@
                                 >
                                     {{ registerFormErrors.confirm_password[0] }}
                                 </div>
-                            </div>
-
-                            <br />
-                            <div class="col-12">
-                                <div class="mt-2">
-                                    <button
-                                        v-if="registerFormStatus == 1"
-                                        class="btn c-btn-theme-primary w-100"
-                                        type="submit"
-                                        @click="register"
-                                    >
-                                        {{ translate("Register") }}
-                                    </button>
-
-                                    <button
-                                        class="btn c-btn-theme-primary w-100"
-                                        type="submit"
-                                        v-else
-                                    >
-                                        {{ translate("Register") }}
-                                        <span
-                                            class="spinner-border spinner-border-sm"
-                                            role="status"
-                                            aria-hidden="true"
-                                        ></span>
-                                    </button>
-
-                                    <button
-                                        type="button"
-                                        class="btn btn-secondary"
-                                        data-bs-dismiss="modal"
-                                        style="display: none"
-                                        ref="registerModalClose"
-                                    >
-                                        Close
-                                    </button>
+                                <div
+                                    v-if="registerForm.confirm_password"
+                                    :class="passwordMatchClass"
+                                >
+                                    {{ passwordMatchText }}
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-12 theme-color-red">
-                            <p class="small mb-0 theme-color-red">
-                                <br />
 
+                            <div class="d-grid gap-2 mt-3">
+                                <button
+                                    v-if="registerFormStatus == 1"
+                                    class="btn c-btn-theme-primary py-2"
+                                    type="submit"
+                                >
+                                    {{ translate("Create Account") }}
+                                </button>
+
+                                <button
+                                    class="btn c-btn-theme-primary py-2"
+                                    type="submit"
+                                    v-else
+                                    disabled
+                                >
+                                    <span
+                                        class="spinner-border spinner-border-sm me-2"
+                                        role="status"
+                                        aria-hidden="true"
+                                    ></span>
+                                    {{ translate("Creating Account...") }}
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- Login Link -->
+                        <div class="register-links">
+                            <p class="small mb-0">
+                                Already have an account?
                                 <a
                                     data-bs-toggle="modal"
                                     data-bs-target="#loginModal"
-                                    class="text-decoration-none text-black c-pointer"
+                                    class="register-link c-pointer ms-1"
                                 >
-                                    {{ translate("Login") }}
+                                    {{ translate("Sign in here") }}
                                 </a>
                             </p>
                         </div>
@@ -862,167 +793,201 @@
     <footer class="footer c-bg-color text-white pt-5">
         <div class="container">
             <div class="row">
-                <!-- Brand and Newsletter -->
-                <div class="offset-md-1 col-md-4 mb-4">
-                    <!-- <a href="/">
-                        <img :src="logo" :alt="name" width="200" class="mb-3" />
-                    </a> -->
+                <!-- Brand and Social Links -->
+                <div class="col-lg-4 col-md-6 mb-5">
+                    <div class="mb-4">
+                        <h5 class="fw-bold">BrandNewHomesVegas</h5>
+                        <p class="text-white opacity-80">
+                            Your trusted partner in real estate, helping you
+                            find the perfect place to call home. Discover new
+                            communities and exclusive properties in Las Vegas.
+                        </p>
+                    </div>
 
-                    <h5 class="fw-bold">BrandNewHomesVegas</h5>
-                    <p class="text-white">
-                        Your trusted partner in real estate, helping you find
-                        the perfect place to call home.
-                    </p>
-
-                    <h6 class="mt-4 mb-2">Follow Us</h6>
-                    <div class="d-flex gap-3">
-                        <a
-                            :href="facebook_link"
-                            target="_blank"
-                            class="text-light"
-                            ><i class="bi bi-facebook fs-4"></i
-                        ></a>
-                        <a href="#" class="text-light"
-                            ><i class="bi bi-twitter fs-4"></i
-                        ></a>
-                        <a
-                            :href="instagram_link"
-                            target="_blank"
-                            class="text-light"
-                            ><i class="bi bi-instagram fs-4"></i
-                        ></a>
-                        <a href="#" class="text-light"
-                            ><i class="bi bi-linkedin fs-4"></i
-                        ></a>
-                        <a
-                            :href="youtube_link"
-                            target="_blank"
-                            class="text-light"
-                            ><i class="bi bi-youtube fs-4"></i
-                        ></a>
+                    <div>
+                        <h6 class="mb-3">Follow Us</h6>
+                        <div class="social-links">
+                            <a
+                                :href="facebook_link"
+                                target="_blank"
+                                class="social-link"
+                                title="Facebook"
+                            >
+                                <i class="bi bi-facebook fs-5"></i>
+                            </a>
+                            <a href="#" class="social-link" title="Twitter">
+                                <i class="bi bi-twitter fs-5"></i>
+                            </a>
+                            <a
+                                :href="instagram_link"
+                                target="_blank"
+                                class="social-link"
+                                title="Instagram"
+                            >
+                                <i class="bi bi-instagram fs-5"></i>
+                            </a>
+                            <a href="#" class="social-link" title="LinkedIn">
+                                <i class="bi bi-linkedin fs-5"></i>
+                            </a>
+                            <a
+                                :href="youtube_link"
+                                target="_blank"
+                                class="social-link"
+                                title="YouTube"
+                            >
+                                <i class="bi bi-youtube fs-5"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <!-- About -->
-                <div class="col-md-2 mb-4">
-                    <h6 class="fw-bold">About</h6>
+
+                <!-- Quick Links -->
+                <div class="col-lg-2 col-md-6 mb-5">
+                    <h6 class="fw-bold">Quick Links</h6>
                     <ul class="list-unstyled">
                         <li class="mb-2">
-                            <a
-                                href="/about"
-                                class="text-white text-decoration-none"
-                                >About Us</a
-                            >
+                            <a href="/" class="text-white text-decoration-none">
+                                Home
+                            </a>
                         </li>
                         <li class="mb-2">
                             <a
-                                href="/help"
+                                href="/all/communities"
                                 class="text-white text-decoration-none"
-                                >Help Center</a
                             >
-                        </li>
-                        <li class="mb-2">
-                            <a
-                                href="/contact"
-                                class="text-white text-decoration-none"
-                                >Contact</a
-                            >
-                        </li>
-                        <li class="mb-2">
-                            <a
-                                href="/privacy-policy"
-                                class="text-white text-decoration-none"
-                                >Privacy Policy</a
-                            >
-                        </li>
-                        <li class="mb-2">
-                            <a
-                                href="/terms-of-services"
-                                class="text-white text-decoration-none"
-                                >Terms of Service</a
-                            >
-                        </li>
-                    </ul>
-                </div>
-                <!-- Discover -->
-                <div class="col-md-2 mb-4">
-                    <h6 class="fw-bold">Discover</h6>
-                    <ul class="list-unstyled">
-                        <li class="mb-2">
-                            <a href="/" class="text-white text-decoration-none"
-                                >Home</a
-                            >
-                        </li>
-                        <li class="mb-2">
-                            <a
-                                href="all/communities"
-                                class="text-white text-decoration-none"
-                                >Communities</a
-                            >
+                                Communities
+                            </a>
                         </li>
                         <li class="mb-2">
                             <a
                                 href="/all/open/houses/"
                                 class="text-white text-decoration-none"
-                                >Open Houses</a
                             >
+                                Open Houses
+                            </a>
                         </li>
                         <li class="mb-2">
                             <a
                                 href="/all-incentives"
                                 class="text-white text-decoration-none"
-                                >Incentives</a
                             >
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Resources -->
-                <div class="col-md-2 mb-4">
-                    <h6 class="fw-bold">Resources</h6>
-                    <ul class="list-unstyled">
-                        <li class="mb-2">
-                            <a
-                                href="/blogs"
-                                class="text-white text-decoration-none"
-                                >Blog</a
-                            >
+                                Incentives
+                            </a>
                         </li>
                         <li class="mb-2">
                             <a
                                 href="/all-events"
                                 class="text-white text-decoration-none"
-                                >Events</a
                             >
+                                Events
+                            </a>
                         </li>
-                        <!-- <li><a href="#" class="text-white text-decoration-none">Guides</a></li>
-            <li><a href="#" class="text-white text-decoration-none">Help Center</a></li> -->
+                    </ul>
+                </div>
+
+                <!-- Company -->
+                <div class="col-lg-2 col-md-6 mb-5">
+                    <h6 class="fw-bold">Company</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <a
+                                href="/about"
+                                class="text-white text-decoration-none"
+                            >
+                                About Us
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a
+                                href="/contact"
+                                class="text-white text-decoration-none"
+                            >
+                                Contact
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a
+                                href="/blogs"
+                                class="text-white text-decoration-none"
+                            >
+                                Blog
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a
+                                href="/help"
+                                class="text-white text-decoration-none"
+                            >
+                                Help Center
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Legal -->
+                <div class="col-lg-2 col-md-6 mb-5">
+                    <h6 class="fw-bold">Legal</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <a
+                                href="/privacy-policy"
+                                class="text-white text-decoration-none"
+                            >
+                                Privacy Policy
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a
+                                href="/terms-of-services"
+                                class="text-white text-decoration-none"
+                            >
+                                Terms of Service
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a
+                                href="/cookie-policy"
+                                class="text-white text-decoration-none"
+                            >
+                                Cookie Policy
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
 
-            <hr class="border-secondary" />
-
             <!-- Bottom Bar -->
-            <div
-                class="offset-md-1 d-flex flex-column flex-md-row justify-content-between py-3 text-whitesmall"
-            >
-                <div>© 2025 BrandNewHomesVegas. All rights reserved.</div>
-                <div class="d-flex gap-3">
-                    <a
-                        href="/privacy-policy"
-                        class="text-white text-decoration-none"
-                        >Privacy Policy</a
-                    >
-                    <a
-                        href="/terms-of-services"
-                        class="text-white text-decoration-none"
-                        >Terms of Service</a
-                    >
-                    <a
-                        href="/cookie-policy"
-                        class="text-white text-decoration-none"
-                        >Cookie Policy</a
-                    >
+            <div class="footer-bottom">
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-center text-md-start">
+                        <div class="text-white opacity-70">
+                            © 2025 BrandNewHomesVegas. All rights reserved.
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <div
+                            class="d-flex justify-content-center justify-content-md-end gap-3"
+                        >
+                            <a
+                                href="/privacy-policy"
+                                class="text-white text-decoration-none"
+                            >
+                                Privacy Policy
+                            </a>
+                            <a
+                                href="/terms-of-services"
+                                class="text-white text-decoration-none"
+                            >
+                                Terms of Service
+                            </a>
+                            <a
+                                href="/cookie-policy"
+                                class="text-white text-decoration-none"
+                            >
+                                Cookie Policy
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1412,565 +1377,1137 @@ export default {
     },
 };
 </script>
-<style>
+
+<style scoped>
+:root {
+    --primary-color: #1a365d;
+    --accent-color: hsl(213 71% 45%);
+    --text-color: #2d3748;
+    --light-bg: #f7fafc;
+    --border-color: #e2e8f0;
+}
+
 body {
-    font-family: Inter, sans-serif !important;
-    background-color: #f7fafc;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-color);
 }
-p {
-    margin: 0;
-    padding: 0;
-}
+
 .c-top-bar-section {
-    background-color: rgba(218, 224, 231, 1);
-    text-indent: 20px;
-    font-size: 0.875rem;
-    color: white;
-}
-.c-top-bar-section-inside-navbar {
-    display: none !important;
-}
-.c-theme-color {
-    color: #023F86;
-}
-.c-bg-color {
-    background-color: #e7ebef !important;
-    color: white !important;
-}
-.c-image-brightness {
-    filter: brightness(60%);
-}
-
-.c-top-card {
-    background-color: #023F86;
-    padding: 4px 24px;
-    font-size: 0.875rem;
-    text-align: center;
-    height: 31px;
-}
-.carousel__prev,
-.carousel__next {
-    background: #163259 !important;
-    border-radius: 50% !important;
-    transform: unset !important;
-    color: white !important;
-}
-.c-payment-methods .list-inline-item {
-    font-size: 50px;
-    margin-left: 15px;
-}
-.c-follow-us .list-inline-item {
-    font-size: 20px;
-    margin-left: 15px;
-}
-.c-website-footer-name {
-    text-align: center;
-    font-weight: bold;
-    font-family: "Oakes Grotesk", sans-serif !important;
-}
-.flag {
-    width: 20px;
-    border-radius: 2px;
-}
-.contact {
-    color: black;
-    text-decoration: none;
-}
-.c-pointer {
-    cursor: pointer;
-}
-
-.form-signin {
-    max-width: 330px;
-    padding: 1rem;
-    margin-top: 10% !important;
-}
-
-.form-signin .form-floating:focus-within {
-    z-index: 2;
-}
-.dropdown-menu.show {
-    position: absolute;
-    width: 150% !important;
-    z-index: 1;
-    animation: 100ms linear 0s 1 normal none running fadein;
-    margin-top: -2px;
-    right: 0px;
-    border-color: rgb(113, 113, 113);
-    overflow: hidden;
-    text-overflow: ellipsis; /* Truncate text with ellipsis */
-    white-space: normal;
-}
-
-.select-field {
-    border: 1px solid black;
-    border-radius: 20px;
-    padding: 8px;
-}
-
-.c-font-size {
+    background-color: var(--light-bg);
+    border-bottom: 1px solid var(--border-color);
+    padding: 8px 0;
     font-size: 0.9rem;
 }
 
-.c-border-design {
-    margin-bottom: 1rem !important;
-
-    border: none;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
-        rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-}
-.c-card-border-design {
-    border-radius: 0.25rem !important;
-}
-
-.c-site-main-title {
-    display: block !important;
-}
-.c-site-secondary-title {
-    display: none !important;
-}
-
-.navbar {
-    height: 80px !important;
-    color: white !important;
-    font-weight: bold !important;
-}
-/* Media query for screens smaller than or equal to 768px (typically mobile devices) */
-@media (max-width: 576px) {
-    .navbar {
-        height: auto !important;
-        background-color: #163259 !important;
-    }
-    .dropdown-menu.show {
-        position: absolute;
-        width: 100% !important;
-        z-index: 1;
-        animation: 100ms linear 0s 1 normal none running fadein;
-        margin-top: -2px;
-        right: 0px;
-        border-color: rgb(113, 113, 113);
-        overflow: hidden;
-        text-overflow: ellipsis; /* Truncate text with ellipsis */
-        white-space: normal;
-    }
-
-    /* Hide c-top-bar-section on smaller screens */
-    .c-top-bar-section {
-        display: none !important;
-    }
-    /* Show c-top-bar-section-inside-navbar on smaller screens */
-    .c-top-bar-section-inside-navbar {
-        display: block !important;
-    }
-
-    .c-site-main-title {
-        display: none !important;
-    }
-    .c-site-secondary-title {
-        display: block !important;
-    }
-    .c-phone-icon {
-        margin-top: 20px !important;
-    }
-}
-
-@media (min-width: 577px) and (max-width: 768px) {
-    .navbar {
-        height: auto !important;
-        background-color: #163259 !important;
-    }
-    .dropdown-menu.show {
-        position: absolute;
-        width: 50% !important;
-        z-index: 1;
-        animation: 100ms linear 0s 1 normal none running fadein;
-        margin-top: -2px;
-        right: 0px;
-        border-color: rgb(113, 113, 113);
-        overflow: hidden;
-        text-overflow: ellipsis; /* Truncate text with ellipsis */
-        white-space: normal;
-    }
-
-    /* Hide c-top-bar-section within this range */
-    .c-top-bar-section {
-        display: none !important;
-    }
-
-    /* Show c-top-bar-section-inside-navbar within this range */
-    .c-top-bar-section-inside-navbar {
-        display: block !important;
-    }
-
-    .c-site-main-title {
-        display: none !important;
-    }
-    .c-site-secondary-title {
-        display: block !important;
-    }
-    .c-phone-icon {
-        margin-top: 20px !important;
-    }
-}
-
-/* Media query for screens larger than 768px (typically larger devices) */
-@media (min-width: 769px) and (max-width: 991px) {
-    .navbar {
-        height: auto !important;
-        background-color: #163259 !important;
-    }
-    .dropdown-menu.show {
-        position: absolute;
-        width: 40% !important;
-        z-index: 1;
-        animation: 100ms linear 0s 1 normal none running fadein;
-        margin-top: -2px;
-        right: 0px;
-        border-color: rgb(113, 113, 113);
-        overflow: hidden;
-        text-overflow: ellipsis; /* Truncate text with ellipsis */
-        white-space: normal;
-    }
-
-    /* Show c-top-bar-section on larger screens */
-    .c-top-bar-section {
-        display: none !important;
-    }
-
-    /* Hide c-top-bar-section-inside-navbar on larger screens */
-    .c-top-bar-section-inside-navbar {
-        display: block !important;
-    }
-    .c-site-main-title {
-        display: none !important;
-    }
-    .c-site-secondary-title {
-        display: block !important;
-    }
-    .c-phone-icon {
-        margin-top: 0px !important;
-    }
-    .c-phone-icon {
-        margin-top: 0px !important;
-    }
-    .c-details-book-expert {
-        width: 220px;
-    }
-    .c-details-book-expert-download {
-        width: 220px;
-    }
-}
-
-.c-link-style {
-    text-decoration: none;
-    color: white;
-} 
-/* Global Css ////////////////////////////////////////////////////////////////////// */
-/* Global Css ////////////////////////////////////////////////////////////////////// */
-.c-btn-theme-primary {
-    background-color: #023F86;
-    color: white !important;
-}
-.c-btn-theme-primary:hover,
-.c-btn-theme-primary:active,
-.c-btn-theme-primary:visited {
-    background-color: #023F86 !important;
-}
-
-.c-btn-theme-primary:focus {
-    box-shadow: 0 0 0 0.2rem #023F86 !important;
-}
-.c-btn-theme-primary:active {
-    box-shadow: 0 0 0 0.2rem #023F86 !important;
-}
-
-.c-btn-theme-primary-outline {
-    color: #023F86 !important;
-    border: 1px solid #023F86 !important;
-}
-
-.c-btn-theme-primary-outline:hover {
-    background-color: #023F86 !important;
-    color: white !important;
-}
-
-.c-btn-theme-primary-outline:focus,
-.c-btn-theme-primary-outline.focus {
-    background: #023F86 !important;
-    border-color: #023F86 !important;
-    color: white !important;
-    box-shadow: 0 0 0 0.25rem #023F86 !important;
-}
-
-.c-btn-theme-primary-outline:active,
-.c-btn-theme-primary-outline.active,
-.show > .c-btn-theme-primary-outline.dropdown-toggle {
-    background: #023F86 !important;
-    border-color: #023F86 !important;
-}
-
-.c-btn-theme-primary-outline:active:focus,
-.c-btn-theme-primary-outline.active:focus,
-.show > .c-btn-theme-primary-outline.dropdown-toggle:focus {
-    box-shadow: 0 0 0 0.25rem #023F86 !important;
-}
-
-.c-btn-theme-primary-outline :active:focus,
-.c-btn-theme-primary-outline .active:focus,
-.show > .c-btn-theme-primary-outline .dropdown-toggle:focus {
-    box-shadow: 0 0 0 0.25rem #023F86 !important;
-}
-
-/* //////////////////////////////////////////////////////////////////////////////////// */
-/* TourDetails page css ////////////////////////////////////////////////////////////////*/
-/* //////////////////////////////////////////////////////////////////////////////////// */
-.fc-title {
-    white-space: normal;
-    overflow: visible;
-    text-overflow: clip;
-    background-color: #023F86;
-    color: black !important;
-}
-
-.calendar-container .fc-h-event .fc-event-main:hover {
-    background-color: #023F86 !important;
-    border: #023F86 !important;
-    cursor: pointer;
-}
-
-.fc-h-event {
-    border: 0px solid #023F86;
-    background-color: white;
-}
-
-.calendar-container .fc-h-event .fc-event-main {
-    color: black !important;
-    background-color: #023F86 !important;
-    font-weight: bold;
-
-    text-align: center;
-}
-.calendar-container a {
-    color: black !important;
-    text-decoration: none;
-}
-
-.calendar {
-    color: black !important;
-}
-label {
-    font-weight: bold;
-}
-.c-content-radius {
-    /* border: 1px solid grey; */
-    border-radius: 25px;
-}
-
-.fc .fc-multimonth {
-    border-radius: 30px;
-    justify-content: space-between;
-}
-
-.fc .fc-button-primary:disabled {
-    background-color: #023F86 !important;
-}
-.fc .fc-button-primary {
-    background-color: #023F86 !important;
-    color: black !important;
-}
-.fc .fc-button-primary:hover {
-    background-color: #023F86 !important;
-}
-
-.fc .fc-button-primary {
-    border: 0px solid #023F86;
-}
-
-.c-step-dropdown {
-    width: 100% !important;
-    background-color: #023F86 !important;
-    color: black !important;
-}
-
-.c-step-dropdown:hover,
-.c-step-dropdown:active,
-.c-step-dropdown:visited {
-    background-color: #023F86 !important;
-    color: black !important;
-}
-
-.c-step-dropdown:focus {
-    box-shadow: 0 0 0 0.2rem #023F86 !important;
-}
-.c-step-dropdown:active {
-    box-shadow: 0 0 0 0.2rem #023F86 !important;
-}
-.dropdown-menu {
-    width: 100% !important;
-}
-
-.accordion-button:not(.collapsed) {
-    background-color: white !important;
-}
-
-.justify-text {
-    text-align: justify;
-}
-
-.c-btn-border {
-    border: 1px solid white;
-    color: white;
-}
-.inline-elements {
+.c-top-bar-content {
     display: flex;
-    align-items: baseline;
-}
-.inline-elements h1 {
-    margin: 0;
-}
-.inline-elements small {
-    margin-left: 5px;
-    font-size: smaller;
-}
-.inline-elements .badge {
-    margin-left: 10px;
-}
-.accordion-button:focus {
-    box-shadow: none !important;
-}
-.accordion-button:not(.collapsed) {
-    color: unset !important;
-}
-.c-card-img-overlay-name h3 {
-    font-size: 24px;
-    margin-bottom: 0px !important;
-}
-.c-card-img-overlay-name h5 {
-    font-size: 14px;
-}
-.c-card-img-overlay-name + .card-body .card-title {
-    height: 50px !important;
-    display: -webkit-box;
-    -webkit-line-clamp: 2; /* Limits to 2 lines */
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.c-l-corner-radius {
-    border-radius: 25px 0px 0px 25px;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
 }
 
-.card-title {
-    color: black !important;
+.contact-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }
 
-.info-card-overlay {
-    background: #bcd6f5b2;
-    padding: 10px;
-    width: 100%;
-    color: black !important;
-    font-weight: bold;
-}
-
-.bg-theme {
-    background-color: #ffffff !important;
-}
-.c-navbar-color {
-    color: #172636 !important;
-}
-
-.interactive-banner {
-    background-color: #023F86;
-    color: white;
-    text-align: center;
-    padding: 20px 0;
-}
-.interactive-banner h1 {
-    letter-spacing: 0.15em;
-}
-
-.c-gradient-color {
-    background: linear-gradient(#c2a01e 9%, #debf46, #c2a01e 84%);
-}
-.btn-primary {
-    background: #023F86;
-}
-.btn-primary:hover {
-    background: #023f86;
-}
-.c-anchor-decoration {
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--text-color);
     text-decoration: none;
-    color: white;
-    cursor: pointer;
+    transition: color 0.3s ease;
 }
-/* Customize dropdown menu styling for the navbar */
 
-.dropdown-menu {
-    min-width: 200px; /* Adjust this value as needed */
+.contact-item:hover {
+    color: hsl(213 71% 30%);
 }
-.dropdown-item {
-    white-space: normal;
+
+.contact-icon {
+    font-size: 1rem;
+    color: hsl(213 71% 45%);
 }
-.dropdown-menu {
-    width: 200px; /* Set to a comfortable width */
-    overflow-x: auto; /* Allows horizontal scrolling */
+
+.social-links {
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
-.dropdown-item:hover {
-    background-color: #023F86;
-    color: white; /* Adjust text color for better readability, if needed */
+
+.social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: white;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-color);
 }
+
+.social-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.social-link.youtube:hover {
+    background-color: #ff0000;
+    color: white;
+}
+
+.social-link.instagram:hover {
+    background: radial-gradient(
+        circle at 30% 107%,
+        #fdf497 0%,
+        #fdf497 5%,
+        #fd5949 45%,
+        #d6249f 60%,
+        #285aeb 90%
+    );
+    color: white;
+}
+
+.social-link.facebook:hover {
+    background-color: #1877f2;
+    color: white;
+}
+
 .c-dec-none {
     text-decoration: none;
 }
 
-.c-main-title {
-    font-family: "Playfair Display", serif !important;
-    color: #023F86;
-    font-weight: 700 !important;
-    line-height: 60px !important;
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .c-top-bar-content {
+        flex-direction: column;
+        gap: 10px;
+    }
 
-    z-index: 3 !important;
-    width: 100% !important;
-}
-.c-main-title-2 {
-    font-family: "Playfair Display", serif !important;
-    font-size: 18px;
-    font-weight: bold;
-    color: #023F86;
-}
-.c-sub-title {
-    font-family: Inter, sans-serif !important;
-    font-size: 16px !important;
-    font-weight: 400 !important;
-    line-height: 32px !important;
-    color: #596773;
+    .contact-info {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+    }
 }
 
-.c-custom-btn {
-    border: 2px solid #023F86; /* Primary color border */
-    color: #023F86; /* Primary text color */
+/* Navigation Styles */
+.c-navbar-color {
+    background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 0.5rem 0;
+    transition: all 0.3s ease;
 }
 
-.c-custom-btn:hover {
-    background-color: #023F86; /* Primary color on hover */
-    color: white; /* White text on hover */
-}
-.multiselect-option.is-selected {
-    background: #023F86 !important;
-    color: var(--ms-option-color-selected, #fff);
-}
-.multiselect-option.is-selected.is-pointed {
-    background: #023F86 !important;
-    color: var(--ms-option-color-selected, #fff);
+.navbar-brand-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-.uppercase {
-    text-transform: uppercase;
+.c-site-main-title img,
+.c-site-secondary-title img {
+    transition: transform 0.3s ease;
+    filter: brightness(0) invert(1);
 }
-.footer {
-    background-color: #163259 !important;
+
+.c-site-main-title img:hover,
+.c-site-secondary-title img:hover {
+    transform: scale(1.05);
+}
+
+.navbar-nav {
+    align-items: center;
+}
+
+.nav-link {
+    color: rgba(255, 255, 255, 0.85) !important;
+    font-weight: 500;
+    padding: 0.5rem 1rem !important;
+    margin: 0 0.1rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    position: relative;
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+.nav-link:hover {
     color: white !important;
-    padding: 20px 0;
-    font-size: 14px;
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
+}
+
+.nav-link::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background-color: hsl(213 71% 45%);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.nav-link:hover::after {
+    width: 70%;
+}
+
+.navbar-toggler {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.25rem 0.5rem;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.c-btn-theme-primary-register {
+    background: linear-gradient(
+        to right,
+        hsl(213 71% 45%),
+        /* lighter */ hsl(213 71% 30%) /* darker */
+    );
+
+    border: none;
+    border-radius: 4px;
+    padding: 0.4rem 1.2rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.c-btn-theme-primary-register:hover {
+    background: linear-gradient(
+        to right,
+        hsl(213 71% 45%),
+        /* lighter */ hsl(213 71% 30%) /* darker */
+    );
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.dropdown-menu {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.dropdown-item {
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #f7fafc;
+    color: #1a365d;
+}
+
+.c-top-bar-section-inside-navbar {
+    display: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 991.98px) {
+    .navbar-brand-center {
+        position: static;
+        transform: none;
+        text-align: center;
+        margin: 0.5rem 0;
+    }
+
+    .c-site-secondary-title {
+        display: none;
+    }
+
+    .navbar-collapse {
+        padding: 1rem 0;
+    }
+
+    .nav-link {
+        padding: 0.75rem 1rem !important;
+        margin: 0.1rem 0;
+    }
+
+    .c-top-bar-section-inside-navbar {
+        display: block;
+        padding: 1rem;
+        margin-top: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .c-top-bar-section-inside-navbar a {
+        margin-right: 1rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .c-site-main-title {
+        display: none;
+    }
+}
+
+/* Login Modal Styles */
+.modal-content {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+}
+
+.modal-header {
+    border-bottom: none;
+    padding: 2rem 2rem 0;
+    position: relative;
+}
+
+.modal-body {
+    padding: 0 2rem 2rem;
+}
+
+.btn-close {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    z-index: 10;
+}
+
+.login-logo {
+    transition: transform 0.3s ease;
+}
+
+.login-logo:hover {
+    transform: scale(1.05);
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.login-title {
+    color: #1a365d;
+    font-weight: 700;
+    margin: 1rem 0 0.5rem;
+    font-size: 1.5rem;
+}
+
+.login-subtitle {
+    color: #718096;
+    font-size: 0.9rem;
+}
+
+.form-control {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    background-color: #fafafa;
+}
+
+.form-control:focus {
+    border-color: #4299e1;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+    background-color: white;
+}
+
+.invalid-bg {
+    border-color: #e53e3e !important;
+    background-color: #fed7d7 !important;
+}
+
+.invalid-feedback {
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+}
+
+.c-btn-theme-primary {
+    background: linear-gradient(
+        to right,
+        hsl(213 71% 45%),
+        /* lighter */ hsl(213 71% 30%) /* darker */
+    );
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: white;
+}
+
+.c-btn-theme-primary:hover {
+    background: linear-gradient(
+        to right,
+        hsl(213 71% 45%),
+        /* lighter */ hsl(213 71% 30%) /* darker */
+    );
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.c-btn-theme-primary:active {
+    transform: translateY(0);
+}
+
+.spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+}
+
+.login-links {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.login-link {
+    color: #718096;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+    display: inline-block;
+    margin: 0 0.5rem;
+    padding: 0.5rem 0;
+}
+
+.login-link:hover {
+    color: hsl(213 71% 45%);
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    margin: 1.5rem 0;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background-color: #e2e8f0;
+}
+
+.divider-text {
+    padding: 0 1rem;
+    color: #718096;
+    font-size: 0.85rem;
+}
+
+/* Animation for modal appearance */
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal.fade .modal-dialog {
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .modal-body {
+        padding: 0 1.5rem 1.5rem;
+    }
+
+    .modal-header {
+        padding: 1.5rem 1.5rem 0;
+    }
+
+    .login-title {
+        font-size: 1.3rem;
+    }
+}
+
+/* Forgot Password Modal Styles */
+#forgotpasswordmodal .modal-content {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+}
+
+#forgotpasswordmodal .modal-header {
+    border-bottom: none;
+    padding: 2rem 2rem 0;
+    position: relative;
+}
+
+#forgotpasswordmodal .modal-body {
+    padding: 0 2rem 2rem;
+}
+
+#forgotpasswordmodal .btn-close {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    z-index: 10;
+}
+
+#forgotpasswordmodal .reset-logo {
+    transition: transform 0.3s ease;
+}
+
+#forgotpasswordmodal .reset-logo:hover {
+    transform: scale(1.05);
+}
+
+#forgotpasswordmodal .reset-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+#forgotpasswordmodal .reset-title {
+    color: #1a365d;
+    font-weight: 700;
+    margin: 1rem 0 0.5rem;
+    font-size: 1.5rem;
+}
+
+#forgotpasswordmodal .reset-subtitle {
+    color: #718096;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+#forgotpasswordmodal .form-label {
+    color: #4a5568;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+#forgotpasswordmodal .form-control {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    background-color: #fafafa;
+}
+
+#forgotpasswordmodal .form-control:focus {
+    border-color: #4299e1;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+    background-color: white;
+}
+
+#forgotpasswordmodal .invalid-bg {
+    border-color: #e53e3e !important;
+    background-color: #fed7d7 !important;
+}
+
+#forgotpasswordmodal .invalid-feedback {
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+    color: #e53e3e;
+}
+
+#forgotpasswordmodal .c-btn-theme-primary {
+    background: linear-gradient(
+        to right,
+        hsl(213 71% 45%),
+        /* lighter */ hsl(213 71% 30%) /* darker */
+    );
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#forgotpasswordmodal .c-btn-theme-primary:hover {
+    background: linear-gradient(
+        to right,
+        hsl(213 71% 45%),
+        /* lighter */ hsl(213 71% 30%) /* darker */
+    );
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+#forgotpasswordmodal .c-btn-theme-primary:active {
+    transform: translateY(0);
+}
+
+#forgotpasswordmodal .spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+}
+
+#forgotpasswordmodal .reset-links {
+    margin-top: 1.5rem;
+    text-align: center;
+    padding-top: 1rem;
+    border-top: 1px solid #e2e8f0;
+}
+
+#forgotpasswordmodal .reset-link {
+    color: #718096;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+    display: inline-block;
+    padding: 0.5rem 0;
+}
+
+#forgotpasswordmodal .reset-link:hover {
+    color: hsl(213 71% 45%);
+}
+
+#forgotpasswordmodal .password-strength {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+}
+
+#forgotpasswordmodal .strength-bar {
+    height: 4px;
+    border-radius: 2px;
+    background-color: #e2e8f0;
+    margin-top: 0.25rem;
+    overflow: hidden;
+}
+
+#forgotpasswordmodal .strength-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+#forgotpasswordmodal .strength-weak {
+    background-color: #e53e3e;
+    width: 33%;
+}
+
+#forgotpasswordmodal .strength-medium {
+    background-color: #d69e2e;
+    width: 66%;
+}
+
+#forgotpasswordmodal .strength-strong {
+    background-color: #38a169;
+    width: 100%;
+}
+
+#forgotpasswordmodal .password-match {
+    color: #38a169;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+}
+
+#forgotpasswordmodal .password-mismatch {
+    color: #e53e3e;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+}
+
+/* Animation for modal appearance */
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#forgotpasswordmodal .modal.fade .modal-dialog {
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    #forgotpasswordmodal .modal-body {
+        padding: 0 1.5rem 1.5rem;
+    }
+
+    #forgotpasswordmodal .reset-title {
+        font-size: 1.3rem;
+    }
+}
+
+/* Registration Modal Styles */
+#registerusermodal .modal-content {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+}
+
+#registerusermodal .modal-header {
+    border-bottom: none;
+    padding: 2rem 2rem 0;
+    position: relative;
+}
+
+#registerusermodal .modal-body {
+    padding: 0 2rem 2rem;
+}
+
+#registerusermodal .btn-close {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    z-index: 10;
+}
+
+#registerusermodal .register-logo {
+    transition: transform 0.3s ease;
+}
+
+#registerusermodal .register-logo:hover {
+    transform: scale(1.05);
+}
+
+#registerusermodal .register-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+#registerusermodal .register-title {
+    color: #1a365d;
+    font-weight: 700;
+    margin: 1rem 0 0.5rem;
+    font-size: 1.5rem;
+}
+
+#registerusermodal .register-subtitle {
+    color: #718096;
+    font-size: 0.9rem;
+}
+
+#registerusermodal .form-control {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    background-color: #fafafa;
+    margin-bottom: 1rem;
+}
+
+#registerusermodal .form-control:focus {
+    border-color: #4299e1;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+    background-color: white;
+}
+
+#registerusermodal .invalid-bg {
+    border-color: #e53e3e !important;
+    background-color: #fed7d7 !important;
+}
+
+#registerusermodal .invalid-feedback {
+    font-size: 0.85rem;
+    margin-top: -0.5rem;
+    margin-bottom: 0.5rem;
+    color: #e53e3e;
+}
+
+#registerusermodal .c-btn-theme-primary {
+    background: linear-gradient(
+        to right,
+        hsl(213 71% 45%),
+        /* lighter */ hsl(213 71% 30%) /* darker */
+    );
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+#registerusermodal .c-btn-theme-primary:hover {
+    background: linear-gradient(
+        to right,
+        hsl(213 71% 45%),
+        /* lighter */ hsl(213 71% 30%) /* darker */
+    );
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+#registerusermodal .c-btn-theme-primary:active {
+    transform: translateY(0);
+}
+
+#registerusermodal .spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+}
+
+#registerusermodal .register-links {
+    margin-top: 1.5rem;
+    text-align: center;
+    padding-top: 1rem;
+    border-top: 1px solid #e2e8f0;
+}
+
+#registerusermodal .register-link {
+    color: #718096;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+    display: inline-block;
+    padding: 0.5rem 0;
+}
+
+#registerusermodal .register-link:hover {
+    color: hsl(213 71% 45%);
+}
+
+#registerusermodal .password-strength {
+    margin-top: -0.75rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.8rem;
+}
+
+#registerusermodal .strength-bar {
+    height: 4px;
+    border-radius: 2px;
+    background-color: #e2e8f0;
+    margin-top: 0.25rem;
+    overflow: hidden;
+}
+
+#registerusermodal .strength-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+#registerusermodal .strength-weak {
+    background-color: #e53e3e;
+    width: 33%;
+}
+
+#registerusermodal .strength-medium {
+    background-color: #d69e2e;
+    width: 66%;
+}
+
+#registerusermodal .strength-strong {
+    background-color: #38a169;
+    width: 100%;
+}
+
+#registerusermodal .password-match {
+    color: #38a169;
+    font-size: 0.8rem;
+    margin-top: -0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+#registerusermodal .password-mismatch {
+    color: #e53e3e;
+    font-size: 0.8rem;
+    margin-top: -0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+#registerusermodal .form-group {
+    position: relative;
+}
+
+#registerusermodal .password-toggle {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #718096;
+    cursor: pointer;
+}
+
+/* Animation for modal appearance */
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#registerusermodal .modal.fade .modal-dialog {
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    #registerusermodal .modal-body {
+        padding: 0 1.5rem 1.5rem;
+    }
+
+    #registerusermodal .register-title {
+        font-size: 1.3rem;
+    }
+}
+/* Footer Styles - More Specific Selectors */
+footer.footer {
+    background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+    position: relative;
+    overflow: hidden;
+    margin-top: auto; /* Ensure footer stays at bottom */
+}
+
+footer.footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+}
+
+/* Specific footer headings */
+footer.footer h5,
+footer.footer h6 {
+    color: #fff;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+footer.footer h5::after,
+footer.footer h6::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -0.5rem;
+    width: 30px;
+    height: 2px;
+    background: linear-gradient(
+        to right,
+        hsl(213 71% 45%),
+        /* lighter */ hsl(213 71% 30%) /* darker */
+    );
+    border-radius: 2px;
+}
+
+footer.footer p {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+/* Specific footer lists */
+footer.footer .list-unstyled li {
+    margin-bottom: 0.75rem;
+}
+
+footer.footer .list-unstyled a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    padding-left: 0;
+    display: inline-block;
+}
+
+footer.footer .list-unstyled a::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    height: 1px;
+    background: hsl(213 71% 45%);
+    transition: width 0.3s ease;
+}
+
+footer.footer .list-unstyled a:hover {
+    color: #fff;
+    transform: translateX(5px);
+}
+
+footer.footer .list-unstyled a:hover::before {
+    width: 15px;
+}
+
+/* Social Links - Footer Specific */
+footer.footer .social-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+footer.footer .social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+footer.footer .social-link:hover {
+    background: #e53e3e;
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(229, 62, 62, 0.3);
+}
+
+/* Footer Bottom - Specific */
+footer.footer .footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1.5rem 0;
+}
+
+footer.footer .footer-bottom a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    position: relative;
+}
+
+footer.footer .footer-bottom a::after {
+    content: "•";
+    margin: 0 0.75rem;
+    color: rgba(255, 255, 255, 0.3);
+}
+
+footer.footer .footer-bottom a:last-child::after {
+    display: none;
+}
+
+footer.footer .footer-bottom a:hover {
+    color: #fff;
+}
+
+/* Ensure top bar styles are not affected */
+.c-top-bar-section {
+    z-index: 1030; /* Higher than footer */
+    position: relative;
+    background: var(--light-bg);
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Reset any potential footer styles affecting top bar */
+.c-top-bar-section * {
+    box-sizing: border-box;
+}
+
+.c-top-bar-section .contact-info,
+.c-top-bar-section .social-links {
+    /* Ensure these don't inherit footer styles */
+    display: flex;
+    align-items: center;
+}
+
+/* Responsive Design - Footer Specific */
+@media (max-width: 768px) {
+    footer.footer .row > div {
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+
+    footer.footer h5::after,
+    footer.footer h6::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    footer.footer .social-links {
+        justify-content: center;
+    }
+
+    footer.footer .footer-bottom {
+        text-align: center;
+    }
+
+    footer.footer .footer-bottom .d-flex {
+        justify-content: center;
+        margin-top: 1rem;
+    }
+
+    footer.footer .footer-bottom a::after {
+        margin: 0 0.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    footer.footer {
+        padding: 2rem 0 !important;
+    }
+
+    footer.footer .footer-bottom {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    footer.footer .footer-bottom a::after {
+        display: none;
+    }
+
+    footer.footer .footer-bottom .d-flex {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+}
+
+/* Animation for social icons - Footer only */
+@keyframes footerFloat {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+footer.footer .social-link:hover {
+    animation: footerFloat 1s ease-in-out infinite;
+}
+
+/* Ensure body has proper layout */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1; /* Push footer to bottom */
 }
 </style>

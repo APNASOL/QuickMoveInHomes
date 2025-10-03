@@ -1,391 +1,670 @@
+<style scoped>
+/* Community Details Page */
+.community-details-page {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    min-height: 100vh;
+}
+
+/* Hero Section */
+.community-hero-section {
+    background: linear-gradient(
+        135deg,
+        rgba(26, 54, 93, 0.85) 0%,
+        rgba(45, 55, 72, 0.75) 100%
+    );
+    padding: 3rem 0 0 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.community-hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+}
+
+.hero-content {
+    padding: 2rem 0;
+}
+
+.community-name {
+    font-size: 3rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.community-location {
+    font-size: 1.3rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 0;
+}
+
+/* Image Gallery */
+.image-gallery-section {
+    margin-top: 0;
+}
+
+.carousel-container {
+    border-radius: 0 0 20px 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.community-image {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+}
+
+.no-image-placeholder {
+    height: 500px;
+    background: linear-gradient(135deg, #e2e8f0, #cbd5e0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+    font-size: 1.2rem;
+    border-radius: 0 0 20px 20px;
+}
+
+/* Main Content Section */
+.main-content-section {
+    padding: 4rem 0;
+}
+
+.content-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border: 1px solid #f1f5f9;
+    overflow: hidden;
+}
+
+.content-header {
+    padding: 2.5rem 2.5rem 0 2.5rem;
+}
+
+.section-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #1a365d;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(
+  to right,
+  hsl(213 71% 45%),  /* lighter */
+  hsl(213 71% 30%)   /* darker */
+);
+    border-radius: 2px;
+}
+
+.community-description {
+    font-size: 1.1rem;
+    color: #64748b;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+}
+
+/* Tabs Styling */
+.community-tabs {
+    padding: 0 2.5rem;
+}
+
+.nav-tabs {
+    border-bottom: 2px solid #e2e8f0;
+    gap: 1rem;
+}
+
+.nav-tabs .nav-link {
+    border: none;
+    background: transparent;
+    color: #64748b;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 1rem 1.5rem;
+    border-radius: 12px 12px 0 0;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-tabs .nav-link:hover {
+    color: #1a365d;
+    background: #f8fafc;
+}
+
+.nav-tabs .nav-link.active {
+    color: hsl(213 71% 30%);
+    background: white;
+    border-bottom: 3px solid hsl(213 71% 30%);
+}
+
+.tab-content {
+    padding: 2.5rem;
+    background: #fafbfc;
+    border-radius: 0 0 20px 20px;
+}
+
+.tab-pane {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Info Grid */
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.info-item {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid #f1f5f9;
+    transition: all 0.3s ease;
+}
+
+.info-item:hover {
+    border-color: hsl(213 71% 30%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.info-label {
+    font-weight: 600;
+    color: #1a365d;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.info-value {
+    color: #64748b;
+    font-size: 1rem;
+    line-height: 1.4;
+}
+
+/* Sidebar */
+.sidebar-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border: 1px solid #f1f5f9;
+    height: fit-content;
+    position: sticky;
+    top: 2rem;
+}
+
+.sidebar-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1a365d;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.sidebar-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 30px;
+    height: 2px;
+    background: linear-gradient(
+  to right,
+  hsl(213 71% 45%),  /* lighter */
+  hsl(213 71% 30%)   /* darker */
+);
+    border-radius: 2px;
+}
+
+.amenities-list, .neighborhoods-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.amenities-list li, .neighborhoods-list li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #f1f5f9;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.amenities-list li:last-child, .neighborhoods-list li:last-child {
+    border-bottom: none;
+}
+
+.amenities-list li::before {
+    content: '✓';
+    color: hsl(213 71% 30%);
+    font-weight: bold;
+}
+
+/* Homes Section */
+.homes-section {
+    background: white;
+    padding: 4rem 0;
+    margin-top: 2rem;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.homes-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(
+        135deg,
+        rgba(26, 54, 93, 0.85) 0%,
+        rgba(45, 55, 72, 0.75) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.homes-subtitle {
+    font-size: 1.1rem;
+    color: #64748b;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.homes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+/* Carousel Customization */
+.carousel__prev,
+.carousel__next {
+    background: rgba(255, 255, 255, 0.2) !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    border-radius: 50% !important;
+    width: 50px !important;
+    height: 50px !important;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease !important;
+}
+
+.carousel__prev:hover,
+.carousel__next:hover {
+    background: hsl(213 71% 30%) !important;
+    border-color: hsl(213 71% 45%) !important;
+    transform: scale(1.1);
+}
+
+.carousel__icon {
+    fill: white !important;
+}
+
+/* Decorative Elements */
+.section-decoration {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    background: linear-gradient(135deg, rgba(229, 62, 62, 0.1), rgba(255, 255, 255, 0.05));
+    border-radius: 50%;
+    filter: blur(30px);
+    z-index: 0;
+}
+
+.decoration-1 {
+    top: -30px;
+    right: -30px;
+}
+
+.decoration-2 {
+    bottom: -30px;
+    left: -30px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .community-hero-section {
+        padding: 2rem 0 0 0;
+    }
+
+    .community-name {
+        font-size: 2.2rem;
+    }
+
+    .community-location {
+        font-size: 1.1rem;
+    }
+
+    .community-image {
+        height: 300px;
+    }
+
+    .no-image-placeholder {
+        height: 300px;
+    }
+
+    .main-content-section {
+        padding: 2rem 0;
+    }
+
+    .content-header,
+    .community-tabs,
+    .tab-content {
+        padding: 1.5rem;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+    }
+
+    .homes-section {
+        padding: 2rem 0;
+    }
+
+    .homes-title {
+        font-size: 2rem;
+    }
+
+    .nav-tabs .nav-link {
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .community-name {
+        font-size: 1.8rem;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .homes-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar-card {
+        padding: 1.5rem;
+    }
+}
+
+/* Loading States */
+.skeleton-loading {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+</style>
+
 <template>
     <Master>
-        <div class="property-detail-section">
-            <div>
-                <div class="info-overlay">
-                    <div class="d-flex justify-content-between container">
-                        <div>
-                            <h1 class="uppercase c-main-title">
-                                {{ community_details.name }}
-                            </h1>
-                            <h4>
-                                {{ community_details.location }}
-                            </h4>
+        <div class="community-details-page">
+            <!-- Hero Section -->
+            <section class="community-hero-section">
+                <div class="container position-relative" style="z-index: 1;">
+                    <div class="hero-content">
+                        <h1 class="community-name">{{ community_details.name }}</h1>
+                        <p class="community-location">{{ community_details.location }}</p>
+                    </div>
+                </div>
+
+                <!-- Decorative Elements -->
+                <div class="section-decoration decoration-1"></div>
+                <div class="section-decoration decoration-2"></div>
+            </section>
+
+            <!-- Image Gallery -->
+            <section class="image-gallery-section">
+                <div class="container">
+                    <div class="carousel-container">
+                        <Carousel
+                            v-if="communityImages.length > 1"
+                            v-model="currentSlide"
+                            :items-to-show="1"
+                            :wrap-around="true"
+                            :transition="500"
+                            id="gallery"
+                        >
+                            <Slide
+                                v-for="(file, idx) in communityImages"
+                                :key="file.id || idx"
+                            >
+                                <img
+                                    :src="file.file_name"
+                                    :alt="file.file_original_name || 'Image ' + (idx + 1)"
+                                    class="community-image"
+                                    @error="setAltImg($event)"
+                                />
+                            </Slide>
+                            <template #addons>
+                                <Navigation />
+                            </template>
+                        </Carousel>
+
+                        <!-- Single Image -->
+                        <div v-else-if="communityImages.length === 1">
+                            <img
+                                :src="communityImages[0].file_name"
+                                :alt="communityImages[0].file_original_name || 'Image'"
+                                class="community-image"
+                                @error="setAltImg($event)"
+                            />
+                        </div>
+
+                        <!-- No Images -->
+                        <div v-else class="no-image-placeholder">
+                            <div class="text-center">
+                                <i class="bi bi-image" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                                <p>No images available for this community</p>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </section>
 
+            <!-- Main Content -->
+            <section class="main-content-section">
                 <div class="container">
-                    <!-- 2+ images: carousel -->
-                    <Carousel
-                        v-if="communityImages.length > 1"
-                        v-model="currentSlide"
-                        :items-to-show="1"
-                        :wrap-around="true"
-                        :transition="500"
-                        id="gallery"
-                    >
-                        <Slide
-                            v-for="(file, idx) in communityImages"
-                            :key="file.id || idx"
-                        >
-                            <img
-                                :src="file.file_name"
-                                :alt="
-                                    file.file_original_name ||
-                                    'Image ' + (idx + 1)
-                                "
-                                class="img-fluid c-img-filter c-images-border-design w-100"
-                                style="height: 500px; object-fit: cover"
-                                @error="setAltImg($event)"
-                            />
-                        </Slide>
-                        <template #addons>
-                            <Navigation />
-                            <!-- <Pagination /> -->
-                        </template>
-                    </Carousel>
-
-                    <!-- exactly 1 image -->
-                    <div v-else-if="communityImages.length === 1">
-                        <img
-                            :src="communityImages[0].file_name"
-                            :alt="
-                                communityImages[0].file_original_name || 'Image'
-                            "
-                            class="img-fluid c-img-filter c-images-border-design w-100"
-                            style="height: 500px; object-fit: cover"
-                            @error="setAltImg($event)"
-                        />
-                    </div>
-
-                    <!-- none -->
-                    <!-- <div
-                        v-else
-                        class="d-flex align-items-center justify-content-center bg-light"
-                        style="height: 500px; border-radius: 12px"
-                    >
-                        <span class="text-muted">No images available</span>
-                    </div> -->
-                </div>
-
-                <div class="interactive-open-house-banner mb-2 rounded-lg shadow-lg bg-white p-4 border border-gray-300">
-                    <div class="container">
-                        <div class="row g-4">
-                            <!-- Left Column (Main Content) -->
-                            <div :class="hasSidebar ? 'col-md-8' : 'col-md-12'">
-                                <div
-                                    class="card border-0 shadow-lg rounded-4 p-4 h-100"
-                                >
-                                    <h2 class="fw-bold text-dark mb-3">
-                                        About {{ community_details.name }}
-                                    </h2>
-                                    <p class="text-muted">
+                    <div class="row g-4">
+                        <!-- Left Column - Main Content -->
+                        <div :class="hasSidebar ? 'col-lg-8' : 'col-12'">
+                            <div class="content-card">
+                                <div class="content-header">
+                                    <h2 class="section-title">About {{ community_details.name }}</h2>
+                                    <p class="community-description">
                                         {{ community_details.description }}
                                     </p>
+                                </div>
 
-                                    <!-- Tabs -->
-                                    <ul
-                                        class="nav nav-tabs mt-4 border-bottom"
-                                        id="communityTabs"
-                                        role="tablist"
-                                    >
-                                        <li
-                                            class="nav-item"
-                                            role="presentation"
-                                        >
-                                            <button
-                                                class="nav-link active fw-semibold"
-                                                id="location-tab"
-                                                data-bs-toggle="tab"
-                                                data-bs-target="#location"
-                                                type="button"
-                                                role="tab"
-                                            >
+                                <!-- Tabs -->
+                                <div class="community-tabs">
+                                    <ul class="nav nav-tabs" id="communityTabs" role="tablist">
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link active" id="location-tab" data-bs-toggle="tab" data-bs-target="#location" type="button" role="tab">
                                                 Location and Info
                                             </button>
                                         </li>
-                                        <li
-                                            class="nav-item"
-                                            role="presentation"
-                                        >
-                                            <button
-                                                class="nav-link fw-semibold"
-                                                id="hoa-tab"
-                                                data-bs-toggle="tab"
-                                                data-bs-target="#hoa"
-                                                type="button"
-                                                role="tab"
-                                            >
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="hoa-tab" data-bs-toggle="tab" data-bs-target="#hoa" type="button" role="tab">
                                                 HOA and Fees
                                             </button>
                                         </li>
-                                        <li
-                                            class="nav-item"
-                                            role="presentation"
-                                        >
-                                            <button
-                                                class="nav-link fw-semibold"
-                                                id="proximity-tab"
-                                                data-bs-toggle="tab"
-                                                data-bs-target="#proximity"
-                                                type="button"
-                                                role="tab"
-                                            >
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="proximity-tab" data-bs-toggle="tab" data-bs-target="#proximity" type="button" role="tab">
                                                 Proximity
                                             </button>
                                         </li>
                                     </ul>
+                                </div>
 
-                                    <!-- Tabs Content -->
-                                    <div class="tab-content mt-4">
-                                        <!-- Location and Info -->
-                                        <div
-                                            class="tab-pane fade show active"
-                                            id="location"
-                                            role="tabpanel"
-                                        >
-                                            <h5
-                                                class="mb-3 text-primary fw-semibold c-title"
-                                            >
-                                                Location and Info
-                                            </h5>
-                                            <div class="row">
-                                                <div class="col-md-6 mb-2">
-                                                    <strong>Map:</strong>
-                                                    {{
-                                                        community_details.map_location ??
-                                                        "Nil"
-                                                    }}
-                                                </div>
-                                                <div class="col-md-6 mb-2">
-                                                    <strong
-                                                        >Legal
-                                                        Subdivision:</strong
-                                                    >
-                                                    {{
-                                                        community_details.legal_subdivision ??
-                                                        "Nil"
-                                                    }}
-                                                </div>
-                                                <div class="col-md-6 mb-2">
-                                                    <strong
-                                                        >Nearby
-                                                        Properties:</strong
-                                                    >
-                                                    {{
-                                                        community_details.nearby_properties ??
-                                                        "Nil"
-                                                    }}
-                                                </div>
-                                                <div class="col-md-6 mb-2">
-                                                    <strong>Masterplan:</strong>
-                                                    {{
-                                                        community_details.masterplan ??
-                                                        "Nil"
-                                                    }}
-                                                </div>
-                                                <div class="col-md-6 mb-2">
-                                                    <strong
-                                                        >Sub
-                                                        Association:</strong
-                                                    >
-                                                    {{
-                                                        community_details.sub_association
-                                                            ? "Yes"
-                                                            : "No"
-                                                    }}
-                                                </div>
+                                <!-- Tabs Content -->
+                                <div class="tab-content">
+                                    <!-- Location and Info -->
+                                    <div class="tab-pane fade show active" id="location" role="tabpanel">
+                                        <h5 class="mb-4">Location and Community Information</h5>
+                                        <div class="info-grid">
+                                            <div class="info-item">
+                                                <div class="info-label">Map Location</div>
+                                                <div class="info-value">{{ community_details.map_location ?? "Not specified" }}</div>
+                                            </div>
+                                            <div class="info-item">
+                                                <div class="info-label">Legal Subdivision</div>
+                                                <div class="info-value">{{ community_details.legal_subdivision ?? "Not specified" }}</div>
+                                            </div>
+                                            <div class="info-item">
+                                                <div class="info-label">Nearby Properties</div>
+                                                <div class="info-value">{{ community_details.nearby_properties ?? "Not specified" }}</div>
+                                            </div>
+                                            <div class="info-item">
+                                                <div class="info-label">Masterplan</div>
+                                                <div class="info-value">{{ community_details.masterplan ?? "Not specified" }}</div>
+                                            </div>
+                                            <div class="info-item">
+                                                <div class="info-label">Sub Association</div>
+                                                <div class="info-value">{{ community_details.sub_association ? "Yes" : "No" }}</div>
                                             </div>
                                         </div>
+                                    </div>
 
-                                        <!-- HOA and Fees -->
-                                        <div
-                                            class="tab-pane fade"
-                                            id="hoa"
-                                            role="tabpanel"
-                                        >
-                                            <h5
-                                                class="mb-3 text-primary fw-semibold c-title"
-                                            >
-                                                HOA and Fees
-                                            </h5>
-                                            <div class="row">
-                                                <div class="col-md-6 mb-2">
-                                                    <strong>HOA:</strong>
-                                                    {{
-                                                        community_details.hoa ??
-                                                        "Nil"
-                                                    }}
-                                                </div>
-                                                <div class="col-md-6 mb-2">
-                                                    <strong
-                                                        >SID/LID Fee:</strong
-                                                    >
-                                                    ${{
-                                                        community_details.sid_lid_fee ??
-                                                        "Nil"
-                                                    }}
-                                                </div>
-                                                <div class="col-md-6 mb-2">
-                                                    <strong
-                                                        >Payment
-                                                        Frequency:</strong
-                                                    >
-                                                    {{
-                                                        community_details.sid_lid_payment_frequency ??
-                                                        "Nil"
-                                                    }}
-                                                </div>
-                                                <div class="col-md-6 mb-2">
-                                                    <strong>CIC:</strong>
-                                                    {{
-                                                        community_details.cic
-                                                            ? "Yes"
-                                                            : "No"
-                                                    }}
-                                                </div>
-                                                <div class="col-md-6 mb-2">
-                                                    <strong>LID:</strong>
-                                                    {{
-                                                        community_details.lid
-                                                            ? "Yes"
-                                                            : "No"
-                                                    }}
-                                                </div>
+                                    <!-- HOA and Fees -->
+                                    <div class="tab-pane fade" id="hoa" role="tabpanel">
+                                        <h5 class="mb-4">HOA and Community Fees</h5>
+                                        <div class="info-grid">
+                                            <div class="info-item">
+                                                <div class="info-label">HOA</div>
+                                                <div class="info-value">{{ community_details.hoa ?? "Not specified" }}</div>
+                                            </div>
+                                            <div class="info-item">
+                                                <div class="info-label">SID/LID Fee</div>
+                                                <div class="info-value">${{ community_details.sid_lid_fee ?? "Not specified" }}</div>
+                                            </div>
+                                            <div class="info-item">
+                                                <div class="info-label">Payment Frequency</div>
+                                                <div class="info-value">{{ community_details.sid_lid_payment_frequency ?? "Not specified" }}</div>
+                                            </div>
+                                            <div class="info-item">
+                                                <div class="info-label">CIC</div>
+                                                <div class="info-value">{{ community_details.cic ? "Yes" : "No" }}</div>
+                                            </div>
+                                            <div class="info-item">
+                                                <div class="info-label">LID</div>
+                                                <div class="info-value">{{ community_details.lid ? "Yes" : "No" }}</div>
                                             </div>
                                         </div>
+                                    </div>
 
-                                        <!-- Proximity -->
-                                        <div
-                                            class="tab-pane fade"
-                                            id="proximity"
-                                            role="tabpanel"
-                                        >
-                                            <h5
-                                                class="mb-3 text-primary fw-semibold c-title"
-                                            >
-                                                Proximity
-                                            </h5>
-                                            <div class="row">
-                                                <div class="col-md-6 mb-2">
-                                                    <strong>To Strip:</strong>
-                                                    {{
-                                                        community_details.proximity_to_strip ??
-                                                        "Nil"
-                                                    }}
-                                                    miles
-                                                </div>
-                                                <div class="col-md-6 mb-2">
-                                                    <strong>To Airport:</strong>
-                                                    {{
-                                                        community_details.proximity_to_airport ??
-                                                        "Nil"
-                                                    }}
-                                                    miles
-                                                </div>
-                                                <div class="col-md-12 mb-2">
-                                                    <strong
-                                                        >Nearby
-                                                        Attractions:</strong
-                                                    >
-                                                    {{
-                                                        community_details.nearby_attractions ??
-                                                        "Nil"
-                                                    }}
-                                                </div>
+                                    <!-- Proximity -->
+                                    <div class="tab-pane fade" id="proximity" role="tabpanel">
+                                        <h5 class="mb-4">Location Proximity</h5>
+                                        <div class="info-grid">
+                                            <div class="info-item">
+                                                <div class="info-label">To Las Vegas Strip</div>
+                                                <div class="info-value">{{ community_details.proximity_to_strip ?? "Not specified" }} miles</div>
+                                            </div>
+                                            <div class="info-item">
+                                                <div class="info-label">To Airport</div>
+                                                <div class="info-value">{{ community_details.proximity_to_airport ?? "Not specified" }} miles</div>
+                                            </div>
+                                            <div class="info-item" style="grid-column: 1 / -1;">
+                                                <div class="info-label">Nearby Attractions</div>
+                                                <div class="info-value">{{ community_details.nearby_attractions ?? "Not specified" }}</div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
-                            <!-- Right Column (Sidebar) -->
-                            <div v-if="hasSidebar" class="col-md-4">
-                                <div
-                                    class="card border-0 shadow-lg rounded-4 p-4 h-100"
-                                >
-                                    <div
-                                        v-if="
-                                            community_details.amenities?.length
-                                        "
-                                    >
-                                        <h6 class="fw-bold text-muted">
-                                            Amenities
-                                        </h6>
-                                        <ul class="list-unstyled small">
-                                            <li
-                                                v-for="(
-                                                    item, index
-                                                ) in community_details.amenities"
-                                                :key="index"
-                                            >
-                                                {{ item }}
-                                            </li>
-                                        </ul>
-                                        <hr />
-                                    </div>
+                        <!-- Right Column - Sidebar -->
+                        <div v-if="hasSidebar" class="col-lg-4">
+                            <div class="sidebar-card">
+                                <!-- Amenities -->
+                                <div v-if="community_details.amenities?.length" class="mb-4">
+                                    <h6 class="sidebar-title">Community Amenities</h6>
+                                    <ul class="amenities-list">
+                                        <li v-for="(item, index) in community_details.amenities" :key="index">
+                                            {{ item }}
+                                        </li>
+                                    </ul>
+                                </div>
 
-                                    <div
-                                        v-if="
-                                            community_details.neighborhoods
-                                                ?.length
-                                        "
-                                    >
-                                        <h6 class="fw-bold text-muted">
-                                            Neighborhoods
-                                        </h6>
-                                        <ul class="list-unstyled small">
-                                            <li
-                                                v-for="(
-                                                    item, index
-                                                ) in community_details.neighborhoods"
-                                                :key="index"
-                                            >
-                                                {{ item }}
-                                            </li>
-                                        </ul>
-                                        <hr />
-                                    </div>
+                                <!-- Neighborhoods -->
+                                <div v-if="community_details.neighborhoods?.length" class="mb-4">
+                                    <h6 class="sidebar-title">Neighborhoods</h6>
+                                    <ul class="neighborhoods-list">
+                                        <li v-for="(item, index) in community_details.neighborhoods" :key="index">
+                                            {{ item }}
+                                        </li>
+                                    </ul>
+                                </div>
 
-                                    <div v-if="community_details.hoa">
-                                        <h6 class="fw-bold text-muted">HOA</h6>
-                                        <p class="mb-0 small">
-                                            {{ community_details.hoa }}
-                                        </p>
-                                    </div>
+                                <!-- HOA Info -->
+                                <div v-if="community_details.hoa">
+                                    <h6 class="sidebar-title">HOA Information</h6>
+                                    <p class="info-value">{{ community_details.hoa }}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="container-fluid interactive-banner mt-3">
-                <h1>HOMES IN COMMUNITY</h1>
-            </div>
+            </section>
 
-            <div class="container pt-3">
-                <div class="row">
-                    <div
-                        v-for="home in community_homes"
-                        :key="home.id"
-                        class="col-md-3 mb-3"
-                    >
+            <!-- Homes in Community -->
+            <section class="homes-section">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="homes-title">HOMES IN COMMUNITY</h2>
+                        <p class="homes-subtitle">
+                            Discover available properties in {{ community_details.name }}
+                        </p>
+                    </div>
+
+                    <div class="homes-grid">
                         <a
-                            class="text-decoration-none"
+                            v-for="home in community_homes"
+                            :key="home.id"
                             :href="'/home-details/' + home.property_id"
+                            class="text-decoration-none"
                         >
                             <GlobalCard
-                                :badge="
-                                    home.is_open_house == 1
-                                        ? 'Open House'
-                                        : 'Quick Move In'
-                                "
+                                :badge="home.is_open_house == 1 ? 'Open House' : 'Quick Move In'"
                                 :badge2="home.incentive ? 'Incentive Home' : ''"
-                                :main_image="
-                                    home.main_image ??
-                                    '/images/default_image.png'
-                                "
+                                :main_image="home.main_image ?? '/images/default_image.png'"
                                 :title="home.title"
                                 :address="home.address"
                                 :property_id="home.property_id"
@@ -397,8 +676,18 @@
                             />
                         </a>
                     </div>
+
+                    <!-- Empty State for Homes -->
+                    <div v-if="community_homes.length === 0" class="text-center py-5">
+                        <div class="no-image-placeholder" style="height: 200px; border-radius: 20px;">
+                            <div>
+                                <i class="bi bi-house" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                                <p>No homes currently available in this community</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </section>
         </div>
     </Master>
 </template>
@@ -406,12 +695,9 @@
 <script>
 import Master from "@components/layout/Master.vue";
 import Multiselect from "@vueform/multiselect";
-import { addMonths, startOfMonth, endOfMonth } from "date-fns";
-
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
-import ProceedComponent from "@components/ProceedComponent.vue";
-
 import "vue3-carousel/dist/carousel.css";
+
 export default {
     components: {
         Master,
@@ -420,44 +706,23 @@ export default {
         Pagination,
         Navigation,
         Multiselect,
-
-        ProceedComponent,
     },
     props: ["community_id"],
     created() {
         this.fetchCommunityDetails();
-        this.backgroundImage = this.community_details.property_main_image;
     },
     mounted() {
-        this.getThisCommunityAllHomes(); // Fetch community homes data
+        this.getThisCommunityAllHomes();
     },
-    //     mounted() {
-    //     this.initMap();
-    //   },
     data() {
         return {
-            map: null,
-            markers: [],
             logo: external_website.white_logo,
             name: external_website.name,
             logged_in_user: logged_in_user,
-            settings: {
-                itemsToShow: 1,
-                autoplay: 3500,
-                wrapAround: true,
-                dir: "rtl",
-                // snapAlign: 'center',
-            },
-
-            backgroundImage: "",
-            maxWords: 50,
-
-            community_details: [],
-
-            community_homes: [],
-
-            formErrors: [],
             currentSlide: 0,
+            community_details: [],
+            community_homes: [],
+            formErrors: [],
         };
     },
     computed: {
@@ -466,100 +731,25 @@ export default {
                 ? this.community_details.files
                 : [];
             return files
-                .filter((f) => f && f.file_name) // must have a src
+                .filter((f) => f && f.file_name)
                 .map((f) => ({
                     id: f.id ?? null,
-                    file_name: f.file_name, // ensure full URL from API
+                    file_name: f.file_name,
                     file_original_name: f.file_original_name || "",
                 }));
         },
         hasSidebar() {
-        return (
-            (this.community_details.amenities && this.community_details.amenities.length > 0) ||
-            (this.community_details.neighborhoods && this.community_details.neighborhoods.length > 0) ||
-            (this.community_details.hoa && this.community_details.hoa !== 'Nil')
-        );
-    }
-
+            return (
+                (this.community_details.amenities && this.community_details.amenities.length > 0) ||
+                (this.community_details.neighborhoods && this.community_details.neighborhoods.length > 0) ||
+                (this.community_details.hoa && this.community_details.hoa !== 'Nil')
+            );
+        }
     },
     methods: {
-        initMap() {
-            const mapOptions = {
-                center: { lat: 36.1699, lng: -115.1398 }, // Center the map to a default location or use first home's coordinates
-                zoom: 10,
-            };
-
-            // Initialize the Google Map
-            this.map = new google.maps.Map(this.$refs.map, mapOptions);
-
-            // Add markers to the map after fetching community homes
-            this.addMarkers();
-        },
-
-        addMarkers() {
-            // Check if community_homes have data
-            if (this.community_homes.length === 0) {
-                console.warn("No community homes available to add markers.");
-                return;
-            }
-
-            this.community_homes.forEach((home) => {
-                const markerData = {
-                    lat: parseFloat(home.latitude), // Assuming latitude is part of the home object
-                    lng: parseFloat(home.longitude), // Assuming longitude is part of the home object
-                    title: home.title,
-                    description: home.description,
-                    url: "/home-details/" + home.property_id || "#", // Default to "#" if no URL is provided
-                };
-
-                const marker = new google.maps.Marker({
-                    position: { lat: markerData.lat, lng: markerData.lng },
-                    map: this.map,
-                    title: markerData.title,
-                    icon: {
-                        url: "https://img.icons8.com/3d-fluency/94/home.png",
-                        scaledSize: new google.maps.Size(50, 50),
-                    },
-                });
-
-                const infoWindow = new google.maps.InfoWindow({
-                    content: `<div><h4>${markerData.title}</h4>
-                    <p>${markerData.description}</p></div>`,
-                });
-
-                marker.addListener("mouseover", () => {
-                    infoWindow.open(this.map, marker);
-                });
-
-                marker.addListener("mouseout", () => {
-                    infoWindow.close();
-                });
-
-                marker.addListener("click", () => {
-                    window.location.href = markerData.url; // Redirect to the URL
-                });
-            });
-        },
-        // Method to set the current image based on thumbnail click
-        setCurrentSlide(index) {
-            this.currentIndex = index;
-        },
-        // Go to the previous image
-        prevSlide() {
-            if (this.currentIndex > 0) {
-                this.currentIndex--;
-            }
-        },
-        // Go to the next image
-        nextSlide() {
-            if (this.currentIndex < this.community_details.files.length - 1) {
-                this.currentIndex++;
-            }
-        },
         fetchCommunityDetails() {
             axios
                 .get(`/api/get-community-details/${this.community_id}`)
-
                 .then((response) => {
                     this.community_details = response.data;
                     this.getThisCommunityAllHomes();
@@ -572,248 +762,18 @@ export default {
             axios
                 .get(`/api/fetch-community-all-homes/${this.community_id}`)
                 .then((response) => {
-                    this.community_homes = response.data; // Update community homes data
-                    this.initMap(); // Initialize map after fetching homes
+                    this.community_homes = response.data;
                 })
                 .catch((error) => {
                     toastr.error(error.response.data.message);
                 });
         },
-
         setAltImg(event) {
             event.target.src = "/images/default_image.png";
         },
         formatPrice(price) {
-            return Math.floor(price).toLocaleString(); // Removes the decimal portion
+            return Math.floor(price).toLocaleString();
         },
     },
 };
 </script>
-
-<style scoped>
-@import "@vueform/multiselect/themes/default.css";
-
-.title {
-    font-size: 24px;
-    margin: 0;
-}
-</style>
-
-<style scoped>
-.uppercase {
-    text-transform: uppercase;
-}
-.top-section {
-    position: relative;
-    height: 300px; /* Adjust height as needed */
-    background-size: cover;
-    background-position: center;
-    color: white;
-    display: flex;
-    width: 100%;
-    align-items: flex-end;
-}
-
-.info-overlay {
-    background: #f7fafc;
-    padding: 10px;
-    width: 100%;
-    border-radius: 0px !important;
-    font-family: "Playfair Display", serif;
-    font-size: 30px;
-    font-weight: 700;
-    line-height: 36px;
-    color: rgb(23, 38, 54);
-}
-.info-card-overlay {
-    background: #01060d9d;
-    padding: 10px;
-    width: 100%;
-    border-radius: 0px !important;
-}
-
-.master_plan {
-    font-size: 20px;
-    margin: 5px 0;
-}
-
-.property-detail-section {
-    background-color: #f1f1f1 !important;
-}
-
-.feature-title {
-    font-size: 2.25rem;
-    color: #002856 !important;
-    font-weight: 300 !important;
-}
-.c-feature-title {
-    color: #002856 !important;
-    font-weight: 300 !important;
-    font-size: 1.25rem;
-    margin-top: 4px;
-}
-.text-justify {
-    text-align: justify;
-}
-
-.carousel {
-    overflow: hidden;
-}
-.c-slide-div {
-    position: absolute;
-    top: 35%;
-    left: 5%;
-    text-align: left;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    gap: 5px !important;
-}
-.c-slide-div > button {
-    width: fit-content;
-}
-
-.c-carousel-text {
-    position: absolute;
-    padding: 70px;
-    color: white;
-    font-size: 50px;
-    font-weight: bold;
-}
-
-.interactive-banner {
-    background-color: #023F86;
-    color: white;
-    text-align: center;
-    padding: 20px 0;
-}
-.interactive-banner h1 {
-    letter-spacing: 0.15em;
-}
-.feature-title {
-    font-size: 2.25rem;
-    color: #002856 !important;
-    font-weight: 300 !important;
-}
-.c-card-img-overlay-name {
-    top: unset;
-    bottom: 120px;
-    text-align: left;
-    color: white;
-}
-.info-card-overlay {
-    background: #bcd6f5b2;
-    padding: 10px;
-    width: 100%;
-    border-radius: 0px !important;
-}
-.open-house-tag {
-    background-color: #023F86;
-    color: white;
-    padding: 5px 10px;
-    font-size: 14px;
-    font-weight: bold;
-    border-radius: 10px;
-}
-.blurred-content {
-    filter: blur(4px);
-    color: rgba(0, 0, 0, 0.3);
-    background-color: #f0f0f0;
-    padding: 10px;
-    border-radius: 5px;
-}
-.blurred-box {
-    margin-top: 10px;
-    padding: 15px;
-    background-color: #e0e0e0;
-    text-align: center;
-    font-size: 14px;
-    color: rgba(0, 0, 0, 0.5);
-    border-radius: 5px;
-}
-.placeholder-title {
-    font-weight: bold;
-    font-size: 18px;
-    color: #333;
-    margin-bottom: 10px;
-}
-.card-img-top {
-    height: 240px;
-    object-fit: cover;
-}
-.c-description {
-    font-family: Inter, sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 24px;
-    color: #023F86;
-}
-.card {
-    border: none;
-}
-.card-body {
-    padding: 0;
-}
-
-.section-title {
-    font-size: 1.75rem;
-    font-weight: 700;
-    color: #2d6a9f;
-    border-bottom: 3px solid #2d6a9f;
-    padding-bottom: 0.5rem;
-    margin-bottom: 1.5rem;
-}
-
-.sub-section-title {
-    font-family: "Playfair Display", serif;
-    font-size: 20px;
-    font-weight: 600;
-    line-height: 28px;
-    color: rgb(23, 38, 54);
-}
-
-.list-group-item {
-    border: none;
-    font-family: Inter, sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 24px;
-    color: #023F86;
-    margin: 0 !important;
-}
-
-.c-tab-title {
-    font-family: "Playfair Display", serif;
-    font-size: 20px;
-    font-weight: 600;
-    line-height: 28px;
-    color: rgb(23, 38, 54);
-}
-.bi-check2-circle {
-    color: #023F86;
-}
-.c-card-main {
-    font-family: "Playfair Display", serif;
-    font-size: 30px;
-    font-weight: 700;
-    line-height: 36px;
-    color: rgb(45, 106, 159) !important ;
-}
-
-.nav-tabs .nav-link {
-    color: #023F86 !important;
-    font-weight: bold !important;
-}
-.nav-tabs {
-    background-color: #ffffff !important;
-}
-.card {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
-.card-body {
-    flex-grow: 1;
-}
-</style>
