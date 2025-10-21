@@ -471,14 +471,14 @@
                                 target="_blank"
                                 class="team-btn btn-linkedin"
                             >
-                                <i class="bi bi-linkedin me-1"></i> LinkedIn
+                                <i class="bi bi-linkedin me-1"></i>LinkedIn
                             </a>
                             <a
                                 v-if="member.email"
                                 :href="'mailto:' + member.email"
                                 class="team-btn btn-contact"
                             >
-                                <i class="bi bi-envelope me-1"></i> Contact
+                                <i class="bi bi-envelope me-1"></i>Contact
                             </a>
                         </div>
                     </div>
