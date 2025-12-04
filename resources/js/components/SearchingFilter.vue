@@ -1114,8 +1114,8 @@ export default {
                 "Lot Size",
             ],
             sort_by: "Newest",
-            bathroom: 0,
-            bedrooms: 0,
+            bathroom: "",
+            bedrooms: "",
             total_homes: 0,
             YesNoOptions: ["Yes", "No"],
             communities_options: [],
@@ -1123,12 +1123,15 @@ export default {
             hoasOptions: [],
             homes: [],
             formErrors: [],
+            validationErrors: {
+                price: "",
+                square_feet: "",
+                lot_size: "",
+            },
             form: {
-                // Your existing form structure
                 city: "",
                 state: "",
                 zip_code: "",
-                // ... other form fields
             },
             formStatus: 1,
             loadmap: false,
@@ -1139,10 +1142,103 @@ export default {
             max_square_feet: "",
             min_lot_size: "",
             max_lot_size: "",
-            is_open_house: "",
+            is_open_house: false,
         };
     },
+    watch: {
+        min_price() {
+            this.validatePriceRange();
+        },
+        max_price() {
+            this.validatePriceRange();
+        },
+        min_square_feet() {
+            this.validateSquareFeetRange();
+        },
+        max_square_feet() {
+            this.validateSquareFeetRange();
+        },
+        min_lot_size() {
+            this.validateLotSizeRange();
+        },
+        max_lot_size() {
+            this.validateLotSizeRange();
+        },
+    },
     methods: {
+        validatePriceRange() {
+            const min = parseFloat(this.min_price) || 0;
+            const max = parseFloat(this.max_price) || 0;
+
+            if (min > 0 && max > 0 && min > max) {
+                this.validationErrors.price = "Minimum price cannot be greater than maximum price. Values will be auto-corrected.";
+                return false;
+            } else {
+                this.validationErrors.price = "";
+                return true;
+            }
+        },
+
+        validateSquareFeetRange() {
+            const min = parseFloat(this.min_square_feet) || 0;
+            const max = parseFloat(this.max_square_feet) || 0;
+
+            if (min > 0 && max > 0 && min > max) {
+                this.validationErrors.square_feet = "Minimum square feet cannot be greater than maximum. Values will be auto-corrected.";
+                return false;
+            } else {
+                this.validationErrors.square_feet = "";
+                return true;
+            }
+        },
+
+        validateLotSizeRange() {
+            const min = parseFloat(this.min_lot_size) || 0;
+            const max = parseFloat(this.max_lot_size) || 0;
+
+            if (min > 0 && max > 0 && min > max) {
+                this.validationErrors.lot_size = "Minimum lot size cannot be greater than maximum. Values will be auto-corrected.";
+                return false;
+            } else {
+                this.validationErrors.lot_size = "";
+                return true;
+            }
+        },
+
+        validateAllRanges() {
+            const priceValid = this.validatePriceRange();
+            const sqFtValid = this.validateSquareFeetRange();
+            const lotValid = this.validateLotSizeRange();
+
+            return priceValid && sqFtValid && lotValid;
+        },
+
+        autoCorrectRanges() {
+            if (this.min_price && this.max_price) {
+                const min = parseFloat(this.min_price);
+                const max = parseFloat(this.max_price);
+                if (min > max) {
+                    [this.min_price, this.max_price] = [this.max_price, this.min_price];
+                }
+            }
+
+            if (this.min_square_feet && this.max_square_feet) {
+                const min = parseFloat(this.min_square_feet);
+                const max = parseFloat(this.max_square_feet);
+                if (min > max) {
+                    [this.min_square_feet, this.max_square_feet] = [this.max_square_feet, this.min_square_feet];
+                }
+            }
+
+            if (this.min_lot_size && this.max_lot_size) {
+                const min = parseFloat(this.min_lot_size);
+                const max = parseFloat(this.max_lot_size);
+                if (min > max) {
+                    [this.min_lot_size, this.max_lot_size] = [this.max_lot_size, this.min_lot_size];
+                }
+            }
+        },
+
         resetForm() {
             this.main_search_field = "";
             this.min_price = "";
@@ -1153,13 +1249,24 @@ export default {
             this.max_lot_size = "";
             this.bathroom = "";
             this.bedrooms = "";
-            this.is_open_house = "";
+            this.is_open_house = false;
+            this.sort_by = "Newest";
+
+            this.validationErrors = {
+                price: "",
+                square_feet: "",
+                lot_size: "",
+            };
+
+            this.formErrors = [];
+
             this.sortProperties();
         },
-        // ... your other methods remain the same
+
         setAltImg(event) {
             event.target.src = "/images/default_image.png";
         },
+
         pluckCommunities() {
             axios
                 .get("/api/communities/pluck")
@@ -1167,9 +1274,10 @@ export default {
                     this.communities_options = response.data;
                 })
                 .catch((error) => {
-                    toastr.error(error.response.data.message);
+                    toastr.error(error.response?.data?.message || "Failed to load communities");
                 });
         },
+
         pluckSchools() {
             axios
                 .get("/api/schools/pluck/")
@@ -1177,9 +1285,10 @@ export default {
                     this.schoolOptions = response.data;
                 })
                 .catch((error) => {
-                    toastr.error(error.response.data.message);
+                    toastr.error(error.response?.data?.message || "Failed to load schools");
                 });
         },
+
         pluckHoas() {
             axios
                 .get("/api/home/owners/pluck")
@@ -1187,12 +1296,14 @@ export default {
                     this.hoasOptions = response.data;
                 })
                 .catch((error) => {
-                    toastr.error(error.response.data.message);
+                    toastr.error(error.response?.data?.message || "Failed to load HOAs");
                 });
         },
+
         sortProperties() {
             let formData = new FormData();
             formData.append("sort_by", this.sort_by ?? "");
+
             axios
                 .post("/api/homes/sort", formData)
                 .then((response) => {
@@ -1203,25 +1314,51 @@ export default {
                 })
                 .catch((error) => {
                     toastr.error(
-                        error.response?.data?.message || "An error occurred."
+                        error.response?.data?.message || "An error occurred while sorting."
                     );
                     if (error.response?.data?.errors) {
                         this.formErrors = error.response.data.errors;
                     }
                 });
         },
+
         quickSearch() {
+            this.validateAllRanges();
+
+            this.autoCorrectRanges();
+
             let formData = new FormData();
-            formData.append("is_open_house", this.is_open_house ?? "");
-            formData.append("main_search_field", this.main_search_field ?? "");
-            formData.append("min_price", this.min_price ?? "");
-            formData.append("max_price", this.max_price ?? "");
-            formData.append("min_square_feet", this.min_square_feet ?? "");
-            formData.append("max_square_feet", this.max_square_feet ?? "");
-            formData.append("min_lot_size", this.min_lot_size ?? "");
-            formData.append("max_lot_size", this.max_lot_size ?? "");
-            formData.append("bathroom", this.bathroom ?? "");
-            formData.append("bedrooms", this.bedrooms ?? "");
+
+            if (this.is_open_house) {
+                formData.append("is_open_house", this.is_open_house ? 1 : 0);
+            }
+            if (this.main_search_field && this.main_search_field.trim()) {
+                formData.append("main_search_field", this.main_search_field.trim());
+            }
+            if (this.min_price) {
+                formData.append("min_price", this.min_price);
+            }
+            if (this.max_price) {
+                formData.append("max_price", this.max_price);
+            }
+            if (this.min_square_feet) {
+                formData.append("min_square_feet", this.min_square_feet);
+            }
+            if (this.max_square_feet) {
+                formData.append("max_square_feet", this.max_square_feet);
+            }
+            if (this.min_lot_size) {
+                formData.append("min_lot_size", this.min_lot_size);
+            }
+            if (this.max_lot_size) {
+                formData.append("max_lot_size", this.max_lot_size);
+            }
+            if (this.bathroom) {
+                formData.append("bathroom", this.bathroom);
+            }
+            if (this.bedrooms) {
+                formData.append("bedrooms", this.bedrooms);
+            }
 
             axios
                 .post("/api/quick/search", formData)
@@ -1230,22 +1367,31 @@ export default {
                     this.total_homes = response.data.total_homes;
                     this.loadmap = true;
                     this.formErrors = [];
+
+                    this.validationErrors = {
+                        price: "",
+                        square_feet: "",
+                        lot_size: "",
+                    };
                 })
                 .catch((error) => {
                     toastr.error(
-                        error.response?.data?.message || "An error occurred."
+                        error.response?.data?.message || "An error occurred during search."
                     );
                     if (error.response?.data?.errors) {
                         this.formErrors = error.response.data.errors;
                     }
                 });
         },
+
         searchHomes() {
             this.formStatus = 0;
             let formData = new FormData();
-            // Append your form data as before
+
             Object.keys(this.form).forEach((key) => {
-                formData.append(key, this.form[key] ?? "");
+                if (this.form[key] !== null && this.form[key] !== "" && this.form[key] !== "null") {
+                    formData.append(key, this.form[key]);
+                }
             });
 
             axios
@@ -1260,13 +1406,14 @@ export default {
                 .catch((error) => {
                     this.formStatus = 1;
                     toastr.error(
-                        error.response?.data?.message || "An error occurred."
+                        error.response?.data?.message || "An error occurred during search."
                     );
                     if (error.response?.data?.errors) {
                         this.formErrors = error.response.data.errors;
                     }
                 });
         },
+
         formatPrice(price) {
             return Math.floor(price).toLocaleString();
         },
