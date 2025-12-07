@@ -9,6 +9,7 @@ use App\Models\Upload;
 use App\Models\Amenity;
 use App\Models\Builder;
 use App\Models\Contact;
+use App\Models\Country;
 use App\Models\Setting;
 use App\Models\Property;
 use App\Models\Community;
@@ -24,11 +25,13 @@ use App\Models\CommunityAmenity;
 use App\Models\BuildersCommunity;
 use App\Models\PropertyIncentive;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use App\Models\CommunityNeighborhood;
 use App\Models\CommunityLasVegasRegion;
 use App\Models\CustomerAgentConnection;
 use App\Models\CustomerVisitingHomesHistory;
+use Illuminate\Validation\ValidationException;
 
 class HomeController extends Controller
 {
@@ -53,22 +56,61 @@ class HomeController extends Controller
 
     public function contact_store(Request $request)
     {
-        $request->validate([
-            'name'    => 'required|string|max:255',
-            'email'   => 'required',
-            'phone'   => 'required',
-            'message' => 'required',
-        ]);
+        try {
+            $validated = $request->validate([
+                'name'            => 'required|string|min:2|max:255',
+                'email'           => 'required|email|max:255',
+                'phone'           => 'required|string|min:10|max:20|regex:/^[\d\s\+\-\(\)]+$/',
+                'message'         => 'required|string|min:10|max:2000',
+                'contacted_from'  => 'nullable|string|in:Agent,Customer',
+            ], [
+                'name.required'     => 'Please enter your full name.',
+                'name.min'          => 'Name must be at least 2 characters.',
+                'email.required'    => 'Email address is required.',
+                'email.email'       => 'Please enter a valid email address.',
+                'phone.required'    => 'Phone number is required.',
+                'phone.min'         => 'Phone number must be at least 10 digits.',
+                'phone.regex'       => 'Please enter a valid phone number.',
+                'message.required'  => 'Please enter a message.',
+                'message.min'       => 'Message must be at least 10 characters.',
+                'message.max'       => 'Message cannot exceed 2000 characters.',
+            ]);
 
-        $contact                 = new Contact;
-        $contact->id             = Str::orderedUuid();
-        $contact->name           = $request->name;
-        $contact->email          = $request->email;
-        $contact->phone          = $request->phone;
-        $contact->message        = $request->message;
-        $contact->contacted_from = $request->contacted_from;
-        $contact->save();
-        return 'success';
+            $contact = new Contact();
+            $contact->id             = Str::orderedUuid();
+            $contact->name           = $validated['name'];
+            $contact->email          = $validated['email'];
+            $contact->phone          = $validated['phone'];
+            $contact->message        = $validated['message'];
+            $contact->contacted_from = $validated['contacted_from'] ?? null;
+            $contact->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Thank you for contacting us! We will get back to you soon.',
+                'data'    => [
+                    'id' => $contact->id
+                ]
+            ], 201);
+
+        } catch (ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Please check the form for errors.',
+                'errors'  => $e->errors()
+            ], 422);
+
+        } catch (\Exception $e) {
+            Log::error('Contact form submission failed', [
+                'error'   => $e->getMessage(),
+                'request' => $request->all()
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while processing your request. Please try again.',
+            ], 500);
+        }
     }
 
     public function countries_pluck()
@@ -495,103 +537,199 @@ class HomeController extends Controller
 
     public function sortProperties(Request $request)
     {
-        $total_homes = 0;
-        $properties  = DB::table('properties'); // Start from properties table
+        $currentDate = now()->format('Y-m-d');
+
+        // Validate request including filters
+        $request->validate([
+            'sort_by' => 'nullable|string',
+            'main_search_field' => 'nullable|string',
+            'bathroom' => 'nullable|integer|min:0',
+            'bedrooms' => 'nullable|integer|min:0',
+            'min_price' => 'nullable|integer|min:0',
+            'max_price' => 'nullable|integer|min:0',
+            'min_square_feet' => 'nullable|integer|min:0',
+            'max_square_feet' => 'nullable|integer|min:0',
+            'min_lot_size' => 'nullable|integer|min:0',
+            'max_lot_size' => 'nullable|integer|min:0',
+            'is_open_house' => 'nullable|boolean',
+        ]);
+
+        // Auto-swap inverted ranges
+        if ($request->min_price && $request->max_price && $request->min_price > $request->max_price) {
+            $temp = $request->min_price;
+            $request->merge(['min_price' => $request->max_price, 'max_price' => $temp]);
+        }
+        if ($request->min_square_feet && $request->max_square_feet && $request->min_square_feet > $request->max_square_feet) {
+            $temp = $request->min_square_feet;
+            $request->merge(['min_square_feet' => $request->max_square_feet, 'max_square_feet' => $temp]);
+        }
+        if ($request->min_lot_size && $request->max_lot_size && $request->min_lot_size > $request->max_lot_size) {
+            $temp = $request->min_lot_size;
+            $request->merge(['min_lot_size' => $request->max_lot_size, 'max_lot_size' => $temp]);
+        }
+
+        // Start building query with join
+        $properties = DB::table('properties')
+            ->leftJoin('property_features', 'properties.property_id', '=', 'property_features.property_id')
+            ->select('properties.*', 'property_features.parking_enclosure');
+
+        // Apply filters if they exist
+        if ($request->filled('main_search_field') && $request->main_search_field !== "null") {
+            $searchTerm = $request->main_search_field;
+            $properties->where(function ($query) use ($searchTerm) {
+                $query->where('properties.address', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('properties.city', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('properties.zip_code', 'LIKE', '%' . $searchTerm . '%');
+            });
+        }
+
+        if ($request->filled('is_open_house') && ($request->is_open_house == true || $request->is_open_house == "true" || $request->is_open_house == 1)) {
+            $properties->where('properties.is_open_house', 1);
+        }
+
+        // Price filtering
+        if ($request->filled('min_price') && $request->filled('max_price')) {
+            $properties->whereBetween('properties.price', [(int)$request->min_price, (int)$request->max_price]);
+        } elseif ($request->filled('min_price')) {
+            $properties->where('properties.price', '>=', (int)$request->min_price);
+        } elseif ($request->filled('max_price')) {
+            $properties->where('properties.price', '<=', (int)$request->max_price);
+        }
+
+        // Square feet filtering
+        if ($request->filled('min_square_feet') && $request->filled('max_square_feet')) {
+            $properties->whereBetween('properties.square_feet', [(int)$request->min_square_feet, (int)$request->max_square_feet]);
+        } elseif ($request->filled('min_square_feet')) {
+            $properties->where('properties.square_feet', '>=', (int)$request->min_square_feet);
+        } elseif ($request->filled('max_square_feet')) {
+            $properties->where('properties.square_feet', '<=', (int)$request->max_square_feet);
+        }
+
+        // Lot size filtering
+        if ($request->filled('min_lot_size') && $request->filled('max_lot_size')) {
+            $properties->whereBetween('properties.lot_size', [(int)$request->min_lot_size, (int)$request->max_lot_size]);
+        } elseif ($request->filled('min_lot_size')) {
+            $properties->where('properties.lot_size', '>=', (int)$request->min_lot_size);
+        } elseif ($request->filled('max_lot_size')) {
+            $properties->where('properties.lot_size', '<=', (int)$request->max_lot_size);
+        }
+
+        // Bedrooms filtering
+        if ($request->filled('bedrooms') && $request->bedrooms > 0) {
+            $properties->where('properties.bedrooms', '>=', (int)$request->bedrooms);
+        }
+
+        // Bathroom filtering
+        if ($request->filled('bathroom') && $request->bathroom !== "null" && $request->bathroom > 0) {
+            $properties->whereRaw('(properties.full_bath + properties.half_bath) >= ?', [(int)$request->bathroom]);
+        }
 
         // Get the sort_by value from the request
-        $sort_by = $request->input('sort_by');
+        $sort_by = $request->input('sort_by', 'Newest');
 
-        // Sort based on the selected option
+        // Apply sorting based on the selected option
         switch ($sort_by) {
             case 'Price (High to Low)':
-                $properties = $properties->orderBy('price', 'desc');
+                $properties->orderBy('properties.price', 'desc');
                 break;
             case 'Price (Low to High)':
-                $properties = $properties->orderBy('price', 'asc');
+                $properties->orderBy('properties.price', 'asc');
                 break;
             case 'Newest':
-                $properties = $properties->orderBy('created_at', 'desc');
+                $properties->orderBy('properties.created_at', 'desc');
                 break;
             case 'Bedrooms':
-                $properties = $properties->orderBy('bedrooms', 'asc');
+                $properties->orderBy('properties.bedrooms', 'desc');
                 break;
             case 'Square Feet':
-                $properties = $properties->orderBy('square_feet', 'asc');
+                $properties->orderBy('properties.square_feet', 'desc');
                 break;
             case 'Lot Size':
-                $properties = $properties->orderBy('lot_size', 'asc');
+                $properties->orderBy('properties.lot_size', 'desc');
                 break;
             case 'Homes for You':
             default:
-                // Default sorting by property_id or any other logic for 'Homes for You'
-                $properties = $properties->orderBy('property_id', 'asc');
+                $properties->orderBy('properties.property_id', 'asc');
                 break;
         }
 
         // Fetch the sorted properties
-        $properties  = $properties->get();
+        $properties = $properties->get();
         $total_homes = $properties->count();
 
+        // Process each property
         foreach ($properties as $property) {
-            $property->banner     = null;
+            $property->banner = null;
             $property->main_image = null;
 
-            // $property->bathrooms = $property->half_bath +  $property->full_bath;
-
+            // Calculate bathrooms
             $full = (int) filter_var($property->full_bath, FILTER_SANITIZE_NUMBER_INT);
             $half = (int) filter_var($property->half_bath, FILTER_SANITIZE_NUMBER_INT);
             $property->bathrooms = $full + $half;
-            $propertyFeature = PropertyFeature::where('property_id', $property->property_id)->select('parking_enclosure')->first();
-            $property->parking_enclosure = $propertyFeature->parking_enclosure ?? 0;
-            // Fetch related property record
+
+            // Get parking enclosure from joined data
+            $property->parking_enclosure = $property->parking_enclosure ?? 0;
+
+            // Open house data
             if ($property->is_open_house) {
-                $open_house                = OpenHouse::where('property_id', $property->property_id)->first();
+                $open_house = OpenHouse::where('property_id', $property->property_id)->first();
                 $property->open_house_data = $open_house;
             }
 
+            // Property incentive
             $PropertyIncentive = PropertyIncentive::where('property_id', $property->property_id)->first();
-            if($PropertyIncentive)
-            {
-                // $incentive = Incentive::where('id', $PropertyIncentive->incentive_id)->first();
-                // $property->incentive = $incentive;
+            if ($PropertyIncentive) {
                 $property->incentive = 1;
             }
-            // Process main image
+
+            // Process images
             $images = json_decode($property->images);
             if (is_array($images) && count($images) > 0) {
-                $uploads     = Upload::whereIn('id', $images)->get();
+                $uploads = Upload::whereIn('id', $images)->get();
                 $firstUpload = $uploads->first();
-                $lastUpload  = $uploads->last();
+                $lastUpload = $uploads->last();
 
-                // Check if the first upload exists, then assign its file_name to the property
                 if ($firstUpload) {
-                    $file_image           = $firstUpload->file_name;
+                    $file_image = $firstUpload->file_name;
                     $property->main_image = get_storage_url($file_image);
-
                 }
                 if ($lastUpload) {
-                    $file_image       = $lastUpload->file_name;
+                    $file_image = $lastUpload->file_name;
                     $property->banner = get_storage_url($file_image);
                 }
             }
-            // $uploads = Upload::whereIn('id', $images)->get();
-            // $firstUpload = $uploads->first();
-            // $lastUpload = $uploads->last();
 
-            // // Check if the first upload exists, then assign its file_name to the property
-            // if ($firstUpload) {
-            //     $file_image = $firstUpload->file_name;
-            //     $property->main_image = get_storage_url($file_image);
+            // Community details and incentives
+            $community = Community::find($property->community_id);
+            if ($community) {
+                if ($community->banner) {
+                    $community_upload = Upload::find($community->banner);
+                    if ($community_upload) {
+                        $community->banner = get_storage_url($community_upload->file_name);
+                    }
+                }
 
-            // }
-            // if ($lastUpload) {
-            //     $file_image = $lastUpload->file_name;
-            //     $property->banner = get_storage_url($file_image);
-            // }
-
+                // Builder and incentive
+                $community_builder = BuildersCommunity::where('community_id', $community->id)->first();
+                if ($community_builder) {
+                    $builder = Builder::where('id', $community_builder->builder_id)->first();
+                    if ($builder) {
+                        $incentive_record = Incentive::where('builder_id', $builder->id)
+                            ->where('end_date', '>=', $currentDate)
+                            ->first();
+                        if ($incentive_record) {
+                            $property->incentive = $incentive_record->title ?? "";
+                        }
+                    }
+                }
+            }
         }
 
-        return ['properties' => $properties, 'total_homes' => $total_homes];
+        return [
+            'properties' => $properties,
+            'total_homes' => $total_homes,
+            'sort_by' => $sort_by
+        ];
     }
 
     public function quickSearch(Request $request)

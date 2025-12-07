@@ -12,13 +12,18 @@
 }
 
 .contact-hero-section::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
 }
 
 .contact-title-main {
@@ -155,10 +160,10 @@
 
 .toggle-btn {
     background: linear-gradient(
-  to right,
-  hsl(213 71% 45%),  /* lighter */
-  hsl(213 71% 30%)   /* darker */
-);
+        to right,
+        hsl(213 71% 45%),
+        /* lighter */ hsl(213 71% 30%) /* darker */
+    );
     border: none;
     border-radius: 12px;
     padding: 1rem 1.5rem;
@@ -170,10 +175,10 @@
 
 .toggle-btn:hover {
     background: linear-gradient(
-  to right,
-  hsl(213 71% 45%),  /* lighter */
-  hsl(213 71% 30%)   /* darker */
-);
+        to right,
+        hsl(213 71% 45%),
+        /* lighter */ hsl(213 71% 30%) /* darker */
+    );
     transform: translateY(-2px);
     box-shadow: 0 8px 20px hsl(213 71% 45%);
 }
@@ -336,7 +341,11 @@
     position: absolute;
     width: 150px;
     height: 150px;
-    background: linear-gradient(135deg, rgba(229, 62, 62, 0.1), rgba(255, 255, 255, 0.05));
+    background: linear-gradient(
+        135deg,
+        rgba(229, 62, 62, 0.1),
+        rgba(255, 255, 255, 0.05)
+    );
     border-radius: 50%;
     filter: blur(30px);
     z-index: 0;
@@ -427,13 +436,43 @@
     height: 1rem;
     border-width: 0.15em;
 }
+/* Visual indicator for required fields */
+.form-label .text-danger {
+    margin-left: 2px;
+}
+
+/* Enhanced validation states */
+.form-control.is-valid {
+    border-color: #28a745;
+    padding-right: calc(1.5em + 0.75rem);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%2328a745' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}
+
+.form-control.is-invalid {
+    border-color: #dc3545;
+    padding-right: calc(1.5em + 0.75rem);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}
+
+.invalid-feedback {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.875em;
+    color: #dc3545;
+}
 </style>
 
 <template>
     <Master>
         <!-- Hero Section -->
         <section class="contact-hero-section">
-            <div class="container position-relative" style="z-index: 1;">
+            <div class="container position-relative" style="z-index: 1">
                 <h1 class="contact-title-main">Contact Yvonne Khoo</h1>
                 <p class="contact-subtitle">
                     Ready to start your real estate journey? Whether you're
@@ -454,20 +493,28 @@
                     <!-- Left Column - Contact Info -->
                     <div>
                         <div class="contact-info-card">
-                            <h3 class="contact-info-title">Better yet, see us in person!</h3>
+                            <h3 class="contact-info-title">
+                                Better yet, see us in person!
+                            </h3>
                             <p class="contact-info-text">
-                                We love our customers, so feel free to visit during normal business hours.
+                                We love our customers, so feel free to visit
+                                during normal business hours.
                             </p>
 
                             <div class="contact-detail">
-                                <h5 class="contact-detail-title">Brand New Homes Vegas</h5>
+                                <h5 class="contact-detail-title">
+                                    Brand New Homes Vegas
+                                </h5>
                                 <p class="contact-detail-text">
-                                    10845 Griffith Peak Drive, Suite 2, Las Vegas, NV 89135
+                                    10845 Griffith Peak Drive, Suite 2, Las
+                                    Vegas, NV 89135
                                 </p>
                             </div>
 
                             <div class="contact-detail">
-                                <h5 class="contact-detail-title">Phone | 24-Hour Emergency Assistance</h5>
+                                <h5 class="contact-detail-title">
+                                    Phone | 24-Hour Emergency Assistance
+                                </h5>
                                 <p class="contact-detail-text">
                                     USA & Canada: (702) 819-0035 <br />
                                     Overseas: +1 (702) 819-0035
@@ -478,11 +525,19 @@
                         <div class="contact-accordion mt-4">
                             <div class="accordion-item border-0">
                                 <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#officeHours">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#officeHours"
+                                    >
                                         OFFICE HOURS
                                     </button>
                                 </h2>
-                                <div id="officeHours" class="accordion-collapse collapse show">
+                                <div
+                                    id="officeHours"
+                                    class="accordion-collapse collapse show"
+                                >
                                     <div class="accordion-body">
                                         <ul class="office-hours-list">
                                             <li>
@@ -503,12 +558,11 @@
                             </div>
                         </div>
 
-
                         <!-- Form Toggle Buttons -->
                         <div class="form-toggle-buttons">
                             <button
                                 class="toggle-btn"
-                                @click="showForm('Agent')"
+                                @click="initializeForm('Agent')"
                                 data-bs-toggle="collapse"
                                 data-bs-target=".multi-collapse"
                             >
@@ -516,7 +570,7 @@
                             </button>
                             <button
                                 class="toggle-btn"
-                                @click="showForm('Customer')"
+                                @click="initializeForm('Customer')"
                                 data-bs-toggle="collapse"
                                 data-bs-target=".multi-collapse"
                             >
@@ -527,66 +581,141 @@
 
                     <!-- Right Column - Contact Form -->
                     <div>
-                        <div class="collapse multi-collapse" id="collapseContactForm">
+                        <div
+                            class="collapse multi-collapse"
+                            id="collapseContactForm"
+                        >
                             <div class="contact-form-card">
                                 <div class="form-header">
                                     <h3 class="form-title">
-                                        Dear <span style="color: #e53e3e;">{{ contacting_user }}</span>, Drop us a line
+                                        Dear
+                                        <span style="color: #e53e3e">{{
+                                            contacting_user
+                                        }}</span
+                                        >, Drop us a line
                                     </h3>
-                                    <p class="form-subtitle">We'll get back to you as soon as possible</p>
+                                    <p class="form-subtitle">
+                                        We'll get back to you as soon as
+                                        possible
+                                    </p>
                                 </div>
 
                                 <div class="row g-3">
                                     <div class="col-12">
-                                        <label class="form-label">{{ translate("Your Full Name") }}</label>
+                                        <label class="form-label">
+                                            {{ translate("Your Full Name") }}
+                                            <span class="text-danger">*</span>
+                                        </label>
                                         <input
                                             type="text"
                                             class="form-control"
-                                            :class="{ 'invalid-bg': formErrors.name }"
+                                            :class="{
+                                                'invalid-bg': formErrors.name,
+                                                'is-invalid': formErrors.name,
+                                                'is-valid':
+                                                    form.name &&
+                                                    !formErrors.name &&
+                                                    formTouched.name,
+                                            }"
                                             v-model="form.name"
+                                            @blur="formTouched.name = true"
+                                            @input="clearFieldError('name')"
+                                            placeholder="Enter your full name"
                                         />
-                                        <div class="invalid-feedback" v-if="formErrors.name">
+                                        <div
+                                            class="invalid-feedback d-block"
+                                            v-if="formErrors.name"
+                                        >
                                             {{ formErrors.name[0] }}
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
-                                        <label class="form-label">Email</label>
+                                        <label class="form-label">
+                                            Email
+                                            <span class="text-danger">*</span>
+                                        </label>
                                         <input
-                                            type="text"
+                                            type="email"
                                             class="form-control"
-                                            :class="{ 'invalid-bg': formErrors.email }"
+                                            :class="{
+                                                'invalid-bg': formErrors.email,
+                                                'is-invalid': formErrors.email,
+                                                'is-valid':
+                                                    form.email &&
+                                                    !formErrors.email &&
+                                                    formTouched.email,
+                                            }"
                                             v-model="form.email"
+                                            @blur="formTouched.email = true"
+                                            @input="clearFieldError('email')"
+                                            placeholder="your.email@example.com"
                                         />
-                                        <div class="invalid-feedback" v-if="formErrors.email">
+                                        <div
+                                            class="invalid-feedback d-block"
+                                            v-if="formErrors.email"
+                                        >
                                             {{ formErrors.email[0] }}
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
-                                        <label class="form-label">Phone</label>
+                                        <label class="form-label">
+                                            Phone
+                                            <span class="text-danger">*</span>
+                                        </label>
                                         <input
                                             type="tel"
                                             class="form-control"
                                             v-model.trim="form.phone"
                                             inputmode="tel"
                                             placeholder="+1 7021234567 or 7021234567"
-                                            :class="{ 'invalid-bg': formErrors.phone }"
+                                            :class="{
+                                                'invalid-bg': formErrors.phone,
+                                                'is-invalid': formErrors.phone,
+                                                'is-valid':
+                                                    form.phone &&
+                                                    !formErrors.phone &&
+                                                    formTouched.phone,
+                                            }"
+                                            @blur="formTouched.phone = true"
+                                            @input="clearFieldError('phone')"
                                         />
-                                        <div class="invalid-feedback" v-if="formErrors.phone">
+                                        <div
+                                            class="invalid-feedback d-block"
+                                            v-if="formErrors.phone"
+                                        >
                                             {{ formErrors.phone[0] }}
                                         </div>
                                     </div>
 
                                     <div class="col-12">
-                                        <label class="form-label">Message</label>
+                                        <label class="form-label">
+                                            Message
+                                            <span class="text-danger">*</span>
+                                        </label>
                                         <textarea
                                             class="form-control"
-                                            :class="{ 'invalid-bg': formErrors.message }"
+                                            :class="{
+                                                'invalid-bg':
+                                                    formErrors.message,
+                                                'is-invalid':
+                                                    formErrors.message,
+                                                'is-valid':
+                                                    form.message &&
+                                                    !formErrors.message &&
+                                                    formTouched.message,
+                                            }"
                                             v-model="form.message"
                                             rows="4"
+                                            @blur="formTouched.message = true"
+                                            @input="clearFieldError('message')"
+                                            placeholder="Tell us how we can help you..."
                                         ></textarea>
-                                        <div class="invalid-feedback" v-if="formErrors.message">
+                                        <div
+                                            class="invalid-feedback d-block"
+                                            v-if="formErrors.message"
+                                        >
                                             {{ formErrors.message[0] }}
                                         </div>
                                     </div>
@@ -598,10 +727,15 @@
                                                 :disabled="!formStatus"
                                                 @click="save"
                                             >
-                                                <span v-if="formStatus">{{ translate("Send Message") }}</span>
+                                                <span v-if="formStatus">{{
+                                                    translate("Send Message")
+                                                }}</span>
                                                 <span v-else>
                                                     {{ translate("Sending") }}
-                                                    <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                                                    <span
+                                                        class="spinner-border spinner-border-sm"
+                                                        aria-hidden="true"
+                                                    ></span>
                                                 </span>
                                             </button>
                                             <button
@@ -609,7 +743,7 @@
                                                 type="button"
                                                 data-bs-toggle="collapse"
                                                 data-bs-target=".multi-collapse"
-                                                @click="showForm(null)"
+                                                @click="cancelForm"
                                             >
                                                 Cancel
                                             </button>
@@ -629,27 +763,41 @@
                 <h2 class="faq-title">Frequently Asked Questions</h2>
                 <div class="faq-grid">
                     <div class="faq-item">
-                        <h4 class="faq-question">How quickly can I expect a response?</h4>
+                        <h4 class="faq-question">
+                            How quickly can I expect a response?
+                        </h4>
                         <p class="faq-answer">
-                            I typically respond to all inquiries within 24 hours, often much sooner during business hours.
+                            I typically respond to all inquiries within 24
+                            hours, often much sooner during business hours.
                         </p>
                     </div>
                     <div class="faq-item">
-                        <h4 class="faq-question">Do you work with out-of-state buyers?</h4>
+                        <h4 class="faq-question">
+                            Do you work with out-of-state buyers?
+                        </h4>
                         <p class="faq-answer">
-                            Yes! I frequently work with clients relocating to Las Vegas and can facilitate virtual tours and remote transactions.
+                            Yes! I frequently work with clients relocating to
+                            Las Vegas and can facilitate virtual tours and
+                            remote transactions.
                         </p>
                     </div>
                     <div class="faq-item">
-                        <h4 class="faq-question">What areas of Las Vegas do you serve?</h4>
+                        <h4 class="faq-question">
+                            What areas of Las Vegas do you serve?
+                        </h4>
                         <p class="faq-answer">
-                            I work throughout the entire Las Vegas Valley, including Las Vegas, North Las Vegas, Henderson, and surrounding areas.
+                            I work throughout the entire Las Vegas Valley,
+                            including Las Vegas, North Las Vegas, Henderson, and
+                            surrounding areas.
                         </p>
                     </div>
                     <div class="faq-item">
-                        <h4 class="faq-question">Do you charge for initial consultations?</h4>
+                        <h4 class="faq-question">
+                            Do you charge for initial consultations?
+                        </h4>
                         <p class="faq-answer">
-                            No, I offer complimentary initial consultations to discuss your real estate needs and how I can help.
+                            No, I offer complimentary initial consultations to
+                            discuss your real estate needs and how I can help.
                         </p>
                     </div>
                 </div>
@@ -660,6 +808,7 @@
 
 <script>
 import Master from "@components/layout/Master.vue";
+
 export default {
     components: {
         Master,
@@ -689,30 +838,63 @@ export default {
                 message: "",
                 contacted_from: "",
             },
-            formErrors: [],
+            formErrors: {},
+            formTouched: {
+                name: false,
+                email: false,
+                phone: false,
+                message: false,
+            },
             formStatus: 1,
             contactFormBtnStatus: 0,
             contacting_user: "",
+            isFormInitialized: false,
         };
     },
     methods: {
-        showForm(user) {
+        initializeForm(user) {
             this.contactFormBtnStatus = 1;
             this.contacting_user = user;
-            this.form = Object.assign(
-                {},
-                {
+
+            if (!this.isFormInitialized) {
+                this.form = {
                     name: "",
                     phone: "",
                     email: "",
                     message: "",
                     contacted_from: user,
-                }
-            );
-            this.formErrors = [];
+                };
+                this.isFormInitialized = true;
+            } else {
+                this.form.contacted_from = user;
+            }
+
+            this.formErrors = {};
         },
-        hideForm() {
+
+        cancelForm() {
+            this.form = {
+                name: "",
+                phone: "",
+                email: "",
+                message: "",
+                contacted_from: "",
+            };
+            this.formErrors = {};
+            this.formTouched = {
+                name: false,
+                email: false,
+                phone: false,
+                message: false,
+            };
             this.contactFormBtnStatus = 0;
+            this.isFormInitialized = false;
+        },
+
+        clearFieldError(field) {
+            if (this.formErrors[field]) {
+                this.$delete(this.formErrors, field);
+            }
         },
 
         fetchWesiteInfo() {
@@ -727,29 +909,64 @@ export default {
                     toastr.error(error.response.data.message);
                 });
         },
+
         save() {
             this.formStatus = 0;
             axios
                 .post("/api/contact-save", this.form)
-                .then((data) => {
+                .then((response) => {
                     toastr.success(
-                        this.translate("Message Sent successfully.")
+                        "Thank you! An agent will contact you shortly",
+                        "Message Sent",
+                        {
+                            timeOut: 5000,
+                            closeButton: true,
+                            progressBar: true,
+                            positionClass: "toast-top-right",
+                        }
                     );
+
                     this.form = {
                         name: "",
                         email: "",
                         phone: "",
                         message: "",
+                        contacted_from: "",
+                    };
+                    this.formErrors = {};
+                    this.formTouched = {
+                        name: false,
+                        email: false,
+                        phone: false,
+                        message: false,
                     };
                     this.contactFormBtnStatus = 0;
-                    this.formErrors = [];
                     this.formStatus = 1;
+                    this.isFormInitialized = false;
+
+                    setTimeout(() => {
+                        const collapseElement = document.querySelector(
+                            '[data-bs-toggle="collapse"][data-bs-target=".multi-collapse"]'
+                        );
+                        if (collapseElement) {
+                            collapseElement.click();
+                        }
+                    }, 1500);
                 })
                 .catch((error) => {
                     this.formStatus = 1;
-                    toastr.error(error.response.data.message);
 
-                    if (error.response.data.errors) {
+                    const errorMessage =
+                        error.response?.data?.message ||
+                        "An error occurred. Please try again.";
+                    toastr.error(errorMessage, "Error", {
+                        timeOut: 5000,
+                        closeButton: true,
+                        progressBar: true,
+                        positionClass: "toast-top-right",
+                    });
+
+                    if (error.response?.data?.errors) {
                         this.formErrors = error.response.data.errors;
                     }
                 });

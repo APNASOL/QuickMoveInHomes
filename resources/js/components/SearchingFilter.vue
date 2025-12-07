@@ -230,6 +230,30 @@
                         </div>
                     </div>
 
+                    <!-- No Results Message -->
+                    <div
+                        v-if="homes.length === 0 && formStatus === 1"
+                        class="no-results"
+                    >
+                        <div class="no-results-icon">
+                            <i class="bi bi-house-x"></i>
+                        </div>
+                        <h4>No Properties Found</h4>
+                        <p v-if="hasActiveFilters()">
+                            No properties match your current filters. Try
+                            adjusting your search criteria.
+                        </p>
+                        <p v-else>No properties are currently available.</p>
+                        <button
+                            v-if="hasActiveFilters()"
+                            @click="resetForm"
+                            class="action-btn btn-primary"
+                        >
+                            <i class="bi bi-arrow-repeat me-2"></i>
+                            Clear All Filters
+                        </button>
+                    </div>
+
                     <!-- Homes Grid -->
                     <div v-if="homes && homes.length > 0" class="homes-grid">
                         <div
@@ -347,8 +371,64 @@
         <!-- Map Section -->
         <section class="map-section">
             <div class="container-fluid">
-                <div class="map-container">
-                    <Map v-if="loadmap" :homes="homes" />
+                <!-- Show Map with Properties -->
+                <div v-if="homes.length > 0 && loadmap" class="map-container">
+                    <Map :homes="homes" />
+                </div>
+
+                <!-- Show Message When No Results with Filters -->
+                <div
+                    v-else-if="
+                        homes.length === 0 &&
+                        hasActiveFilters() &&
+                        formStatus === 1
+                    "
+                    class="map-placeholder"
+                >
+                    <div class="map-message">
+                        <div class="message-icon">
+                            <i class="bi bi-geo-alt-fill"></i>
+                        </div>
+                        <h4>No Properties to Display on Map</h4>
+                        <p>
+                            Adjust your filters to see properties in this area
+                        </p>
+                        <button
+                            @click="resetForm"
+                            class="action-btn btn-primary"
+                        >
+                            <i class="bi bi-funnel me-2"></i>
+                            Show All Properties
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Show Map Placeholder When No Properties at All -->
+                <div
+                    v-else-if="
+                        homes.length === 0 &&
+                        !hasActiveFilters() &&
+                        formStatus === 1
+                    "
+                    class="map-placeholder"
+                >
+                    <div class="map-message">
+                        <div class="message-icon">
+                            <i class="bi bi-map"></i>
+                        </div>
+                        <h4>Map Unavailable</h4>
+                        <p>No properties available to display</p>
+                    </div>
+                </div>
+
+                <!-- Loading State -->
+                <div v-else-if="formStatus === 0" class="map-placeholder">
+                    <div class="map-message">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <h4 class="mt-3">Loading Properties...</h4>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1122,6 +1202,7 @@ export default {
             schoolOptions: [],
             hoasOptions: [],
             homes: [],
+            total_homes: 0,
             formErrors: [],
             validationErrors: {
                 price: "",
@@ -1171,7 +1252,8 @@ export default {
             const max = parseFloat(this.max_price) || 0;
 
             if (min > 0 && max > 0 && min > max) {
-                this.validationErrors.price = "Minimum price cannot be greater than maximum price. Values will be auto-corrected.";
+                this.validationErrors.price =
+                    "Minimum price cannot be greater than maximum price. Values will be auto-corrected.";
                 return false;
             } else {
                 this.validationErrors.price = "";
@@ -1184,7 +1266,8 @@ export default {
             const max = parseFloat(this.max_square_feet) || 0;
 
             if (min > 0 && max > 0 && min > max) {
-                this.validationErrors.square_feet = "Minimum square feet cannot be greater than maximum. Values will be auto-corrected.";
+                this.validationErrors.square_feet =
+                    "Minimum square feet cannot be greater than maximum. Values will be auto-corrected.";
                 return false;
             } else {
                 this.validationErrors.square_feet = "";
@@ -1197,7 +1280,8 @@ export default {
             const max = parseFloat(this.max_lot_size) || 0;
 
             if (min > 0 && max > 0 && min > max) {
-                this.validationErrors.lot_size = "Minimum lot size cannot be greater than maximum. Values will be auto-corrected.";
+                this.validationErrors.lot_size =
+                    "Minimum lot size cannot be greater than maximum. Values will be auto-corrected.";
                 return false;
             } else {
                 this.validationErrors.lot_size = "";
@@ -1218,7 +1302,10 @@ export default {
                 const min = parseFloat(this.min_price);
                 const max = parseFloat(this.max_price);
                 if (min > max) {
-                    [this.min_price, this.max_price] = [this.max_price, this.min_price];
+                    [this.min_price, this.max_price] = [
+                        this.max_price,
+                        this.min_price,
+                    ];
                 }
             }
 
@@ -1226,7 +1313,10 @@ export default {
                 const min = parseFloat(this.min_square_feet);
                 const max = parseFloat(this.max_square_feet);
                 if (min > max) {
-                    [this.min_square_feet, this.max_square_feet] = [this.max_square_feet, this.min_square_feet];
+                    [this.min_square_feet, this.max_square_feet] = [
+                        this.max_square_feet,
+                        this.min_square_feet,
+                    ];
                 }
             }
 
@@ -1234,7 +1324,10 @@ export default {
                 const min = parseFloat(this.min_lot_size);
                 const max = parseFloat(this.max_lot_size);
                 if (min > max) {
-                    [this.min_lot_size, this.max_lot_size] = [this.max_lot_size, this.min_lot_size];
+                    [this.min_lot_size, this.max_lot_size] = [
+                        this.max_lot_size,
+                        this.min_lot_size,
+                    ];
                 }
             }
         },
@@ -1274,7 +1367,10 @@ export default {
                     this.communities_options = response.data;
                 })
                 .catch((error) => {
-                    toastr.error(error.response?.data?.message || "Failed to load communities");
+                    toastr.error(
+                        error.response?.data?.message ||
+                            "Failed to load communities"
+                    );
                 });
         },
 
@@ -1285,7 +1381,10 @@ export default {
                     this.schoolOptions = response.data;
                 })
                 .catch((error) => {
-                    toastr.error(error.response?.data?.message || "Failed to load schools");
+                    toastr.error(
+                        error.response?.data?.message ||
+                            "Failed to load schools"
+                    );
                 });
         },
 
@@ -1296,44 +1395,29 @@ export default {
                     this.hoasOptions = response.data;
                 })
                 .catch((error) => {
-                    toastr.error(error.response?.data?.message || "Failed to load HOAs");
-                });
-        },
-
-        sortProperties() {
-            let formData = new FormData();
-            formData.append("sort_by", this.sort_by ?? "");
-
-            axios
-                .post("/api/homes/sort", formData)
-                .then((response) => {
-                    this.homes = response.data.properties;
-                    this.loadmap = true;
-                    this.total_homes = response.data.total_homes;
-                    this.formErrors = [];
-                })
-                .catch((error) => {
                     toastr.error(
-                        error.response?.data?.message || "An error occurred while sorting."
+                        error.response?.data?.message || "Failed to load HOAs"
                     );
-                    if (error.response?.data?.errors) {
-                        this.formErrors = error.response.data.errors;
-                    }
                 });
         },
 
-        quickSearch() {
-            this.validateAllRanges();
-
-            this.autoCorrectRanges();
-
+        buildFilterFormData(includeSort = false) {
             let formData = new FormData();
 
+            // Add sort parameter if needed
+            if (includeSort) {
+                formData.append("sort_by", this.sort_by ?? "");
+            }
+
+            // Add filter parameters only if they have values
             if (this.is_open_house) {
                 formData.append("is_open_house", this.is_open_house ? 1 : 0);
             }
             if (this.main_search_field && this.main_search_field.trim()) {
-                formData.append("main_search_field", this.main_search_field.trim());
+                formData.append(
+                    "main_search_field",
+                    this.main_search_field.trim()
+                );
             }
             if (this.min_price) {
                 formData.append("min_price", this.min_price);
@@ -1360,23 +1444,91 @@ export default {
                 formData.append("bedrooms", this.bedrooms);
             }
 
+            return formData;
+        },
+
+        hasActiveFilters() {
+            return !!(
+                this.main_search_field ||
+                this.min_price ||
+                this.max_price ||
+                this.min_square_feet ||
+                this.max_square_feet ||
+                this.min_lot_size ||
+                this.max_lot_size ||
+                this.bathroom ||
+                this.bedrooms ||
+                this.is_open_house
+            );
+        },
+
+        quickSearch() {
+            // Set loading state
+            this.formStatus = 0;
+            this.loadmap = false;
+
+            // Validate ranges before searching
+            this.validateAllRanges();
+
+            // Auto-correct inverted ranges
+            this.autoCorrectRanges();
+
+            // Build form data with current filters
+            let formData = this.buildFilterFormData(false);
+
             axios
                 .post("/api/quick/search", formData)
                 .then((response) => {
                     this.homes = response.data.properties;
                     this.total_homes = response.data.total_homes;
-                    this.loadmap = true;
+                    this.loadmap = this.homes.length > 0;
+                    this.formStatus = 1;
                     this.formErrors = [];
 
+                    // Clear validation errors on successful search
                     this.validationErrors = {
                         price: "",
                         square_feet: "",
                         lot_size: "",
                     };
+                    // Show success message if results found
+                    if (this.homes.length > 0) {
+                        toastr.success(
+                            `Found ${this.total_homes} ${
+                                this.total_homes === 1
+                                    ? "property"
+                                    : "properties"
+                            }`
+                        );
+                    }
                 })
                 .catch((error) => {
                     toastr.error(
-                        error.response?.data?.message || "An error occurred during search."
+                        error.response?.data?.message ||
+                            "An error occurred during search."
+                    );
+                    if (error.response?.data?.errors) {
+                        this.formErrors = error.response.data.errors;
+                    }
+                });
+        },
+
+        sortProperties() {
+            // Build form data with sort parameter AND all active filters
+            let formData = this.buildFilterFormData(true);
+
+            axios
+                .post("/api/homes/sort", formData)
+                .then((response) => {
+                    this.homes = response.data.properties;
+                    this.loadmap = true;
+                    this.total_homes = response.data.total_homes;
+                    this.formErrors = [];
+                })
+                .catch((error) => {
+                    toastr.error(
+                        error.response?.data?.message ||
+                            "An error occurred while sorting."
                     );
                     if (error.response?.data?.errors) {
                         this.formErrors = error.response.data.errors;
@@ -1389,7 +1541,11 @@ export default {
             let formData = new FormData();
 
             Object.keys(this.form).forEach((key) => {
-                if (this.form[key] !== null && this.form[key] !== "" && this.form[key] !== "null") {
+                if (
+                    this.form[key] !== null &&
+                    this.form[key] !== "" &&
+                    this.form[key] !== "null"
+                ) {
                     formData.append(key, this.form[key]);
                 }
             });
@@ -1406,7 +1562,8 @@ export default {
                 .catch((error) => {
                     this.formStatus = 1;
                     toastr.error(
-                        error.response?.data?.message || "An error occurred during search."
+                        error.response?.data?.message ||
+                            "An error occurred during search."
                     );
                     if (error.response?.data?.errors) {
                         this.formErrors = error.response.data.errors;
@@ -1899,12 +2056,168 @@ export default {
 
 /* Map Section */
 .map-section {
-    padding: 0;
+    padding: 2rem 0;
+    background: #f8f9fa;
+    min-height: 500px;
 }
 
 .map-container {
-    height: 600px;
-    background: #f8fafc;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    height: 500px;
+    background: white;
+}
+
+/* Map Placeholder for Zero Results */
+.map-placeholder {
+    border-radius: 1rem;
+    background: white;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+}
+
+.map-message {
+    text-align: center;
+    max-width: 500px;
+}
+
+.message-icon {
+    font-size: 4rem;
+    color: #cbd5e0;
+    margin-bottom: 1.5rem;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.map-message h4 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 0.75rem;
+}
+
+.map-message p {
+    color: #718096;
+    font-size: 1.125rem;
+    margin-bottom: 2rem;
+}
+
+.map-message .action-btn {
+    padding: 0.875rem 2rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.map-message .btn-outline {
+    background: linear-gradient(to right, hsl(213 71% 45%), hsl(213 71% 30%));
+    border: 2px solid #0d6efd;
+}
+
+.map-message .btn-outline:hover {
+    background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* No Results Section Enhanced */
+.no-results {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+    border-radius: 1rem;
+    border: 2px dashed #cbd5e0;
+}
+
+.no-results-icon {
+    font-size: 5rem;
+    color: #a0aec0;
+    margin-bottom: 1.5rem;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: scale(0.95);
+    }
+}
+
+.no-results h4 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 1rem;
+}
+
+.no-results p {
+    color: #718096;
+    font-size: 1.125rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+/* Loading Spinner */
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+    border-width: 0.3rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .map-placeholder {
+        height: 400px;
+        padding: 2rem 1rem;
+    }
+
+    .message-icon {
+        font-size: 3rem;
+    }
+
+    .map-message h4 {
+        font-size: 1.25rem;
+    }
+
+    .map-message p {
+        font-size: 1rem;
+    }
+
+    .no-results {
+        padding: 3rem 1.5rem;
+    }
+
+    .no-results-icon {
+        font-size: 4rem;
+    }
+
+    .no-results h4 {
+        font-size: 1.5rem;
+    }
 }
 
 /* Modal Styling */

@@ -12,7 +12,7 @@
 }
 
 .events-hero::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -134,10 +134,10 @@
 /* Registration Button */
 .register-btn {
     background: linear-gradient(
-  to right,
-  hsl(213 71% 45%),  /* lighter */
-  hsl(213 71% 30%)   /* darker */
-);
+        to right,
+        hsl(213 71% 45%),
+        /* lighter */ hsl(213 71% 30%) /* darker */
+    );
     border: none;
     border-radius: 12px;
     padding: 0.75rem 1.5rem;
@@ -152,10 +152,10 @@
 
 .register-btn:hover {
     background: linear-gradient(
-  to right,
-  hsl(213 71% 45%),  /* lighter */
-  hsl(213 71% 30%)   /* darker */
-);
+        to right,
+        hsl(213 71% 45%),
+        /* lighter */ hsl(213 71% 30%) /* darker */
+    );
     transform: translateY(-2px);
     box-shadow: 0 8px 20px hsl(213 71% 45%);
     color: white;
@@ -187,7 +187,11 @@
     position: absolute;
     width: 200px;
     height: 200px;
-    background: linear-gradient(135deg, rgba(229, 62, 62, 0.1), rgba(26, 54, 93, 0.05));
+    background: linear-gradient(
+        135deg,
+        rgba(229, 62, 62, 0.1),
+        rgba(26, 54, 93, 0.05)
+    );
     border-radius: 50%;
     filter: blur(40px);
     z-index: 0;
@@ -261,19 +265,28 @@
 }
 
 .event-card.loading::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.4),
+        transparent
+    );
     animation: loading 1.5s infinite;
 }
 
 @keyframes loading {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
 }
 
 /* QL Editor Content Styling */
@@ -289,6 +302,35 @@
 :deep(.ql-editor p:last-child) {
     margin-bottom: 0;
 }
+.event-card.past {
+    opacity: 0.6;
+}
+.action-btn {
+    padding: 0.75rem 2rem;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    cursor: pointer;
+    min-width: 120px;
+}
+
+.btn-primary {
+    background: linear-gradient(to right, hsl(213 71% 45%), hsl(213 71% 30%));
+    color: white;
+    margin-bottom: 20px;
+}
+
+.btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+}
+
+.btn-primary:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
 </style>
 
 <template>
@@ -298,14 +340,15 @@
             <div class="decoration decoration-1"></div>
             <div class="decoration decoration-2"></div>
 
-            <div class="container position-relative" style="z-index: 1;">
+            <div class="container position-relative" style="z-index: 1">
                 <div class="row align-items-center">
                     <div class="col-12 text-center">
                         <h1 class="hero-title">
                             Upcoming Events & Exclusive Incentives!
                         </h1>
                         <p class="hero-subtitle">
-                            Explore special events and financial benefits curated just for you.
+                            Explore special events and financial benefits
+                            curated just for you.
                         </p>
                     </div>
                 </div>
@@ -315,16 +358,20 @@
         <!-- Events Content -->
         <section class="events-content">
             <div class="container">
-                <!-- Events Grid -->
-                <div v-if="events && events.length" class="events-grid">
+                <!-- Upcoming Events Section -->
+                <h2 class="section-title">Upcoming Events</h2>
+
+                <div v-if="upcomingEvents.length" class="events-grid">
                     <div
                         class="event-card"
-                        v-for="event in events"
+                        v-for="event in upcomingEvents"
                         :key="event.id"
                     >
                         <div class="event-image-wrapper">
                             <img
-                                :src="event.image ?? '/images/default_image.png'"
+                                :src="
+                                    event.image ?? '/images/default_image.png'
+                                "
                                 class="event-image"
                                 :alt="event.title"
                                 @error="setAltImg"
@@ -336,7 +383,9 @@
                             <div class="event-date">{{ event.date }}</div>
 
                             <div class="event-description ql-editor">
-                                <span v-html="getTruncatedDescription(event)"></span>
+                                <span
+                                    v-html="getTruncatedDescription(event)"
+                                ></span>
                                 <span
                                     v-if="event.description.length > 200"
                                     class="read-more"
@@ -361,10 +410,83 @@
                     </div>
                 </div>
 
-                <!-- No Events State -->
                 <div v-else class="no-events">
                     <h4>No Upcoming Events</h4>
-                    <p>Check back soon for new events and exclusive opportunities.</p>
+                    <p>
+                        Check back soon for new events and exclusive
+                        opportunities.
+                    </p>
+                </div>
+
+                <hr />
+
+                <!-- Toggle Button for Past Events -->
+                <button
+                    class="action-btn btn-primary toggle-btn"
+                    @click="showPastEvents = !showPastEvents"
+                >
+                    {{
+                        showPastEvents ? "Hide Past Events" : "Show Past Events"
+                    }}
+                </button>
+
+                <!-- Past Events Section -->
+                <div v-if="showPastEvents">
+                    <h2 class="section-title">Past Events</h2>
+
+                    <div v-if="pastEvents.length" class="events-grid">
+                        <div
+                            class="event-card past"
+                            v-for="event in pastEvents"
+                            :key="event.id"
+                        >
+                            <div class="event-image-wrapper">
+                                <img
+                                    :src="
+                                        event.image ??
+                                        '/images/default_image.png'
+                                    "
+                                    class="event-image"
+                                    :alt="event.title"
+                                    @error="setAltImg"
+                                />
+                            </div>
+
+                            <div class="event-content">
+                                <h3 class="event-title">{{ event.title }}</h3>
+                                <div class="event-date">{{ event.date }}</div>
+
+                                <div class="event-description ql-editor">
+                                    <span
+                                        v-html="getTruncatedDescription(event)"
+                                    ></span>
+                                    <span
+                                        v-if="event.description.length > 200"
+                                        class="read-more"
+                                        @click="toggleDescription(event.id)"
+                                    >
+                                        {{
+                                            showFullDescription[event.id]
+                                                ? "Show Less"
+                                                : "Read More"
+                                        }}
+                                    </span>
+                                </div>
+
+                                <a
+                                    :href="'http://' + event.registeration_link"
+                                    target="_blank"
+                                    class="register-btn"
+                                >
+                                    Details & Registration
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div v-else class="no-events">
+                        <p>No Past Events</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -391,7 +513,20 @@ export default {
         return {
             events: [],
             showFullDescription: {},
+            showPastEvents: false,
         };
+    },
+
+    computed: {
+        upcomingEvents() {
+            const today = new Date();
+            return this.events.filter((event) => new Date(event.date) >= today);
+        },
+
+        pastEvents() {
+            const today = new Date();
+            return this.events.filter((event) => new Date(event.date) < today);
+        },
     },
 
     methods: {
@@ -400,7 +535,6 @@ export default {
                 .get("/api/all-events")
                 .then((response) => {
                     this.events = response.data;
-                    // Initialize showFullDescription for each event
                     this.events.forEach((event) => {
                         this.showFullDescription[event.id] = false;
                     });
@@ -415,13 +549,11 @@ export default {
         },
 
         toggleDescription(eventId) {
-            // Toggle full description visibility
             this.showFullDescription[eventId] =
                 !this.showFullDescription[eventId];
         },
 
         getTruncatedDescription(event) {
-            // Display full description if toggled, otherwise truncate
             return this.showFullDescription[event.id]
                 ? event.description
                 : event.description.slice(0, 200) + "...";

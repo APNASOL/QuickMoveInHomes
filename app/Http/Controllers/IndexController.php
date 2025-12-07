@@ -174,7 +174,7 @@ class IndexController extends Controller
                 // $property->incentive = $incentive;
                 $property->incentive = 1;
             }
-            
+
 
             return $property;
         });
@@ -184,11 +184,11 @@ class IndexController extends Controller
 
     public function all_events()
     {
-        $currentDate = Carbon::now();
-        $events      = Event::where('date', '>', $currentDate)->get();
+        $events = Event::orderBy('date', 'asc')->get();
+
         foreach ($events as $event) {
             if ($event->image) {
-                $uploaded_image = Upload::where('id', $event->image)->first();
+                $uploaded_image = Upload::find($event->image);
                 if ($uploaded_image) {
                     $event->image = get_storage_url($uploaded_image->file_name);
                 }
@@ -196,8 +196,10 @@ class IndexController extends Controller
                 $event->image = get_storage_url('');
             }
         }
+
         return $events;
     }
+
     public function incentives_list()
     {
 
