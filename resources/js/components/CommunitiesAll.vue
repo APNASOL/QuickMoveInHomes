@@ -12,13 +12,18 @@
 }
 
 .communities-hero-section::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
 }
 
 .hero-content {
@@ -97,10 +102,10 @@
     top: 1rem;
     right: 1rem;
     background: linear-gradient(
-  to right,
-  hsl(213 71% 45%),  /* lighter */
-  hsl(213 71% 30%)   /* darker */
-);
+        to right,
+        hsl(213 71% 45%),
+        /* lighter */ hsl(213 71% 30%) /* darker */
+    );
     color: white;
     padding: 0.5rem 1rem;
     border-radius: 20px;
@@ -150,10 +155,10 @@
 
 .community-cta {
     background: linear-gradient(
-  to right,
-  hsl(213 71% 45%),  /* lighter */
-  hsl(213 71% 30%)   /* darker */
-);
+        to right,
+        hsl(213 71% 45%),
+        /* lighter */ hsl(213 71% 30%) /* darker */
+    );
     border: none;
     border-radius: 12px;
     padding: 0.75rem 1.5rem;
@@ -167,10 +172,10 @@
 
 .community-cta:hover {
     background: linear-gradient(
-  to right,
-  hsl(213 71% 45%),  /* lighter */
-  hsl(213 71% 30%)   /* darker */
-);
+        to right,
+        hsl(213 71% 45%),
+        /* lighter */ hsl(213 71% 30%) /* darker */
+    );
     transform: translateY(-2px);
     box-shadow: 0 8px 20px hsl(213 71% 45%);
     color: white;
@@ -195,19 +200,28 @@
 }
 
 .community-card-loading::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.4),
+        transparent
+    );
     animation: loading 1.5s infinite;
 }
 
 @keyframes loading {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
 }
 
 /* Empty State */
@@ -243,7 +257,11 @@
     position: absolute;
     width: 200px;
     height: 200px;
-    background: linear-gradient(135deg, rgba(229, 62, 62, 0.1), rgba(26, 54, 93, 0.1));
+    background: linear-gradient(
+        135deg,
+        rgba(229, 62, 62, 0.1),
+        rgba(26, 54, 93, 0.1)
+    );
     border-radius: 50%;
     filter: blur(40px);
     z-index: 0;
@@ -341,13 +359,55 @@
     box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.1);
     outline: none;
 }
+.community-description-wrapper {
+    position: relative;
+}
+
+.community-description {
+    max-height: 1.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    transition: max-height 0.3s ease, -webkit-line-clamp 0.3s ease;
+    line-height: 1.5em;
+    margin-bottom: auto;
+}
+
+.community-description.expanded {
+    max-height: none;
+    -webkit-line-clamp: unset;
+}
+
+.read-more-btn {
+    background: none;
+    border: none;
+    color: hsl(213 71% 30%);
+    cursor: pointer;
+    padding: 0;
+    font-size: 0.9em;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    transition: color 0.2s ease;
+}
+
+.read-more-btn:hover {
+    color: #1a365d;
+    text-decoration: underline;
+}
+
+.read-more-btn:focus {
+    outline: 2px solid #1a365d;
+    outline-offset: 2px;
+}
 </style>
 
 <template>
     <Master>
         <!-- Hero Section -->
         <section class="communities-hero-section">
-            <div class="container position-relative" style="z-index: 1;">
+            <div class="container position-relative" style="z-index: 1">
                 <div class="hero-content">
                     <h1 class="page-title">New Home Communities!</h1>
                     <p class="page-subtitle">
@@ -365,7 +425,10 @@
         <section class="communities-grid-section">
             <div class="container">
                 <!-- Communities Grid -->
-                <div v-if="Communities && Communities.length > 0" class="communities-grid">
+                <div
+                    v-if="Communities && Communities.length > 0"
+                    class="communities-grid"
+                >
                     <div
                         v-for="community in Communities"
                         :key="community.id"
@@ -374,7 +437,10 @@
                         <!-- Image + Badge -->
                         <div class="community-image-container">
                             <img
-                                :src="community.main_image ?? '/images/default_image.png'"
+                                :src="
+                                    community.main_image ??
+                                    '/images/default_image.png'
+                                "
                                 class="community-image"
                                 :alt="community.name"
                                 @error="setAltImg"
@@ -388,14 +454,40 @@
                         <div class="community-content">
                             <h2 class="community-name">{{ community.name }}</h2>
 
-                            <div class="community-location" v-if="community.location">
+                            <div
+                                class="community-location"
+                                v-if="community.location"
+                            >
                                 <i class="bi bi-geo-alt"></i>
                                 <span>{{ community.location }}</span>
                             </div>
 
-                            <p class="community-description">
-                                {{ community.description || `Discover the charm of ${community.name} with beautiful homes, thriving communities, and exceptional amenities in the heart of Las Vegas.` }}
-                            </p>
+                            <div class="community-description-wrapper">
+                                <p
+                                    class="community-description"
+                                    :class="{
+                                        expanded:
+                                            expandedDescriptions[community.id],
+                                    }"
+                                >
+                                    {{
+                                        community.description ||
+                                        `Discover the charm of ${community.name} with beautiful homes, thriving communities, and exceptional amenities in the heart of Las Vegas.`
+                                    }}
+                                </p>
+
+                                <button
+                                    v-if="shouldShowReadMore(community)"
+                                    @click="toggleDescription(community.id)"
+                                    class="read-more-btn"
+                                >
+                                    {{
+                                        expandedDescriptions[community.id]
+                                            ? "Read Less"
+                                            : "Read More"
+                                    }}
+                                </button>
+                            </div>
 
                             <a
                                 :href="'/detailed/community/' + community.id"
@@ -409,7 +501,11 @@
 
                 <!-- Loading State -->
                 <div v-else-if="!Communities" class="communities-loading">
-                    <div v-for="n in 6" :key="n" class="community-card-loading"></div>
+                    <div
+                        v-for="n in 6"
+                        :key="n"
+                        class="community-card-loading"
+                    ></div>
                 </div>
 
                 <!-- Empty State -->
@@ -419,7 +515,9 @@
                     </div>
                     <h3 class="empty-state-title">No Communities Available</h3>
                     <p class="empty-state-text">
-                        We're currently updating our community listings. Please check back soon for the latest new home communities in Las Vegas.
+                        We're currently updating our community listings. Please
+                        check back soon for the latest new home communities in
+                        Las Vegas.
                     </p>
                 </div>
             </div>
@@ -438,6 +536,8 @@ export default defineComponent({
     data() {
         return {
             Communities: [],
+            expandedDescriptions: {},
+            characterLimit: 150,
         };
     },
     created() {
@@ -456,6 +556,16 @@ export default defineComponent({
         },
         setAltImg(event) {
             event.target.src = "/images/default_image.png";
+        },
+        toggleDescription(communityId) {
+            this.expandedDescriptions[communityId] =
+                !this.expandedDescriptions[communityId];
+        },
+        shouldShowReadMore(community) {
+            const description =
+                community.description ||
+                `Discover the charm of ${community.name} with beautiful homes, thriving communities, and exceptional amenities in the heart of Las Vegas.`;
+            return description.length > this.characterLimit;
         },
     },
 });
