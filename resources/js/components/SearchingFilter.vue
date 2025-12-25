@@ -2,7 +2,7 @@
     <Master>
         <!-- Filter Section -->
         <section class="filter-section">
-            <div class="container">
+            <div class="container-fluid">
                 <div class="filter-card">
                     <div
                         class="filter-header"
@@ -227,229 +227,295 @@
             </div>
         </section>
 
-        <!-- Results Section -->
-        <section class="content-section">
-            <div class="container">
-                <div class="content-card">
-                    <!-- Results Header -->
-                    <div class="results-header">
-                        <div class="results-info">
-                            <h3 class="results-title">Brand New Homes Vegas</h3>
-                            <p class="results-count">
-                                {{ total_homes }} results found
-                            </p>
-                        </div>
-                        <div class="sort-section">
-                            <label class="sort-label">Sort By</label>
-                            <Multiselect
-                                v-model="sort_by"
-                                :options="sortingOptions"
-                                :placeholder="translate('Sort homes for you')"
-                                :searchable="true"
-                                @select="sortProperties"
-                                class="sort-select"
-                            />
-                        </div>
-                    </div>
+        <!-- Two-Column Layout Section -->
+        <section class="two-column-layout">
+            <div class="container-fluid">
+                <div class="row g-0">
+                    <!-- Left Column - Property Listings -->
+                    <div class="col-lg-7 col-xl-6 listings-column">
+                        <div class="listings-container">
+                            <div class="content-card">
+                                <!-- Results Header -->
+                                <div class="results-header">
+                                    <div class="results-info">
+                                        <h3 class="results-title">
+                                            Brand New Homes Vegas
+                                        </h3>
+                                        <p class="results-count">
+                                            {{ total_homes }} results found
+                                        </p>
+                                    </div>
+                                    <div class="sort-section">
+                                        <label class="sort-label"
+                                            >Sort By</label
+                                        >
+                                        <Multiselect
+                                            v-model="sort_by"
+                                            :options="sortingOptions"
+                                            :placeholder="
+                                                translate('Sort homes for you')
+                                            "
+                                            :searchable="true"
+                                            @select="sortProperties"
+                                            class="sort-select"
+                                        />
+                                    </div>
+                                </div>
 
-                    <!-- No Results Message -->
-                    <div
-                        v-if="homes.length === 0 && formStatus === 1"
-                        class="no-results"
-                    >
-                        <div class="no-results-icon">
-                            <i class="bi bi-house-x"></i>
-                        </div>
-                        <h4>No Properties Found</h4>
-                        <p v-if="hasActiveFilters()">
-                            No properties match your current filters. Try
-                            adjusting your search criteria.
-                        </p>
-                        <p v-else>No properties are currently available.</p>
-                        <button
-                            v-if="hasActiveFilters()"
-                            @click="resetForm"
-                            class="action-btn btn-primary"
-                        >
-                            <i class="bi bi-arrow-repeat me-2"></i>
-                            Clear All Filters
-                        </button>
-                    </div>
-
-                    <!-- Homes Grid -->
-                    <div v-if="homes && homes.length > 0" class="homes-grid">
-                        <div
-                            v-for="home in homes"
-                            :key="home.id"
-                            class="home-card"
-                        >
-                            <div class="home-card-inner">
-                                <!-- Badge -->
+                                <!-- No Results Message -->
                                 <div
-                                    class="home-badge"
-                                    :class="
-                                        home.is_open_house == 1
-                                            ? 'open-house'
-                                            : 'quick-move'
+                                    v-if="
+                                        homes.length === 0 && formStatus === 1
                                     "
+                                    class="no-results"
                                 >
-                                    {{
-                                        home.is_open_house == 1
-                                            ? "OPEN HOUSE"
-                                            : "QUICK MOVE IN"
-                                    }}
-                                </div>
-
-                                <!-- Image -->
-                                <div class="home-image">
-                                    <img
-                                        :src="
-                                            home.main_image ??
-                                            '/images/default_image.png'
-                                        "
-                                        :alt="home.title"
-                                        @error="setAltImg"
-                                    />
-                                    <div
-                                        v-if="home.incentive"
-                                        class="incentive-badge"
-                                    >
-                                        Incentive Home
+                                    <div class="no-results-icon">
+                                        <i class="bi bi-house-x"></i>
                                     </div>
-                                </div>
-
-                                <!-- Content -->
-                                <div class="home-content">
-                                    <!-- Price -->
-                                    <div class="home-price">
-                                        ${{ formatPrice(home.price) }}
-                                    </div>
-
-                                    <!-- Title -->
-                                    <h3 class="home-title">{{ home.title }}</h3>
-
-                                    <!-- Address -->
-                                    <p class="home-address">
-                                        {{ home.address }}
+                                    <h4>No Properties Found</h4>
+                                    <p v-if="hasActiveFilters()">
+                                        No properties match your current
+                                        filters. Try adjusting your search
+                                        criteria.
                                     </p>
+                                    <p v-else>
+                                        No properties are currently available.
+                                    </p>
+                                    <button
+                                        v-if="hasActiveFilters()"
+                                        @click="resetForm"
+                                        class="action-btn btn-primary"
+                                    >
+                                        <i class="bi bi-arrow-repeat me-2"></i>
+                                        Clear All Filters
+                                    </button>
+                                </div>
 
-                                    <!-- Features -->
-                                    <div class="home-features">
-                                        <div class="feature">
-                                            <i class="bi bi-house-door"></i>
-                                            <span class="feature-value">{{
-                                                home.bedrooms || 0
-                                            }}</span>
-                                            <span class="feature-label"
-                                                >bd</span
+                                <!-- Homes Grid -->
+                                <div
+                                    v-if="homes && homes.length > 0"
+                                    class="homes-grid"
+                                >
+                                    <div
+                                        v-for="home in homes"
+                                        :key="home.id"
+                                        class="home-card"
+                                    >
+                                        <div class="home-card-inner">
+                                            <!-- Badge -->
+                                            <div
+                                                class="home-badge"
+                                                :class="
+                                                    home.is_open_house == 1
+                                                        ? 'open-house'
+                                                        : 'quick-move'
+                                                "
                                             >
-                                        </div>
-                                        <div class="feature">
-                                            <i class="bi bi-droplet"></i>
-                                            <span class="feature-value">{{
-                                                home.bathrooms || 0
-                                            }}</span>
-                                            <span class="feature-label"
-                                                >ba</span
-                                            >
-                                        </div>
-                                        <div class="feature">
-                                            <i class="bi bi-aspect-ratio"></i>
-                                            <span class="feature-value">{{
-                                                home.square_feet || 0
-                                            }}</span>
-                                            <span class="feature-label"
-                                                >sqft</span
-                                            >
-                                        </div>
-                                        <div class="feature">
-                                            <i class="bi bi-car-front"></i>
-                                            <span class="feature-value">{{
-                                                home.garages || 0
-                                            }}</span>
-                                            <span class="feature-label"
-                                                >garage</span
-                                            >
+                                                {{
+                                                    home.is_open_house == 1
+                                                        ? "OPEN HOUSE"
+                                                        : "QUICK MOVE IN"
+                                                }}
+                                            </div>
+
+                                            <!-- Image -->
+                                            <div class="home-image">
+                                                <img
+                                                    :src="
+                                                        home.main_image ??
+                                                        '/images/default_image.png'
+                                                    "
+                                                    :alt="home.title"
+                                                    @error="setAltImg"
+                                                />
+                                                <div
+                                                    v-if="home.incentive"
+                                                    class="incentive-badge"
+                                                >
+                                                    Incentive Home
+                                                </div>
+                                            </div>
+
+                                            <!-- Content -->
+                                            <div class="home-content">
+                                                <!-- Price -->
+                                                <div class="home-price">
+                                                    ${{
+                                                        formatPrice(home.price)
+                                                    }}
+                                                </div>
+
+                                                <!-- Title -->
+                                                <h3 class="home-title">
+                                                    {{ home.title }}
+                                                </h3>
+
+                                                <!-- Address -->
+                                                <p class="home-address">
+                                                    {{ home.address }}
+                                                </p>
+
+                                                <!-- Features -->
+                                                <div class="home-features">
+                                                    <div class="feature">
+                                                        <i
+                                                            class="bi bi-house-door"
+                                                        ></i>
+                                                        <span
+                                                            class="feature-value"
+                                                            >{{
+                                                                home.bedrooms ||
+                                                                0
+                                                            }}</span
+                                                        >
+                                                        <span
+                                                            class="feature-label"
+                                                            >bd</span
+                                                        >
+                                                    </div>
+                                                    <div class="feature">
+                                                        <i
+                                                            class="bi bi-droplet"
+                                                        ></i>
+                                                        <span
+                                                            class="feature-value"
+                                                            >{{
+                                                                home.bathrooms ||
+                                                                0
+                                                            }}</span
+                                                        >
+                                                        <span
+                                                            class="feature-label"
+                                                            >ba</span
+                                                        >
+                                                    </div>
+                                                    <div class="feature">
+                                                        <i
+                                                            class="bi bi-aspect-ratio"
+                                                        ></i>
+                                                        <span
+                                                            class="feature-value"
+                                                            >{{
+                                                                home.square_feet ||
+                                                                0
+                                                            }}</span
+                                                        >
+                                                        <span
+                                                            class="feature-label"
+                                                            >sqft</span
+                                                        >
+                                                    </div>
+                                                    <div class="feature">
+                                                        <i
+                                                            class="bi bi-car-front"
+                                                        ></i>
+                                                        <span
+                                                            class="feature-value"
+                                                            >{{
+                                                                home.garages ||
+                                                                0
+                                                            }}</span
+                                                        >
+                                                        <span
+                                                            class="feature-label"
+                                                            >garage</span
+                                                        >
+                                                    </div>
+                                                </div>
+
+                                                <!-- View Details Button -->
+                                                <a
+                                                    :href="
+                                                        '/home-details/' +
+                                                        home.property_id
+                                                    "
+                                                    class="view-details-btn"
+                                                >
+                                                    View Property Details
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
-
-                                    <!-- View Details Button -->
-                                    <a
-                                        :href="
-                                            '/home-details/' + home.property_id
-                                        "
-                                        class="view-details-btn"
-                                    >
-                                        View Property Details
-                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
 
-        <!-- Map Section -->
-        <section class="map-section">
-            <div class="container-fluid">
-                <!-- Show Map with Properties -->
-                <div v-if="homes.length > 0 && loadmap" class="map-container">
-                    <Map :homes="homes" />
-                </div>
+                    <!-- Right Column - Map (Fixed Position) -->
+                    <div class="col-lg-5 col-xl-6 map-column">
+                        <div class="sticky-map-container">
+                            <!-- Show Map with Properties -->
+                            <div
+                                v-if="homes.length > 0 && loadmap"
+                                class="map-container"
+                            >
+                                <Map :homes="homes" />
+                            </div>
 
-                <!-- Show Message When No Results with Filters -->
-                <div
-                    v-else-if="
-                        homes.length === 0 &&
-                        hasActiveFilters() &&
-                        formStatus === 1
-                    "
-                    class="map-placeholder"
-                >
-                    <div class="map-message">
-                        <div class="message-icon">
-                            <i class="bi bi-geo-alt-fill"></i>
+                            <!-- Show Message When No Results with Filters -->
+                            <div
+                                v-else-if="
+                                    homes.length === 0 &&
+                                    hasActiveFilters() &&
+                                    formStatus === 1
+                                "
+                                class="map-placeholder"
+                            >
+                                <div class="map-message">
+                                    <div class="message-icon">
+                                        <i class="bi bi-geo-alt-fill"></i>
+                                    </div>
+                                    <h4>No Properties to Display on Map</h4>
+                                    <p>
+                                        Adjust your filters to see properties in
+                                        this area
+                                    </p>
+                                    <button
+                                        @click="resetForm"
+                                        class="action-btn btn-primary"
+                                    >
+                                        <i class="bi bi-funnel me-2"></i>
+                                        Show All Properties
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Show Map Placeholder When No Properties at All -->
+                            <div
+                                v-else-if="
+                                    homes.length === 0 &&
+                                    !hasActiveFilters() &&
+                                    formStatus === 1
+                                "
+                                class="map-placeholder"
+                            >
+                                <div class="map-message">
+                                    <div class="message-icon">
+                                        <i class="bi bi-map"></i>
+                                    </div>
+                                    <h4>Map Unavailable</h4>
+                                    <p>No properties available to display</p>
+                                </div>
+                            </div>
+
+                            <!-- Loading State -->
+                            <div
+                                v-else-if="formStatus === 0"
+                                class="map-placeholder"
+                            >
+                                <div class="map-message">
+                                    <div
+                                        class="spinner-border text-primary"
+                                        role="status"
+                                    >
+                                        <span class="visually-hidden"
+                                            >Loading...</span
+                                        >
+                                    </div>
+                                    <h4 class="mt-3">Loading Properties...</h4>
+                                </div>
+                            </div>
                         </div>
-                        <h4>No Properties to Display on Map</h4>
-                        <p>
-                            Adjust your filters to see properties in this area
-                        </p>
-                        <button
-                            @click="resetForm"
-                            class="action-btn btn-primary"
-                        >
-                            <i class="bi bi-funnel me-2"></i>
-                            Show All Properties
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Show Map Placeholder When No Properties at All -->
-                <div
-                    v-else-if="
-                        homes.length === 0 &&
-                        !hasActiveFilters() &&
-                        formStatus === 1
-                    "
-                    class="map-placeholder"
-                >
-                    <div class="map-message">
-                        <div class="message-icon">
-                            <i class="bi bi-map"></i>
-                        </div>
-                        <h4>Map Unavailable</h4>
-                        <p>No properties available to display</p>
-                    </div>
-                </div>
-
-                <!-- Loading State -->
-                <div v-else-if="formStatus === 0" class="map-placeholder">
-                    <div class="map-message">
-                        <div class="spinner-border text-primary" role="status">
-                            <span class="visually-hidden">Loading...</span>
-                        </div>
-                        <h4 class="mt-3">Loading Properties...</h4>
                     </div>
                 </div>
             </div>
@@ -1606,6 +1672,151 @@ export default {
 </script>
 
 <style scoped>
+    /* Two Column Layout */
+.two-column-layout {
+    position: relative;
+    width: 100%;
+    min-height: calc(100vh - 200px); /* Adjust based on your header/footer */
+}
+
+.two-column-layout .row {
+    min-height: calc(100vh - 200px);
+}
+
+/* Listings Column */
+.listings-column {
+    padding: 20px;
+    overflow-y: auto;
+    max-height: calc(100vh - 187px);
+    scrollbar-width: thin;
+    scrollbar-color: #ccc #f1f1f1;
+    border-radius: 20px;
+}
+
+.listings-column::-webkit-scrollbar {
+    width: 8px;
+}
+
+.listings-column::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.listings-column::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
+.listings-column::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
+}
+
+.listings-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Map Column */
+.map-column {
+    padding: 0;
+    position: relative;
+}
+
+.sticky-map-container {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.map-container {
+    width: 100%;
+    height: 100%;
+}
+
+/* Map Placeholder States */
+.map-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa;
+}
+
+.map-message {
+    text-align: center;
+    padding: 40px;
+    max-width: 400px;
+}
+
+.message-icon {
+    font-size: 4rem;
+    color: #6c757d;
+    margin-bottom: 20px;
+}
+
+/* Homes Grid Adjustments for Side-by-Side Layout */
+.homes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 24px;
+    margin-top: 24px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+    .two-column-layout .row {
+        flex-direction: column;
+    }
+
+    .listings-column {
+        max-height: 50vh;
+        order: 2;
+    }
+
+    .map-column {
+        order: 1;
+        height: 50vh;
+    }
+
+    .sticky-map-container {
+        position: relative;
+        height: 50vh;
+    }
+
+    .homes-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .listings-column {
+        padding: 15px;
+    }
+
+    .homes-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Optional: Add smooth transitions */
+.listings-column {
+    transition: all 0.3s ease;
+}
+
+/* Optional: Highlight active property on map */
+.home-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+/* Optional: Active state for selected property */
+.home-card.active {
+    border: 2px solid #007bff;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+}
 /* Filter Section */
 .filter-section {
     padding: 2rem 0;
@@ -1823,9 +2034,6 @@ export default {
 .content-card {
     background: white;
     border-radius: 24px;
-    padding: 2.5rem;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
-    border: 1px solid #f1f5f9;
 }
 
 .results-header {
@@ -1834,7 +2042,7 @@ export default {
     align-items: center;
     margin-bottom: 2rem;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 4rem;
 }
 
 .results-title {
@@ -1850,7 +2058,7 @@ export default {
 }
 
 .sort-section {
-    display: flex;
+    display: -webkit-inline-box;
     align-items: center;
     gap: 1rem;
 }
@@ -1858,6 +2066,7 @@ export default {
 .sort-label {
     font-weight: 600;
     color: #1a365d;
+    margin-top: 6px;
 }
 
 .sort-select {
@@ -2094,7 +2303,7 @@ export default {
     border-radius: 1rem;
     overflow: hidden;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    height: 500px;
+    height: 900px;
     background: white;
 }
 
