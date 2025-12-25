@@ -4,7 +4,7 @@
             <div class="info-overlay">
                 <div class="container text-center">
                     <h1 class="uppercase c-main-title">
-                        Available Agents Move In Homes swds werw
+                        Available Agents & Move-In Ready Homes
                     </h1>
                 </div>
             </div>
@@ -113,9 +113,9 @@
                                 class="modal-title fw-bold text-primary mb-0 c-title"
                             >
                                 {{ translate("Request to Mr") }}.  {{ selelectedAgentName }}
-                               
+
                             </h5>
-                             
+
                             <button
                                 type="button"
                                 class="btn-close"
