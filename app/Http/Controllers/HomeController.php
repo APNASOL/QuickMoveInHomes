@@ -749,36 +749,24 @@ class HomeController extends Controller
             'is_open_house'     => 'nullable|boolean',
         ]);
 
-        if ($request->min_price && $request->max_price && $request->min_price > $request->max_price) {
-            $temp = $request->min_price;
-            $request->merge([
-                'min_price' => $request->max_price,
-                'max_price' => $temp
-            ]);
+        if (isset($validated['min_price'], $validated['max_price']) && $validated['min_price'] > $validated['max_price']) {
+            [$validated['min_price'], $validated['max_price']] = [$validated['max_price'], $validated['min_price']];
         }
 
-        if ($request->min_square_feet && $request->max_square_feet && $request->min_square_feet > $request->max_square_feet) {
-            $temp = $request->min_square_feet;
-            $request->merge([
-                'min_square_feet' => $request->max_square_feet,
-                'max_square_feet' => $temp
-            ]);
+        if (isset($validated['min_square_feet'], $validated['max_square_feet']) && $validated['min_square_feet'] > $validated['max_square_feet']) {
+            [$validated['min_square_feet'], $validated['max_square_feet']] = [$validated['max_square_feet'], $validated['min_square_feet']];
         }
 
-        if ($request->min_lot_size && $request->max_lot_size && $request->min_lot_size > $request->max_lot_size) {
-            $temp = $request->min_lot_size;
-            $request->merge([
-                'min_lot_size' => $request->max_lot_size,
-                'max_lot_size' => $temp
-            ]);
+        if (isset($validated['min_lot_size'], $validated['max_lot_size']) && $validated['min_lot_size'] > $validated['max_lot_size']) {
+            [$validated['min_lot_size'], $validated['max_lot_size']] = [$validated['max_lot_size'], $validated['min_lot_size']];
         }
 
         $properties = DB::table('properties')
             ->leftJoin('property_features', 'properties.property_id', '=', 'property_features.property_id')
             ->select('properties.*', 'property_features.private_bath', 'property_features.parking_enclosure');
 
-        if ($request->filled('main_search_field') && $request->main_search_field !== "null") {
-            $searchTerm = $request->main_search_field;
+        if (!empty($validated['main_search_field'])) {
+            $searchTerm = $validated['main_search_field'];
             $properties->where(function ($query) use ($searchTerm) {
                 $query->where('properties.address', 'LIKE', '%' . $searchTerm . '%')
                     ->orWhere('properties.city', 'LIKE', '%' . $searchTerm . '%')
@@ -786,40 +774,40 @@ class HomeController extends Controller
             });
         }
 
-        if ($request->filled('is_open_house') && ($request->is_open_house == true || $request->is_open_house == "true" || $request->is_open_house == 1)) {
+        if (!empty($validated['is_open_house'])) {
             $properties->where('properties.is_open_house', 1);
         }
 
-        if ($request->filled('min_price') && $request->filled('max_price')) {
-            $properties->whereBetween('properties.price', [(int)$request->min_price, (int)$request->max_price]);
-        } elseif ($request->filled('min_price')) {
-            $properties->where('properties.price', '>=', (int)$request->min_price);
-        } elseif ($request->filled('max_price')) {
-            $properties->where('properties.price', '<=', (int)$request->max_price);
+        if (isset($validated['min_price'], $validated['max_price'])) {
+            $properties->whereBetween('properties.price', [$validated['min_price'], $validated['max_price']]);
+        } elseif (isset($validated['min_price'])) {
+            $properties->where('properties.price', '>=', $validated['min_price']);
+        } elseif (isset($validated['max_price'])) {
+            $properties->where('properties.price', '<=', $validated['max_price']);
         }
 
-        if ($request->filled('min_square_feet') && $request->filled('max_square_feet')) {
-            $properties->whereBetween('properties.square_feet', [(int)$request->min_square_feet, (int)$request->max_square_feet]);
-        } elseif ($request->filled('min_square_feet')) {
-            $properties->where('properties.square_feet', '>=', (int)$request->min_square_feet);
-        } elseif ($request->filled('max_square_feet')) {
-            $properties->where('properties.square_feet', '<=', (int)$request->max_square_feet);
+        if (isset($validated['min_square_feet'], $validated['max_square_feet'])) {
+            $properties->whereBetween('properties.square_feet', [$validated['min_square_feet'], $validated['max_square_feet']]);
+        } elseif (isset($validated['min_square_feet'])) {
+            $properties->where('properties.square_feet', '>=', $validated['min_square_feet']);
+        } elseif (isset($validated['max_square_feet'])) {
+            $properties->where('properties.square_feet', '<=', $validated['max_square_feet']);
         }
 
-        if ($request->filled('min_lot_size') && $request->filled('max_lot_size')) {
-            $properties->whereBetween('properties.lot_size', [(int)$request->min_lot_size, (int)$request->max_lot_size]);
-        } elseif ($request->filled('min_lot_size')) {
-            $properties->where('properties.lot_size', '>=', (int)$request->min_lot_size);
-        } elseif ($request->filled('max_lot_size')) {
-            $properties->where('properties.lot_size', '<=', (int)$request->max_lot_size);
+        if (isset($validated['min_lot_size'], $validated['max_lot_size'])) {
+            $properties->whereBetween('properties.lot_size', [$validated['min_lot_size'], $validated['max_lot_size']]);
+        } elseif (isset($validated['min_lot_size'])) {
+            $properties->where('properties.lot_size', '>=', $validated['min_lot_size']);
+        } elseif (isset($validated['max_lot_size'])) {
+            $properties->where('properties.lot_size', '<=', $validated['max_lot_size']);
         }
 
-        if ($request->filled('bedrooms') && $request->bedrooms > 0) {
-            $properties->where('properties.bedrooms', '>=', (int)$request->bedrooms);
+        if (!empty($validated['bedrooms'])) {
+            $properties->where('properties.bedrooms', '>=', $validated['bedrooms']);
         }
 
-        if ($request->filled('bathroom') && $request->bathroom !== "null" && $request->bathroom > 0) {
-            $properties->whereRaw('(properties.full_bath + properties.half_bath) >= ?', [(int)$request->bathroom]);
+        if (!empty($validated['bathroom'])) {
+            $properties->whereRaw('(COALESCE(properties.full_bath, 0) + COALESCE(properties.half_bath, 0)) >= ?', [$validated['bathroom']]);
         }
 
         $properties = $properties->get();
@@ -828,7 +816,7 @@ class HomeController extends Controller
         foreach ($properties as $property) {
             $property->banner = null;
             $property->main_image = null;
-            $property->bathrooms = ($property->half_bath ?? 0) + ($property->full_bath ?? 0);
+            $property->bathrooms = (int)($property->half_bath ?? 0) + (int)($property->full_bath ?? 0);
 
             $property->parking_enclosure = $property->parking_enclosure ?? 0;
 
@@ -838,7 +826,6 @@ class HomeController extends Controller
                 $firstUpload = $uploads->first();
                 $lastUpload = $uploads->last();
 
-                // Check if the first upload exists, then assign its file_name to the property
                 if ($firstUpload) {
                     $property->main_image = get_storage_url($firstUpload->file_name);
                 }
@@ -856,7 +843,7 @@ class HomeController extends Controller
             if ($PropertyIncentive) {
                 $property->incentive = 1;
             }
-            // Fetch community details
+
             $community = Community::find($property->community_id);
             if ($community) {
                 if ($community->banner) {
@@ -885,12 +872,12 @@ class HomeController extends Controller
             'properties' => $properties,
             'total_homes' => $total_homes,
             'filters_applied' => [
-                'main_search' => $request->main_search_field ?? null,
-                'min_price' => $request->min_price ?? null,
-                'max_price' => $request->max_price ?? null,
-                'bedrooms' => $request->bedrooms ?? null,
-                'bathroom' => $request->bathroom ?? null,
-                'is_open_house' => $request->is_open_house ?? null,
+                'main_search' => $validated['main_search_field'] ?? null,
+                'min_price' => $validated['min_price'] ?? null,
+                'max_price' => $validated['max_price'] ?? null,
+                'bedrooms' => $validated['bedrooms'] ?? null,
+                'bathroom' => $validated['bathroom'] ?? null,
+                'is_open_house' => $validated['is_open_house'] ?? null,
             ]
         ];
     }
