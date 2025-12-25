@@ -1313,19 +1313,164 @@
                                             <p class="mb-1">
                                                 <i
                                                     class="bi bi-check-circle text-success me-2"
-                                                ></i
-                                                >{{ Community.name }}
+                                                ></i>
+                                                {{ Community.name }}
                                             </p>
                                             <p class="mb-1 text-muted">
-                                                <i class="bi bi-list me-2"></i
-                                                >{{ Community.description }}
+                                                <i class="bi bi-list me-2"></i>
+                                                {{ Community.description }}
                                             </p>
-                                            <p class="mb-0 text-muted">
-                                                <i
-                                                    class="bi bi-geo-alt-fill me-2"
-                                                ></i
-                                                >{{ Community.location }}
-                                            </p>
+
+                                            <!-- Interactive Map Section -->
+                                            <div class="mt-3">
+                                                <div
+                                                    class="d-flex justify-content-between align-items-center mb-2"
+                                                >
+                                                    <h6
+                                                        class="sidebar-label mb-0"
+                                                    >
+                                                        Location
+                                                    </h6>
+                                                    <button
+                                                        v-if="shouldShowMap"
+                                                        @click="
+                                                            openInExternalMaps
+                                                        "
+                                                        class="btn btn-sm btn-outline-secondary"
+                                                        title="Open in OpenStreetMap"
+                                                    >
+                                                        <i
+                                                            class="bi bi-box-arrow-up-right me-1"
+                                                        ></i
+                                                        >Open Map
+                                                    </button>
+                                                </div>
+
+                                                <!-- Interactive Map -->
+                                                <div
+                                                    v-if="shouldShowMap"
+                                                    class="map-container position-relative"
+                                                    style="
+                                                        height: 250px;
+                                                        border-radius: 8px;
+                                                        overflow: hidden;
+                                                        border: 1px solid
+                                                            #dee2e6;
+                                                    "
+                                                >
+                                                    <div
+                                                        id="community-map"
+                                                        class="h-100 w-100"
+                                                    ></div>
+                                                    <div
+                                                        class="position-absolute top-0 end-0 m-2"
+                                                    >
+                                                        <div
+                                                            class="bg-white rounded shadow-sm px-2 py-1 small"
+                                                        >
+                                                            <i
+                                                                class="bi bi-compass text-primary me-1"
+                                                            ></i>
+                                                            <span
+                                                                >Interactive
+                                                                Map</span
+                                                            >
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Fallback when no map available -->
+                                                <div
+                                                    v-else
+                                                    class="location-fallback mb-3 p-3 text-center"
+                                                    style="
+                                                        background: #f8f9fa;
+                                                        border-radius: 8px;
+                                                        border: 1px dashed
+                                                            #dee2e6;
+                                                    "
+                                                >
+                                                    <div
+                                                        class="d-flex flex-column align-items-center justify-content-center"
+                                                        style="height: 150px"
+                                                    >
+                                                        <i
+                                                            class="bi bi-map display-5 text-muted mb-3"
+                                                        ></i>
+                                                        <p
+                                                            class="mb-1 text-muted"
+                                                        >
+                                                            Interactive map
+                                                            unavailable
+                                                        </p>
+                                                        <small
+                                                            class="text-muted"
+                                                            >Location
+                                                            coordinates
+                                                            required</small
+                                                        >
+                                                    </div>
+                                                </div>
+
+                                                <!-- Address Display -->
+                                                <div
+                                                    class="address-card p-3 mt-2"
+                                                    style="
+                                                        background: #f8f9fa;
+                                                        border-radius: 8px;
+                                                    "
+                                                >
+                                                    <div class="d-flex">
+                                                        <div
+                                                            class="flex-shrink-0"
+                                                        >
+                                                            <i
+                                                                class="bi bi-geo-alt-fill text-primary fs-5"
+                                                            ></i>
+                                                        </div>
+                                                        <div
+                                                            class="flex-grow-1 ms-3"
+                                                        >
+                                                            <h6
+                                                                class="mb-1"
+                                                                style="
+                                                                    font-size: 14px;
+                                                                "
+                                                            >
+                                                                Address
+                                                            </h6>
+                                                            <p
+                                                                class="mb-0 text-dark"
+                                                                style="
+                                                                    font-size: 13px;
+                                                                "
+                                                            >
+                                                                <template
+                                                                    v-if="
+                                                                        Community.location &&
+                                                                        Community.location !==
+                                                                            'NULL'
+                                                                    "
+                                                                >
+                                                                    {{
+                                                                        Community.location
+                                                                    }}
+                                                                </template>
+                                                                <template
+                                                                    v-else
+                                                                >
+                                                                    <span
+                                                                        class="text-muted"
+                                                                        >Location
+                                                                        not
+                                                                        specified</span
+                                                                    >
+                                                                </template>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div
@@ -1408,10 +1553,11 @@ import Master from "@components/layout/Master.vue";
 import ProceedComponent from "@components/ProceedComponent.vue";
 import Multiselect from "@vueform/multiselect";
 import { addMonths, startOfMonth, endOfMonth } from "date-fns";
-
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
-
 import "vue3-carousel/dist/carousel.css";
+import L from "leaflet"; // Import Leaflet
+import "leaflet/dist/leaflet.css"; // Import Leaflet CSS
+
 export default {
     components: {
         Master,
@@ -1435,7 +1581,6 @@ export default {
     data() {
         return {
             Home: [],
-
             logo: external_website.white_logo,
             name: external_website.name,
             logged_in_user: logged_in_user,
@@ -1445,35 +1590,95 @@ export default {
                 autoplay: 3500,
                 wrapAround: true,
                 dir: "rtl",
-                // snapAlign: 'center',
             },
-
             backgroundImage: "",
             maxWords: 50,
-
             Community: [],
             community_homes: [],
             incentive: [],
-
             formErrors: [],
             currentSlide: 0,
+            map: null, // Leaflet map instance
+            mapMarker: null, // Leaflet marker instance
+            mapInitialized: false, // Flag to track map initialization
         };
     },
+
     computed: {
-        // Ensure we always have valid image objects
         images() {
             const files = Array.isArray(this.Home?.files)
                 ? this.Home.files
                 : [];
             return files
-                .filter((f) => f && f.file_name) // must have a src
+                .filter((f) => f && f.file_name)
                 .map((f) => ({
                     id: f.id ?? null,
-                    file_name: f.file_name, // ensure this is a full URL
+                    file_name: f.file_name,
                     file_original_name: f.file_original_name || "",
                 }));
         },
+
+        // Extract coordinates from Community data
+        communityCoordinates() {
+            if (
+                this.Community &&
+                this.Community.latitude &&
+                this.Community.longitude
+            ) {
+                // Handle both string and number formats
+                const lat = parseFloat(this.Community.latitude);
+                const lng = parseFloat(this.Community.longitude);
+
+                // Validate coordinates
+                if (
+                    !isNaN(lat) &&
+                    !isNaN(lng) &&
+                    lat >= -90 &&
+                    lat <= 90 &&
+                    lng >= -180 &&
+                    lng <= 180
+                ) {
+                    return {
+                        lat: lat,
+                        lng: lng,
+                    };
+                }
+            }
+            return null;
+        },
+
+        // Helper to check if map should be displayed
+        shouldShowMap() {
+            return (
+                this.communityCoordinates !== null &&
+                this.Community?.location &&
+                this.Community.location !== "NULL"
+            );
+        },
     },
+
+    watch: {
+        // Watch for Community data changes to initialize map
+        Community: {
+            handler(newVal) {
+                if (
+                    newVal &&
+                    this.communityCoordinates &&
+                    !this.mapInitialized
+                ) {
+                    // Small delay to ensure DOM is ready
+                    this.$nextTick(() => {
+                        setTimeout(() => {
+                            this.initializeMap();
+                        }, 100);
+                    });
+                }
+            },
+            deep: true,
+            immediate: false,
+        },
+    },
+
     methods: {
         isValid(v) {
             return v !== undefined && v !== null && v !== "" && v !== "Nil";
@@ -1482,37 +1687,67 @@ export default {
             return this.isValid(v) ? v : "N/A";
         },
 
-        // Method to set the current image based on thumbnail click
         setCurrentSlide(index) {
             this.currentIndex = index;
         },
-        // Go to the previous image
+
         prevSlide() {
             if (this.currentIndex > 0) {
                 this.currentIndex--;
             }
         },
-        // Go to the next image
+
         nextSlide() {
             if (this.currentIndex < this.Home.files.length - 1) {
                 this.currentIndex++;
             }
         },
+
         fetchHomeDetails() {
             axios
                 .get("/api/fetch-home-details/" + this.home_id)
-
                 .then((response) => {
                     this.Home = response.data.property_info;
-
                     this.Community = response.data.community_info;
                     this.incentive = response.data.incentive;
+
+                    // Ensure latitude/longitude are properly set
+                    if (this.Community) {
+                        // Convert string coordinates to numbers if needed
+                        if (
+                            this.Community.latitude &&
+                            typeof this.Community.latitude === "string"
+                        ) {
+                            this.Community.latitude = parseFloat(
+                                this.Community.latitude
+                            );
+                        }
+                        if (
+                            this.Community.longitude &&
+                            typeof this.Community.longitude === "string"
+                        ) {
+                            this.Community.longitude = parseFloat(
+                                this.Community.longitude
+                            );
+                        }
+                    }
+
                     this.getThisCommunityAllHomes(this.Home.community_id);
+
+                    // Initialize map after data is loaded
+                    this.$nextTick(() => {
+                        if (this.communityCoordinates) {
+                            setTimeout(() => {
+                                this.initializeMap();
+                            }, 300);
+                        }
+                    });
                 })
                 .catch((error) => {
                     toastr.error(error.response.data.message);
                 });
         },
+
         getThisCommunityAllHomes(community_id) {
             axios
                 .get(`/api/fetch-community-all-homes/${community_id}`)
@@ -1527,26 +1762,279 @@ export default {
         setAltImg(event) {
             event.target.src = "/images/default_image.png";
         },
+
         formatDate(date) {
             const options = { year: "numeric", month: "long", day: "numeric" };
             return new Date(date).toLocaleDateString(undefined, options);
         },
+
         formatTime(time) {
             if (!time || typeof time !== "string" || !time.includes(":")) {
                 return "N/A";
             }
-
             const [hours, minutes, seconds] = time.split(":");
             let formattedHours = parseInt(hours, 10);
             const period = formattedHours >= 12 ? "PM" : "AM";
-
             formattedHours = formattedHours % 12 || 12;
-
             return `${formattedHours}:${minutes}:${seconds} ${period}`;
         },
+
         formatPrice(price) {
-            return Math.floor(price).toLocaleString(); // Removes the decimal portion
+            return Math.floor(price).toLocaleString();
         },
+
+        // Initialize the Leaflet map
+        initializeMap() {
+            if (!this.communityCoordinates || this.mapInitialized) {
+                return;
+            }
+
+            try {
+                const mapElement = document.getElementById("community-map");
+                if (!mapElement) {
+                    console.error("Map element not found");
+                    return;
+                }
+
+                // Initialize map with coordinates
+                this.map = L.map("community-map").setView(
+                    [
+                        this.communityCoordinates.lat,
+                        this.communityCoordinates.lng,
+                    ],
+                    15
+                );
+
+                // Add OpenStreetMap tiles
+                L.tileLayer(
+                    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                    {
+                        attribution:
+                            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                        maxZoom: 19,
+                    }
+                ).addTo(this.map);
+
+                // Create custom marker icon
+                const customIcon = L.icon({
+                    iconUrl: "/images/map-marker.png", // Your custom marker icon
+                    iconRetinaUrl: "/images/map-marker-2x.png", // Retina version if available
+                    iconSize: [30, 40],
+                    iconAnchor: [15, 40],
+                    popupAnchor: [0, -40],
+                    shadowUrl: null, // Disable shadow if not needed
+                    shadowSize: null,
+                    shadowAnchor: null,
+                });
+
+                // Fallback to default icon if custom icon doesn't exist
+                const defaultIcon = L.icon({
+                    iconUrl:
+                        "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+                    iconRetinaUrl:
+                        "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+                    shadowUrl:
+                        "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+                    iconSize: [25, 41],
+                    iconAnchor: [12, 41],
+                    popupAnchor: [1, -34],
+                    shadowSize: [41, 41],
+                });
+
+                // Add marker to map
+                this.mapMarker = L.marker(
+                    [
+                        this.communityCoordinates.lat,
+                        this.communityCoordinates.lng,
+                    ],
+                    {
+                        icon: customIcon,
+                        title: this.Community.name,
+                        alt: this.Community.location,
+                        riseOnHover: true,
+                    }
+                ).addTo(this.map);
+
+                // Bind popup with community information
+                const popupContent = `
+                    <div style="padding: 8px; max-width: 250px;">
+                        <h6 style="margin: 0 0 5px 0; font-weight: bold; color: #333;">
+                            <i class="bi bi-geo-alt-fill me-1 text-primary"></i>
+                            ${this.Community.name}
+                        </h6>
+                        <p style="margin: 0; font-size: 12px; color: #666;">
+                            ${this.Community.location || "No address available"}
+                        </p>
+                        <hr style="margin: 8px 0;">
+                        <div style="font-size: 11px; color: #888;">
+                            <div><strong>Latitude:</strong> ${this.communityCoordinates.lat.toFixed(
+                                6
+                            )}</div>
+                            <div><strong>Longitude:</strong> ${this.communityCoordinates.lng.toFixed(
+                                6
+                            )}</div>
+                        </div>
+                    </div>
+                `;
+
+                this.mapMarker.bindPopup(popupContent);
+
+                // Add click event to open popup by default
+                this.mapMarker.openPopup();
+
+                // Add zoom control
+                L.control
+                    .zoom({
+                        position: "topright",
+                    })
+                    .addTo(this.map);
+
+                // Add scale control
+                L.control
+                    .scale({
+                        imperial: true,
+                        metric: true,
+                        position: "bottomleft",
+                    })
+                    .addTo(this.map);
+
+                // Handle map resize issues
+                setTimeout(() => {
+                    this.map.invalidateSize();
+                }, 100);
+
+                this.mapInitialized = true;
+
+                // Optional: Add a circle to show approximate location area
+                L.circle(
+                    [
+                        this.communityCoordinates.lat,
+                        this.communityCoordinates.lng,
+                    ],
+                    {
+                        color: "#0d6efd",
+                        fillColor: "#0d6efd",
+                        fillOpacity: 0.1,
+                        radius: 100, // 100 meters radius
+                    }
+                ).addTo(this.map);
+            } catch (error) {
+                console.error("Failed to initialize Leaflet map:", error);
+                // Fallback: Show static location
+                this.showStaticLocationFallback();
+            }
+        },
+
+        // Update map location when coordinates change
+        updateMapLocation() {
+            if (this.map && this.mapMarker && this.communityCoordinates) {
+                this.map.setView(
+                    [
+                        this.communityCoordinates.lat,
+                        this.communityCoordinates.lng,
+                    ],
+                    15
+                );
+
+                this.mapMarker.setLatLng([
+                    this.communityCoordinates.lat,
+                    this.communityCoordinates.lng,
+                ]);
+
+                // Refresh popup content
+                const popupContent = `
+                    <div style="padding: 8px; max-width: 250px;">
+                        <h6 style="margin: 0 0 5px 0; font-weight: bold; color: #333;">
+                            <i class="bi bi-geo-alt-fill me-1 text-primary"></i>
+                            ${this.Community.name}
+                        </h6>
+                        <p style="margin: 0; font-size: 12px; color: #666;">
+                            ${this.Community.location || "No address available"}
+                        </p>
+                    </div>
+                `;
+
+                this.mapMarker.bindPopup(popupContent);
+                this.mapMarker.openPopup();
+
+                // Trigger map resize
+                setTimeout(() => {
+                    this.map.invalidateSize();
+                }, 50);
+            }
+        },
+
+        // Fallback method if map fails to load
+        showStaticLocationFallback() {
+            const mapElement = document.getElementById("community-map");
+            if (mapElement) {
+                mapElement.innerHTML = `
+                    <div class="d-flex flex-column align-items-center justify-content-center h-100 p-3"
+                         style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+                        <i class="bi bi-geo-alt-fill display-4 text-muted mb-3"></i>
+                        <h6 class="mb-2">${this.Community.name}</h6>
+                        <p class="text-center text-muted small mb-2">${
+                            this.Community.location
+                        }</p>
+                        <p class="text-center text-muted small">
+                            <i class="bi bi-info-circle me-1"></i>
+                            Location: ${this.communityCoordinates.lat.toFixed(
+                                6
+                            )}, ${this.communityCoordinates.lng.toFixed(6)}
+                        </p>
+                        <a href="https://www.openstreetmap.org/?mlat=${
+                            this.communityCoordinates.lat
+                        }&mlon=${this.communityCoordinates.lng}&zoom=15"
+                           target="_blank"
+                           class="btn btn-sm btn-outline-primary mt-2">
+                            <i class="bi bi-box-arrow-up-right me-1"></i>View on OpenStreetMap
+                        </a>
+                    </div>
+                `;
+            }
+        },
+
+        // Open location in external maps
+        openInExternalMaps() {
+            if (this.communityCoordinates) {
+                const url = `https://www.openstreetmap.org/?mlat=${this.communityCoordinates.lat}&mlon=${this.communityCoordinates.lng}&zoom=15`;
+                window.open(url, "_blank");
+            }
+        },
+
+        // Clean up when component is destroyed
+        beforeDestroy() {
+            if (this.map) {
+                this.map.remove();
+                this.map = null;
+                this.mapMarker = null;
+                this.mapInitialized = false;
+            }
+        },
+    },
+
+    mounted() {
+        // Add resize listener for map
+        window.addEventListener("resize", () => {
+            if (this.map) {
+                setTimeout(() => {
+                    this.map.invalidateSize();
+                }, 200);
+            }
+        });
+    },
+
+    beforeUnmount() {
+        // Clean up event listener
+        window.removeEventListener("resize", () => {});
+
+        // Clean up map
+        if (this.map) {
+            this.map.remove();
+            this.map = null;
+            this.mapMarker = null;
+            this.mapInitialized = false;
+        }
     },
 };
 </script>
