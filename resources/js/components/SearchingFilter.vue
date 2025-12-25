@@ -4,203 +4,225 @@
         <section class="filter-section">
             <div class="container">
                 <div class="filter-card">
-                    <div class="filter-header">
+                    <div
+                        class="filter-header"
+                        @click="toggleFilters"
+                        style="cursor: pointer"
+                    >
                         <div class="section-icon">
                             <i class="bi bi-funnel"></i>
                         </div>
                         <h2 class="section-title">Filter Your Search</h2>
+                        <button class="collapse-toggle" type="button">
+                            <i
+                                class="bi"
+                                :class="
+                                    isFilterExpanded
+                                        ? 'bi-chevron-up'
+                                        : 'bi-chevron-down'
+                                "
+                            ></i>
+                        </button>
                     </div>
 
-                    <div class="filter-content">
-                        <div class="filter-grid">
-                            <!-- Search -->
-                            <div class="filter-group">
-                                <label class="filter-label">
-                                    <i class="bi bi-search me-2"></i>
-                                    Search Location
-                                </label>
-                                <input
-                                    type="text"
-                                    v-model="main_search_field"
-                                    :placeholder="
-                                        translate('Enter address, city, or ZIP')
-                                    "
-                                    @change="quickSearch"
-                                    class="filter-input"
-                                />
-                            </div>
-
-                            <!-- Price Range -->
-                            <div class="filter-group">
-                                <label class="filter-label">
-                                    <i class="bi bi-currency-dollar me-2"></i>
-                                    Price Range
-                                </label>
-                                <div class="range-inputs">
-                                    <input
-                                        type="number"
-                                        v-model="min_price"
-                                        placeholder="Min Price"
-                                        @change="quickSearch"
-                                        class="filter-input"
-                                    />
-                                    <input
-                                        type="number"
-                                        v-model="max_price"
-                                        placeholder="Max Price"
-                                        @change="quickSearch"
-                                        class="filter-input"
-                                    />
-                                </div>
-                            </div>
-
-                            <!-- SQRF Range -->
-                            <div class="filter-group">
-                                <label class="filter-label">
-                                    <i class="bi bi-aspect-ratio me-2"></i>
-                                    Square Feet
-                                </label>
-                                <div class="range-inputs">
-                                    <input
-                                        type="number"
-                                        v-model="min_square_feet"
-                                        placeholder="Min SQRF"
-                                        @change="quickSearch"
-                                        class="filter-input"
-                                    />
-                                    <input
-                                        type="number"
-                                        v-model="max_square_feet"
-                                        placeholder="Max SQRF"
-                                        @change="quickSearch"
-                                        class="filter-input"
-                                    />
-                                </div>
-                            </div>
-
-                            <!-- Lot Size -->
-                            <div class="filter-group">
-                                <label class="filter-label">
-                                    <i class="bi bi-columns-gap me-2"></i>
-                                    Lot Size
-                                </label>
-                                <div class="range-inputs">
-                                    <input
-                                        type="number"
-                                        v-model="min_lot_size"
-                                        placeholder="Min Lot Size"
-                                        @change="quickSearch"
-                                        class="filter-input"
-                                    />
-                                    <input
-                                        type="number"
-                                        v-model="max_lot_size"
-                                        placeholder="Max Lot Size"
-                                        @change="quickSearch"
-                                        class="filter-input"
-                                    />
-                                </div>
-                            </div>
-
-                            <!-- Bathrooms -->
-                            <div class="filter-group">
-                                <label class="filter-label">
-                                    <i class="bi bi-droplet me-2"></i>
-                                    Bathrooms
-                                </label>
-                                <div class="filter-buttons">
-                                    <template v-for="n in 5">
-                                        <button
-                                            type="button"
-                                            class="filter-btn"
-                                            :class="{
-                                                'filter-btn-active':
-                                                    bathroom === n,
-                                            }"
-                                            @click.prevent="
-                                                bathroom = n;
-                                                quickSearch();
-                                            "
-                                        >
-                                            {{ n }}+
-                                        </button>
-                                    </template>
-                                </div>
-                            </div>
-
-                            <!-- Bedrooms -->
-                            <div class="filter-group">
-                                <label class="filter-label">
-                                    <i class="bi bi-house-door me-2"></i>
-                                    Bedrooms
-                                </label>
-                                <div class="filter-buttons">
-                                    <template v-for="n in 5">
-                                        <button
-                                            type="button"
-                                            class="filter-btn"
-                                            :class="{
-                                                'filter-btn-active':
-                                                    bedrooms === n,
-                                            }"
-                                            @click.prevent="
-                                                bedrooms = n;
-                                                quickSearch();
-                                            "
-                                        >
-                                            {{ n }}+
-                                        </button>
-                                    </template>
-                                </div>
-                            </div>
-
-                            <!-- Open House -->
-                            <div class="filter-group">
-                                <label class="filter-label">
-                                    <i class="bi bi-calendar-event me-2"></i>
-                                    Open House
-                                </label>
-                                <div class="toggle-switch">
-                                    <input
-                                        class="toggle-input"
-                                        type="checkbox"
-                                        v-model="is_open_house"
-                                        id="openHouseSwitch"
-                                        @change="quickSearch"
-                                    />
-                                    <label
-                                        class="toggle-label"
-                                        for="openHouseSwitch"
-                                    >
-                                        <span class="toggle-slider"></span>
-                                        <span class="toggle-text"
-                                            >Open House Only</span
-                                        >
+                    <transition name="slide-fade">
+                        <div class="filter-content" v-show="isFilterExpanded">
+                            <div class="filter-grid">
+                                <!-- Search -->
+                                <div class="filter-group">
+                                    <label class="filter-label">
+                                        <i class="bi bi-search me-2"></i>
+                                        Search Location
                                     </label>
+                                    <input
+                                        type="text"
+                                        v-model="main_search_field"
+                                        :placeholder="
+                                            translate(
+                                                'Enter address, city, or ZIP'
+                                            )
+                                        "
+                                        @change="quickSearch"
+                                        class="filter-input"
+                                    />
+                                </div>
+
+                                <!-- Price Range -->
+                                <div class="filter-group">
+                                    <label class="filter-label">
+                                        <i
+                                            class="bi bi-currency-dollar me-2"
+                                        ></i>
+                                        Price Range
+                                    </label>
+                                    <div class="range-inputs">
+                                        <input
+                                            type="number"
+                                            v-model="min_price"
+                                            placeholder="Min Price"
+                                            @change="quickSearch"
+                                            class="filter-input"
+                                        />
+                                        <input
+                                            type="number"
+                                            v-model="max_price"
+                                            placeholder="Max Price"
+                                            @change="quickSearch"
+                                            class="filter-input"
+                                        />
+                                    </div>
+                                </div>
+
+                                <!-- SQRF Range -->
+                                <div class="filter-group">
+                                    <label class="filter-label">
+                                        <i class="bi bi-aspect-ratio me-2"></i>
+                                        Square Feet
+                                    </label>
+                                    <div class="range-inputs">
+                                        <input
+                                            type="number"
+                                            v-model="min_square_feet"
+                                            placeholder="Min SQRF"
+                                            @change="quickSearch"
+                                            class="filter-input"
+                                        />
+                                        <input
+                                            type="number"
+                                            v-model="max_square_feet"
+                                            placeholder="Max SQRF"
+                                            @change="quickSearch"
+                                            class="filter-input"
+                                        />
+                                    </div>
+                                </div>
+
+                                <!-- Lot Size -->
+                                <div class="filter-group">
+                                    <label class="filter-label">
+                                        <i class="bi bi-columns-gap me-2"></i>
+                                        Lot Size
+                                    </label>
+                                    <div class="range-inputs">
+                                        <input
+                                            type="number"
+                                            v-model="min_lot_size"
+                                            placeholder="Min Lot Size"
+                                            @change="quickSearch"
+                                            class="filter-input"
+                                        />
+                                        <input
+                                            type="number"
+                                            v-model="max_lot_size"
+                                            placeholder="Max Lot Size"
+                                            @change="quickSearch"
+                                            class="filter-input"
+                                        />
+                                    </div>
+                                </div>
+
+                                <!-- Bathrooms -->
+                                <div class="filter-group">
+                                    <label class="filter-label">
+                                        <i class="bi bi-droplet me-2"></i>
+                                        Bathrooms
+                                    </label>
+                                    <div class="filter-buttons">
+                                        <template v-for="n in 5">
+                                            <button
+                                                type="button"
+                                                class="filter-btn"
+                                                :class="{
+                                                    'filter-btn-active':
+                                                        bathroom === n,
+                                                }"
+                                                @click.prevent="
+                                                    bathroom = n;
+                                                    quickSearch();
+                                                "
+                                            >
+                                                {{ n }}+
+                                            </button>
+                                        </template>
+                                    </div>
+                                </div>
+
+                                <!-- Bedrooms -->
+                                <div class="filter-group">
+                                    <label class="filter-label">
+                                        <i class="bi bi-house-door me-2"></i>
+                                        Bedrooms
+                                    </label>
+                                    <div class="filter-buttons">
+                                        <template v-for="n in 5">
+                                            <button
+                                                type="button"
+                                                class="filter-btn"
+                                                :class="{
+                                                    'filter-btn-active':
+                                                        bedrooms === n,
+                                                }"
+                                                @click.prevent="
+                                                    bedrooms = n;
+                                                    quickSearch();
+                                                "
+                                            >
+                                                {{ n }}+
+                                            </button>
+                                        </template>
+                                    </div>
+                                </div>
+
+                                <!-- Open House -->
+                                <div class="filter-group">
+                                    <label class="filter-label">
+                                        <i
+                                            class="bi bi-calendar-event me-2"
+                                        ></i>
+                                        Open House
+                                    </label>
+                                    <div class="toggle-switch">
+                                        <input
+                                            class="toggle-input"
+                                            type="checkbox"
+                                            v-model="is_open_house"
+                                            id="openHouseSwitch"
+                                            @change="quickSearch"
+                                        />
+                                        <label
+                                            class="toggle-label"
+                                            for="openHouseSwitch"
+                                        >
+                                            <span class="toggle-slider"></span>
+                                            <span class="toggle-text"
+                                                >Open House Only</span
+                                            >
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Action Buttons -->
-                        <div class="filter-actions">
-                            <button
-                                ref="openFilter"
-                                data-bs-target="#filterModal"
-                                data-bs-toggle="modal"
-                                class="action-btn btn-primary"
-                            >
-                                <i class="bi bi-funnel-fill me-2"></i>
-                                Advanced Filters
-                            </button>
-                            <button
-                                @click="resetForm"
-                                class="action-btn btn-outline"
-                            >
-                                <i class="bi bi-arrow-repeat me-2"></i>
-                                Reset Filters
-                            </button>
+                            <!-- Action Buttons -->
+                            <div class="filter-actions">
+                                <button
+                                    ref="openFilter"
+                                    data-bs-target="#filterModal"
+                                    data-bs-toggle="modal"
+                                    class="action-btn btn-primary"
+                                >
+                                    <i class="bi bi-funnel-fill me-2"></i>
+                                    Advanced Filters
+                                </button>
+                                <button
+                                    @click="resetForm"
+                                    class="action-btn btn-outline"
+                                >
+                                    <i class="bi bi-arrow-repeat me-2"></i>
+                                    Reset Filters
+                                </button>
+                            </div>
                         </div>
-                    </div>
+                    </transition>
                 </div>
             </div>
         </section>
@@ -1184,6 +1206,7 @@ export default {
     },
     data() {
         return {
+            isFilterExpanded: false, // Start collapsed for better above-the-fold
             sortingOptions: [
                 "Homes for You",
                 "Price (High to Low)",
@@ -1247,6 +1270,10 @@ export default {
         },
     },
     methods: {
+        toggleFilters() {
+            this.isFilterExpanded = !this.isFilterExpanded;
+        },
+
         validatePriceRange() {
             const min = parseFloat(this.min_price) || 0;
             const max = parseFloat(this.max_price) || 0;
@@ -1588,7 +1615,6 @@ export default {
 .filter-card {
     background: white;
     border-radius: 24px;
-    padding: 2.5rem;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
     border: 1px solid #f1f5f9;
 }
@@ -1597,7 +1623,6 @@ export default {
     display: flex;
     align-items: center;
     gap: 1rem;
-    margin-bottom: 2rem;
 }
 
 .section-icon {
@@ -1618,6 +1643,10 @@ export default {
     font-weight: 700;
     color: #1a365d;
     margin: 0;
+}
+
+.filter-content {
+    padding: 2.5rem;
 }
 
 /* Filter Grid */
@@ -2689,5 +2718,57 @@ export default {
 
 .policy-section:nth-child(2) {
     animation-delay: 0.1s;
+}
+/* Collapse toggle button */
+.collapse-toggle {
+    margin-left: auto;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: inherit;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.collapse-toggle:hover {
+    transform: scale(1.1);
+}
+
+/* Make header flexbox to position toggle button */
+.filter-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    user-select: none;
+    border-radius: 25px;
+}
+
+.filter-header:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* Transition animations */
+.slide-fade-enter-active {
+    transition: all 0.3s ease-out;
+}
+
+.slide-fade-leave-active {
+    transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+    transform: translateY(-10px);
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+}
+
+.slide-fade-enter-to,
+.slide-fade-leave-from {
+    max-height: 2000px;
+    overflow: visible;
 }
 </style>
