@@ -581,173 +581,157 @@
 
                     <!-- Right Column - Contact Form -->
                     <div>
-                        <div
-                            class="collapse multi-collapse"
-                            id="collapseContactForm"
-                        >
-                            <div class="contact-form-card">
-                                <div class="form-header">
-                                    <h3 class="form-title">
-                                        Dear
-                                        <span style="color: #e53e3e">{{
-                                            contacting_user
-                                        }}</span
-                                        >, Drop us a line
-                                    </h3>
-                                    <p class="form-subtitle">
-                                        We'll get back to you as soon as
-                                        possible
-                                    </p>
+                        <div class="contact-form-card">
+                            <div class="form-header">
+                                <h3 class="form-title">Drop us a line</h3>
+                                <p class="form-subtitle">
+                                    We'll get back to you as soon as possible
+                                </p>
+                            </div>
+
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label class="form-label">
+                                        {{ translate("Your Full Name") }}
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        :class="{
+                                            'invalid-bg': formErrors.name,
+                                            'is-invalid': formErrors.name,
+                                            'is-valid':
+                                                form.name &&
+                                                !formErrors.name &&
+                                                formTouched.name,
+                                        }"
+                                        v-model="form.name"
+                                        @blur="formTouched.name = true"
+                                        @input="clearFieldError('name')"
+                                        placeholder="Enter your full name"
+                                    />
+                                    <div
+                                        class="invalid-feedback d-block"
+                                        v-if="formErrors.name"
+                                    >
+                                        {{ formErrors.name[0] }}
+                                    </div>
                                 </div>
 
-                                <div class="row g-3">
-                                    <div class="col-12">
-                                        <label class="form-label">
-                                            {{ translate("Your Full Name") }}
-                                            <span class="text-danger">*</span>
-                                        </label>
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            :class="{
-                                                'invalid-bg': formErrors.name,
-                                                'is-invalid': formErrors.name,
-                                                'is-valid':
-                                                    form.name &&
-                                                    !formErrors.name &&
-                                                    formTouched.name,
-                                            }"
-                                            v-model="form.name"
-                                            @blur="formTouched.name = true"
-                                            @input="clearFieldError('name')"
-                                            placeholder="Enter your full name"
-                                        />
-                                        <div
-                                            class="invalid-feedback d-block"
-                                            v-if="formErrors.name"
-                                        >
-                                            {{ formErrors.name[0] }}
-                                        </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">
+                                        Email
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input
+                                        type="email"
+                                        class="form-control"
+                                        :class="{
+                                            'invalid-bg': formErrors.email,
+                                            'is-invalid': formErrors.email,
+                                            'is-valid':
+                                                form.email &&
+                                                !formErrors.email &&
+                                                formTouched.email,
+                                        }"
+                                        v-model="form.email"
+                                        @blur="formTouched.email = true"
+                                        @input="clearFieldError('email')"
+                                        placeholder="your.email@example.com"
+                                    />
+                                    <div
+                                        class="invalid-feedback d-block"
+                                        v-if="formErrors.email"
+                                    >
+                                        {{ formErrors.email[0] }}
                                     </div>
+                                </div>
 
-                                    <div class="col-md-6">
-                                        <label class="form-label">
-                                            Email
-                                            <span class="text-danger">*</span>
-                                        </label>
-                                        <input
-                                            type="email"
-                                            class="form-control"
-                                            :class="{
-                                                'invalid-bg': formErrors.email,
-                                                'is-invalid': formErrors.email,
-                                                'is-valid':
-                                                    form.email &&
-                                                    !formErrors.email &&
-                                                    formTouched.email,
-                                            }"
-                                            v-model="form.email"
-                                            @blur="formTouched.email = true"
-                                            @input="clearFieldError('email')"
-                                            placeholder="your.email@example.com"
-                                        />
-                                        <div
-                                            class="invalid-feedback d-block"
-                                            v-if="formErrors.email"
-                                        >
-                                            {{ formErrors.email[0] }}
-                                        </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">
+                                        Phone
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input
+                                        type="tel"
+                                        class="form-control"
+                                        v-model.trim="form.phone"
+                                        inputmode="tel"
+                                        placeholder="+1 7021234567 or 7021234567"
+                                        :class="{
+                                            'invalid-bg': formErrors.phone,
+                                            'is-invalid': formErrors.phone,
+                                            'is-valid':
+                                                form.phone &&
+                                                !formErrors.phone &&
+                                                formTouched.phone,
+                                        }"
+                                        @blur="formTouched.phone = true"
+                                        @input="clearFieldError('phone')"
+                                    />
+                                    <div
+                                        class="invalid-feedback d-block"
+                                        v-if="formErrors.phone"
+                                    >
+                                        {{ formErrors.phone[0] }}
                                     </div>
+                                </div>
 
-                                    <div class="col-md-6">
-                                        <label class="form-label">
-                                            Phone
-                                            <span class="text-danger">*</span>
-                                        </label>
-                                        <input
-                                            type="tel"
-                                            class="form-control"
-                                            v-model.trim="form.phone"
-                                            inputmode="tel"
-                                            placeholder="+1 7021234567 or 7021234567"
-                                            :class="{
-                                                'invalid-bg': formErrors.phone,
-                                                'is-invalid': formErrors.phone,
-                                                'is-valid':
-                                                    form.phone &&
-                                                    !formErrors.phone &&
-                                                    formTouched.phone,
-                                            }"
-                                            @blur="formTouched.phone = true"
-                                            @input="clearFieldError('phone')"
-                                        />
-                                        <div
-                                            class="invalid-feedback d-block"
-                                            v-if="formErrors.phone"
-                                        >
-                                            {{ formErrors.phone[0] }}
-                                        </div>
+                                <div class="col-12">
+                                    <label class="form-label">
+                                        Message
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <textarea
+                                        class="form-control"
+                                        :class="{
+                                            'invalid-bg': formErrors.message,
+                                            'is-invalid': formErrors.message,
+                                            'is-valid':
+                                                form.message &&
+                                                !formErrors.message &&
+                                                formTouched.message,
+                                        }"
+                                        v-model="form.message"
+                                        rows="4"
+                                        @blur="formTouched.message = true"
+                                        @input="clearFieldError('message')"
+                                        placeholder="Tell us how we can help you..."
+                                    ></textarea>
+                                    <div
+                                        class="invalid-feedback d-block"
+                                        v-if="formErrors.message"
+                                    >
+                                        {{ formErrors.message[0] }}
                                     </div>
+                                </div>
 
-                                    <div class="col-12">
-                                        <label class="form-label">
-                                            Message
-                                            <span class="text-danger">*</span>
-                                        </label>
-                                        <textarea
-                                            class="form-control"
-                                            :class="{
-                                                'invalid-bg':
-                                                    formErrors.message,
-                                                'is-invalid':
-                                                    formErrors.message,
-                                                'is-valid':
-                                                    form.message &&
-                                                    !formErrors.message &&
-                                                    formTouched.message,
-                                            }"
-                                            v-model="form.message"
-                                            rows="4"
-                                            @blur="formTouched.message = true"
-                                            @input="clearFieldError('message')"
-                                            placeholder="Tell us how we can help you..."
-                                        ></textarea>
-                                        <div
-                                            class="invalid-feedback d-block"
-                                            v-if="formErrors.message"
+                                <div class="col-12">
+                                    <div class="form-actions">
+                                        <button
+                                            class="btn-send"
+                                            :disabled="!formStatus"
+                                            @click="save"
                                         >
-                                            {{ formErrors.message[0] }}
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12">
-                                        <div class="form-actions">
-                                            <button
-                                                class="btn-send"
-                                                :disabled="!formStatus"
-                                                @click="save"
-                                            >
-                                                <span v-if="formStatus">{{
-                                                    translate("Send Message")
-                                                }}</span>
-                                                <span v-else>
-                                                    {{ translate("Sending") }}
-                                                    <span
-                                                        class="spinner-border spinner-border-sm"
-                                                        aria-hidden="true"
-                                                    ></span>
-                                                </span>
-                                            </button>
-                                            <button
-                                                class="btn-cancel"
-                                                type="button"
-                                                data-bs-toggle="collapse"
-                                                data-bs-target=".multi-collapse"
-                                                @click="cancelForm"
-                                            >
-                                                Cancel
-                                            </button>
-                                        </div>
+                                            <span v-if="formStatus">{{
+                                                translate("Send Message")
+                                            }}</span>
+                                            <span v-else>
+                                                {{ translate("Sending") }}
+                                                <span
+                                                    class="spinner-border spinner-border-sm"
+                                                    aria-hidden="true"
+                                                ></span>
+                                            </span>
+                                        </button>
+                                        <button
+                                            class="btn-cancel"
+                                            type="button"
+                                            @click="cancelForm"
+                                        >
+                                            Clear Form
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -815,6 +799,8 @@ export default {
     },
     created() {
         this.fetchWesiteInfo();
+        this.contactFormBtnStatus = 1;
+        this.isFormInitialized = true;
     },
     watch: {
         "form.phone"(val) {
@@ -846,9 +832,9 @@ export default {
                 message: false,
             },
             formStatus: 1,
-            contactFormBtnStatus: 0,
+            contactFormBtnStatus: 1,
             contacting_user: "",
-            isFormInitialized: false,
+            isFormInitialized: true,
         };
     },
     methods: {
@@ -887,8 +873,6 @@ export default {
                 phone: false,
                 message: false,
             };
-            this.contactFormBtnStatus = 0;
-            this.isFormInitialized = false;
         },
 
         clearFieldError(field) {
@@ -940,18 +924,7 @@ export default {
                         phone: false,
                         message: false,
                     };
-                    this.contactFormBtnStatus = 0;
                     this.formStatus = 1;
-                    this.isFormInitialized = false;
-
-                    setTimeout(() => {
-                        const collapseElement = document.querySelector(
-                            '[data-bs-toggle="collapse"][data-bs-target=".multi-collapse"]'
-                        );
-                        if (collapseElement) {
-                            collapseElement.click();
-                        }
-                    }, 1500);
                 })
                 .catch((error) => {
                     this.formStatus = 1;
