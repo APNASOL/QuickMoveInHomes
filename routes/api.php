@@ -301,6 +301,7 @@ Route::post('connect/customer/agents', [HomeController::class, 'connect_customer
 Route::get('/get-communities', [IndexController::class, 'communities'])->name('get-communities');
 Route::get('/get-all-communities', [IndexController::class, 'all_communities'])->name('get-all-communities');
 Route::get('/get-all-open-houses', [IndexController::class, 'all_open_houses'])->name('get-all-open-houses');
+Route::post('/search-communities', [IndexController::class, 'SearchCommunities'])->name('search-communities');
 
 // for external website
 

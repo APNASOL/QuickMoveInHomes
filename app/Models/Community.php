@@ -55,10 +55,15 @@ class Community extends Model
     {
         return $this->belongsTo(LasVegasRegion::class, 'las_vegas_region_id');
     }
-  
+
     // Define the relationship with the Builder model
     public function builders()
     {
         return $this->belongsToMany(Builder::class, 'builders_communities', 'community_id', 'builder_id');
+    }
+
+    public function properties()
+    {
+        return $this->hasMany(Property::class, 'community_id');
     }
 }

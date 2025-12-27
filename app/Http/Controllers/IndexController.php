@@ -1,18 +1,18 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Builder;
-use App\Models\Community;
+use Carbon\Carbon;
 use App\Models\Event;
+use App\Models\Upload;
+use App\Models\Builder;
+use App\Models\Property;
+use App\Models\Community;
 use App\Models\Incentive;
 use App\Models\OpenHouse;
-use App\Models\Property;
+use Illuminate\Http\Request;
 use App\Models\PropertyFeature;
 use App\Models\PropertyIncentive;
-use App\Models\Upload;
-use Carbon\Carbon;
-use DB;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class IndexController extends Controller
 {
@@ -121,6 +121,198 @@ class IndexController extends Controller
         }
 
         return $communities;
+    }
+
+    public function SearchCommunities(Request $request)
+    {
+        $validated = $request->validate([
+            'main_search_field' => 'nullable|string',
+            'bathroom'          => 'nullable|integer|min:0',
+            'bedrooms'          => 'nullable|integer|min:0',
+            'min_price'         => 'nullable|integer|min:0',
+            'max_price'         => 'nullable|integer|min:0',
+            'min_square_feet'   => 'nullable|integer|min:0',
+            'max_square_feet'   => 'nullable|integer|min:0',
+            'min_lot_size'      => 'nullable|integer|min:0',
+            'max_lot_size'      => 'nullable|integer|min:0',
+            'is_open_house'     => 'nullable|boolean',
+            'min_homes_count'   => 'nullable|integer|min:0',
+        ]);
+
+        // Auto-correct inverted ranges
+        if (isset($validated['min_price'], $validated['max_price']) && $validated['min_price'] > $validated['max_price']) {
+            [$validated['min_price'], $validated['max_price']] = [$validated['max_price'], $validated['min_price']];
+        }
+
+        if (isset($validated['min_square_feet'], $validated['max_square_feet']) && $validated['min_square_feet'] > $validated['max_square_feet']) {
+            [$validated['min_square_feet'], $validated['max_square_feet']] = [$validated['max_square_feet'], $validated['min_square_feet']];
+        }
+
+        if (isset($validated['min_lot_size'], $validated['max_lot_size']) && $validated['min_lot_size'] > $validated['max_lot_size']) {
+            [$validated['min_lot_size'], $validated['max_lot_size']] = [$validated['max_lot_size'], $validated['min_lot_size']];
+        }
+
+        $communities = DB::table('communities')
+            ->select('communities.*')
+            ->distinct();
+
+            // Search by community name or location
+            if (!empty($validated['main_search_field'])) {
+                $searchTerm = $validated['main_search_field'];
+                // Search by community name, description, or location
+            if (!empty($validated['main_search_field'])) {
+                $searchTerm = $validated['main_search_field'];
+                $communities->where(function ($query) use ($searchTerm) {
+                    $query->where('communities.name', 'LIKE', '%' . $searchTerm . '%')
+                        ->orWhere('communities.description', 'LIKE', '%' . $searchTerm . '%')
+                        ->orWhere('communities.location', 'LIKE', '%' . $searchTerm . '%');
+                });
+            }
+        }
+
+        // Filter by minimum homes count
+        if (!empty($validated['min_homes_count'])) {
+            $minHomesCount = $validated['min_homes_count'];
+            $communities->whereExists(function ($query) use ($minHomesCount) {
+                $query->select(DB::raw(1))
+                    ->from('properties')
+                    ->whereRaw('properties.community_id = communities.community_id')
+                    ->havingRaw('COUNT(*) >= ?', [$minHomesCount]);
+            });
+        }
+
+        // Filter communities that have properties matching the criteria
+        $communities->whereExists(function ($query) use ($validated) {
+            $query->select(DB::raw(1))
+                ->from('properties')
+                ->whereRaw('properties.community_id = communities.community_id');
+
+            // Apply property filters
+            if (!empty($validated['is_open_house'])) {
+                $query->where('properties.is_open_house', 1);
+            }
+
+            // Price range filter
+            if (isset($validated['min_price'], $validated['max_price'])) {
+                $query->whereBetween('properties.price', [$validated['min_price'], $validated['max_price']]);
+            } elseif (isset($validated['min_price'])) {
+                $query->where('properties.price', '>=', $validated['min_price']);
+            } elseif (isset($validated['max_price'])) {
+                $query->where('properties.price', '<=', $validated['max_price']);
+            }
+
+            // Square feet filter
+            if (isset($validated['min_square_feet'], $validated['max_square_feet'])) {
+                $query->whereBetween('properties.square_feet', [$validated['min_square_feet'], $validated['max_square_feet']]);
+            } elseif (isset($validated['min_square_feet'])) {
+                $query->where('properties.square_feet', '>=', $validated['min_square_feet']);
+            } elseif (isset($validated['max_square_feet'])) {
+                $query->where('properties.square_feet', '<=', $validated['max_square_feet']);
+            }
+
+            // Lot size filter
+            if (isset($validated['min_lot_size'], $validated['max_lot_size'])) {
+                $query->whereBetween('properties.lot_size', [$validated['min_lot_size'], $validated['max_lot_size']]);
+            } elseif (isset($validated['min_lot_size'])) {
+                $query->where('properties.lot_size', '>=', $validated['min_lot_size']);
+            } elseif (isset($validated['max_lot_size'])) {
+                $query->where('properties.lot_size', '<=', $validated['max_lot_size']);
+            }
+
+            // Bedrooms filter
+            if (!empty($validated['bedrooms'])) {
+                $query->where('properties.bedrooms', '>=', $validated['bedrooms']);
+            }
+
+            // Bathrooms filter
+            if (!empty($validated['bathroom'])) {
+                $query->whereRaw('(COALESCE(properties.full_bath, 0) + COALESCE(properties.half_bath, 0)) >= ?', [$validated['bathroom']]);
+            }
+        });
+
+        $communities = $communities->latest('communities.id')->get();
+
+        // Process each community
+        foreach ($communities as $community) {
+            // Get total homes count in community
+            $community->homes_count = Property::where('community_id', $community->community_id)->count();
+
+            // Get filtered homes count (matching the search criteria)
+            $filteredHomesQuery = Property::where('community_id', $community->community_id);
+
+            // Apply the same filters to count matching properties
+            if (!empty($validated['is_open_house'])) {
+                $filteredHomesQuery->where('is_open_house', 1);
+            }
+
+            if (isset($validated['min_price'], $validated['max_price'])) {
+                $filteredHomesQuery->whereBetween('price', [$validated['min_price'], $validated['max_price']]);
+            } elseif (isset($validated['min_price'])) {
+                $filteredHomesQuery->where('price', '>=', $validated['min_price']);
+            } elseif (isset($validated['max_price'])) {
+                $filteredHomesQuery->where('price', '<=', $validated['max_price']);
+            }
+
+            if (isset($validated['min_square_feet'], $validated['max_square_feet'])) {
+                $filteredHomesQuery->whereBetween('square_feet', [$validated['min_square_feet'], $validated['max_square_feet']]);
+            } elseif (isset($validated['min_square_feet'])) {
+                $filteredHomesQuery->where('square_feet', '>=', $validated['min_square_feet']);
+            } elseif (isset($validated['max_square_feet'])) {
+                $filteredHomesQuery->where('square_feet', '<=', $validated['max_square_feet']);
+            }
+
+            if (isset($validated['min_lot_size'], $validated['max_lot_size'])) {
+                $filteredHomesQuery->whereBetween('lot_size', [$validated['min_lot_size'], $validated['max_lot_size']]);
+            } elseif (isset($validated['min_lot_size'])) {
+                $filteredHomesQuery->where('lot_size', '>=', $validated['min_lot_size']);
+            } elseif (isset($validated['max_lot_size'])) {
+                $filteredHomesQuery->where('lot_size', '<=', $validated['max_lot_size']);
+            }
+
+            if (!empty($validated['bedrooms'])) {
+                $filteredHomesQuery->where('bedrooms', '>=', $validated['bedrooms']);
+            }
+
+            if (!empty($validated['bathroom'])) {
+                $filteredHomesQuery->whereRaw('(COALESCE(full_bath, 0) + COALESCE(half_bath, 0)) >= ?', [$validated['bathroom']]);
+            }
+
+            $community->filtered_homes_count = $filteredHomesQuery->count();
+
+            // Process main image
+            if ($community->main_image) {
+                $uploaded_image = Upload::find($community->main_image);
+                if ($uploaded_image) {
+                    $community->main_image = get_storage_url($uploaded_image->file_name);
+                }
+            }
+
+            // Get price range for properties in this community (optional, useful for display)
+            $priceRange = Property::where('community_id', $community->community_id)
+                ->selectRaw('MIN(price) as min_price, MAX(price) as max_price')
+                ->first();
+
+            $community->price_range = [
+                'min' => $priceRange->min_price ?? 0,
+                'max' => $priceRange->max_price ?? 0
+            ];
+        }
+
+        // Shuffle results if no specific sorting is needed
+        $communities = $communities->shuffle();
+
+        return [
+            'communities' => $communities,
+            'total_communities' => $communities->count(),
+            'filters_applied' => [
+                'main_search' => $validated['main_search_field'] ?? null,
+                'min_price' => $validated['min_price'] ?? null,
+                'max_price' => $validated['max_price'] ?? null,
+                'bedrooms' => $validated['bedrooms'] ?? null,
+                'bathroom' => $validated['bathroom'] ?? null,
+                'is_open_house' => $validated['is_open_house'] ?? null,
+            ]
+        ];
     }
 
     public function all_open_houses(Request $request)
