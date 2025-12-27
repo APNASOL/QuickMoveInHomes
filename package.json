@@ -31,6 +31,7 @@
         "popper.js": "^1.16.1",
         "supercluster": "^8.0.1",
         "toastr": "^2.1.4",
+        "v-calendar": "^3.1.2",
         "vue-cropperjs": "^5.0.0",
         "vue-draggable-next": "^2.1.1",
         "vue-star-rating": "^2.1.0",

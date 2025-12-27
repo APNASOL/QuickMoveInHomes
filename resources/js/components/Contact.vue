@@ -1,4 +1,71 @@
 <style scoped>
+.appointment-section {
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+}
+
+.calendar-container {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+.time-slots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 0.5rem;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.time-slot-btn {
+    padding: 0.75rem;
+    border: 2px solid #e9ecef;
+    background: white;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.time-slot-btn:hover {
+    border-color: #0d6efd;
+    background: #e7f1ff;
+}
+
+.time-slot-btn.active {
+    background: #0d6efd;
+    border-color: #0d6efd;
+    color: white;
+}
+
+.slide-fade-enter-active,
+.slide-fade-leave-active {
+    transition: all 0.3s ease;
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+/* V-Calendar Custom Styling */
+:deep(.vc-container) {
+    border: none !important;
+    font-family: inherit !important;
+}
+
+:deep(.vc-day-content) {
+    font-weight: 500 !important;
+}
+
+:deep(.vc-highlight) {
+    background-color: #0d6efd !important;
+}
 /* Contact Page Styles */
 .contact-hero-section {
     background: linear-gradient(
@@ -589,6 +656,124 @@
                                 </p>
                             </div>
 
+                            <!-- Appointment Scheduler Section -->
+                            <div class="appointment-section mb-4">
+                                <div
+                                    class="d-flex justify-content-between align-items-center mb-3"
+                                >
+                                    <h5 class="mb-0">
+                                        <i
+                                            class="bi bi-calendar-check me-2"
+                                        ></i>
+                                        Schedule an Appointment (Optional)
+                                    </h5>
+                                    <button
+                                        @click="toggleCalendar"
+                                        class="toggle-btn btn-sm"
+                                    >
+                                        <i
+                                            class="bi"
+                                            :class="
+                                                showCalendar
+                                                    ? 'bi-chevron-up'
+                                                    : 'bi-calendar3'
+                                            "
+                                        ></i>
+                                        {{
+                                            showCalendar
+                                                ? "Hide Calendar"
+                                                : "Select Date & Time"
+                                        }}
+                                    </button>
+                                </div>
+
+                                <transition name="slide-fade">
+                                    <div
+                                        v-if="showCalendar"
+                                        class="calendar-container"
+                                    >
+                                        <!-- Calendar -->
+                                        <div class="row g-3">
+                                            <div class="col-lg-7">
+                                                <VDatePicker
+                                                    v-model="selectedDate"
+                                                    :disabled-dates="
+                                                        disabledDates
+                                                    "
+                                                    :min-date="new Date()"
+                                                    color="blue"
+                                                    :is-expanded="true"
+                                                    :attributes="attrs"
+                                                    @dayclick="handleDateSelect"
+                                                />
+                                            </div>
+
+                                            <!-- Time Slots -->
+                                            <div class="col-lg-5">
+                                                <div v-if="selectedDate">
+                                                    <h6 class="mb-3">
+                                                        <i
+                                                            class="bi bi-clock me-2"
+                                                        ></i>
+                                                        Available Time Slots
+                                                    </h6>
+                                                    <div
+                                                        class="time-slots-grid"
+                                                    >
+                                                        <button
+                                                            v-for="time in timeSlots"
+                                                            :key="time"
+                                                            @click="
+                                                                handleTimeSelect(
+                                                                    time
+                                                                )
+                                                            "
+                                                            :class="[
+                                                                'time-slot-btn',
+                                                                {
+                                                                    active:
+                                                                        selectedTime ===
+                                                                        time,
+                                                                },
+                                                            ]"
+                                                        >
+                                                            {{ time }}
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div
+                                                    v-else
+                                                    class="text-center text-muted py-5"
+                                                >
+                                                    <i
+                                                        class="bi bi-calendar3 fs-1 d-block mb-3"
+                                                    ></i>
+                                                    <p>
+                                                        Select a date to view
+                                                        available times
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Selected Appointment Info -->
+                                        <div
+                                            v-if="isAppointmentSelected"
+                                            class="alert alert-info mt-3"
+                                        >
+                                            <i
+                                                class="bi bi-check-circle-fill me-2"
+                                            ></i>
+                                            <strong
+                                                >Appointment Selected:</strong
+                                            >
+                                            {{ formattedSelectedDate }} at
+                                            {{ selectedTime }}
+                                        </div>
+                                    </div>
+                                </transition>
+                            </div>
+
                             <div class="row g-3">
                                 <div class="col-12">
                                     <label class="form-label">
@@ -792,10 +977,13 @@
 
 <script>
 import Master from "@components/layout/Master.vue";
+import { Calendar, DatePicker } from "v-calendar";
+import "v-calendar/style.css";
 
 export default {
     components: {
         Master,
+        VDatePicker: DatePicker,
     },
     created() {
         this.fetchWesiteInfo();
@@ -812,17 +1000,72 @@ export default {
         },
     },
     data() {
+        const today = new Date();
         return {
             logo: external_website.logo,
             name: external_website.name,
             website_address: "",
             website_phone: "",
+
+            // Calendar data - ensure selectedDate is a Date object
+            selectedDate: today,
+            selectedTime: null,
+            showCalendar: false,
+
+            // Add attributes for highlighting
+            attrs: [
+                {
+                    key: "today",
+                    highlight: {
+                        color: "blue",
+                        fillMode: "outline",
+                    },
+                    dates: today,
+                },
+            ],
+
+            // Available time slots
+            timeSlots: [
+                "09:00 AM",
+                "09:30 AM",
+                "10:00 AM",
+                "10:30 AM",
+                "11:00 AM",
+                "11:30 AM",
+                "12:00 PM",
+                "12:30 PM",
+                "01:00 PM",
+                "01:30 PM",
+                "02:00 PM",
+                "02:30 PM",
+                "03:00 PM",
+                "03:30 PM",
+                "04:00 PM",
+                "04:30 PM",
+                "05:00 PM",
+            ],
+
+            // Disabled dates (past dates and Sundays)
+            disabledDates: [
+                {
+                    start: null,
+                    end: new Date(today.getTime() - 86400000), // Yesterday
+                },
+                // Disable Sundays
+                (date) => {
+                    const day = date.getDay();
+                    return day === 0; // Sunday is 0
+                },
+            ],
+
             form: {
                 name: "",
                 phone: "",
                 email: "",
                 message: "",
                 contacted_from: "",
+                appointment_date: today.toISOString().split("T")[0],
+                appointment_time: "",
             },
             formErrors: {},
             formTouched: {
@@ -837,6 +1080,44 @@ export default {
             isFormInitialized: true,
         };
     },
+    computed: {
+        formattedSelectedDate() {
+            if (!this.selectedDate) return "";
+
+            try {
+                let dateObj;
+
+                if (this.selectedDate instanceof Date) {
+                    dateObj = this.selectedDate;
+                } else if (typeof this.selectedDate === "string") {
+                    dateObj = new Date(this.selectedDate);
+                } else if (this.selectedDate && this.selectedDate.date) {
+                    dateObj = this.selectedDate.date;
+                } else {
+                    // Try to parse it as a date
+                    dateObj = new Date(this.selectedDate);
+                }
+
+                // Check if date is valid
+                if (isNaN(dateObj.getTime())) {
+                    return "Invalid Date";
+                }
+
+                return dateObj.toLocaleDateString("en-US", {
+                    weekday: "long",
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                });
+            } catch (error) {
+                console.error("Date formatting error:", error);
+                return "";
+            }
+        },
+        isAppointmentSelected() {
+            return this.selectedDate && this.selectedTime;
+        },
+    },
     methods: {
         initializeForm(user) {
             this.contactFormBtnStatus = 1;
@@ -849,6 +1130,8 @@ export default {
                     email: "",
                     message: "",
                     contacted_from: user,
+                    appointment_date: "",
+                    appointment_time: "",
                 };
                 this.isFormInitialized = true;
             } else {
@@ -858,6 +1141,39 @@ export default {
             this.formErrors = {};
         },
 
+        handleDateSelect(date) {
+            // v-calendar v3 passes the date directly, not as { date: Date }
+            this.selectedDate = date;
+            this.selectedTime = null;
+
+            // Convert to proper date object
+            let selectedDateObj;
+
+            if (date instanceof Date) {
+                selectedDateObj = date;
+            } else if (typeof date === "string") {
+                selectedDateObj = new Date(date);
+            } else if (date && date.date) {
+                selectedDateObj = date.date;
+            } else {
+                selectedDateObj = new Date(date);
+            }
+
+            // Format as YYYY-MM-DD for form
+            this.form.appointment_date = selectedDateObj
+                .toISOString()
+                .split("T")[0];
+        },
+
+        handleTimeSelect(time) {
+            this.selectedTime = time;
+            this.form.appointment_time = time;
+        },
+
+        toggleCalendar() {
+            this.showCalendar = !this.showCalendar;
+        },
+
         cancelForm() {
             this.form = {
                 name: "",
@@ -865,6 +1181,8 @@ export default {
                 email: "",
                 message: "",
                 contacted_from: "",
+                appointment_date: "",
+                appointment_time: "",
             };
             this.formErrors = {};
             this.formTouched = {
@@ -873,6 +1191,8 @@ export default {
                 phone: false,
                 message: false,
             };
+            this.selectedDate = null;
+            this.selectedTime = null;
         },
 
         clearFieldError(field) {
@@ -899,8 +1219,12 @@ export default {
             axios
                 .post("/api/contact-save", this.form)
                 .then((response) => {
+                    const appointmentInfo = this.isAppointmentSelected
+                        ? ` Your appointment is scheduled for ${this.formattedSelectedDate} at ${this.selectedTime}.`
+                        : "";
+
                     toastr.success(
-                        "Thank you! An agent will contact you shortly",
+                        `Thank you! An agent will contact you shortly.${appointmentInfo}`,
                         "Message Sent",
                         {
                             timeOut: 5000,
@@ -916,6 +1240,8 @@ export default {
                         phone: "",
                         message: "",
                         contacted_from: "",
+                        appointment_date: "",
+                        appointment_time: "",
                     };
                     this.formErrors = {};
                     this.formTouched = {
@@ -924,6 +1250,8 @@ export default {
                         phone: false,
                         message: false,
                     };
+                    this.selectedDate = null;
+                    this.selectedTime = null;
                     this.formStatus = 1;
                 })
                 .catch((error) => {

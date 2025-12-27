@@ -63,6 +63,8 @@ class HomeController extends Controller
                 'phone'           => 'required|string|min:10|max:20|regex:/^[\d\s\+\-\(\)]+$/',
                 'message'         => 'required|string|min:10|max:2000',
                 'contacted_from'  => 'nullable|string|in:Agent,Customer',
+                'appointment_date' => 'nullable|date|after_or_equal:today',
+                'appointment_time' => 'nullable',
             ], [
                 'name.required'     => 'Please enter your full name.',
                 'name.min'          => 'Name must be at least 2 characters.',
@@ -74,7 +76,41 @@ class HomeController extends Controller
                 'message.required'  => 'Please enter a message.',
                 'message.min'       => 'Message must be at least 10 characters.',
                 'message.max'       => 'Message cannot exceed 2000 characters.',
+                'appointment_date.date' => 'Please select a valid appointment date.',
+                'appointment_date.after_or_equal' => 'Appointment date cannot be in the past.',
+                'appointment_time.regex' => 'Please select a valid appointment time.',
             ]);
+
+            // Validate appointment logic
+            if ($validated['appointment_date'] || $validated['appointment_time']) {
+                // Both date and time must be provided together
+                if (empty($validated['appointment_date']) || empty($validated['appointment_time'])) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Please select both date and time for the appointment.',
+                        'errors'  => [
+                            'appointment_date' => ['Please select both date and time.'],
+                            'appointment_time' => ['Please select both date and time.']
+                        ]
+                    ], 422);
+                }
+
+                // Check for existing appointments (optional - if you want to prevent double booking)
+                $existingAppointment = Contact::where('appointment_date', $validated['appointment_date'])
+                    ->where('appointment_time', $validated['appointment_time'])
+                    ->where('created_at', '>', now()->subHours(24))
+                    ->first();
+
+                if ($existingAppointment) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'This time slot is already booked. Please select another time.',
+                        'errors'  => [
+                            'appointment_time' => ['This time slot is not available.']
+                        ]
+                    ], 422);
+                }
+            }
 
             $contact = new Contact();
             $contact->id             = Str::orderedUuid();
@@ -83,13 +119,20 @@ class HomeController extends Controller
             $contact->phone          = $validated['phone'];
             $contact->message        = $validated['message'];
             $contact->contacted_from = $validated['contacted_from'] ?? null;
+            $contact->appointment_date = $validated['appointment_date'] ?? null;
+            $contact->appointment_time = $validated['appointment_time'] ?? null;
+
             $contact->save();
 
             return response()->json([
                 'success' => true,
-                'message' => 'Thank you for contacting us! We will get back to you soon.',
+                'message' => $contact->appointment_date
+                    ? 'Thank you! Your appointment has been scheduled. We will contact you shortly to confirm.'
+                    : 'Thank you for contacting us! We will get back to you soon.',
                 'data'    => [
-                    'id' => $contact->id
+                    'id' => $contact->id,
+                    'appointment_date' => $contact->appointment_date,
+                    'appointment_time' => $contact->appointment_time,
                 ]
             ], 201);
 
@@ -101,6 +144,7 @@ class HomeController extends Controller
             ], 422);
 
         } catch (\Exception $e) {
+            dd($e->getMessage());
             Log::error('Contact form submission failed', [
                 'error'   => $e->getMessage(),
                 'request' => $request->all()
