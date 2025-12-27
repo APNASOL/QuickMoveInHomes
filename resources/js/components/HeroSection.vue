@@ -21,6 +21,7 @@
             type="text"
             class="form-control form-control-lg"
             placeholder="Search by address, city, or ZIP code"
+            @keypress.enter="handleSearch"
           />
           <a
             v-if="formStatus"
@@ -54,6 +55,12 @@ export default {
     };
   },
   methods: {
+    handleSearch() {
+        if (this.formStatus && this.searching_location) {
+        this.activeSpinner();
+        window.location.href = `/homes-list/${this.searching_location}`;
+        }
+    },
     activeSpinner() {
       this.formStatus = false;
       setTimeout(() => {
