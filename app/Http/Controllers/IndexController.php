@@ -110,6 +110,7 @@ class IndexController extends Controller
         // Loop through each community
         foreach ($communities as $community) {
             $community->homes_count = Property::where('community_id', $community->community_id)->count();
+            $community->properties = Property::where('community_id', $community->community_id)->get();
 
             // Handle the main image
             if ($community->main_image) {

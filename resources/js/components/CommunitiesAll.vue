@@ -1,4 +1,107 @@
 <style scoped>
+/* Two Column Layout */
+.two-column-layout {
+    position: relative;
+    width: 100%;
+    min-height: calc(100vh - 200px); /* Adjust based on your header/footer */
+}
+
+.two-column-layout .row {
+    min-height: calc(100vh - 200px);
+}
+
+/* Listings Column */
+.listings-column {
+    padding: 20px;
+    overflow-y: auto;
+    max-height: calc(100vh - 187px);
+    scrollbar-width: thin;
+    scrollbar-color: #ccc #f1f1f1;
+    border-radius: 20px;
+}
+
+.listings-column::-webkit-scrollbar {
+    width: 8px;
+}
+
+.listings-column::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.listings-column::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
+.listings-column::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
+}
+
+.listings-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Map Column */
+.map-column {
+    padding: 0;
+    position: relative;
+}
+
+.sticky-map-container {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.map-container {
+    width: 100%;
+    height: 100%;
+}
+
+/* Map Placeholder States */
+.map-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa;
+}
+
+.map-message {
+    text-align: center;
+    padding: 40px;
+    max-width: 400px;
+}
+
+.message-icon {
+    font-size: 4rem;
+    color: #6c757d;
+    margin-bottom: 20px;
+}
+.results-header {
+    display: flex;
+    justify-content: between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 4rem;
+}
+
+.results-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1a365d;
+    margin: 0;
+}
+
+.results-count {
+    color: #64748b;
+    margin: 0;
+}
+
 /* New Home Communities Page */
 .communities-hero-section {
     background: linear-gradient(
@@ -1082,104 +1185,224 @@
             </div>
         </section>
 
-        <!-- Communities Grid Section -->
-        <section class="communities-grid-section">
-            <div class="container">
-                <!-- Communities Grid -->
-                <div
-                    v-if="Communities && Communities.length > 0"
-                    class="communities-grid"
-                >
-                    <div
-                        v-for="community in Communities"
-                        :key="community.id"
-                        class="community-card"
-                    >
-                        <!-- Image + Badge -->
-                        <div class="community-image-container">
-                            <img
-                                :src="
-                                    community.main_image ??
-                                    '/images/default_image.png'
-                                "
-                                class="community-image"
-                                :alt="community.name"
-                                @error="setAltImg"
-                            />
-                            <span class="community-badge">
-                                {{ community.homes_count }} Homes
-                            </span>
-                        </div>
-
-                        <!-- Content -->
-                        <div class="community-content">
-                            <h2 class="community-name">{{ community.name }}</h2>
-
+        <!-- Two-Column Layout Section -->
+        <section class="two-column-layout">
+            <div class="container-fluid">
+                <div class="row g-0">
+                    <!-- Left Column - Property Listings -->
+                    <div class="col-lg-7 col-xl-6 listings-column">
+                        <!-- Results Header -->
+                                <div class="results-header">
+                                    <div class="results-info">
+                                        <h3 class="results-title">
+                                            Communities
+                                        </h3>
+                                        <p class="results-count">
+                                            {{ total_communities }} results found
+                                        </p>
+                                    </div>
+                                </div>
+                        <div class="listings-container">
+                            <!-- Communities Grid -->
                             <div
-                                class="community-location"
-                                v-if="community.location"
+                                v-if="Communities && Communities.length > 0"
+                                class="communities-grid"
                             >
-                                <i class="bi bi-geo-alt"></i>
-                                <span>{{ community.location }}</span>
+                                <div
+                                    v-for="community in Communities"
+                                    :key="community.id"
+                                    class="community-card"
+                                >
+                                    <!-- Image + Badge -->
+                                    <div class="community-image-container">
+                                        <img
+                                            :src="
+                                                community.main_image ??
+                                                '/images/default_image.png'
+                                            "
+                                            class="community-image"
+                                            :alt="community.name"
+                                            @error="setAltImg"
+                                        />
+                                        <span class="community-badge">
+                                            {{ community.homes_count }} Homes
+                                        </span>
+                                    </div>
+
+                                    <!-- Content -->
+                                    <div class="community-content">
+                                        <h2 class="community-name">
+                                            {{ community.name }}
+                                        </h2>
+
+                                        <div
+                                            class="community-location"
+                                            v-if="community.location"
+                                        >
+                                            <i class="bi bi-geo-alt"></i>
+                                            <span>{{
+                                                community.location
+                                            }}</span>
+                                        </div>
+
+                                        <div
+                                            class="community-description-wrapper"
+                                        >
+                                            <p
+                                                class="community-description"
+                                                :class="{
+                                                    expanded:
+                                                        expandedDescriptions[
+                                                            community.id
+                                                        ],
+                                                }"
+                                            >
+                                                {{
+                                                    community.description ||
+                                                    `Discover the charm of ${community.name} with beautiful homes, thriving communities, and exceptional amenities in the heart of Las Vegas.`
+                                                }}
+                                            </p>
+
+                                            <button
+                                                v-if="
+                                                    shouldShowReadMore(
+                                                        community
+                                                    )
+                                                "
+                                                @click="
+                                                    toggleDescription(
+                                                        community.id
+                                                    )
+                                                "
+                                                class="read-more-btn"
+                                            >
+                                                {{
+                                                    expandedDescriptions[
+                                                        community.id
+                                                    ]
+                                                        ? "Read Less"
+                                                        : "Read More"
+                                                }}
+                                            </button>
+                                        </div>
+
+                                        <a
+                                            :href="
+                                                '/detailed/community/' +
+                                                community.id
+                                            "
+                                            class="community-cta"
+                                        >
+                                            View Community
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="community-description-wrapper">
-                                <p
-                                    class="community-description"
-                                    :class="{
-                                        expanded:
-                                            expandedDescriptions[community.id],
-                                    }"
-                                >
-                                    {{
-                                        community.description ||
-                                        `Discover the charm of ${community.name} with beautiful homes, thriving communities, and exceptional amenities in the heart of Las Vegas.`
-                                    }}
+                            <!-- Loading State -->
+                            <div
+                                v-else-if="!Communities"
+                                class="communities-loading"
+                            >
+                                <div
+                                    v-for="n in 6"
+                                    :key="n"
+                                    class="community-card-loading"
+                                ></div>
+                            </div>
+
+                            <!-- Empty State -->
+                            <div v-else class="empty-state">
+                                <div class="empty-state-icon">
+                                    <i class="bi bi-building"></i>
+                                </div>
+                                <h3 class="empty-state-title">
+                                    No Communities Available
+                                </h3>
+                                <p class="empty-state-text">
+                                    We're currently updating our community
+                                    listings. Please check back soon for the
+                                    latest new home communities in Las Vegas.
                                 </p>
-
-                                <button
-                                    v-if="shouldShowReadMore(community)"
-                                    @click="toggleDescription(community.id)"
-                                    class="read-more-btn"
-                                >
-                                    {{
-                                        expandedDescriptions[community.id]
-                                            ? "Read Less"
-                                            : "Read More"
-                                    }}
-                                </button>
                             </div>
-
-                            <a
-                                :href="'/detailed/community/' + community.id"
-                                class="community-cta"
-                            >
-                                View Community
-                            </a>
                         </div>
                     </div>
-                </div>
+                    <!-- Right Column - Map (Fixed Position) -->
+                    <div class="col-lg-5 col-xl-6 map-column">
+                        <div class="sticky-map-container">
+                            <!-- Show Map with Properties -->
+                            <div
+                                v-if="homes.length > 0 && loadmap"
+                                class="map-container"
+                            >
+                                <Map :homes="homes" />
+                            </div>
 
-                <!-- Loading State -->
-                <div v-else-if="!Communities" class="communities-loading">
-                    <div
-                        v-for="n in 6"
-                        :key="n"
-                        class="community-card-loading"
-                    ></div>
-                </div>
+                            <!-- Show Message When No Results with Filters -->
+                            <div
+                                v-else-if="
+                                    homes.length === 0 &&
+                                    hasActiveFilters() &&
+                                    formStatus === 1
+                                "
+                                class="map-placeholder"
+                            >
+                                <div class="map-message">
+                                    <div class="message-icon">
+                                        <i class="bi bi-geo-alt-fill"></i>
+                                    </div>
+                                    <h4>No Properties to Display on Map</h4>
+                                    <p>
+                                        Adjust your filters to see properties in
+                                        this area
+                                    </p>
+                                    <button
+                                        @click="resetForm"
+                                        class="action-btn btn-primary"
+                                    >
+                                        <i class="bi bi-funnel me-2"></i>
+                                        Show All Properties
+                                    </button>
+                                </div>
+                            </div>
 
-                <!-- Empty State -->
-                <div v-else class="empty-state">
-                    <div class="empty-state-icon">
-                        <i class="bi bi-building"></i>
+                            <!-- Show Map Placeholder When No Properties at All -->
+                            <div
+                                v-else-if="
+                                    homes.length === 0 &&
+                                    !hasActiveFilters() &&
+                                    formStatus === 1
+                                "
+                                class="map-placeholder"
+                            >
+                                <div class="map-message">
+                                    <div class="message-icon">
+                                        <i class="bi bi-map"></i>
+                                    </div>
+                                    <h4>Map Unavailable</h4>
+                                    <p>No properties available to display</p>
+                                </div>
+                            </div>
+
+                            <!-- Loading State -->
+                            <div
+                                v-else-if="formStatus === 0"
+                                class="map-placeholder"
+                            >
+                                <div class="map-message">
+                                    <div
+                                        class="spinner-border text-primary"
+                                        role="status"
+                                    >
+                                        <span class="visually-hidden"
+                                            >Loading...</span
+                                        >
+                                    </div>
+                                    <h4 class="mt-3">Loading Properties...</h4>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <h3 class="empty-state-title">No Communities Available</h3>
-                    <p class="empty-state-text">
-                        We're currently updating our community listings. Please
-                        check back soon for the latest new home communities in
-                        Las Vegas.
-                    </p>
                 </div>
             </div>
         </section>
@@ -1189,10 +1412,12 @@
 <script>
 import { defineComponent } from "vue";
 import Master from "@components/layout/Master.vue";
+import Map from "@components/Map.vue";
 
 export default defineComponent({
     components: {
         Master,
+        Map,
     },
     data() {
         return {
@@ -1231,6 +1456,7 @@ export default defineComponent({
             Communities: [],
             expandedDescriptions: {},
             characterLimit: 150,
+            total_communities: 0,
         };
     },
     created() {
@@ -1467,6 +1693,7 @@ export default defineComponent({
                 .then((response) => {
                     this.Communities = response.data.communities;
                     this.total_homes = response.data.total_communities;
+                    this.total_communities = this.Communities.length;
                     this.formStatus = 1;
                     this.formErrors = [];
 
@@ -1509,9 +1736,30 @@ export default defineComponent({
                 .get("/api/get-all-communities")
                 .then((response) => {
                     this.Communities = response.data;
+                    this.total_communities = this.Communities.length;
+                    // Extract all properties from all communities
+                    this.homes = [];
+                    this.Communities.forEach((community) => {
+                        if (
+                            community.properties &&
+                            Array.isArray(community.properties)
+                        ) {
+                            // Add community info to each property for map display
+                            community.properties.forEach((property) => {
+                                property.community_name = community.name;
+                                this.homes.push(property);
+                            });
+                        }
+                    });
+
+                    this.total_homes = this.homes.length;
+                    this.loadmap = this.homes.length > 0;
                 })
                 .catch((error) => {
-                    toastr.error(error.response.data.message);
+                    toastr.error(
+                        error.response?.data?.message ||
+                            "Failed to load communities"
+                    );
                 });
         },
 

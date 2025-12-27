@@ -1828,12 +1828,20 @@ export default {
     border-radius: 24px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
     border: 1px solid #f1f5f9;
+    overflow: hidden;
 }
 
 .filter-header {
     display: flex;
     align-items: center;
     gap: 1rem;
+    padding: 1.5rem 2rem;
+    user-select: none;
+    transition: background-color 0.2s ease;
+}
+
+.filter-header:hover {
+    background-color: rgba(0, 0, 0, 0.02);
 }
 
 .section-icon {
@@ -1846,7 +1854,7 @@ export default {
     justify-content: center;
     color: white;
     font-size: 1.5rem;
-    margin-right: 10px;
+    flex-shrink: 0;
 }
 
 .section-title {
@@ -1854,10 +1862,38 @@ export default {
     font-weight: 700;
     color: #1a365d;
     margin: 0;
+    flex-grow: 1;
+}
+
+.collapse-toggle {
+    margin-left: auto;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #64748b;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.collapse-toggle:hover {
+    background-color: #f1f5f9;
+    color: hsl(213 71% 45%);
+    transform: scale(1.05);
+}
+
+.collapse-toggle i {
+    transition: transform 0.3s ease;
 }
 
 .filter-content {
     padding: 2.5rem;
+    border-top: 1px solid #f1f5f9;
 }
 
 /* Filter Grid */
@@ -1866,6 +1902,12 @@ export default {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1.5rem;
     margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+    .filter-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 .filter-group {
@@ -1880,15 +1922,31 @@ export default {
     font-size: 0.95rem;
     display: flex;
     align-items: center;
+    margin-bottom: 0;
+}
+
+.filter-label i {
+    color: hsl(213 71% 45%);
 }
 
 .filter-input {
     padding: 0.75rem 1rem;
-    border: 1px solid #e2e8f0;
+    border: 2px solid #e2e8f0;
     border-radius: 12px;
     background: #f8fafc;
     transition: all 0.3s ease;
     font-size: 0.95rem;
+    color: #1a365d;
+    width: 100%;
+}
+
+.filter-input::placeholder {
+    color: #94a3b8;
+}
+
+.filter-input:hover {
+    border-color: #cbd5e1;
+    background: white;
 }
 
 .filter-input:focus {
@@ -1896,6 +1954,17 @@ export default {
     border-color: hsl(213 71% 45%);
     background: white;
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Remove spinner from number inputs */
+.filter-input[type="number"]::-webkit-inner-spin-button,
+.filter-input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.filter-input[type="number"] {
+    -moz-appearance: textfield;
 }
 
 .range-inputs {
@@ -1912,25 +1981,35 @@ export default {
 }
 
 .filter-btn {
-    padding: 0.5rem 1rem;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
+    padding: 0.6rem 1.2rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
     background: white;
     color: #64748b;
-    font-weight: 500;
+    font-weight: 600;
+    font-size: 0.9rem;
     transition: all 0.3s ease;
     cursor: pointer;
+    flex: 0 0 auto;
 }
 
 .filter-btn:hover {
     border-color: hsl(213 71% 45%);
     color: hsl(213 71% 45%);
+    background: rgba(59, 130, 246, 0.05);
+    transform: translateY(-2px);
 }
 
 .filter-btn-active {
     background: linear-gradient(to right, hsl(213 71% 45%), hsl(213 71% 30%));
     border-color: hsl(213 71% 45%);
     color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.filter-btn-active:hover {
+    background: linear-gradient(to right, hsl(213 71% 50%), hsl(213 71% 35%));
 }
 
 /* Toggle Switch */
@@ -1949,15 +2028,17 @@ export default {
     align-items: center;
     gap: 0.75rem;
     cursor: pointer;
+    user-select: none;
 }
 
 .toggle-slider {
     width: 50px;
     height: 26px;
-    background: #e2e8f0;
+    background: #cbd5e1;
     border-radius: 25px;
     position: relative;
     transition: all 0.3s ease;
+    flex-shrink: 0;
 }
 
 .toggle-slider::before {
@@ -1970,19 +2051,183 @@ export default {
     top: 3px;
     left: 3px;
     transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .toggle-input:checked + .toggle-label .toggle-slider {
-    background: hsl(213 71% 45%);
+    background: linear-gradient(to right, hsl(213 71% 45%), hsl(213 71% 30%));
 }
 
 .toggle-input:checked + .toggle-label .toggle-slider::before {
     transform: translateX(24px);
 }
 
+.toggle-label:hover .toggle-slider {
+    opacity: 0.9;
+}
+
 .toggle-text {
     font-weight: 500;
     color: #1a365d;
+    font-size: 0.95rem;
+}
+
+/* Action Buttons */
+.filter-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    padding-top: 1rem;
+    border-top: 1px solid #f1f5f9;
+}
+
+.action-btn {
+    padding: 0.85rem 2rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+.btn-primary {
+    background: linear-gradient(to right, hsl(213 71% 45%), hsl(213 71% 30%));
+    color: white;
+    border-color: transparent;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-outline {
+    background: white;
+    border-color: #e2e8f0;
+    color: #64748b;
+}
+
+.btn-outline:hover {
+    background: #f8fafc;
+    border-color: hsl(213 71% 45%);
+    color: hsl(213 71% 45%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.btn-outline:active {
+    transform: translateY(0);
+}
+
+.btn-outline i {
+    transition: transform 0.3s ease;
+}
+
+.btn-outline:hover i {
+    transform: rotate(180deg);
+}
+
+/* Transition animations */
+.slide-fade-enter-active {
+    transition: all 0.4s ease-out;
+}
+
+.slide-fade-leave-active {
+    transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from {
+    transform: translateY(-20px);
+    opacity: 0;
+    max-height: 0;
+}
+
+.slide-fade-leave-to {
+    transform: translateY(-10px);
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+}
+
+.slide-fade-enter-to {
+    max-height: 2000px;
+    overflow: visible;
+}
+
+.slide-fade-leave-from {
+    max-height: 2000px;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .filter-content {
+        padding: 2rem 1.5rem;
+    }
+
+    .filter-header {
+        padding: 1.25rem 1.5rem;
+    }
+
+    .section-title {
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .filter-content {
+        padding: 1.5rem 1rem;
+    }
+
+    .filter-header {
+        padding: 1rem;
+    }
+
+    .section-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.25rem;
+    }
+
+    .section-title {
+        font-size: 1.2rem;
+    }
+
+    .filter-actions {
+        justify-content: stretch;
+    }
+
+    .action-btn {
+        flex: 1;
+    }
+
+    .range-inputs {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Loading state for inputs */
+.filter-input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Focus visible for accessibility */
+.filter-btn:focus-visible,
+.action-btn:focus-visible,
+.toggle-label:focus-visible {
+    outline: 2px solid hsl(213 71% 45%);
+    outline-offset: 2px;
 }
 
 /* Action Buttons */
@@ -2927,57 +3172,5 @@ export default {
 
 .policy-section:nth-child(2) {
     animation-delay: 0.1s;
-}
-/* Collapse toggle button */
-.collapse-toggle {
-    margin-left: auto;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    color: inherit;
-    padding: 0.5rem;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-}
-
-.collapse-toggle:hover {
-    transform: scale(1.1);
-}
-
-/* Make header flexbox to position toggle button */
-.filter-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem 1.5rem;
-    user-select: none;
-    border-radius: 25px;
-}
-
-.filter-header:hover {
-    background-color: rgba(0, 0, 0, 0.02);
-}
-
-/* Transition animations */
-.slide-fade-enter-active {
-    transition: all 0.3s ease-out;
-}
-
-.slide-fade-leave-active {
-    transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
-}
-
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-    transform: translateY(-10px);
-    opacity: 0;
-    max-height: 0;
-    overflow: hidden;
-}
-
-.slide-fade-enter-to,
-.slide-fade-leave-from {
-    max-height: 2000px;
-    overflow: visible;
 }
 </style>
